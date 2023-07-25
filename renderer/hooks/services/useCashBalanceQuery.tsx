@@ -30,7 +30,8 @@ export default function useCashBalanceQuery() {
       } catch (error: any) {
         console.log("🚀 ~ file: useCashBalance.tsx:47 ~ error:", error);
         if ([401, 403].includes(getError(error).status)) {
-          router.push("/");
+          router.push('/');
+
 
           return [];
         }

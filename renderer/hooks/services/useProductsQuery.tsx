@@ -126,7 +126,7 @@ export default function useProductsQuery({
       } catch (error: any) {
         console.error("🚀 ~ file: useProductsQuery.tsx:71 ~ error:", error);
         if ([401, 403].includes(getError(error).status)) {
-          router.push("/");
+          router.push('/');
 
           return [];
         }
