@@ -2,7 +2,6 @@ import PageLayout from '@/components/PageLayout';
 import ProductTable from '@/components/ProductTable';
 import SearchInput, { useSearchProps } from '@/components/SearchInput';
 import useIsMobile from '@/hooks/useIsMobile';
-import { getServerSideOwnerProps } from '@/libs/auth';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
@@ -49,7 +48,5 @@ const Productos = () => {
     </PageLayout>
   );
 };
-
-export const getServerSideProps = getServerSideOwnerProps;
 
 export default Productos;

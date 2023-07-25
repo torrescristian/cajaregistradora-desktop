@@ -1,5 +1,4 @@
 import PageLayout from '@/components/PageLayout';
-import { getServerSideOwnerProps } from '@/libs/auth';
 import { parseDateToArgentinianFormat } from '@/libs/utils';
 import useCashBalanceMutation from '@/hooks/services/useCashBalanceMutation';
 import useCashBalanceQuery from '@/hooks/services/useCashBalanceQuery';
@@ -101,7 +100,5 @@ const Caja = () => {
     </PageLayout>
   );
 };
-
-export const getServerSideProps = getServerSideOwnerProps;
 
 export default Caja;

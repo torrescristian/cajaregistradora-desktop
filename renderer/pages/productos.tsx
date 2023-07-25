@@ -1,5 +1,3 @@
-import { getServerSideAuthProps } from '@/libs/auth';
-import { GetServerSideProps } from 'next';
 import Products from '@/components/Products';
 import Cart from '@/components/Cart';
 
@@ -11,8 +9,5 @@ const Productos = () => {
     </section>
   );
 };
-
-export const getServerSideProps: GetServerSideProps = async (ctx: any) =>
-  getServerSideAuthProps(ctx);
 
 export default Productos;

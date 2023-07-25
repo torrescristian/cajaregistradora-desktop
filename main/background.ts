@@ -18,7 +18,7 @@ if (isProd) {
     height: 600,
     webPreferences: {
       webSecurity: false
-    }
+    }
   });
 
   if (isProd) {

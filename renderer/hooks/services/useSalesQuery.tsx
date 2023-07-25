@@ -43,7 +43,7 @@ export default function useSalesQuery() {
       } catch (error: any) {
         console.log('🚀 ~ file: useSalesQuery.tsx:57 ~ error:', error);
         if ([401, 403].includes(getError(error).status)) {
-          router.push('/login');
+          router.push('/');
 
           return [];
         }

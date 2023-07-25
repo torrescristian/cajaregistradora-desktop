@@ -16,6 +16,7 @@ export default (windowName: string, options: BrowserWindowConstructorOptions): B
   let state = {};
   let win;
 
+
   const restore = () => store.get(key, defaultSize);
 
   const getCurrentPosition = () => {
