@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import getUserByJWT from './getUserByJWT';
 
-
 interface ILoginPayload {
   identifier: string;
   password: string;
@@ -29,7 +28,6 @@ export default function useLoginMutation() {
     
       const user = await getUserByJWT(jwt);     
 
-    
       dispatch(login(user));
 
       router.push('/productos');
