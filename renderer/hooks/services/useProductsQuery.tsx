@@ -1,12 +1,12 @@
-import strapi from '@/libs/strapi';
-import { getError } from '@/libs/utils';
-import IProductUI, { IProduct, IProductPage } from '@/interfaces/IProduct';
-import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
-import { useState } from 'react';
-import { IVariantUI } from '@/interfaces/IProduct';
+import strapi from "@/libs/strapi";
+import { getError } from "@/libs/utils";
+import IProductUI, { IProduct, IProductPage } from "@/interfaces/IProduct";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { IVariantUI } from "@/interfaces/IProduct";
 
-export const getProductsQueryKey = () => 'products';
+export const getProductsQueryKey = () => "products";
 
 const parseProductFacade = (product: IProduct): IProductUI => {
   const {
@@ -41,7 +41,7 @@ const parseProductFacade = (product: IProduct): IProductUI => {
     catalog_price,
     special_price,
     wholesale_price,
-    image: (image as unknown as any)?.formats?.thumbnail?.url || '/default.png',
+    image: (image as unknown as any)?.formats?.thumbnail?.url || "/default.png",
     stock:
       stock_per_product.stock_amount_per_product -
       stock_per_product.sales_amount_per_product,
@@ -63,7 +63,7 @@ export default function useProductsQuery({
   page,
 }: IProductsQueryProps) {
   const router = useRouter();
-  const [pagination, setPagination] = useState<IProductPage['pagination']>({
+  const [pagination, setPagination] = useState<IProductPage["pagination"]>({
     page: 1,
     pageSize: 20,
     pageCount: 1,
@@ -76,28 +76,28 @@ export default function useProductsQuery({
       try {
         let options: any = {
           populate: [
-            'categories',
-            'stock_per_product',
-            'variants',
-            'variants.categories',
-            'variants.categories.parent',
-            'variants.stock_per_variant',
-            'image',
+            "categories",
+            "stock_per_product",
+            "variants",
+            "variants.categories",
+            "variants.categories.parent",
+            "variants.stock_per_variant",
+            "image",
           ],
           page: page || 1,
-          pageSize: 20,
+          pageSize: 9,
         };
 
         options.filters =
           selectedCategories?.length === 0
             ? {
                 name: {
-                  $containsi: query || '',
+                  $containsi: query || "",
                 },
               }
             : {
                 name: {
-                  $containsi: query || '',
+                  $containsi: query || "",
                 },
                 $or: [
                   {
@@ -124,9 +124,9 @@ export default function useProductsQuery({
 
         return parsedRes;
       } catch (error: any) {
-        console.error('🚀 ~ file: useProductsQuery.tsx:71 ~ error:', error);
+        console.error("🚀 ~ file: useProductsQuery.tsx:71 ~ error:", error);
         if ([401, 403].includes(getError(error).status)) {
-          router.push('/');
+          router.push("/");
 
           return [];
         }

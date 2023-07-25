@@ -1,7 +1,7 @@
-import { IStockPerVariant } from '@/interfaces/IProduct';
-import strapi from '@/libs/strapi';
-import { useMutation, useQueryClient } from 'react-query';
-import { getProductsQueryKey } from './useProductsQuery';
+import { IStockPerVariant } from "@/interfaces/IProduct";
+import strapi from "@/libs/strapi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getProductsQueryKey } from "./useProductsQuery";
 
 export interface IUseUpdateVariantMutationProps {
   stock: number;
@@ -22,13 +22,13 @@ export default function useUpdateVariantMutation() {
       console.log(newStockPerVariant);
 
       const res = await strapi.update(
-        'stock-per-variants',
+        "stock-per-variants",
         stockPerVariant.id,
         newStockPerVariant
       );
       console.log(res);
 
-      await queryClient.invalidateQueries(getProductsQueryKey());
+      await queryClient.invalidateQueries([getProductsQueryKey()]);
 
       return res;
     }

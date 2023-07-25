@@ -1,13 +1,13 @@
 import {
   ICategoryFieldPopulate,
   ICategoryResponsePopulate,
-} from '@/interfaces/ICategory';
-import strapi from '@/libs/strapi';
-import { useQuery } from 'react-query';
+} from "@/interfaces/ICategory";
+import strapi from "@/libs/strapi";
+import { useQuery } from "@tanstack/react-query";
 
-export default function useFilterMenuQuery(query = '') {
-  return useQuery<ICategoryFieldPopulate[]>('filter-menu', async () => {
-    const res = (await strapi.find('categories', {
+export default function useFilterMenuQuery(query = "") {
+  return useQuery<ICategoryFieldPopulate[]>(["filter-menu"], async () => {
+    const res = (await strapi.find("categories", {
       filters: {
         children: {
           name: {
@@ -15,7 +15,7 @@ export default function useFilterMenuQuery(query = '') {
           },
         },
       },
-      populate: '*',
+      populate: "*",
     })) as unknown as ICategoryResponsePopulate;
 
     if (!res) [];

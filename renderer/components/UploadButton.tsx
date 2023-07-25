@@ -1,8 +1,8 @@
-import { getProductsQueryKey } from '@/hooks/services/useProductsQuery';
-import IProductUI from '@/interfaces/IProduct';
-import strapi from '@/libs/strapi';
-import React, { useState } from 'react';
-import { useQueryClient } from 'react-query';
+import { getProductsQueryKey } from "@/hooks/services/useProductsQuery";
+import IProductUI from "@/interfaces/IProduct";
+import strapi from "@/libs/strapi";
+import React, { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   product: IProductUI;
@@ -13,16 +13,16 @@ const UploadButton = ({ product }: IProps) => {
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
     const [productImage] = await fetch(
-      'https://control.cajaregistradora.app/api/upload',
+      "https://control.cajaregistradora.app/api/upload",
       {
-        method: 'POST',
+        method: "POST",
         body: new FormData(e.target),
         headers: {
-          Authorization: 'Bearer ' + strapi.getToken(),
-          'Access-Control-Allow-Origin':
-            'https://control.cajaregistradora.app/',
-          'Access-Control-Allow-Methods': 'POST',
-          'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+          Authorization: "Bearer " + strapi.getToken(),
+          "Access-Control-Allow-Origin":
+            "https://control.cajaregistradora.app/",
+          "Access-Control-Allow-Methods": "POST",
+          "Access-Control-Allow-Headers": "Authorization, Content-Type",
         },
       }
     ).then((res) => res.json());
@@ -42,9 +42,9 @@ const UploadButton = ({ product }: IProps) => {
       <input
         type="file"
         name="files"
-        className="file-input-bordered file-input-secondary file-input w-full max-w-xs"
+        className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
       />
-      <button type="submit" className="btn-success btn w-min">
+      <button type="submit" className="btn btn-success w-min">
         Guardar foto
       </button>
     </form>

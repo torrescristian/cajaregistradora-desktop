@@ -1,11 +1,11 @@
-import strapi from '@/libs/strapi';
-import { clearCart, useCartDispatch } from '@/contexts/CartContext';
-import { ICartItem } from '@/interfaces/ICart';
-import { ISaleItem, ISale } from '@/interfaces/ISale';
+import strapi from "@/libs/strapi";
+import { clearCart, useCartDispatch } from "@/contexts/CartContext";
+import { ICartItem } from "@/interfaces/ICart";
+import { ISaleItem, ISale } from "@/interfaces/ISale";
 import IStockPerProduct, {
   IStockPerProductPages,
-} from '@/interfaces/IStockPerProduct';
-import { useMutation } from 'react-query';
+} from "@/interfaces/IStockPerProduct";
+import { useMutation } from "@tanstack/react-query";
 
 interface IProps {
   items: ICartItem[];
@@ -18,7 +18,7 @@ export default function useSalesMutation() {
   return useMutation(async (props: IProps) => {
     const res = [null, null] as [any, any];
 
-    res[0] = await strapi.create('sales', parseSaleToPayload(props));
+    res[0] = await strapi.create("sales", parseSaleToPayload(props));
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -53,7 +53,7 @@ function parseSaleToPayload({ items, totalAmount }: IProps): ISale {
 async function updateStock(items: ICartItem[]) {
   const productIds = items.map((item) => item.product.id);
 
-  const stockPerProduct = (await strapi.find('stock-per-products', {
+  const stockPerProduct = (await strapi.find("stock-per-products", {
     filters: {
       product: {
         id: productIds,
@@ -79,7 +79,7 @@ async function updateStock(items: ICartItem[]) {
   const promises = updatedStockPerProduct.map(async (spp) => {
     const { id } = spp;
 
-    return await strapi.update('stock-per-products', id, {
+    return await strapi.update("stock-per-products", id, {
       sales_amount_per_product: spp.sales_amount_per_product,
     });
   });
@@ -88,9 +88,9 @@ async function updateStock(items: ICartItem[]) {
 
   if (
     result.some((r) => {
-      return r.status === 'rejected';
+      return r.status === "rejected";
     })
   ) {
-    throw new Error('Error al actualizar el stock');
+    throw new Error("Error al actualizar el stock");
   }
 }

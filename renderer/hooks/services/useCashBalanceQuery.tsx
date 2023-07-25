@@ -1,10 +1,10 @@
-import strapi from '@/libs/strapi';
-import { getError } from '@/libs/utils';
-import { ICashBalance, ICashBalancePage } from '@/interfaces/ICashBalance';
-import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import strapi from "@/libs/strapi";
+import { getError } from "@/libs/utils";
+import { ICashBalance, ICashBalancePage } from "@/interfaces/ICashBalance";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
 
-export const getCashBalanceKey = () => 'cashBalance';
+export const getCashBalanceKey = () => "cashBalance";
 
 export default function useCashBalanceQuery() {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function useCashBalanceQuery() {
     [getCashBalanceKey()],
     async () => {
       try {
-        const res = (await strapi.find('cash-balances', {
+        const res = (await strapi.find("cash-balances", {
           pagination: {
             page: 1,
             limit: 5,
@@ -28,9 +28,9 @@ export default function useCashBalanceQuery() {
 
         return parsedRes;
       } catch (error: any) {
-        console.log('🚀 ~ file: useCashBalance.tsx:47 ~ error:', error);
+        console.log("🚀 ~ file: useCashBalance.tsx:47 ~ error:", error);
         if ([401, 403].includes(getError(error).status)) {
-          router.push('/');
+          router.push("/");
 
           return [];
         }
