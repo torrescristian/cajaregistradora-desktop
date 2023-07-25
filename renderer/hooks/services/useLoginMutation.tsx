@@ -1,10 +1,9 @@
 import strapi from '@/libs/strapi';
 import { login, useAuthDispatch } from '@/contexts/AuthContext';
-import { USER_KEY } from '@/libs/localStorageManager';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import getUserByJWT from './getUserByJWT';
+
 
 interface ILoginPayload {
   identifier: string;
@@ -26,13 +25,11 @@ export default function useLoginMutation() {
         identifier: props.email,
         password: props.password,
       } as ILoginPayload;
-
       const { jwt } = await strapi.login(payload);
+    
+      const user = await getUserByJWT(jwt);     
 
-      const user = await getUserByJWT(jwt);
-
-      Cookies.set(USER_KEY, JSON.stringify(user));
-
+    
       dispatch(login(user));
 
       router.push('/productos');

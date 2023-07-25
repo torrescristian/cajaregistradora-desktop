@@ -1,5 +1,4 @@
 import PageLayout from '@/components/PageLayout';
-import { getServerSideAuthProps } from '@/libs/auth';
 import useSalesQuery from '@/hooks/services/useSalesQuery';
 import Loader from '@/components/Loader';
 import Sale from '@/components/Sale';
@@ -34,6 +33,6 @@ const Ventas = () => {
   );
 };
 
-export const getServerSideProps = getServerSideAuthProps;
+
 
 export default Ventas;

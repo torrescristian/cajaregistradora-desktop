@@ -32,7 +32,7 @@ export const getServerSideOwnerProps = async (ctx: NextPageContext) => {
       // If there is no token, the user is not logged in
       return {
         redirect: {
-          destination: '/login',
+          destination: '/',
           permanent: false,
         },
       };
@@ -49,7 +49,7 @@ export const getServerSideOwnerProps = async (ctx: NextPageContext) => {
 
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     };
@@ -63,7 +63,7 @@ export const getServerSideAuthProps = async (ctx: NextPageContext) => {
       // If there is no token, the user is not logged in
       return {
         redirect: {
-          destination: '/login',
+          destination: '/',
           permanent: false,
         },
       };
@@ -80,7 +80,7 @@ export const getServerSideAuthProps = async (ctx: NextPageContext) => {
 
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     };

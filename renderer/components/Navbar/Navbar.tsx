@@ -15,7 +15,7 @@ export default function Navbar() {
   const handleLogout = () => {
     logoutMutation.mutate();
 
-    router.push('/login');
+    router.push('/');
   };
 
   return (
