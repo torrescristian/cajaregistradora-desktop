@@ -101,6 +101,4 @@ const Caja = () => {
   );
 };
 
-
-
 export default Caja;
