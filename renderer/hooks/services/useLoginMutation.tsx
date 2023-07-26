@@ -29,6 +29,8 @@ export default function useLoginMutation() {
 
 
       dispatch(login(user));
+
+      
       router.push("/productos");
     },
     {

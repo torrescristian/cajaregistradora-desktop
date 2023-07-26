@@ -29,7 +29,7 @@ const UploadButton = ({ product }: IProps) => {
     await strapi.update(getProductsQueryKey(), product.id, {
       image: productImage,
     });
-    queryClient.invalidateQueries(getProductsQueryKey());
+    queryClient.invalidateQueries([getProductsQueryKey()]);
   };
 
   return (
