@@ -13,7 +13,8 @@
     "build:win32": "nextron build --win --ia32",
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
-    "build:linux": "nextron build --linux"
+    "build:linux": "nextron build --linux",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.16",
@@ -50,6 +51,8 @@
     "@types/react-dom": "18.0.11",
     "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
     "prettier": "^2.8.8",
@@ -57,5 +60,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^4.9.4"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
   }
 }
