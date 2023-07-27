@@ -25,8 +25,8 @@ export default function useLoginMutation() {
         password: props.password,
       } as ILoginPayload;
       const { jwt } = await strapi.login(payload);
-      const user = await getUserByJWT(jwt);
 
+      const user = await getUserByJWT(jwt);
 
       dispatch(login(user));
       
