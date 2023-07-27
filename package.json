@@ -51,6 +51,7 @@
     "@types/react-dom": "18.0.11",
     "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
+    "eslint": "^8.45.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "next": "^12.3.4",
