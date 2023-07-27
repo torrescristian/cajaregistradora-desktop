@@ -1,7 +1,0 @@
-{
-    "extends": ["eslint:recommended"],
-    "rules": {
-      "no-empty": "error",
-      "no-console": "error"
-    }
-  }
