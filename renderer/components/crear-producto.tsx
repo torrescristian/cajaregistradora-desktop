@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import useCreateProductMutation from '@/hooks/services/useCreateProductMutation';
 import { mergeClasses, toLC } from '@/libs/utils';
 import FormField from './FormField';
+import useStoreQuery from '@/hooks/services/useStoreQuery';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <section className="flex w-full flex-col items-center justify-around">
@@ -34,9 +35,9 @@ interface IProps {
   show: boolean;
 }
 export default function CrearProducto({ className,handleChangeBox,show }: IProps) {
+  const storeQuery = useStoreQuery();
   const articlesQuery = useArticlesQuery();
   const createProductMutation = useCreateProductMutation();
-
   const schema = yup
     .object({
       article: yup.number().positive().integer().required(),
@@ -93,7 +94,7 @@ export default function CrearProducto({ className,handleChangeBox,show }: IProps
         [] as { id: number }[]
       ),
       // FIXME: change constant
-      store: 2,
+      store: storeQuery.data?.id ,
       
     };
   };

@@ -32,7 +32,7 @@ const ProductItem = ({ product }: ICollapseTitle) => {
         </p>
         <p>Una descripcion bien piola del producto</p>
          </div>
-              <img src={product.image} alt={product.name} className="w-1/3 rounded-xl" />
+              <img src={product.image} alt={product.name} className="w-1/3 m-2 rounded-xl" />
       </section>
       
       <section
