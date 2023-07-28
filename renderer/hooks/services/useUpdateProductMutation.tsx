@@ -1,11 +1,11 @@
-import strapi from "@/libs/strapi";
-import IProductUI, { IProduct } from "@/interfaces/IProduct";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getProductsQueryKey } from "./useProductsQuery";
+import strapi from '@/libs/strapi';
+import IProductUI, { IProduct } from '@/interfaces/IProduct';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getProductsQueryKey } from './useProductsQuery';
 
 // FUNCTIONS
 const parseProductToPayload = (
-  product: Partial<IProductUI>
+  product: Partial<IProductUI>,
 ): Partial<IProduct> => {
   const {
     id,
@@ -37,9 +37,9 @@ export default function useUpdateProductMutation() {
 
   return useMutation(async (product: Partial<IProductUI>) => {
     const response = strapi.update(
-      "products",
+      'products',
       product.id!,
-      parseProductToPayload(product)
+      parseProductToPayload(product),
     );
 
     queryClient.invalidateQueries([getProductsQueryKey()]);

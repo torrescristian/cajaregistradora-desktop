@@ -5,6 +5,4 @@ app
 dist
 renderer/.env
 renderer/.env.example
-/test-results/
-/playwright-report/
-/playwright/.cache/
+

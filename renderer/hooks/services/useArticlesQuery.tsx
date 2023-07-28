@@ -1,16 +1,16 @@
-import { ICategoryField, ICategoryResponse } from "@/interfaces/ICategory";
-import strapi from "@/libs/strapi";
-import { useQuery } from "@tanstack/react-query";
+import { ICategoryField, ICategoryResponse } from '@/interfaces/ICategory';
+import strapi from '@/libs/strapi';
+import { useQuery } from '@tanstack/react-query';
 
 export default function useArticlesQuery() {
-  return useQuery<ICategoryField[]>(["articles"], async () => {
-    const res = (await strapi.find("categories", {
+  return useQuery<ICategoryField[]>(['articles'], async () => {
+    const res = (await strapi.find('categories', {
       filters: {
         parent: {
-          name: "Articulos",
+          name: 'Articulos',
         },
       },
-      populate: "*",
+      populate: '*',
     })) as unknown as ICategoryResponse;
 
     if (!res) [];

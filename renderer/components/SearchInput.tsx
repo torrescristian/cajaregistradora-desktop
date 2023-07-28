@@ -20,7 +20,7 @@ export const useSearchProps = () => {
   const handleToggleSelectedCategory = (categoryId: number) => {
     if (selectedCategories.includes(categoryId)) {
       setSelectedCategories(
-        selectedCategories.filter((sc) => sc !== categoryId)
+        selectedCategories.filter((sc) => sc !== categoryId),
       );
       return;
     }

@@ -4,7 +4,9 @@ import React from 'react';
 import { IContainerProps, ISaleItemProps } from '@/interfaces/Sale.interfaces';
 import { useSale } from '@/contexts/SaleContext';
 
-export const Divider = () => <div className="divider h-1 w-full bg-stone-300" />;
+export const Divider = () => (
+  <div className="divider h-1 w-full bg-stone-300" />
+);
 
 export const Container = ({ children }: IContainerProps) => (
   <section className="alert flex flex-col font-semibold shadow-lx text-center bg-stone-50 shadow-lg w-full h-5/6 justify-start">
@@ -19,7 +21,6 @@ export const DateComponent = () => {
     <p className="text-s m-0 font-light ">
       {parseDateToArgentinianFormat(sale.createdAt)}
     </p>
-    
   );
 };
 
@@ -29,7 +30,7 @@ export const TotalItems = () => {
   return (
     <span className="flex flex-col">
       <p className="bold text-2xl">{formatPrice(sale.total)}</p>
-      <Divider/>
+      <Divider />
       <span>{sale.saleItems.length} productos</span>
     </span>
   );
@@ -41,7 +42,7 @@ export const SaleItem = ({ item }: ISaleItemProps) => {
       key={item.id}
       className="flex w-full flex-col items-center justify-between px-3"
     >
-      <Divider/>
+      <Divider />
       <span className="text-center text-sm font-thin  ">
         {(item?.product as IProduct)?.name}
       </span>

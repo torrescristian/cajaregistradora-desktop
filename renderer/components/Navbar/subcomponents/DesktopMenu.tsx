@@ -13,7 +13,7 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
           <NavButton href="/ventas">Ventas</NavButton>
           {isOwner ? (
             <>
-              <NavButton href="/admin/caja">Balance de Caja</NavButton> 
+              <NavButton href="/admin/caja">Balance de Caja</NavButton>
               <NavButton href="/admin/productos">Reabastecer</NavButton>
               <NavButton href="/admin/generador-de-productos-y-variantes">
                 Crear Producto

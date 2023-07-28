@@ -1,8 +1,8 @@
-import strapi from "@/libs/strapi";
-import { login, useAuthDispatch } from "@/contexts/AuthContext";
-import { useRouter } from "next/router";
-import { useMutation } from "@tanstack/react-query";
-import getUserByJWT from "./getUserByJWT";
+import strapi from '@/libs/strapi';
+import { login, useAuthDispatch } from '@/contexts/AuthContext';
+import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import getUserByJWT from './getUserByJWT';
 
 interface ILoginPayload {
   identifier: string;
@@ -29,12 +29,12 @@ export default function useLoginMutation() {
       const user = await getUserByJWT(jwt);
 
       dispatch(login(user));
-      
-      router.push("/productos");
+
+      router.push('/productos');
     },
     {
       onSuccess: () => {},
-    }
+    },
   );
 
   return { mutate, isSuccess, isLoading };

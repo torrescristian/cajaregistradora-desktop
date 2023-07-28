@@ -34,7 +34,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
     }
     case 'ADD_PRODUCT': {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.product.id === productPayload.id
+        (item) => item.product.id === productPayload.id,
       );
 
       if (itemIndex >= 0) {
@@ -72,17 +72,17 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
     }
     case 'REMOVE_PRODUCT': {
       const item: ICartItem | undefined = state.cartItems.find(
-        (item: ICartItem) => item.product.id === productPayload.id
+        (item: ICartItem) => item.product.id === productPayload.id,
       );
 
       if (item?.quantity === 1) {
         return {
           ...state,
           cartItems: state.cartItems.filter(
-            (item: ICartItem) => item.product.id !== productPayload.id
+            (item: ICartItem) => item.product.id !== productPayload.id,
           ),
           totalAmount: fixPrice(
-            Math.max(state.totalAmount - productPayload.price, 0)
+            Math.max(state.totalAmount - productPayload.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -101,7 +101,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
             return item;
           }),
           totalAmount: fixPrice(
-            Math.max(state.totalAmount - productPayload.price, 0)
+            Math.max(state.totalAmount - productPayload.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -130,7 +130,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
       return {
         ...state,
         cartItems: state.cartItems.filter(
-          (item: ICartItem) => item.product.id !== productPayload.id
+          (item: ICartItem) => item.product.id !== productPayload.id,
         ),
         totalAmount:
           Math.max(totalQuantity, 0) === 0

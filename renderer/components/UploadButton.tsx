@@ -1,8 +1,8 @@
-import { getProductsQueryKey } from "@/hooks/services/useProductsQuery";
-import IProductUI from "@/interfaces/IProduct";
-import strapi from "@/libs/strapi";
-import React, { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { getProductsQueryKey } from '@/hooks/services/useProductsQuery';
+import IProductUI from '@/interfaces/IProduct';
+import strapi from '@/libs/strapi';
+import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface IProps {
   product: IProductUI;
@@ -13,18 +13,18 @@ const UploadButton = ({ product }: IProps) => {
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
     const [productImage] = await fetch(
-      "https://control.cajaregistradora.app/api/upload",
+      'https://control.cajaregistradora.app/api/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: new FormData(e.target),
         headers: {
-          Authorization: "Bearer " + strapi.getToken(),
-          "Access-Control-Allow-Origin":
-            "https://control.cajaregistradora.app/",
-          "Access-Control-Allow-Methods": "POST",
-          "Access-Control-Allow-Headers": "Authorization, Content-Type",
+          Authorization: 'Bearer ' + strapi.getToken(),
+          'Access-Control-Allow-Origin':
+            'https://control.cajaregistradora.app/',
+          'Access-Control-Allow-Methods': 'POST',
+          'Access-Control-Allow-Headers': 'Authorization, Content-Type',
         },
-      }
+      },
     ).then((res) => res.json());
     await strapi.update(getProductsQueryKey(), product.id, {
       image: productImage,

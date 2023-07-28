@@ -41,7 +41,6 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.36.2",
     "@types/cookie": "^0.5.1",
     "@types/deep-equal": "^1.0.1",
     "@types/js-cookie": "^3.0.3",
@@ -52,10 +51,9 @@
     "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
     "eslint": "^8.45.0",
-    "lint-staged": "^13.2.3",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
-    "prettier": "^3.0.0",
+    "prettier": "3.0.0",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
