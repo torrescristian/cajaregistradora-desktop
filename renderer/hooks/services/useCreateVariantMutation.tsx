@@ -1,13 +1,12 @@
 import { IVariantPayload } from '@/interfaces/IProduct';
 import strapi from '@/libs/strapi';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 export interface IUseCreateVariantMutationProps {
   categories: number[];
   product: number;
   stock: number;
 }
-
 
 export default function useCreateVariantMutation() {
   return useMutation(
@@ -17,7 +16,7 @@ export default function useCreateVariantMutation() {
         {
           sales_amount_per_variant: 0,
           stock_amount_per_variant: stock,
-        }
+        },
       );
 
       const newVariant: IVariantPayload = {
@@ -29,6 +28,6 @@ export default function useCreateVariantMutation() {
       const res = await strapi.create('variants', newVariant);
 
       return res;
-    }
+    },
   );
 }

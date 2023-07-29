@@ -5,7 +5,7 @@ import { ISaleItem, ISale } from '@/interfaces/ISale';
 import IStockPerProduct, {
   IStockPerProductPages,
 } from '@/interfaces/IStockPerProduct';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 interface IProps {
   items: ICartItem[];
@@ -41,7 +41,7 @@ function parseSaleToPayload({ items, totalAmount }: IProps): ISale {
       product: item.product.id,
       price: item.product.price,
       quantity: item.quantity,
-    })
+    }),
   );
 
   return {
@@ -73,7 +73,7 @@ async function updateStock(items: ICartItem[]) {
         ...spp,
         sales_amount_per_product: spp.sales_amount_per_product + quantity,
       } as IStockPerProduct;
-    }
+    },
   );
 
   const promises = updatedStockPerProduct.map(async (spp) => {

@@ -2,7 +2,7 @@ import strapi from '@/libs/strapi';
 import { getError } from '@/libs/utils';
 import IProductUI, { IProduct, IProductPage } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { IVariantUI } from '@/interfaces/IProduct';
 
@@ -35,7 +35,7 @@ const parseProductFacade = (product: IProduct): IProductUI => {
             variant.stock_per_variant.stock_amount_per_variant -
             variant.stock_per_variant.sales_amount_per_variant,
           stock_per_variant: variant.stock_per_variant,
-        } as IVariantUI)
+        }) as IVariantUI,
     ),
     public_price,
     catalog_price,
@@ -85,7 +85,7 @@ export default function useProductsQuery({
             'image',
           ],
           page: page || 1,
-          pageSize: 20,
+          pageSize: 9,
         };
 
         options.filters =
@@ -113,7 +113,7 @@ export default function useProductsQuery({
 
         const res = (await strapi.find(
           getProductsQueryKey(),
-          options
+          options,
         )) as unknown as IProductPage;
 
         if (!res) return [];
@@ -133,7 +133,7 @@ export default function useProductsQuery({
 
         return [];
       }
-    }
+    },
   );
 
   const products = data || [];

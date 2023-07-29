@@ -2,7 +2,7 @@ import strapi from '@/libs/strapi';
 import { getError } from '@/libs/utils';
 import ISaleUI, { ISale, ISalePage } from '@/interfaces/ISale';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 const getSalesQueryKey = () => 'sales';
 
@@ -27,33 +27,50 @@ const byDate = (a: ISaleUI, b: ISaleUI) => {
 export default function useSalesQuery() {
   const router = useRouter();
 
-  const { data, isLoading, isError } = useQuery<ISaleUI[]>(
-    getSalesQueryKey(),
-    async () => {
-      try {
-        const res = (await strapi.find<ISalePage>(
-          'sales'
-        )) as unknown as ISalePage;
+  const defaultSale: ISalePage = {
+    pagination: {
+      page: 1,
+      pageSize: 9,
+      total: 9,
+      pageCount: 1,
+    },
+    results: [],
+  };
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
+    useInfiniteQuery<ISalePage>({
+      queryKey: [getSalesQueryKey()],
+      queryFn: async ({ pageParam = 0 }) => {
+        try {
+          const res = (await strapi.find<ISalePage>('sales', {
+            pageSize: 9,
+            page: pageParam,
+          } as any)) as unknown as ISalePage;
 
-        if (!res) return [];
+          if (!res) return defaultSale;
+          return res;
+        } catch (error: any) {
+          console.log('🚀 ~ file: useSalesQuery.tsx:57 ~ error:', error);
+          if ([401, 403].includes(getError(error).status)) {
+            router.push('/');
 
-        const parsedRes = res.results.map(parseSaleFacade);
+            return defaultSale;
+          }
 
-        return parsedRes.sort(byDate);
-      } catch (error: any) {
-        console.log('🚀 ~ file: useSalesQuery.tsx:57 ~ error:', error);
-        if ([401, 403].includes(getError(error).status)) {
-          router.push('/');
-
-          return [];
+          return defaultSale;
         }
+      },
+      getNextPageParam: (lastPage) =>
+        lastPage.pagination.pageCount > lastPage.pagination.page
+          ? lastPage.pagination.page + 1
+          : false,
+    });
 
-        return [];
-      }
-    }
-  );
+  const parsedRes =
+    data?.pages
+      .reduce((acc, curr) => acc.concat(curr.results), [] as ISale[])
+      .map(parseSaleFacade) || [];
 
-  const sales = data || [];
+  const sales = parsedRes.sort(byDate);
 
-  return { sales, isLoading, isError };
+  return { sales, isLoading, isError, fetchNextPage, hasNextPage };
 }

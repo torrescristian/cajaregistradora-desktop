@@ -28,7 +28,7 @@ const EditableCollapse = ({ product }: ICollapseTitle) => {
       tabIndex={0}
       className={mergeClasses(
         'collapse items-center rounded-3xl shadow-md',
-        pendingChanges ? 'collapse-open' : ''
+        pendingChanges ? 'collapse-open' : '',
       )}
     >
       <CollapseTitle>
