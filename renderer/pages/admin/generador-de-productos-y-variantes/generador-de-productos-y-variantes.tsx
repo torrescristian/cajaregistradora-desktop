@@ -1,5 +1,5 @@
 import CreateVariant from '@/components/CreateVariant';
-import CrearProducto from '@/components/crear-producto';
+import CrearProducto from '@/components/CreateProduct';
 import { useState } from 'react';
 
 export default function GeneradorDeProductosYVariantes() {
