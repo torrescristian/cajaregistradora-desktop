@@ -6,11 +6,10 @@ export interface IOrderUI {
 
 export default interface IOrder {
   id: number;
-  attributes:
-  {
+  attributes: {
     createAt: string;
     last_update: string;
     total_price: number;
     updatedAt: string;
-  }
+  };
 }

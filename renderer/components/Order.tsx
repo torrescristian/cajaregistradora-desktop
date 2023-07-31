@@ -2,14 +2,11 @@ import useOrderQuery from '@/hooks/services/useOrderQuery';
 import { Divider } from './Sale/Sale.styles';
 import Loader from './Loader';
 
-
-
 function Order() {
   const orderQuery = useOrderQuery();
 
-
   if (!orderQuery.data) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -17,7 +14,9 @@ function Order() {
       <h1 className="text-2xl font-bold">✍🏻 Lista de ordenes</h1>
       <div className="flex flex-col items-center shadow-xl w-3/5 m-3 gap-5 p-10">
         <div className="flex flex-row gap-5 m-5">
-          <h2 className="font-bold text-center">Orden #{orderQuery.data.id} </h2>
+          <h2 className="font-bold text-center">
+            Orden #{orderQuery.data.id}{' '}
+          </h2>
           <button className="btn btn-outline btn-warning">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +60,9 @@ function Order() {
         <p>2 Lomitos</p>
         <p>1 Manaos 3 lts.</p>
         <Divider />
-        <p className="text-2xl font-bold">Total: ${orderQuery.data.totalPrice}</p>
+        <p className="text-2xl font-bold">
+          Total: ${orderQuery.data.totalPrice}
+        </p>
         <button className="btn btn-success text-stone-50">
           Orden completada
         </button>
