@@ -9,7 +9,7 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
     <section className="relative flex-none">
       {isLoggedIn && (
         <ul className="flex items-center space-x-4">
-          <NavButton href="/productos">Productos</NavButton>
+          <NavButton href="/productos">Ordenes</NavButton>
           <NavButton href="/ventas">Ventas</NavButton>
           {isOwner ? (
             <>
