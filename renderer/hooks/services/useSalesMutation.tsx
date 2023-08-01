@@ -31,7 +31,11 @@ export default function useSalesMutation() {
     }
 
     const socket = io('http://localhost:4000')
-    socket.emit('print', props)
+
+    if (socket) {
+      socket.emit('print', props)
+      console.log('Ticket no impreso')
+    }
 
     dispatch(clearCart());
 

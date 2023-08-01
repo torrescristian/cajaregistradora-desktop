@@ -11,7 +11,7 @@ if (isProd) {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
 
-createSocketServer();
+createSocketServer(app);
 
 (async () => {
   await app.whenReady();
@@ -30,8 +30,6 @@ createSocketServer();
     await mainWindow.loadURL(`http://localhost:${port}/productos`);
     mainWindow.webContents.openDevTools();
   }
-
-
 })();
 
 app.on('window-all-closed', () => {

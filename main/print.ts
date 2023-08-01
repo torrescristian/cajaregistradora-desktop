@@ -4,13 +4,18 @@ import escposUSB from 'escpos-usb'
 
 export default function print() {
     try {
-        
+        if (!escposUSB) return
+
         escpos.USB = escposUSB
         
+        
+        const connectedDevices = escpos.USB.findPrinter() as any[]
+        if (!connectedDevices.length) return
+        
         const device = new escpos.USB()
-        
         const options = { width: 56 }
-        
+
+        console.log({ device, Printer: escpos.Printer })
         const printer = new escpos.Printer(device, options as any)
         
         device.open(error => {
