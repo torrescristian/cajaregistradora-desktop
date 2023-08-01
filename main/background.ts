@@ -30,6 +30,8 @@ createSocketServer(app);
     await mainWindow.loadURL(`http://localhost:${port}/productos`);
     mainWindow.webContents.openDevTools();
   }
+
+
 })();
 
 app.on('window-all-closed', () => {

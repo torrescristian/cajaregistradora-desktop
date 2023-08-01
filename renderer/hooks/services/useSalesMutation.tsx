@@ -34,7 +34,6 @@ export default function useSalesMutation() {
 
     if (socket) {
       socket.emit('print', props)
-      console.log('Ticket no impreso')
     }
 
     dispatch(clearCart());
