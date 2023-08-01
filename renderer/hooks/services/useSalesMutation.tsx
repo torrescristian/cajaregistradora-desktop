@@ -6,6 +6,7 @@ import IStockPerProduct, {
   IStockPerProductPages,
 } from '@/interfaces/IStockPerProduct';
 import { useMutation } from '@tanstack/react-query';
+import { io } from 'socket.io-client'
 
 interface IProps {
   items: ICartItem[];
@@ -28,6 +29,9 @@ export default function useSalesMutation() {
     if (itemsToUpdate.length) {
       res[1] = await updateStock(itemsToUpdate);
     }
+
+    const socket = io('http://localhost:4000')
+    socket.emit('print', props)
 
     dispatch(clearCart());
 
