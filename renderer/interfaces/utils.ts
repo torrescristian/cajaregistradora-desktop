@@ -23,7 +23,7 @@ export interface INativeResponse<T> {
 export interface IFixedNativeResponse<T> {
   data: {
     id: number;
-    attributes: Omit<T, 'id'>
+    attributes: Omit<T, 'id'>;
   };
   meta: {
     pagination: {
