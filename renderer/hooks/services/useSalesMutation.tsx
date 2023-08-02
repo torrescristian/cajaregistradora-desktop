@@ -1,12 +1,12 @@
 import strapi from '@/libs/strapi';
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
-import { ISaleItem, ISale } from '@/interfaces/ISale';
+import { ISaleItem, ISale, ISaleNativeResponse } from '@/interfaces/ISale';
 import IStockPerProduct, {
   IStockPerProductPages,
 } from '@/interfaces/IStockPerProduct';
 import { useMutation } from '@tanstack/react-query';
-import { io } from 'socket.io-client'
+import { io } from 'socket.io-client';
 
 interface IProps {
   items: ICartItem[];
@@ -17,9 +17,12 @@ export default function useSalesMutation() {
   const dispatch = useCartDispatch();
 
   return useMutation(async (props: IProps) => {
-    const res = [null, null] as [any, any];
+    const res = [null, null] as [ISaleNativeResponse | null, any];
 
-    res[0] = await strapi.create('sales', parseSaleToPayload(props));
+    res[0] = (await strapi.create(
+      'sales',
+      parseSaleToPayload(props),
+    )) as ISaleNativeResponse;
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -30,11 +33,21 @@ export default function useSalesMutation() {
       res[1] = await updateStock(itemsToUpdate);
     }
 
-    const socket = io('http://localhost:4000')
+    const socket = io('http://localhost:4000');
+
+    const {
+      id,
+      attributes: { createdAt, updatedAt },
+    } = res[0]!.data;
 
     if (socket) {
-      socket.emit('print', props)
-      console.log('Ticket no impreso')
+      socket.emit('print', {
+        items: props.items,
+        totalAmount: props.totalAmount,
+        id,
+        createdAt,
+        updatedAt
+      })
     }
 
     dispatch(clearCart());
