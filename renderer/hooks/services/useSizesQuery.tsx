@@ -1,9 +1,23 @@
-import { ICategoryField, ICategoryResponse } from '@/interfaces/ICategory';
+import { ICategory, ICategoryResponse } from '@/interfaces/ICategory';
 import strapi from '@/libs/strapi';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
+
+const parseCategory = (data: ICategoryResponse): ICategory[] => {
+  return data.data.map((item) => {
+    return {
+      id: item.id,
+      name: item.attributes.name,
+      products: item.attributes.products,
+      parent: item.attributes.parent,
+      childrens: item.attributes.childrens,
+      store: item.attributes.store,
+      emoji: item.attributes.emoji,
+    } as ICategory;
+  });
+};
 
 export default function useSizesQuery() {
-  return useQuery<ICategoryField[]>('sizes', async () => {
+  return useQuery<ICategory[]>(['sizes'], async () => {
     const res = (await strapi.find('categories', {
       filters: {
         parent: {
@@ -14,7 +28,6 @@ export default function useSizesQuery() {
     })) as unknown as ICategoryResponse;
 
     if (!res) [];
-
-    return res.data;
+    return parseCategory(res);
   });
 }

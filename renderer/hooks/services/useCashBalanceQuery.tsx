@@ -2,7 +2,7 @@ import strapi from '@/libs/strapi';
 import { getError } from '@/libs/utils';
 import { ICashBalance, ICashBalancePage } from '@/interfaces/ICashBalance';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const getCashBalanceKey = () => 'cashBalance';
 
@@ -37,7 +37,7 @@ export default function useCashBalanceQuery() {
 
         return [];
       }
-    }
+    },
   );
 
   const cashBalances = data || [];

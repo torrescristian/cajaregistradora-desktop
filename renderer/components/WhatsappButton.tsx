@@ -10,7 +10,7 @@ const WhatsappButton = ({ className }: IProps) => (
     target="_blank"
     className={mergeClasses(
       'btn-success btn w-fit rounded-md font-semibold',
-      className
+      className,
     )}
   >
     Contactanos por WhatsApp

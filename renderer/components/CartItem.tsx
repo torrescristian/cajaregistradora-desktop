@@ -77,11 +77,11 @@ const CartItem = ({ product }: ICollapseTitle) => {
         </section>
         <section className="flex flex-row justify-end">
           <p>
-             {isService
+            {isService
               ? null
               : product.stock === 0
               ? '| Sin stock'
-              : `| ${product.stock} en stock`} 
+              : `| ${product.stock} en stock`}
           </p>
           <ClearButton onClick={handleClickClear} />
           <RemoveProductButton onClick={handleClickRemove} />

@@ -3,10 +3,10 @@ import {
   ICategoryResponsePopulate,
 } from '@/interfaces/ICategory';
 import strapi from '@/libs/strapi';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export default function useFilterMenuQuery(query = '') {
-  return useQuery<ICategoryFieldPopulate[]>('filter-menu', async () => {
+  return useQuery<ICategoryFieldPopulate[]>(['filter-menu'], async () => {
     const res = (await strapi.find('categories', {
       filters: {
         children: {
