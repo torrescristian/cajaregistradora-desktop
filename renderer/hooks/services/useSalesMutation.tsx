@@ -6,7 +6,7 @@ import IStockPerProduct, {
   IStockPerProductPages,
 } from '@/interfaces/IStockPerProduct';
 import { useMutation } from '@tanstack/react-query';
-import { io } from 'socket.io-client'
+import { io } from 'socket.io-client';
 
 interface IProps {
   items: ICartItem[];
@@ -19,7 +19,10 @@ export default function useSalesMutation() {
   return useMutation(async (props: IProps) => {
     const res = [null, null] as [ISaleNativeResponse | null, any];
 
-    res[0] = await strapi.create('sales', parseSaleToPayload(props)) as ISaleNativeResponse;
+    res[0] = (await strapi.create(
+      'sales',
+      parseSaleToPayload(props),
+    )) as ISaleNativeResponse;
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -30,9 +33,12 @@ export default function useSalesMutation() {
       res[1] = await updateStock(itemsToUpdate);
     }
 
-    const socket = io('http://localhost:4000')
+    const socket = io('http://localhost:4000');
 
-    const { id, attributes: { createdAt, updatedAt } } = res[0]!.data;
+    const {
+      id,
+      attributes: { createdAt, updatedAt },
+    } = res[0]!.data;
 
     if (socket) {
       socket.emit('print', {

@@ -31,4 +31,4 @@ export default interface ISaleUI {
   saleItems: ISaleItem[];
 }
 
-export type ISaleNativeResponse = IFixedNativeResponse<ISale>
+export type ISaleNativeResponse = IFixedNativeResponse<ISale>;
