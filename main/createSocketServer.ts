@@ -18,7 +18,7 @@ export default function createSocketServer(app) {
 
         socket.on('print', (props) => {
             console.log(JSON.stringify(props, null, 2))
-            print?.()
+            print(props)
         })
     })
 
