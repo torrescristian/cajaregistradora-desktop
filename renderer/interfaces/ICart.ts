@@ -1,3 +1,4 @@
+import { IOrderUI } from './IOrder';
 import IProductUI from './IProduct';
 
 export interface ICartItem {
@@ -10,6 +11,10 @@ export interface ICartState {
   totalAmount: number;
   totalQuantity: number;
   reset?: boolean;
+  clientName: string;
+  clientPhone: string;
+  clientAddress: string;
+  totalPrice: number;
 }
 
 export interface ICartAction {
