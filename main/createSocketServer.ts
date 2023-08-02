@@ -2,7 +2,6 @@ import express from 'express'
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io'
 import print from './print'
-import net from 'net'
 
 export default function createSocketServer(app) {
     const expressApp = express()
@@ -18,7 +17,7 @@ export default function createSocketServer(app) {
 
         socket.on('print', (props) => {
             console.log(JSON.stringify(props, null, 2))
-            print?.()
+            print(props)
         })
     })
 
