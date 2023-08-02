@@ -36,14 +36,15 @@ const Productos = () => {
           </>
         ) : (
           <ProductTable
-            isLoading={productsQuery.isLoading}
-            isError={productsQuery.isError}
+          isLoading={productsQuery.isLoading}
+          isError={productsQuery.isError}
             products={productsQuery.products}
             setActivePage={setActivePage}
             pagination={productsQuery.pagination}
-          />
-        )}
-      </section>
+            />
+            )}
+            </section>
+            
     </PageLayout>
   );
 };

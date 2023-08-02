@@ -1,5 +1,5 @@
 import strapi from '@/libs/strapi';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { getCashBalanceKey } from './useCashBalanceQuery';
 
 export default function useCashBalanceMutation() {
@@ -13,7 +13,7 @@ export default function useCashBalanceMutation() {
       },
     });
 
-    queryClient.invalidateQueries([getCashBalanceKey()]);
+    queryClient.invalidateQueries(getCashBalanceKey());
 
     return res;
   });

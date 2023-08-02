@@ -15,7 +15,12 @@ const FormControl = ({
   textAlign,
 }: FormControl) => {
   return (
-    <section className={mergeClasses('form-control flex w-full', className)}>
+    <section
+      className={mergeClasses(
+        'form-control flex w-full',
+        className
+      )}
+    >
       {hideLabel ? null : (
         <label htmlFor={name} className="whitespace-nowrap">
           {text}
@@ -30,20 +35,20 @@ const FormControl = ({
             'input-bordered input text-left',
             fullWidth ? 'w-full' : 'w-40',
             disabled ? 'bg-gray-400' : '',
-            textAlign || 'text-center',
-          )}
-          disabled={disabled}
-          id={name}
-          name={name}
-          onChange={onChange}
-          type={type}
-          value={value}
-          style={{
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-          }}
-        />
+            textAlign || 'text-center'
+            )}
+            disabled={disabled}
+            id={name}
+            name={name}
+            onChange={onChange}
+            type={type}
+            value={value}
+            style={{
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            }}
+            />
       </section>
     </section>
   );

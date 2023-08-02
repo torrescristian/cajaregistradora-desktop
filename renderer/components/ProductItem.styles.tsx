@@ -12,7 +12,7 @@ export const CollapseTitle = ({
     className={mergeClasses(
       'collapse-title flex items-center p-5 text-primary-content',
       className,
-      disabled ? 'bg-gray-400' : '',
+      disabled ? 'bg-gray-400' : ''
     )}
   >
     {children}
@@ -29,7 +29,7 @@ export const CollapseContent = ({
     className={mergeClasses(
       'collapse-content flex justify-end gap-x-2.5 pt-5 text-primary-content',
       className,
-      disabled ? 'bg-gray-400' : 'bg-secondary',
+      disabled ? 'bg-gray-400' : 'bg-secondary'
     )}
   >
     {children}
@@ -46,7 +46,7 @@ export const ActionButton = ({
     className={mergeClasses(
       'btn-md btn z-10 flex flex-row shadow-lg text-white btn-success w-min',
       className,
-      disabled ? 'btn-disabled' : 'btn-success',
+      disabled ? 'btn-disabled' : 'btn-success'
     )}
     onClick={onClick}
   >
@@ -60,7 +60,7 @@ export const Badge = ({ children, className }: IComponent) =>
       className={mergeClasses(
         'text-2xs bg-red-500 font-bold text-white',
         'flex h-8 w-12 items-center justify-center rounded-full rounded-l-full',
-        className,
+        className
       )}
     >
       {children}
@@ -105,7 +105,9 @@ export const UpdateProductButton = ({
   pendingChanges: boolean;
 }) => (
   // TODO:  <ActionButton onClick={onClick} disabled={!pendingChanges}>
-  <ActionButton onClick={onClick}>Guardar</ActionButton>
+  <ActionButton onClick={onClick}>
+  Guardar
+  </ActionButton>
 );
 
 export const RemoveProductButton = ({ onClick }: IActionButton) => (

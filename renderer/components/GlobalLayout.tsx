@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 interface IProps {
   children: React.ReactNode;
 }
+
 export default function GlobalLayout({ children }: IProps) {
   return (
     <section

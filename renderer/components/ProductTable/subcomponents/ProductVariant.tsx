@@ -28,7 +28,7 @@ export default function ProductVariant({ variant }: IProps) {
       <section className="flex">
         {categories
           .filter(
-            (c) => !['articulos', 'modelos'].includes(toLC(c.parent.name)),
+            (c) => !['articulos', 'modelos'].includes(toLC(c.parent.name))
           )
           .map((c) => (
             <p key={c.id} className="text-bold self-center">

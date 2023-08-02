@@ -13,22 +13,17 @@
     "build:win32": "nextron build --win --ia32",
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
-    "build:linux": "nextron build --linux",
-    "prepare": "husky install"
+    "build:linux": "nextron build --linux"
   },
   "dependencies": {
+    "electron-serve": "^1.1.0",
+    "electron-store": "^8.1.0",
     "@heroicons/react": "^2.0.16",
     "@hookform/resolvers": "^3.1.0",
-    "@tanstack/react-query": "^4.32.0",
     "autoprefixer": "^10.4.14",
     "cookie": "^0.5.0",
     "daisyui": "^2.51.5",
     "deep-equal": "^2.2.0",
-    "electron-serve": "^1.1.0",
-    "electron-store": "^8.1.0",
-    "escpos": "^3.0.0-alpha.6",
-    "escpos-usb": "^3.0.0-alpha.4",
-    "express": "^4.18.2",
     "js-cookie": "^3.0.1",
     "next": "13.2.4",
     "next-auth": "^4.21.1",
@@ -36,42 +31,30 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
-    "react-infinite-scroll-component": "^6.1.0",
-    "socket.io": "^4.7.1",
-    "socket.io-client": "^4.7.1",
+    "react-query": "^3.39.3",
     "strapi-sdk-js": "^2.2.0",
     "tailwind-merge": "^1.12.0",
     "tailwindcss": "^3.3.0",
-    "thermal-printer-encoder": "^2.0.0",
+    "typescript": "5.0.2",
     "use-debounce": "^9.0.4",
     "yup": "^1.1.1"
   },
   "devDependencies": {
-    "@types/cookie": "^0.5.1",
-    "@types/deep-equal": "^1.0.1",
-    "@types/escpos": "^2.5.2",
-    "@types/express": "^4.17.17",
-    "@types/js-cookie": "^3.0.3",
     "@types/next-auth": "^3.15.0",
     "@types/node": "18.15.10",
     "@types/react": "18.0.30",
     "@types/react-dom": "18.0.11",
-    "@types/socket.io": "^3.0.2",
     "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
-    "eslint": "^8.45.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.3",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
-    "prettier": "3.0.0",
-    "prettier-plugin-tailwindcss": "^0.3.0",
-    "typescript": "5.0.2"
-  },
-  "resolutions": {
-    "usb": "1.8.8"
-  },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.4",
+    "@types/cookie": "^0.5.1",
+    "@types/deep-equal": "^1.0.1",
+    "@types/js-cookie": "^3.0.3",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.3.0"
   }
 }

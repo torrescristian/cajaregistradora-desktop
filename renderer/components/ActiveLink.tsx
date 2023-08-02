@@ -25,7 +25,7 @@ export default function ActiveLink({ children, href }: IActiveLinkProps) {
       style={style}
       className={mergeClasses(
         'h-8 w-8 text-info',
-        router.asPath === href ? 'text-secondary' : 'text-stone-400',
+        router.asPath === href ? 'text-secondary' : 'text-stone-400'
       )}
     >
       {children}

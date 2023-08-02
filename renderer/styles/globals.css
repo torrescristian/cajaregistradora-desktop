@@ -30,29 +30,7 @@
   font-style: italic;
 }
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li,
-a,
-span,
-button,
-input,
-textarea,
-select,
-label,
-legend,
-caption,
-blockquote,
-dfn,
-address,
-summary,
-details,
-section {
+p, h1, h2, h3, h4, h5, h6, li, a, span, button, input, textarea, select, label, legend, caption, blockquote, dfn, address, summary, details, section {
   font-family: 'Open-Dyslexic', sans-serif;
 }
 

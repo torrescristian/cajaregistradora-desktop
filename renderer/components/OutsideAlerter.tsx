@@ -34,7 +34,7 @@ function useOutsideAlerter({ callback, ref }: IProps) {
 export default function OutsideAlerter(
   props: IComponent & {
     callback: () => void;
-  },
+  }
 ) {
   const wrapperRef = useRef(null);
   useOutsideAlerter({

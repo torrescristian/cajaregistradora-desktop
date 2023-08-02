@@ -19,7 +19,7 @@ const Pagination = ({ pagination, onClick, isLoading }: IPagination) => {
         key={page}
         className={mergeClasses(
           'btn justify-center btn-primary my-3ter m-auto flex text-white',
-          page === pagination.page ? 'btn-primary' : 'btn-outline',
+          page === pagination.page ? 'btn-primary' : 'btn-outline'
         )}
         onClick={onClick(page)}
       >

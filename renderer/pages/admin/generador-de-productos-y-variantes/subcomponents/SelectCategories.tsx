@@ -38,7 +38,7 @@ const SelectCategories = ({ errors, setValue }: IProps) => {
   const {
     subcategories,
     categories,
-    handleChangeCategories,
+    handleChangeCategories,   
     handleChangeRemoveCategory,
     handleClickAddCategory,
   } = useSelectCategoriesProps();
@@ -46,7 +46,7 @@ const SelectCategories = ({ errors, setValue }: IProps) => {
   useEffect(() => {
     setValue(
       'categories',
-      (categories || []).map((category) => category.id),
+      (categories || []).map((category) => category.id)
     );
   }, [categories]);
 

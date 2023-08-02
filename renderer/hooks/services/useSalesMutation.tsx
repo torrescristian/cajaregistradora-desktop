@@ -1,12 +1,11 @@
 import strapi from '@/libs/strapi';
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
-import { ISaleItem, ISale, ISaleNativeResponse } from '@/interfaces/ISale';
+import { ISaleItem, ISale } from '@/interfaces/ISale';
 import IStockPerProduct, {
   IStockPerProductPages,
 } from '@/interfaces/IStockPerProduct';
-import { useMutation } from '@tanstack/react-query';
-import { io } from 'socket.io-client';
+import { useMutation } from 'react-query';
 
 interface IProps {
   items: ICartItem[];
@@ -17,12 +16,9 @@ export default function useSalesMutation() {
   const dispatch = useCartDispatch();
 
   return useMutation(async (props: IProps) => {
-    const res = [null, null] as [ISaleNativeResponse | null, any];
+    const res = [null, null] as [any, any];
 
-    res[0] = (await strapi.create(
-      'sales',
-      parseSaleToPayload(props),
-    )) as ISaleNativeResponse;
+    res[0] = await strapi.create('sales', parseSaleToPayload(props));
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -31,24 +27,6 @@ export default function useSalesMutation() {
 
     if (itemsToUpdate.length) {
       res[1] = await updateStock(itemsToUpdate);
-    }
-
-    const socket = io('http://localhost:4000');
-
-    const {
-      id,
-      attributes: { createdAt, updatedAt },
-    } = res[0]!.data;
-
-    if (socket) {
-      socket.emit('print', {
-        items: props.items,
-        totalAmount: props.totalAmount,
-        id,
-        createdAt,
-        updatedAt,
-      });
-      console.log('Ticket no impreso');
     }
 
     dispatch(clearCart());
@@ -63,7 +41,7 @@ function parseSaleToPayload({ items, totalAmount }: IProps): ISale {
       product: item.product.id,
       price: item.product.price,
       quantity: item.quantity,
-    }),
+    })
   );
 
   return {
@@ -95,7 +73,7 @@ async function updateStock(items: ICartItem[]) {
         ...spp,
         sales_amount_per_product: spp.sales_amount_per_product + quantity,
       } as IStockPerProduct;
-    },
+    }
   );
 
   const promises = updatedStockPerProduct.map(async (spp) => {

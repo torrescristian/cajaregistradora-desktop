@@ -1,9 +1,9 @@
 import { ICategoryField, ICategoryResponse } from '@/interfaces/ICategory';
 import strapi from '@/libs/strapi';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from 'react-query';
 
 export default function useArticlesQuery() {
-  return useQuery<ICategoryField[]>(['articles'], async () => {
+  return useQuery<ICategoryField[]>('articles', async () => {
     const res = (await strapi.find('categories', {
       filters: {
         parent: {

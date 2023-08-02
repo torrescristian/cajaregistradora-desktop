@@ -19,10 +19,10 @@ export default function ProductTable({
   pagination,
   setActivePage,
 }: IProps) {
-  const handleClickPage = (page: number) => () => setActivePage(page);
+   const handleClickPage = (page: number) => () => setActivePage(page);
 
   return (
-    <section className="flex flex-col gap-5">
+    <section className='flex flex-col gap-5'>
       <section className="flex flex-wrap justify-around gap-5">
         {isLoading && <Loader className="w-full text-center" />}
         {isError && <ErrorMessage>Error</ErrorMessage>}
@@ -30,11 +30,11 @@ export default function ProductTable({
           products.map((p) => <ProductRow product={p} key={p.id} />)}
       </section>
 
-      <Pagination
+        <Pagination
         pagination={pagination}
         onClick={handleClickPage}
         isLoading={isLoading}
-      />
+        /> 
     </section>
   );
 }

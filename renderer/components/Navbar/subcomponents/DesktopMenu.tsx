@@ -9,11 +9,11 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
     <section className="relative flex-none">
       {isLoggedIn && (
         <ul className="flex items-center space-x-4">
-          <NavButton href="/productos">Ordenes</NavButton>
+          <NavButton href="/productos">Productos</NavButton>
           <NavButton href="/ventas">Ventas</NavButton>
           {isOwner ? (
             <>
-              <NavButton href="/admin/caja">Balance de Caja</NavButton>
+              <NavButton href="/admin/caja">Balance de Caja</NavButton> 
               <NavButton href="/admin/productos">Reabastecer</NavButton>
               <NavButton href="/admin/generador-de-productos-y-variantes">
                 Crear Producto

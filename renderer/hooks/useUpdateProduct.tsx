@@ -11,11 +11,11 @@ const useUpdateProductForm = ({ product }: IUseUpdateProductFormProps) => {
   // STATE
   const updateProductMutation = useUpdateProductMutation();
 
-  const { value: name, handleChange: handleChangeName } = useFormControl(
+  const { value: name,handleChange: handleChangeName } = useFormControl(
     product.name,
   );
   const { value: stock, handleChange: handleChangeStock } = useFormControl(
-    product.name,
+    product.name
   );
 
   const pendingChanges = useMemo(() => {

@@ -26,10 +26,7 @@ const CashBalance = ({ cashBalance }: ICashBalanceProps) => {
     >
       <Small>{parseDateToArgentinianFormat(cashBalance.createdAt)}</Small>
       <p>
-        <Small>Total: $</Small>{' '}
-        <span className="badge badge-secondary text-white">
-          {cashBalance.total_amount}
-        </span>
+        <Small>Total: $</Small> <span className='badge badge-secondary text-white'>{cashBalance.total_amount}</span>
       </p>
       <ul className="mt-5">
         {cashBalance.products_sold.map((productSold) => {
@@ -38,10 +35,7 @@ const CashBalance = ({ cashBalance }: ICashBalanceProps) => {
           return (
             <li key={id} className="">
               <p className="text-left">
-                <span className="badge text-white badge-secondary ">
-                  {quantity}
-                </span>{' '}
-                - {name}.
+                 <span className='badge text-white badge-secondary '>{quantity}</span> - {name}.
               </p>
             </li>
           );
@@ -88,7 +82,7 @@ const Caja = () => {
           registro de las últimas cajas realizadas
         </h2>
         <ul className="flex flex-col">
-          <section className="flex w-full justify-center m-5">
+          <section className='flex w-full justify-center m-5'>
             {isLoading ? (
               <Loader className="mt-5" />
             ) : (

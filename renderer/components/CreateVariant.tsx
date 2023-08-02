@@ -1,13 +1,11 @@
-import useProductsQuery from '@/hooks/services/useProductsQuery';
-import Loader from './Loader';
-import useVariant from '@/hooks/useVariant';
-import { useForm } from 'react-hook-form';
-import useCreateVariantMutation, {
-  IUseCreateVariantMutationProps,
-} from '@/hooks/services/useCreateVariantMutation';
-import { yupResolver } from '@hookform/resolvers/yup';
-import SelectCategories from '@/pages/admin/generador-de-productos-y-variantes/subcomponents/SelectCategories';
-import ErrorMessage from './ErrorMessage';
+import useProductsQuery from "@/hooks/services/useProductsQuery";
+import Loader from "./Loader";
+import useVariant from "@/hooks/useVariant";
+import { useForm } from "react-hook-form";
+import useCreateVariantMutation, { IUseCreateVariantMutationProps } from "@/hooks/services/useCreateVariantMutation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import SelectCategories from "@/pages/admin/generador-de-productos-y-variantes/subcomponents/SelectCategories";
+import ErrorMessage from "./ErrorMessage";
 import * as yup from 'yup';
 
 const SubmitButton = ({ isLoading }: { isLoading: boolean }) => {
@@ -22,7 +20,7 @@ const SubmitButton = ({ isLoading }: { isLoading: boolean }) => {
   );
 };
 
-export default function CreateVarant() {
+export default function CreateVarant(){
   const productsQuery = useProductsQuery({
     query: '',
     selectedCategories: [],
@@ -56,48 +54,46 @@ export default function CreateVarant() {
       stock: data.stock,
     });
   });
-  return (
-    <form
-      className="flex w-96 flex-col px-10 py-12 gap-5 h-min bg-stone-50 rounded-xl shadow-xl"
-      onSubmit={onSubmit}
-    >
-      <h2 className="text-center text-2xl">Crear Variante</h2>
-      <select
-        className="select-bordered select w-full max-w-xs "
-        {...register('product')}
-      >
-        {productsQuery.products.map((product) => (
-          <option key={product.id} value={product.id}>
-            {product.name}
-          </option>
-        ))}
-      </select>
+  return(
+    <form className="flex w-96 flex-col px-10 py-12 gap-5 h-min bg-stone-50 rounded-xl shadow-xl" onSubmit={onSubmit}>
+        <h2 className="text-center text-2xl">Crear Variante</h2>
+        <select
+          className="select-bordered select w-full max-w-xs "
+          {...register('product')}
+        >
+          {productsQuery.products.map((product) => (
+            <option key={product.id} value={product.id}>
+              {product.name}
+            </option>
+          ))}
+        </select>
 
-      <div className="flex flex-col">
-        <SelectCategories errors={errors} setValue={setValue} />
+        <div className="flex flex-col">
+          <SelectCategories errors={errors} setValue={setValue} />
 
-        <label className="label">
-          <span className="label-text">Stock</span>
-        </label>
-        <input
-          className="input-bordered input"
-          type="number"
-          {...register('stock')}
-        />
-        {errors.stock && <ErrorMessage>{errors.stock}</ErrorMessage>}
-      </div>
-      {productsQuery.isSuccess ? (
-        <div className="alert alert-success">🎉 Producto Creado 🎊</div>
-      ) : null}
-      {productsQuery.isLoading ? (
-        <Loader className="mt-5" />
-      ) : (
-        <SubmitButton isLoading={variantMutation.isLoading} />
-      )}
-      {formIsInvalid && { errors } &&
-        Object.values(errors).map((error) => (
-          <ErrorMessage key={error.message}>{error.message}</ErrorMessage>
-        ))}
-    </form>
-  );
+          <label className="label">
+            <span className="label-text">Stock</span>
+          </label>
+          <input
+            className="input-bordered input"
+            type="number"
+            {...register('stock')}
+          />
+          {errors.stock && <ErrorMessage>{errors.stock}</ErrorMessage>}
+        </div>
+        {productsQuery.isSuccess ? (
+          <div className="alert alert-success">🎉 Producto Creado 🎊</div>
+        ) : null}
+        {productsQuery.isLoading ? (
+          <Loader className="mt-5" />
+        ) : (
+          <SubmitButton isLoading={variantMutation.isLoading} />
+        )}
+        {formIsInvalid && { errors } &&
+          Object.values(errors).map((error) => (
+            <ErrorMessage key={error.message}>{error.message}</ErrorMessage>
+          ))}
+      </form>
+  )
+
 }

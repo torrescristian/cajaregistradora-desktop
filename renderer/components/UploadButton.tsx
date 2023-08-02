@@ -2,7 +2,7 @@ import { getProductsQueryKey } from '@/hooks/services/useProductsQuery';
 import IProductUI from '@/interfaces/IProduct';
 import strapi from '@/libs/strapi';
 import React, { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from 'react-query';
 
 interface IProps {
   product: IProductUI;
@@ -24,12 +24,12 @@ const UploadButton = ({ product }: IProps) => {
           'Access-Control-Allow-Methods': 'POST',
           'Access-Control-Allow-Headers': 'Authorization, Content-Type',
         },
-      },
+      }
     ).then((res) => res.json());
     await strapi.update(getProductsQueryKey(), product.id, {
       image: productImage,
     });
-    queryClient.invalidateQueries([getProductsQueryKey()]);
+    queryClient.invalidateQueries(getProductsQueryKey());
   };
 
   return (
@@ -42,9 +42,9 @@ const UploadButton = ({ product }: IProps) => {
       <input
         type="file"
         name="files"
-        className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+        className="file-input-bordered file-input-secondary file-input w-full max-w-xs"
       />
-      <button type="submit" className="btn btn-success w-min">
+      <button type="submit" className="btn-success btn w-min">
         Guardar foto
       </button>
     </form>

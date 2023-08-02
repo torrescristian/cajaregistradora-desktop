@@ -1,5 +1,5 @@
 import { IProduct } from './IProduct';
-import { IFixedNativeResponse, INativeResponse, IResponsePage } from './utils';
+import { IResponsePage } from './utils';
 
 export interface ISaleItem {
   id?: number;
@@ -30,5 +30,3 @@ export default interface ISaleUI {
   createdAt: string;
   saleItems: ISaleItem[];
 }
-
-export type ISaleNativeResponse = IFixedNativeResponse<ISale>;

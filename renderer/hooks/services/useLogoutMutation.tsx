@@ -1,7 +1,7 @@
 import strapi from '@/libs/strapi';
 import { logout, useAuthDispatch } from '@/contexts/AuthContext';
 import { USER_KEY, CART_KEY } from '@/libs/localStorageManager';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from 'react-query';
 import Cookie from 'js-cookie';
 
 export default function useLogoutMutation() {
@@ -18,7 +18,7 @@ export default function useLogoutMutation() {
     },
     {
       onSuccess: () => {},
-    },
+    }
   );
 
   return { mutate, isSuccess, isLoading };

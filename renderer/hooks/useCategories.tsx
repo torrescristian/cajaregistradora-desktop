@@ -19,7 +19,7 @@ export interface IUseCategoriesResponse {
 }
 
 const useCategories = (
-  data: ICategoryFieldPopulate[],
+  data: ICategoryFieldPopulate[]
 ): IUseCategoriesResponse => {
   const [categories, dispatch] = useReducer(
     (state: ICategoryUI[], action: any) => {
@@ -43,7 +43,7 @@ const useCategories = (
                       parent: null,
                     },
                   };
-                },
+                }
               ),
             };
           });
@@ -55,7 +55,7 @@ const useCategories = (
       }
     },
 
-    [],
+    []
   );
 
   useEffect(() => {

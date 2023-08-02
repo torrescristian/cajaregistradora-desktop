@@ -5,10 +5,7 @@ import {
 } from 'electron';
 import Store from 'electron-store';
 
-export default (
-  windowName: string,
-  options: BrowserWindowConstructorOptions,
-): BrowserWindow => {
+export default (windowName: string, options: BrowserWindowConstructorOptions): BrowserWindow => {
   const key = 'window-state';
   const name = `window-state-${windowName}`;
   const store = new Store({ name });
@@ -18,6 +15,7 @@ export default (
   };
   let state = {};
   let win;
+
 
   const restore = () => store.get(key, defaultSize);
 
@@ -49,8 +47,8 @@ export default (
     });
   };
 
-  const ensureVisibleOnSomeDisplay = (windowState) => {
-    const visible = screen.getAllDisplays().some((display) => {
+  const ensureVisibleOnSomeDisplay = windowState => {
+    const visible = screen.getAllDisplays().some(display => {
       return windowWithinBounds(windowState, display.bounds);
     });
     if (!visible) {
@@ -76,10 +74,11 @@ export default (
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      ...options.webPreferences,
+      ...options.webPreferences,  
     },
   };
   win = new BrowserWindow(browserOptions);
+
 
   win.on('close', saveState);
 

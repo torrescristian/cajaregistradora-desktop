@@ -15,7 +15,7 @@ const useProductItem = (product: IProductUI) => {
   const disabled = isNotService && isDisabledOrWithoutStock;
   const isService = !!product.isService;
   const cartItemQuantity = useCartSelect(
-    getCartItemQuantityByProductId(product.id),
+    getCartItemQuantityByProductId(product.id)
   );
   const dispatch = useCartDispatch();
 
