@@ -14,8 +14,10 @@ export interface IOrderUI {
   id?: number;
   clientName: string;
   clientPhone: string;
+  clientAddress: string;
   totalPrice: number;
   items: IOrderItem[];
+  additionalDetails: string;
 }
 
 export interface IOrder {
@@ -28,8 +30,9 @@ export interface IOrder {
     address: string;
     id?: number;
   };
+  additionalDetails: string;
   createAt?: string;
   updatedAt?: string;
 }
 
-export type IOrderResponse = IResponsePage<IOrder>
+export type IOrderResponse = IResponsePage<IOrder>;

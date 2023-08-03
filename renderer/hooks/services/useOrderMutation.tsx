@@ -12,6 +12,8 @@ interface IProps {
   totalPrice: number;
   clientName: string;
   clientPhone: string;
+  clientAddress: string;
+  additionalDetails: string;
 }
 
 export default function useOrderMutation() {
@@ -40,6 +42,8 @@ function parseOrderToPayLoad({
   totalPrice,
   clientName,
   clientPhone,
+  clientAddress,
+  additionalDetails,
 }: IProps): IOrder {
   return {
     items: items.map((item) => {
@@ -53,7 +57,9 @@ function parseOrderToPayLoad({
     client: {
       name: clientName,
       phone_number: clientPhone,
+      address: clientAddress,
     },
+    additionalDetails: additionalDetails,
   };
 }
 

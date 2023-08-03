@@ -16,7 +16,8 @@ const defaultCartState = {
   clientPhone: '',
   clientAddress: '',
   totalPrice: 0,
-};
+  additionalDetails: '',
+} as ICartState;
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
 
@@ -184,6 +185,8 @@ export const getClientAddress = (state: ICartState) => state.clientAddress;
 export const getTotalPrice = (state: ICartState) => state.totalPrice;
 export const getCartItems = (state: ICartState) => state.cartItems;
 export const getTotalAmount = (state: ICartState) => state.totalAmount;
+export const getAdditionalDetails = (state: ICartState) =>
+  state.additionalDetails;
 export const getTotalQuantity = (state: ICartState) => state.totalQuantity;
 export const getCartItemById = (id: number) => (state: ICartState) =>
   state.cartItems.find((cartItem: ICartItem) => cartItem.product.id === id);
