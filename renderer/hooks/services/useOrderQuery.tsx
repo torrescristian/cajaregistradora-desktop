@@ -1,34 +1,27 @@
-import IOrder, { IOrderUI } from '@/interfaces/IOrder';
-import { INativeResponse } from '@/interfaces/utils';
+import {IOrderResponse, IOrderUI } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 
 const getOrderQueryKey = () => 'orders';
 
-const parseOrderFacade = (order: IOrder): IOrderUI => {
-  const { id, attributes } = order;
-  console.log(order);
-  return {
-    id: id,
-    clientName: attributes.client.name,
-    clientPhone: attributes.client.phone_number,
-    totalPrice: attributes.total_price,
-    items: attributes.items.map((item) => ({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      quantity: item.quantity,
-      totalPrice: item.total_price,
-    })),
-  };
-};
+const parseOrderFacade = (order: IOrderResponse): IOrderUI[] => {
+   return order.results.map(
+     (props) => {
+     return {
+       id: props.id,
+       clientName: props.client.name,
+       clientPhone: props.client.phone_number,
+       totalPrice: props.total_price,
+       items : props.items
+      };
+    })
+  }
 
 export default function useOrderQuery() {
-  return useQuery<IOrderUI>([getOrderQueryKey()], async () => {
-    const order = (await strapi.find(
+  return useQuery<IOrderUI[]>([getOrderQueryKey()], async () => {
+    const orderResponse = (await strapi.find(
       'orders',
-    )) as unknown as INativeResponse<IOrder>;
-    const [orders] = (order.data || [[]]).map(parseOrderFacade);
-    return orders;
+    )) as unknown as IOrderResponse;
+    return parseOrderFacade(orderResponse);
   });
 }

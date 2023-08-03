@@ -1,4 +1,5 @@
 import IProduct from './IProduct';
+import { IResponsePage } from './utils';
 
 export interface IOrderItem {
   id?: number;
@@ -24,20 +25,11 @@ export interface IOrder {
   client: {
     name: string;
     phone_number: string;
+    address: string;
+    id?: number;
   };
   createAt?: string;
   updatedAt?: string;
 }
 
-export default interface IOrderResponse {
-  id: number;
-  attributes: {
-    client: {
-      name: string;
-      phone_number: string;
-    };
-    createAt: string;
-    total_price: number;
-    updatedAt: string;
-  };
-}
+export type IOrderResponse = IResponsePage<IOrder>

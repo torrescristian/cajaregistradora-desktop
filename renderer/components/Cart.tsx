@@ -53,7 +53,7 @@ const Cart = () => {
 
   const handleSubmit = () => {
     //TODO: salesMutation.mutate({ items, totalAmount });
-    orderMutation.mutate({ items, clientName, clientPhone, totalPrice });
+    orderMutation.mutate({ items, clientName, clientPhone, totalPrice })};
     if (salesMutation.isLoading) {
       return (
         <Layout>
@@ -107,6 +107,6 @@ const Cart = () => {
       </Layout>
     );
   };
-};
+
 
 export default Cart;

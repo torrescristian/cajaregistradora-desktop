@@ -12,10 +12,11 @@ function Order() {
   return (
     <section className="flex flex-col items-center w-1/2 gap-5">
       <h1 className="text-2xl font-bold">✍🏻 Lista de ordenes</h1>
+      {orderQuery.data.map((order) => (
       <div className="flex flex-col items-center shadow-xl w-3/5 m-3 gap-5 p-10">
         <div className="flex flex-row gap-5 m-5">
           <h2 className="font-bold text-center">
-            Orden #{orderQuery.data.id}{' '}
+            Orden #{order.id}{' '}
           </h2>
           <button className="btn btn-outline btn-warning">
             <svg
@@ -51,7 +52,7 @@ function Order() {
             </svg>
           </button>
         </div>
-        <p className="font-bold text-xl">Nombre: Cristian Torres</p>
+        <p className="font-bold text-xl">Nombre: {order.clientName}</p>
         <Divider />
         <p>Fecha: 12/12/2022 12:00:00hs</p>
         <Divider />
@@ -61,12 +62,12 @@ function Order() {
         <p>1 Manaos 3 lts.</p>
         <Divider />
         <p className="text-2xl font-bold">
-          Total: ${orderQuery.data.totalPrice}
+          Total: ${order.totalPrice}
         </p>
         <button className="btn btn-success text-stone-50">
           Orden completada
         </button>
-      </div>
+      </div>))}
     </section>
   );
 }
