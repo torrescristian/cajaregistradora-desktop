@@ -12,6 +12,7 @@ function Order() {
   return (
     <section className="flex flex-col items-center w-1/2 gap-5">
       <h1 className="text-2xl font-bold">✍🏻 Lista de ordenes</h1>
+
       {orderQuery.data.map((order) => (
       <div className="flex flex-col items-center shadow-xl w-3/5 m-3 gap-5 p-10">
         <div className="flex flex-row gap-5 m-5">
@@ -68,6 +69,7 @@ function Order() {
           Orden completada
         </button>
       </div>))}
+
     </section>
   );
 }
