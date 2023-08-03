@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
-import { Server, Socket } from 'socket.io'
-import print from './print'
+import { Server, Socket } from 'socket.io';
+import print from './print';
 
 export default function createSocketServer(app) {
   const expressApp = express();

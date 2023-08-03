@@ -1,28 +1,24 @@
-import strapi from '@/libs/strapi';
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
-import { ISaleItem, ISale, ISaleNativeResponse } from '@/interfaces/ISale';
+import { IOrder } from '@/interfaces/IOrder';
 import IStockPerProduct, {
   IStockPerProductPages,
 } from '@/interfaces/IStockPerProduct';
+import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
-import { io } from 'socket.io-client';
 
 interface IProps {
   items: ICartItem[];
-  totalAmount: number;
+  totalPrice: number;
+  clientName: string;
+  clientPhone: string;
 }
 
-export default function useSalesMutation() {
+export default function useOrderMutation() {
   const dispatch = useCartDispatch();
-
   return useMutation(async (props: IProps) => {
-    const res = [null, null] as [ISaleNativeResponse | null, any];
-
-    res[0] = (await strapi.create(
-      'sales',
-      parseSaleToPayload(props),
-    )) as ISaleNativeResponse;
+    const resp = [null, null] as [any, any];
+    resp[0] = await strapi.create('orders', parseOrderToPayLoad(props));
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -30,44 +26,34 @@ export default function useSalesMutation() {
     const itemsToUpdate = props.items.filter(excludeServiceItem);
 
     if (itemsToUpdate.length) {
-      res[1] = await updateStock(itemsToUpdate);
-    }
-
-    const socket = io('http://localhost:4000');
-
-    const {
-      id,
-      attributes: { createdAt, updatedAt },
-    } = res[0]!.data;
-
-    if (socket) {
-      socket.emit('print', {
-        items: props.items,
-        totalAmount: props.totalAmount,
-        id,
-        createdAt,
-        updatedAt,
-      });
+      resp[1] = await updateStock(itemsToUpdate);
     }
 
     dispatch(clearCart());
 
-    return res;
+    return resp;
   });
 }
 
-function parseSaleToPayload({ items, totalAmount }: IProps): ISale {
-  const sale_items = items.map(
-    (item): ISaleItem => ({
-      product: item.product.id,
-      price: item.product.price,
-      quantity: item.quantity,
-    }),
-  );
-
+function parseOrderToPayLoad({
+  items,
+  totalPrice,
+  clientName,
+  clientPhone,
+}: IProps): IOrder {
   return {
-    total_price: totalAmount,
-    sale_items,
+    items: items.map((item) => {
+      return {
+        product: item.product.id,
+        quantity: item.quantity,
+        price: item.product.price,
+      };
+    }),
+    total_price: totalPrice,
+    client: {
+      name: clientName,
+      phone_number: clientPhone,
+    },
   };
 }
 

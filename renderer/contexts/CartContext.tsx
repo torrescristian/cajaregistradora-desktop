@@ -12,6 +12,10 @@ const defaultCartState = {
   cartItems: [],
   totalAmount: 0,
   totalQuantity: 0,
+  clientName: '',
+  clientPhone: '',
+  clientAddress: '',
+  totalPrice: 0,
 };
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
@@ -174,6 +178,10 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
 
 // selectors
 export const getCartState = (state: ICartState) => state;
+export const getClientName = (state: ICartState) => state.clientName;
+export const getClientPhone = (state: ICartState) => state.clientPhone;
+export const getClientAddress = (state: ICartState) => state.clientAddress;
+export const getTotalPrice = (state: ICartState) => state.totalPrice;
 export const getCartItems = (state: ICartState) => state.cartItems;
 export const getTotalAmount = (state: ICartState) => state.totalAmount;
 export const getTotalQuantity = (state: ICartState) => state.totalQuantity;
