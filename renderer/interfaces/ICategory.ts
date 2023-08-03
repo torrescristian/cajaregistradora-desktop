@@ -13,15 +13,7 @@ export interface ICategory {
 
 export interface ICategoryField {
   id: number;
-  attributes: Partial<{
-    createdAt: string;
-    updatedAt: string;
-    name: string;
-    products: IProduct[];
-    store: number;
-    parent: ICategoryField;
-    children: ICategoryField[];
-  }>;
+  attributes: Omit<ICategory, 'id'>
 }
 
 export interface ICategoryFieldPopulate {

@@ -1,8 +1,8 @@
+import IClient from './IClient';
 import IProduct from './IProduct';
 import { IResponsePage } from './utils';
 
 export interface IOrderItem {
-  id?: number;
   quantity: number;
   price: number;
   createdAt?: string;
@@ -22,12 +22,7 @@ export interface IOrder {
   items: IOrderItem[];
   id?: number;
   total_price: number;
-  client: {
-    name: string;
-    phone_number: string;
-    address: string;
-    id?: number;
-  };
+  client: number | IClient;
   createAt?: string;
   updatedAt?: string;
 }

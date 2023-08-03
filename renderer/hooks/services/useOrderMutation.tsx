@@ -41,6 +41,10 @@ function parseOrderToPayLoad({
   clientName,
   clientPhone,
 }: IProps): IOrder {
+  const clientId = 420
+
+  throw new Error('create client ID');
+
   return {
     items: items.map((item) => {
       return {
@@ -50,10 +54,7 @@ function parseOrderToPayLoad({
       };
     }),
     total_price: totalPrice,
-    client: {
-      name: clientName,
-      phone_number: clientPhone,
-    },
+    client: clientId,
   };
 }
 

@@ -42,7 +42,7 @@ export interface IProduct {
   stock_per_product: IStockPerProduct;
   categories: ICategory[];
   store: number;
-  variants: IVariant[];
+  variants?: IVariant[];
   public_price: number;
   wholesale_price: number;
   catalog_price: number;
