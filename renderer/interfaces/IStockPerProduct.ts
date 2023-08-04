@@ -5,9 +5,7 @@ export type IStockPerProductPages = IResponsePage<IStockPerProduct>;
 
 export default interface IStockPerProduct {
   id: number;
-  name: string;
-  stock_amount_per_product: number;
-  sales_amount_per_product: number;
+  stock: number;
   createdAt: string;
   updatedAt: string;
   product: IProduct;
