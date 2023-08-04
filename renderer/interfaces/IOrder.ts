@@ -1,30 +1,40 @@
 import IClient from './IClient';
 import IProduct from './IProduct';
-import { IResponsePage } from './utils';
+import { ISingleResultResponsePage } from './utils';
 
-export interface IOrderItem {
+export interface IOrderItem<PRODUCT = number> {
   quantity: number;
   price: number;
   createdAt?: string;
   updatedAt?: string;
-  product: IProduct | number;
+  product?: PRODUCT
 }
+
+export type IOrderItemExpanded = IOrderItem<IProduct>
 
 export interface IOrderUI {
   id?: number;
   clientName: string;
   clientPhone: string;
   totalPrice: number;
-  items: IOrderItem[];
+  items: IOrderItemExpanded[];
 }
 
-export interface IOrder {
-  items: IOrderItem[];
+export interface IOrder<CLIENT = number> {
+  items: IOrderItemExpanded[];
   id?: number;
   total_price: number;
-  client: number | IClient;
+  client: CLIENT;
   createAt?: string;
   updatedAt?: string;
+  status: ORDER_STATUS;
 }
 
-export type IOrderResponse = IResponsePage<IOrder>
+export type IOrderResponse = ISingleResultResponsePage<IOrder<IClient>>
+
+export enum ORDER_STATUS {
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  CANCELED = 'CANCELED',
+  WAITING_FOR_REFUND = 'WAITING_FOR_REFUND',
+}

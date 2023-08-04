@@ -1,11 +1,11 @@
 import * as yup from 'yup';
 import OrderSchema from './OrderSchema';
 
-const TicketSchema = yup
+const TicketSchema = (order: any = OrderSchema().required()) => yup
   .object().shape({
     date: yup.string().required(),
     total_price: yup.number().required(),
-    order: OrderSchema().required(),
+    order,
 }).defined().required();
 
 export default TicketSchema;
