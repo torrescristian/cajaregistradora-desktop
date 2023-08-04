@@ -1,6 +1,6 @@
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
-import { IOrder } from '@/interfaces/IOrder';
+import { IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
 import IStockPerProduct, {
   IStockPerProductPages,
 } from '@/interfaces/IStockPerProduct';
@@ -47,7 +47,7 @@ function parseOrderToPayLoad({
   return {
     items: items.map((item) => {
       return {
-        product: item.product.id,
+        product: item.product,
         quantity: item.quantity,
         price: item.product.price,
       };
@@ -55,6 +55,7 @@ function parseOrderToPayLoad({
     additional_details: additionalDetails,
     total_price: totalPrice,
     client: clientId,
+    status: ORDER_STATUS.PENDING,
   };
 }
 
@@ -77,18 +78,23 @@ async function updateStock(items: ICartItem[]) {
 
       const { quantity } = item;
 
+      if (spp.stock < quantity) {
+        throw new Error(
+          `No hay suficiente stock para el producto ${spp.product.name}`,
+        );
+      }
+
       return {
-        ...spp,
-        sales_amount_per_product: spp.sales_amount_per_product + quantity,
+        stock: spp.stock - quantity,
       } as IStockPerProduct;
     },
   );
 
   const promises = updatedStockPerProduct.map(async (spp) => {
-    const { id } = spp;
+    const { id, stock } = spp;
 
     return await strapi.update('stock-per-products', id, {
-      sales_amount_per_product: spp.sales_amount_per_product,
+      stock,
     });
   });
 
@@ -101,4 +107,6 @@ async function updateStock(items: ICartItem[]) {
   ) {
     throw new Error('Error al actualizar el stock');
   }
+
+  return result
 }

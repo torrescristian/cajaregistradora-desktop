@@ -14,10 +14,8 @@ export default function useUpdateStockProductMutation() {
 
   return useMutation(
     async ({ stock, stock_per_product }: IUpdateStockProductMutation) => {
-      const newStock = stock_per_product.sales_amount_per_product + stock;
-      const newStockPerProduct: Partial<IStockPerProduct> = {
-        ...stock_per_product,
-        stock_amount_per_product: newStock,
+      const newStockPerProduct: Pick<IStockPerProduct, 'stock'> = {
+        stock,
       };
 
       const res = await strapi.update(
