@@ -12,7 +12,6 @@ interface IProps {
   totalPrice: number;
   clientName: string;
   clientPhone: string;
-  clientAddress: string;
   additionalDetails: string;
 }
 
@@ -36,15 +35,16 @@ export default function useOrderMutation() {
     return resp;
   });
 }
+const clientId = 420
+
+throw new Error('create client ID');
 
 function parseOrderToPayLoad({
   items,
   totalPrice,
-  clientName,
-  clientPhone,
-  clientAddress,
   additionalDetails,
 }: IProps): IOrder {
+
   return {
     items: items.map((item) => {
       return {
@@ -53,13 +53,9 @@ function parseOrderToPayLoad({
         price: item.product.price,
       };
     }),
+    additional_details: additionalDetails,
     total_price: totalPrice,
-    client: {
-      name: clientName,
-      phone_number: clientPhone,
-      address: clientAddress,
-    },
-    additionalDetails: additionalDetails,
+    client: clientId,
   };
 }
 

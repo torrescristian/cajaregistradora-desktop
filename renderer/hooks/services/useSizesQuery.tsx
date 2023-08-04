@@ -7,9 +7,9 @@ const parseCategory = (data: ICategoryResponse): ICategory[] => {
     return {
       id: item.id,
       name: item.attributes.name,
-      products: item.attributes.products,
       parent: item.attributes.parent,
       childrens: item.attributes.childrens,
+      products: item.attributes.products,
       store: item.attributes.store,
       emoji: item.attributes.emoji,
     } as ICategory;
