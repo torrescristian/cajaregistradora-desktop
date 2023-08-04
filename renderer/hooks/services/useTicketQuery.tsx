@@ -6,17 +6,16 @@ import ITicket, { ITicketResponse, TICKET_STATUS } from '@/interfaces/ITicket';
 const getOrderQueryKey = () => 'orders';
 
 const parseOrderFacade = (ticket: ITicketResponse): ITicket[] => {
-  return ticket.results.map(
-    (props) => {
-     return {
-        date: props.date,
-        id: props.id,
-        order: props.order as IOrder,
-        total_price: props.total_price,
-        status: TICKET_STATUS.PAID,
-      };
-    })
-  }
+  return ticket.results.map((props) => {
+    return {
+      date: props.date,
+      id: props.id,
+      order: props.order as IOrder,
+      total_price: props.total_price,
+      status: TICKET_STATUS.PAID,
+    };
+  });
+};
 
 export default function useOrderQuery() {
   return useQuery<ITicket[]>([getOrderQueryKey()], async () => {

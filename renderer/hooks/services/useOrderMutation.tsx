@@ -35,9 +35,8 @@ export default function useOrderMutation() {
     return resp;
   });
 }
-const clientId = 420;
-
-throw new Error('create client ID');
+//fix
+const clientId = 1;
 
 function parseOrderToPayLoad({
   items,
@@ -108,5 +107,5 @@ async function updateStock(items: ICartItem[]) {
     throw new Error('Error al actualizar el stock');
   }
 
-  return result
+  return result;
 }

@@ -16,6 +16,10 @@ const parseOrderFacade = (order: IOrderResponse): IOrderUI[] => {
       totalPrice: props.total_price,
       items: props.items,
       additionalDetails: props.additional_details,
+      createdAt: props.createdAt!,
+      updatedAt: props.updatedAt!,
+      status: props.status,
+      
     };
   });
 };
@@ -23,7 +27,10 @@ const parseOrderFacade = (order: IOrderResponse): IOrderUI[] => {
 export default function useOrderQuery() {
   return useQuery<IOrderUI[]>([getOrderQueryKey()], async () => {
     const orderResponse = (await strapi.find('orders', {
-      populate: '*',
+      populate: [
+        'client',
+        'items.product',
+      ],
     })) as unknown as IOrderResponse;
     return parseOrderFacade(orderResponse);
   });

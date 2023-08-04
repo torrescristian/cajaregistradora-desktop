@@ -1,16 +1,16 @@
 import IClient from './IClient';
 import IProduct from './IProduct';
-import { ISingleResultResponsePage } from './utils';
+import { IResponsePage, ISingleResultResponsePage } from './utils';
 
 export interface IOrderItem<PRODUCT = number> {
   quantity: number;
   price: number;
   createdAt?: string;
   updatedAt?: string;
-  product?: PRODUCT
+  product?: PRODUCT;
 }
 
-export type IOrderItemExpanded = IOrderItem<IProduct>
+export type IOrderItemExpanded = IOrderItem<IProduct>;
 
 export interface IOrderUI {
   id?: number;
@@ -20,6 +20,9 @@ export interface IOrderUI {
   totalPrice: number;
   additionalDetails: string;
   items: IOrderItemExpanded[];
+  createdAt?: string;
+  updatedAt?: string;
+  status: ORDER_STATUS;
 }
 
 export interface IOrder<CLIENT = number> {
@@ -28,12 +31,13 @@ export interface IOrder<CLIENT = number> {
   total_price: number;
   additional_details: string;
   client: CLIENT;
-  createAt?: string;
+  createdAt?: string;
   updatedAt?: string;
   status: ORDER_STATUS;
 }
 
-export type IOrderResponse = ISingleResultResponsePage<IOrder<IClient>>
+export type IOrderResponse = IResponsePage<IOrder<IClient>>;
+export type IOrderSingleResponse = ISingleResultResponsePage<IOrder<IClient>>;
 
 export enum ORDER_STATUS {
   PENDING = 'PENDING',

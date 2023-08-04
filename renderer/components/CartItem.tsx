@@ -75,20 +75,6 @@ const CartItem = ({ product }: ICollapseTitle) => {
           <Badge className="mx-2">{cartItemQuantity}</Badge>
           <p> = {formatPrice(product.price * cartItemQuantity)}</p>
         </section>
-        <form>
-          <label className="label">
-            Nombre:
-            <input className="input input-bordered" type="text" />
-          </label>
-          <label className="label">
-            Direccion:
-            <input className="input input-bordered" type="text" />
-          </label>
-          <label className="label">
-            Det. adicionales:
-            <input className="input input-bordered" type="text" />
-          </label>
-        </form>
         <section className="flex flex-row justify-end">
           <p>
             {isService

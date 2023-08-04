@@ -1,6 +1,7 @@
 import useOrderQuery from '@/hooks/services/useOrderQuery';
 import { Divider } from './Sale/Sale.styles';
 import Loader from './Loader';
+import { parseDateToArgentinianFormat } from '@/libs/utils';
 
 function Order() {
   const orderQuery = useOrderQuery();
@@ -15,6 +16,9 @@ function Order() {
 
       {orderQuery.data.map((order) => (
         <div className="flex flex-col items-center shadow-xl w-3/5 m-3 gap-5 p-10">
+          <p className='text-center font-bold'>
+            {order.status}
+            </p>
           <div className="flex flex-row gap-5 m-5">
             <h2 className="font-bold text-center">Orden #{order.id} </h2>
             <button className="btn btn-outline btn-warning">
@@ -52,14 +56,15 @@ function Order() {
             </button>
           </div>
           <p className="font-bold text-xl">Nombre: {order.clientName}</p>
+          <p className='font-bold'>Teléfono: {order.clientPhone}</p>
+          <p className='font-bold'>Dirección: {order.clientAddress}</p>
           <Divider />
-          <p>Fecha: 12/12/2022 12:00:00hs</p>
+          <p className='text-xl font-bold text-center'>{order.createdAt === order.updatedAt ? 'Fecha de creación:' : 'Fecha de actualización: '}{parseDateToArgentinianFormat(order.updatedAt)}</p>
           <Divider />
-          <p>3 productos</p>
+          <p className='text-xl font-bold text-center gap-5'>Detalles: <br/>{order.additionalDetails}</p>
           <Divider />
-          <p>2 Lomitos</p>
-          <p>1 Manaos 3 lts.</p>
-          <p>{order.additionalDetails}</p>
+          <p>{order.items.map(item => item.product!.name)}</p>
+          <p>Cantidad: {order.items.map(item => item.quantity)}</p>
           <Divider />
           <p className="text-2xl font-bold">Total: ${order.totalPrice}</p>
           <button className="btn btn-success text-stone-50">

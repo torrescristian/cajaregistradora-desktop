@@ -3,7 +3,7 @@ import strapi from '@/libs/strapi';
 import TicketSchema from '@/schemas/TicketSchema';
 import { useMutation } from '@tanstack/react-query';
 
-type ICreateTicketMutation = Omit<ITicket, 'id' | 'status'>
+type ICreateTicketMutation = Omit<ITicket, 'id' | 'status'>;
 
 export default function useCreateTicketMutation() {
   return useMutation(async (data: ICreateTicketMutation) => {
