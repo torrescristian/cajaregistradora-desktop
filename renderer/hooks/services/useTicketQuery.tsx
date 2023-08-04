@@ -1,7 +1,7 @@
 import {IOrder, IOrderResponse, IOrderUI } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
-import ITicket, { ITicketResponse } from '@/interfaces/ITicket';
+import ITicket, { ITicketResponse, TICKET_STATUS } from '@/interfaces/ITicket';
 
 const getOrderQueryKey = () => 'orders';
 
@@ -13,6 +13,7 @@ const parseOrderFacade = (ticket: ITicketResponse): ITicket[] => {
         id: props.id,
         order: props.order as IOrder,
         total_price: props.total_price,
+        status: TICKET_STATUS.PAID,
       };
     })
   }

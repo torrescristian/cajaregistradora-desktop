@@ -1,16 +1,18 @@
+import ITicket, { TICKET_STATUS } from '@/interfaces/ITicket';
 import strapi from '@/libs/strapi';
 import TicketSchema from '@/schemas/TicketSchema';
 import { useMutation } from '@tanstack/react-query';
 
-export default function useCreateTicketMutation() {
-  return useMutation(async (data) => {
-    await TicketSchema.validate(data);
+type ICreateTicketMutation = Omit<ITicket, 'id' | 'status'>
 
-    const res = await strapi.create('ticket', data);
-    console.log(
-      '🚀 ~ file: useCreateTicketMutation.tsx:8',
-      res,
-    );
+export default function useCreateTicketMutation() {
+  return useMutation(async (data: ICreateTicketMutation) => {
+    await TicketSchema().validate(data);
+
+    const res = await strapi.create('ticket', {
+      ...data,
+      status: TICKET_STATUS.PAID,
+    } as ITicket);
 
     return res;
   });
