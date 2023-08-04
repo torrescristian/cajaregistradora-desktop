@@ -1,4 +1,4 @@
-import {IOrderSingleResponse, ORDER_STATUS } from '@/interfaces/IOrder';
+import { IOrderSingleResponse, ORDER_STATUS } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import OrderSchema from '@/schemas/OrderSchema';
 import { useMutation } from '@tanstack/react-query';
