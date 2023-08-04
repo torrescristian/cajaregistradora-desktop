@@ -35,7 +35,7 @@ export default function useOrderMutation() {
     return resp;
   });
 }
-const clientId = 420
+const clientId = 420;
 
 throw new Error('create client ID');
 
@@ -44,7 +44,6 @@ function parseOrderToPayLoad({
   totalPrice,
   additionalDetails,
 }: IProps): IOrder {
-
   return {
     items: items.map((item) => {
       return {

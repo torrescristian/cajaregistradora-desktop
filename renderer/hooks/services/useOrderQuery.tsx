@@ -7,7 +7,7 @@ const getOrderQueryKey = () => 'orders';
 
 const parseOrderFacade = (order: IOrderResponse): IOrderUI[] => {
   return order.results.map((props) => {
-    const { name, phone_number,address } = props.client as IClient 
+    const { name, phone_number, address } = props.client as IClient;
     return {
       id: props.id,
       clientName: name,
@@ -25,6 +25,6 @@ export default function useOrderQuery() {
     const orderResponse = (await strapi.find('orders', {
       populate: '*',
     })) as unknown as IOrderResponse;
-    return parseOrderFacade(orderResponse)
+    return parseOrderFacade(orderResponse);
   });
 }

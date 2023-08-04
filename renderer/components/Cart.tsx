@@ -4,7 +4,6 @@ import useSalesMutation from '@/hooks/services/useSalesMutation';
 import {
   getAdditionalDetails,
   getCartItems,
-  getClientAddress,
   getClientName,
   getClientPhone,
   getTotalAmount,
@@ -52,7 +51,6 @@ const Cart = () => {
   const orderMutation = useOrderMutation();
   const clientName = useCartSelect(getClientName);
   const clientPhone = useCartSelect(getClientPhone);
-  const clientAddress = useCartSelect(getClientAddress);
   const additionalDetails = useCartSelect(getAdditionalDetails);
   const totalPrice = useCartSelect(getTotalAmount);
 
@@ -64,7 +62,6 @@ const Cart = () => {
       clientPhone,
       totalPrice,
       additionalDetails,
-      clientAddress,
     });
   };
   if (salesMutation.isLoading) {

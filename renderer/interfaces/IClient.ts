@@ -3,4 +3,4 @@ export default interface IClient {
   phone_number: string;
   address: string;
   id?: number;
-};
+}

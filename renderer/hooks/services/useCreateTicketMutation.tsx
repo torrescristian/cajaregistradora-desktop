@@ -7,10 +7,7 @@ export default function useCreateTicketMutation() {
     await TicketSchema.validate(data);
 
     const res = await strapi.create('ticket', data);
-    console.log(
-      '🚀 ~ file: useCreateTicketMutation.tsx:8',
-      res,
-    );
+    console.log('🚀 ~ file: useCreateTicketMutation.tsx:8', res);
 
     return res;
   });

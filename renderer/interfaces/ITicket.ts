@@ -1,8 +1,7 @@
-import { IOrder } from "./IOrder";
-import { IResponsePage } from "./utils";
+import { IOrder } from './IOrder';
+import { IResponsePage } from './utils';
 
 export type ITicketResponse = IResponsePage<ITicket>;
-
 
 export default interface ITicket {
   id?: number;
