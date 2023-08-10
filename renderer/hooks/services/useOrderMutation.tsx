@@ -1,9 +1,7 @@
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
 import { IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
-import IStockPerProduct, {
-  IStockPerProductPages,
-} from '@/interfaces/IStockPerProduct';
+import IStockPerVariant, { IStockPerVariantPages } from '@/interfaces/IStockPerVariant';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 
@@ -35,7 +33,7 @@ export default function useOrderMutation() {
     return resp;
   });
 }
-//fix
+//FIXME:
 const clientId = 1;
 
 function parseOrderToPayLoad({
@@ -48,7 +46,7 @@ function parseOrderToPayLoad({
       return {
         product: item.product,
         quantity: item.quantity,
-        price: item.product.price,
+        price: item.selectedVariant.price
       };
     }),
     additional_details: additionalDetails,
@@ -61,39 +59,33 @@ function parseOrderToPayLoad({
 async function updateStock(items: ICartItem[]) {
   const productIds = items.map((item) => item.product.id);
 
-  const stockPerProduct = (await strapi.find('stock-per-products', {
+  const stockPerVariant = (await strapi.find('stock-per-variants', {
     filters: {
       product: {
         id: productIds,
       },
     },
-  })) as unknown as IStockPerProductPages;
+  })) as unknown as IStockPerVariantPages;
 
-  const updatedStockPerProduct = stockPerProduct.results.map(
-    (spp): IStockPerProduct => {
-      const item = items.find((i) => i.product.id === spp.product.id);
+  const updatedStockPerVariant = stockPerVariant.results.map(
+    (spv): IStockPerVariant => {
+      const item = items.find((i) => spv.variant === i.selectedVariant.id);
 
-      if (!item) return spp;
+      if (!item) return spv;
 
       const { quantity } = item;
 
-      if (spp.stock < quantity) {
-        throw new Error(
-          `No hay suficiente stock para el producto ${spp.product.name}`,
-        );
-      }
-
       return {
-        stock: spp.stock - quantity,
-      } as IStockPerProduct;
+        ...spv,
+      } as IStockPerVariant;
     },
   );
 
-  const promises = updatedStockPerProduct.map(async (spp) => {
-    const { id, stock } = spp;
+  const promises = updatedStockPerVariant.map(async (spv) => {
+    const { id } = spv;
 
-    return await strapi.update('stock-per-products', id, {
-      stock,
+    return await strapi.update('stock-per-variant', id, {
+      stock: spv.stock
     });
   });
 
@@ -106,6 +98,4 @@ async function updateStock(items: ICartItem[]) {
   ) {
     throw new Error('Error al actualizar el stock');
   }
-
-  return result;
 }

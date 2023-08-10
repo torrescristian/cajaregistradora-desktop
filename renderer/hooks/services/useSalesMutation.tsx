@@ -2,11 +2,9 @@ import strapi from '@/libs/strapi';
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
 import { ISaleItem, ISale, ISaleNativeResponse } from '@/interfaces/ISale';
-import IStockPerProduct, {
-  IStockPerProductPages,
-} from '@/interfaces/IStockPerProduct';
 import { useMutation } from '@tanstack/react-query';
 import { io } from 'socket.io-client';
+import IStockPerVariant, { IStockPerVariantPages } from '@/interfaces/IStockPerVariant';
 
 interface IProps {
   items: ICartItem[];
@@ -60,7 +58,7 @@ function parseSaleToPayload({ items, totalAmount }: IProps): ISale {
   const sale_items = items.map(
     (item): ISaleItem => ({
       product: item.product.id,
-      price: item.product.price,
+      price: item.selectedVariant.price,
       quantity: item.quantity,
     }),
   );
@@ -74,34 +72,33 @@ function parseSaleToPayload({ items, totalAmount }: IProps): ISale {
 async function updateStock(items: ICartItem[]) {
   const productIds = items.map((item) => item.product.id);
 
-  const stockPerProduct = (await strapi.find('stock-per-products', {
+  const stockPerVariant = (await strapi.find('stock-per-variants', {
     filters: {
       product: {
         id: productIds,
       },
     },
-  })) as unknown as IStockPerProductPages;
+  })) as unknown as IStockPerVariantPages;
 
-  const updatedStockPerProduct = stockPerProduct.results.map(
-    (spp): IStockPerProduct => {
-      const item = items.find((i) => i.product.id === spp.product.id);
+  const updatedStockPerVariant = stockPerVariant.results.map(
+    (spv): IStockPerVariant => {
+      const item = items.find((i) => spv.variant === i.selectedVariant.id);
 
-      if (!item) return spp;
+      if (!item) return spv;
 
       const { quantity } = item;
 
       return {
-        ...spp,
-        sales_amount_per_product: spp.sales_amount_per_product + quantity,
-      } as IStockPerProduct;
+        ...spv,
+      } as IStockPerVariant;
     },
   );
 
-  const promises = updatedStockPerProduct.map(async (spp) => {
-    const { id } = spp;
+  const promises = updatedStockPerVariant.map(async (spv) => {
+    const { id } = spv;
 
-    return await strapi.update('stock-per-products', id, {
-      sales_amount_per_product: spp.sales_amount_per_product,
+    return await strapi.update('stock-per-variant', id, {
+      stock: spv.stock
     });
   });
 

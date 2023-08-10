@@ -1,5 +1,4 @@
 import useOrderQuery from '@/hooks/services/useOrderQuery';
-import { Divider } from './Sale/Sale.styles';
 import Loader from './Loader';
 import { parseDateToArgentinianFormat } from '@/libs/utils';
 
@@ -10,74 +9,62 @@ function Order() {
     return <Loader />;
   }
 
+
   return (
-    <section className="flex flex-col items-center w-1/2 gap-5">
+    <section className="flex flex-col items-center w-4/5 gap-5">
       <h1 className="text-2xl font-bold">✍🏻 Lista de ordenes</h1>
 
       {orderQuery.data.map((order) => (
-        <div className="flex flex-col items-center shadow-xl w-3/5 m-3 gap-5 p-10">
-          <p className="text-center font-bold">{order.status}</p>
-          <div className="flex flex-row gap-5 m-5">
-            <h2 className="font-bold text-center">Orden #{order.id} </h2>
-            <button className="btn btn-outline btn-warning">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                />
-              </svg>
-            </button>
-
-            <button className="btn btn-outline btn-error">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                />
-              </svg>
-            </button>
+        <div key={order.id} className="bg-stone-300 w-full justify-between p-10 flex flex-row">
+          <div className='flex flex-col w-max gap-5 justify-between'>
+            <p className='text-2xl font-bold'>
+              Orden # {order.id} - Cliente: {order.clientName}
+            </p>
+            <p className='text-xl'>Direccion: {order.clientAddress}</p>
+            <p>Telefono: {order.clientPhone}</p>
+            <p>{order.additionalDetails}</p>
+            <p>SubTotal: ${order.totalPrice}</p>
+            <p>Descuento: $-1000</p>
+            <p>
+              pago: {order.status}
+            </p>
+            <p>
+              {parseDateToArgentinianFormat(order.createdAt)}
+            </p>
+            <p className='text-xl font-bold'>
+              Total:${order.totalPrice}
+            </p>
           </div>
-          <p className="font-bold text-xl">Nombre: {order.clientName}</p>
-          <p className="font-bold">Teléfono: {order.clientPhone}</p>
-          <p className="font-bold">Dirección: {order.clientAddress}</p>
-          <Divider />
-          <p className="text-xl font-bold text-center">
-            {order.createdAt === order.updatedAt
-              ? 'Fecha de creación:'
-              : 'Fecha de actualización: '}
-            {parseDateToArgentinianFormat(order.updatedAt)}
-          </p>
-          <Divider />
-          <p className="text-xl font-bold text-center gap-5">
-            Detalles: <br />
-            {order.additionalDetails}
-          </p>
-          <Divider />
-          <p>{order.items.map((item) => item.product!.name)}</p>
-          <p>Cantidad: {order.items.map((item) => item.quantity)}</p>
-          <Divider />
-          <p className="text-2xl font-bold">Total: ${order.totalPrice}</p>
-          <button className="btn btn-success text-stone-50">
-            Orden completada
-          </button>
-        </div>
-      ))}
+          <div className='flex flex-col justify-between'>
+            <div className='flex flex-row gap-5 justify-end'>
+              <button className='btn btn-secondary text-stone-50'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                </svg>
+              </button>
+              <button className='btn btn-error text-stone-50'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </button>
+            </div>
+            <div className='flex flex-col gap-5'>
+              {order.items.map((item) => (
+                <div key={item.product?.id} className="flex flex-row p-5 items-center gap-10">
+                  <p>{item.product?.type}</p>
+                  <p>{item.product?.name}</p>
+                  <p>x {item.quantity}</p>
+                  <button className='btn btn-error text-stone-50'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button className='btn btn-success text-stone-50'>Confirmar orden</button>
+          </div>
+        </div>))}
     </section>
   );
 }

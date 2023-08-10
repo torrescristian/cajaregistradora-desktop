@@ -1,8 +1,9 @@
-import IProductUI from './IProduct';
+import IProductUI, { IVariantUI } from './IProduct';
 
 export interface ICartItem {
   product: IProductUI;
   quantity: number;
+  selectedVariant: IVariantUI;
 }
 
 export interface ICartState {

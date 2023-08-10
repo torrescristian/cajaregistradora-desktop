@@ -1,16 +1,19 @@
 import IClient from './IClient';
-import IProduct from './IProduct';
+import IProduct, { IVariant } from './IProduct';
 import { IResponsePage, ISingleResultResponsePage } from './utils';
 
-export interface IOrderItem<PRODUCT = number> {
+export interface IOrderItem<PRODUCT = number, SELECTED_VARIANT = number> {
   quantity: number;
   price: number;
   createdAt?: string;
   updatedAt?: string;
   product?: PRODUCT;
+  selectedVariant: SELECTED_VARIANT;
 }
 
-export type IOrderItemExpanded = IOrderItem<IProduct>;
+export type IOrderItemExpanded = IOrderItem<IProduct, IVariant>;
+
+
 
 export interface IOrderUI {
   id?: number;

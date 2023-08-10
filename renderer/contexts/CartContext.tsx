@@ -48,7 +48,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
 
         if (
           !cartItem.product.isService &&
-          cartItem.quantity >= productPayload.stock
+          cartItem.quantity >= productPayload.defaultVariant.stockPerVariant.stock
         ) {
           return state;
         }
@@ -57,7 +57,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
         return {
           ...state,
           cartItems: newCartItems,
-          totalAmount: fixPrice(state.totalAmount + productPayload.price),
+          totalAmount: fixPrice(state.totalAmount + productPayload.defaultVariant.price),
           totalQuantity: state.totalQuantity + 1,
         };
       }
@@ -69,9 +69,10 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
           {
             product: productPayload,
             quantity: 1,
+            selectedVariant: productPayload.defaultVariant,
           },
         ],
-        totalAmount: fixPrice(state.totalAmount + productPayload.price),
+        totalAmount: fixPrice(state.totalAmount + productPayload.defaultVariant.price),
         totalQuantity: state.totalQuantity + 1,
       };
     }
@@ -87,7 +88,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
             (item: ICartItem) => item.product.id !== productPayload.id,
           ),
           totalAmount: fixPrice(
-            Math.max(state.totalAmount - productPayload.price, 0),
+            Math.max(state.totalAmount - productPayload.defaultVariant.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -106,7 +107,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
             return item;
           }),
           totalAmount: fixPrice(
-            Math.max(state.totalAmount - productPayload.price, 0),
+            Math.max(state.totalAmount - productPayload.defaultVariant.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -127,7 +128,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
         state.totalAmount -
         state.cartItems.reduce((acc: number, item: ICartItem) => {
           if (item.product.id === productPayload.id) {
-            return acc + item.product.price * item.quantity;
+            return acc + item.product.defaultVariant.price * item.quantity;
           }
           return acc;
         }, 0);
@@ -160,7 +161,7 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
         cartItems: state.cartItems.map((item: ICartItem) => {
           if (item.product.id === updatePricePayload.product.id) {
             const newItem = structuredClone(item);
-            newItem.product.price = updatePricePayload.newPrice;
+            newItem.product.defaultVariant.price = updatePricePayload.newPrice;
             return newItem;
           }
           return item;

@@ -1,5 +1,5 @@
 import { IProduct } from './IProduct';
-import { IFixedNativeResponse, INativeResponse, IResponsePage } from './utils';
+import { IFixedNativeResponse, IResponsePage } from './utils';
 
 export interface ISaleItem {
   id?: number;
@@ -8,6 +8,7 @@ export interface ISaleItem {
   createdAt?: string;
   updatedAt?: string;
   product: IProduct | number;
+
 }
 
 export interface ISale {
