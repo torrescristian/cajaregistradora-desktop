@@ -1,9 +1,9 @@
-import { IOrderUI } from './IOrder';
-import IProductUI from './IProduct';
+import IProductUI, { IVariantUI } from './IProduct';
 
 export interface ICartItem {
   product: IProductUI;
   quantity: number;
+  selectedVariant: IVariantUI;
 }
 
 export interface ICartState {
@@ -15,6 +15,7 @@ export interface ICartState {
   clientPhone: string;
   clientAddress: string;
   totalPrice: number;
+  additionalDetails: string;
 }
 
 export interface ICartAction {

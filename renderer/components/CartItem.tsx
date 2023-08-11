@@ -7,10 +7,8 @@ import {
   RemoveProductButton,
 } from './ProductItem.styles';
 import useProductItem from '@/hooks/useProductItem';
-import IProductUI from '@/interfaces/IProduct';
-import { useState } from 'react';
 
-interface ISelectPriceType {
+/* interface ISelectPriceType {
   product: IProductUI;
   onChange: (value: number) => void;
 }
@@ -43,7 +41,7 @@ const SelectPriceType = ({ product, onChange }: ISelectPriceType) => {
     </select>
   );
 };
-
+ */
 const CartItem = ({ product }: ICollapseTitle) => {
   const {
     disabled,
@@ -67,21 +65,20 @@ const CartItem = ({ product }: ICollapseTitle) => {
     >
       <section className="flex flex-1 flex-col gap-y-2">
         <p className="font-bold">{product.name}</p>
-        <SelectPriceType product={product} onChange={handleChange} />
       </section>
       <section className="flex flex-1 flex-col gap-y-2">
         <section className="flex flex-row items-center justify-end whitespace-nowrap">
-          <p>{formatPrice(product.price)} x </p>
+          <p>{formatPrice(product.defaultVariant.price)} x </p>
           <Badge className="mx-2">{cartItemQuantity}</Badge>
-          <p> = {formatPrice(product.price * cartItemQuantity)}</p>
+          <p> = {formatPrice(product.defaultVariant.price * cartItemQuantity)}</p>
         </section>
         <section className="flex flex-row justify-end">
           <p>
             {isService
               ? null
-              : product.stock === 0
-              ? '| Sin stock'
-              : `| ${product.stock} en stock`}
+              : product.defaultVariant.stockPerVariant.stock === 0
+                ? '| Sin stock'
+                : `| ${product.defaultVariant.stockPerVariant.stock} en stock`}
           </p>
           <ClearButton onClick={handleClickClear} />
           <RemoveProductButton onClick={handleClickRemove} />

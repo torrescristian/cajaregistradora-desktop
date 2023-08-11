@@ -13,7 +13,7 @@ export interface ICategory {
 
 export interface ICategoryField {
   id: number;
-  attributes: Omit<ICategory, 'id'>
+  attributes: Omit<ICategory, 'id'>;
 }
 
 export interface ICategoryFieldPopulate {

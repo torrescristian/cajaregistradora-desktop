@@ -4,21 +4,18 @@ import { UpdateProductButton } from '@/components/ProductItem.styles';
 import IProductUI from '@/interfaces/IProduct';
 import ProductVariant from './ProductVariant';
 import { useForm } from 'react-hook-form';
-import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import FormField from '@/components/FormField';
-import useUpdateStockProductMutation from '@/hooks/services/useUpdateStockProductMutation';
 import UploadButton from '@/components/UploadButton';
+import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
+import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 
 interface IProps {
   product: IProductUI;
 }
 interface IFormControl {
-  public_price: number;
-  catalog_price: number;
-  special_price: number;
-  wholesale_price: number;
   stock: number;
   image: string;
+  price: number;
 }
 
 const ProductRow = ({ product }: IProps) => {
@@ -31,23 +28,22 @@ const ProductRow = ({ product }: IProps) => {
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
-      public_price: product.public_price,
-      catalog_price: product.catalog_price,
-      special_price: product.special_price,
-      wholesale_price: product.wholesale_price,
-      stock: product.stock,
+      stock: product.defaultVariant.stockPerVariant.stock,
+      price: product.defaultVariant.price,
+
     },
   });
+  const updateVariantMutation = useUpdateVariantMutation();
   const updateProductMutation = useUpdateProductMutation();
-  const updateStockProductMutation = useUpdateStockProductMutation();
   const onSubmit = (data: IFormControl) => {
     updateProductMutation.mutate({
       ...data,
       id: product.id,
     });
-    updateStockProductMutation.mutate({
-      stock: Number(data.stock),
-      stock_per_product: product.stock_per_product,
+    updateVariantMutation.mutate({
+      newStock: Number(data.stock),
+      stockPerVariantId: product.defaultVariant.stockPerVariant.id,
+      variantPrice: product.defaultVariant.price
     });
   };
 
@@ -86,32 +82,9 @@ const ProductRow = ({ product }: IProps) => {
           <div className="divider">Precios</div>
           <section className="flex w-full justify-around  gap-4">
             <FormField
-              label="Público"
+              label="Precio"
               register={register}
-              formKey="public_price"
-              errors={errors}
-              symbol="$"
-            />
-            <FormField
-              label="Catalogo"
-              register={register}
-              formKey="catalog_price"
-              errors={errors}
-              symbol="$"
-            />
-          </section>
-          <section className="flex w-full justify-around gap-4">
-            <FormField
-              label="Especial"
-              register={register}
-              formKey="special_price"
-              errors={errors}
-              symbol="$"
-            />
-            <FormField
-              label="Por Mayor"
-              register={register}
-              formKey="wholesale_price"
+              formKey="price"
               errors={errors}
               symbol="$"
             />

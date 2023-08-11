@@ -1,7 +1,8 @@
-import { IOrder } from "./IOrder";
-import { IResponsePage } from "./utils";
+import { IOrder } from './IOrder';
+import { IResponsePage } from './utils';
 
 export type ITicketResponse = IResponsePage<ITicket>;
+export type ITicketResponseExpanded = IResponsePage<ITicketExpanded>;
 
 export enum TICKET_STATUS {
   PAID = 'PAID',
@@ -9,10 +10,11 @@ export enum TICKET_STATUS {
   WAITING_FOR_REFUND = 'WAITING_FOR_REFUND',
 }
 
-export default interface ITicket {
+export interface ITicket<ORDER = number> {
   id?: number;
-  date: string;
   total_price: number;
-  order: number | IOrder;
+  order: ORDER;
   status: TICKET_STATUS;
 }
+
+export type ITicketExpanded = ITicket<IOrder>;

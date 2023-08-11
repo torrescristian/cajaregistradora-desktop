@@ -1,6 +1,6 @@
 import strapi from '@/libs/strapi';
 import { getError } from '@/libs/utils';
-import IProductUI, { IProduct, IProductPage } from '@/interfaces/IProduct';
+import IProductUI, { IProductExpanded, IProductPage } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -8,18 +8,17 @@ import { IVariantUI } from '@/interfaces/IProduct';
 
 export const getProductsQueryKey = () => 'products';
 
-const parseProductFacade = (product: IProduct): IProductUI => {
+const parseProductFacade = (product: IProductExpanded): IProductUI => {
   const {
     name,
     id,
     isService,
     variants,
-    public_price,
-    catalog_price,
-    special_price,
-    wholesale_price,
     image,
-    stock_per_product,
+    categories,
+    default_variant,
+    store,
+    type,
   } = product;
 
   const res = {
@@ -29,24 +28,33 @@ const parseProductFacade = (product: IProduct): IProductUI => {
     variants: variants.map(
       (variant) =>
         ({
-          id: variant.id || 0,
-          categories: variant.categories,
-          stock:
-            variant.stock_per_variant.stock_amount_per_variant -
-            variant.stock_per_variant.sales_amount_per_variant,
-          stock_per_variant: variant.stock_per_variant,
+          id: variant.id,
+          name: variant.name,
+          price: variant.price,
+          product: id,
+          stockPerVariant: variant.stock_per_variant
         }) as IVariantUI,
     ),
-    public_price,
-    catalog_price,
-    special_price,
-    wholesale_price,
     image: (image as unknown as any)?.formats?.thumbnail?.url || '/default.png',
-    stock:
-      stock_per_product.stock_amount_per_product -
-      stock_per_product.sales_amount_per_product,
-    price: public_price,
-    stock_per_product,
+    categories: categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      product: category.products,
+      store: category.store,
+      emoji: category.emoji,
+      products: category.products,
+      childrens: category.childrens,
+      parent: category.parent,
+    })),
+    defaultVariant: {
+      id: default_variant.id,
+      name: default_variant.name,
+      price: default_variant.price,
+      product: id,
+      stockPerVariant: default_variant.stock_per_variant
+    }as IVariantUI,
+    store: store,
+    type: type,
   };
   return res;
 };
@@ -83,6 +91,8 @@ export default function useProductsQuery({
             'variants.categories.parent',
             'variants.stock_per_variant',
             'image',
+            'default_variant',
+            'default_variant.stock_per_variant',
           ],
           page: page || 1,
           pageSize: 9,
@@ -91,25 +101,25 @@ export default function useProductsQuery({
         options.filters =
           selectedCategories?.length === 0
             ? {
-                name: {
-                  $containsi: query || '',
-                },
-              }
+              name: {
+                $containsi: query || '',
+              },
+            }
             : {
-                name: {
-                  $containsi: query || '',
-                },
-                $or: [
-                  {
-                    variants: {
-                      categories: selectedCategories,
-                    },
-                  },
-                  {
+              name: {
+                $containsi: query || '',
+              },
+              $or: [
+                {
+                  variants: {
                     categories: selectedCategories,
                   },
-                ],
-              };
+                },
+                {
+                  categories: selectedCategories,
+                },
+              ],
+            };
 
         const res = (await strapi.find(
           getProductsQueryKey(),

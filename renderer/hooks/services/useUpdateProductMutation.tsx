@@ -10,24 +10,12 @@ const parseProductToPayload = (
   const {
     id,
     name,
-    catalog_price,
-    public_price,
-    special_price,
-    wholesale_price,
-
-    stock_per_product,
     image,
   } = product;
 
   return {
     id,
     name,
-    catalog_price,
-    public_price,
-    special_price,
-    wholesale_price,
-    stock_per_product,
-
     image,
   };
 };
