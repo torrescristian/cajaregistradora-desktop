@@ -1,6 +1,6 @@
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
-import { IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
+import { IOrder, IOrderItem, ORDER_STATUS } from '@/interfaces/IOrder';
 import IStockPerVariant, { IStockPerVariantPages } from '@/interfaces/IStockPerVariant';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
@@ -40,13 +40,15 @@ function parseOrderToPayLoad({
   items,
   totalPrice,
   additionalDetails,
+
 }: IProps): IOrder {
   return {
-    items: items.map((item) => {
+    items: items.map((item) : IOrderItem => {
       return {
-        product: item.product,
+        product: item.product.id,
         quantity: item.quantity,
-        price: item.selectedVariant.price
+        price: item.selectedVariant.price,
+        selectedVariant: item.selectedVariant.id,        
       };
     }),
     additional_details: additionalDetails,

@@ -15,21 +15,21 @@ export type IOrderItemExpanded = IOrderItem<IProduct, IVariant>;
 
 
 
-export interface IOrderUI {
+export interface IOrderUI<ORDER_ITEM = IOrderItemExpanded> {
   id?: number;
   clientName: string;
   clientPhone: string;
   clientAddress: string;
   totalPrice: number;
   additionalDetails: string;
-  items: IOrderItemExpanded[];
+  items: ORDER_ITEM[];
   createdAt?: string;
   updatedAt?: string;
   status: ORDER_STATUS;
 }
 
-export interface IOrder<CLIENT = number> {
-  items: IOrderItemExpanded[];
+export interface IOrder<CLIENT = number, ORDER_ITEM = IOrderItem> {
+  items: ORDER_ITEM[];
   id?: number;
   total_price: number;
   additional_details: string;
@@ -46,5 +46,4 @@ export enum ORDER_STATUS {
   PENDING = 'PENDING',
   PAID = 'PAID',
   CANCELED = 'CANCELED',
-  WAITING_FOR_REFUND = 'WAITING_FOR_REFUND',
 }

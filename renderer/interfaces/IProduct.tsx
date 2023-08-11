@@ -51,6 +51,8 @@ export interface IProductUpdate {
   data: Partial<IProduct>;
 }
 
+export type PRODUCT_TYPE = 'SODA' | 'PIZZA' | 'HAMBURGER' | 'PAPAS';
+
 export default interface IProductUI {
   id: number;
   name: string;
@@ -60,6 +62,6 @@ export default interface IProductUI {
   variants: IVariantUI[];
   image: string;
   defaultVariant: IVariantUI;
-  type : string;
+  type : PRODUCT_TYPE;
   disabled?: boolean;
 }

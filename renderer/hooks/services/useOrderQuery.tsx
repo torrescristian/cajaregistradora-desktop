@@ -3,7 +3,7 @@ import strapi from '@/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 import IClient from '@/interfaces/IClient';
 
-const getOrderQueryKey = () => 'orders';
+export const getOrderQueryKey = () => 'orders';
 
 const parseOrderFacade = (order: IOrderResponse): IOrderUI[] => {
   return order.results.map((props) => {
