@@ -24,13 +24,13 @@ export interface IVariantPayload {
 
 export interface IVariantUI {
   id: number;
-  product:number;
-  price:number;
+  product: number;
+  price: number;
   stockPerVariant: IStockPerVariant;
   name: string;
 }
 
-export interface IProduct<DEFAULT_VARIANT = number> {
+export interface IProduct<DEFAULT_VARIANT = IVariant> {
   id: number;
   name: string;
   categories: ICategory[];
@@ -39,12 +39,12 @@ export interface IProduct<DEFAULT_VARIANT = number> {
   variants: IVariant[];
   default_variant: DEFAULT_VARIANT;
   image: string;
-  type: string;
+  type: PRODUCT_TYPE;
   updatedAt: string;
   createdAt: string;
 }
 
-export type IProductExpanded = IProduct<IVariant>
+
 export type IProductPage = IResponsePage<IProduct<IVariant>>;
 
 export interface IProductUpdate {
@@ -62,6 +62,6 @@ export default interface IProductUI {
   variants: IVariantUI[];
   image: string;
   defaultVariant: IVariantUI;
-  type : PRODUCT_TYPE;
+  type: PRODUCT_TYPE;
   disabled?: boolean;
 }

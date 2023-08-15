@@ -2,7 +2,7 @@ import Loader from '@/components/Loader';
 import OrderItem from '@/components/OrderItem';
 import PageLayout from '@/components/PageLayout';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
-import { IOrderExpanded } from '@/interfaces/IOrder';
+import { IOrder } from '@/interfaces/IOrder';
 import { TICKET_STATUS } from '@/interfaces/ITicket';
 import { parseDateToArgentinianFormat } from '@/libs/utils';
 import {  TrashIcon } from '@heroicons/react/24/solid';
@@ -32,9 +32,9 @@ const Ventas = () => {
 
   const ref = useRef<HTMLDialogElement>(null);
 
-  const [selectedOrder, setSelectOrder] = useState<IOrderExpanded | null>(null);
+  const [selectedOrder, setSelectOrder] = useState<IOrder | null>(null);
 
-  const handleClickMoreInfo = (order: IOrderExpanded) => () => {
+  const handleClickMoreInfo = (order: IOrder) => () => {
     setSelectOrder(order);
     ref.current?.showModal()
   }

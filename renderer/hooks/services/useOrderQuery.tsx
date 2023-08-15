@@ -1,11 +1,11 @@
-import { IOrderResponse, IOrderResponseExpanded, IOrderUI, ORDER_STATUS } from '@/interfaces/IOrder';
+import { IOrderResponse, IOrderUI, ORDER_STATUS } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 import IClient from '@/interfaces/IClient';
 
 export const getOrderQueryKey = () => 'orders';
 
-const parseOrderFacade = (order: IOrderResponseExpanded): IOrderUI[] => {
+const parseOrderFacade = (order: IOrderResponse): IOrderUI[] => {
   return order.results.map((props) => {
     const { name, phone_number, address } = props.client as IClient;
     return {
@@ -28,9 +28,9 @@ export default function useOrderQuery() {
     const orderResponse = (await strapi.find('orders', {
       filters: {
         status: ORDER_STATUS.PENDING,
-        },
+      },
       populate: ['client', 'items.product'],
-    })) as unknown as IOrderResponseExpanded;
+    })) as unknown as IOrderResponse;
     return parseOrderFacade(orderResponse);
   });
 }

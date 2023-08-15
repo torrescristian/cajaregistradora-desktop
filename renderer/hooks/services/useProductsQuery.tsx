@@ -1,6 +1,6 @@
 import strapi from '@/libs/strapi';
 import { getError } from '@/libs/utils';
-import IProductUI, { IProductExpanded, IProductPage } from '@/interfaces/IProduct';
+import IProductUI, { IProduct, IProductPage } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -8,7 +8,7 @@ import { IVariantUI } from '@/interfaces/IProduct';
 
 export const getProductsQueryKey = () => 'products';
 
-const parseProductFacade = (product: IProductExpanded): IProductUI => {
+const parseProductFacade = (product: IProduct): IProductUI => {
   const {
     name,
     id,
@@ -52,9 +52,10 @@ const parseProductFacade = (product: IProductExpanded): IProductUI => {
       price: default_variant.price,
       product: id,
       stockPerVariant: default_variant.stock_per_variant
-    }as IVariantUI,
+    } as IVariantUI,
     store: store,
     type: type,
+
   };
   return res;
 };
