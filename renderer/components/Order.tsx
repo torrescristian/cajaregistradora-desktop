@@ -1,10 +1,10 @@
 import { parseDateToArgentinianFormat } from '@/libs/utils';
-import { IOrderUI } from '@/interfaces/IOrder';
+import { IOrderUI, ORDER_STATUS } from '@/interfaces/IOrder';
 import OrderItem from './OrderItem';
 import { useState } from 'react';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
 import Loader from './Loader';
-import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { CalendarDaysIcon, CheckIcon, DevicePhoneMobileIcon, MapPinIcon, PencilIcon, ShoppingCartIcon, TrashIcon, UserIcon } from '@heroicons/react/24/solid';
 import { twMerge } from 'tailwind-merge';
 import { useForm } from 'react-hook-form';
 import FormFieldText from './FormFieldText';
@@ -59,6 +59,31 @@ function Order({ order }: IProps) {
 
   if (createTicketMutation.isError) {
     return <p>Error</p>
+  }
+
+  function statusTraslate(orderStatus: ORDER_STATUS) {
+    switch (orderStatus) {
+      case ORDER_STATUS.PAID:
+        return 'Pagado'
+      case ORDER_STATUS.CANCELED:
+        return 'Cancelado'
+      case ORDER_STATUS.PENDING:
+        return 'Pendiente'
+      default:
+        return ''
+    }
+  }
+  function statusColor(orderStatus: ORDER_STATUS) {
+    switch (orderStatus) {
+      case ORDER_STATUS.PAID:
+        return 'text-success'
+      case ORDER_STATUS.CANCELED:
+        return 'text-error'
+      case ORDER_STATUS.PENDING:
+        return 'text-yellow-500'
+      default:
+        return ''
+    }
   }
 
   return (
@@ -127,16 +152,29 @@ function Order({ order }: IProps) {
           :
           <div className='flex flex-col gap-4'>
             <p className="text-2xl font-bold">
-              Orden # {order.id} - Cliente: {order.clientName}
+              <ShoppingCartIcon className='w-5 inline' /> Orden # {order.id} | <UserIcon className='w-5 inline' /> {order.clientName}
             </p>
-            <p className="text-xl">Direccion: {order.clientAddress}</p>
-            <p>Telefono: {order.clientPhone}</p>
-            <p>{order.additionalDetails}</p>
-            <p>SubTotal: ${order.totalPrice}</p>
-            <p>Descuento: $-1000</p>
-            <p>pago: {order.status}</p>
-            <p>{parseDateToArgentinianFormat(order.createdAt)}</p>
-            <p className="text-xl font-bold">Total:${order.totalPrice}</p>
+            <p className='flex flex-row items-center gap-3'> <CalendarDaysIcon className='w-5 inline' /> {parseDateToArgentinianFormat(order.createdAt)}</p>
+            <p className="flex flex-row items-center gap-3"><MapPinIcon className='w-5 inline' /> {order.clientAddress}</p>
+            <p className='flex flex-row items-center gap-3'><DevicePhoneMobileIcon className='w-5 inline' /> {order.clientPhone}</p>
+            {order.additionalDetails && <p>{order.additionalDetails}</p>}
+            <p>SubTotal: {' '}
+              <span className='text-green-600'>
+                ${order.totalPrice}
+              </span>
+            </p>
+            <p>Descuento: {'  '}
+              <span className='text-red-600'>
+                $1000
+              </span>
+              
+            </p>
+            <p>pago: {' '}
+            <span className={twMerge(statusColor(order.status))}>
+            {statusTraslate(order.status)}
+            </span>
+            </p>
+            <p className="text-xl font-bold">Total: ${order.totalPrice}</p>
           </div>
         }
       </div>

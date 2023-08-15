@@ -1,4 +1,4 @@
-import { IOrder, IOrderExpanded } from './IOrder';
+import {  IOrderExpanded } from './IOrder';
 import { IResponsePage } from './utils';
 
 export type ITicketResponse = IResponsePage<ITicket>;
