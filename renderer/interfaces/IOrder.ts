@@ -12,9 +12,6 @@ export interface IOrderItem<PRODUCT = number, SELECTED_VARIANT = number> {
 }
 
 export type IOrderItemExpanded = IOrderItem<IProduct, IVariant>;
-
-
-
 export interface IOrderUI<ORDER_ITEM = IOrderItemExpanded> {
   id?: number;
   clientName: string;
@@ -38,7 +35,8 @@ export interface IOrder<CLIENT = number, ORDER_ITEM = IOrderItem> {
   updatedAt?: string;
   status: ORDER_STATUS;
 }
-
+export type IOrderExpanded = IOrder<IClient, IOrderItemExpanded>;
+export type IOrderResponseExpanded = IResponsePage<IOrderExpanded>;
 export type IOrderResponse = IResponsePage<IOrder<IClient>>;
 export type IOrderSingleResponse = ISingleResultResponsePage<IOrder<IClient>>;
 

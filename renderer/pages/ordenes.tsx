@@ -5,9 +5,11 @@ import React from 'react'
 
 function ordenes() {
   const orderQuery = useOrderQuery();
-
-  if (!orderQuery.data) {
+  if (orderQuery.isLoading) {
     return <Loader />;
+  }
+  if (orderQuery.isError) {
+    return <p>Error</p>;
   }
   return (
     <section className="flex flex-col items-center w-4/5 gap-5">
