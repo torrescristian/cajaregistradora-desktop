@@ -5,7 +5,6 @@ import React from 'react'
 
 function ordenes() {
   const orderQuery = useOrderQuery();
-
   if (orderQuery.isLoading) {
     return <Loader />;
   }

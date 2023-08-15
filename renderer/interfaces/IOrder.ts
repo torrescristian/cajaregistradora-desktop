@@ -12,7 +12,6 @@ export interface IOrderItem<PRODUCT = number, SELECTED_VARIANT = number> {
 }
 
 export type IOrderItemExpanded = IOrderItem<IProduct, IVariant>;
-
 export interface IOrderUI<ORDER_ITEM = IOrderItemExpanded> {
   id?: number;
   clientName: string;

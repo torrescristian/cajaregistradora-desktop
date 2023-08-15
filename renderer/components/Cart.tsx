@@ -55,7 +55,9 @@ const Cart = () => {
   const totalPrice = useCartSelect(getTotalAmount);
 
   const handleSubmit = () => {
+
     //FIXME: no limpia el carrito
+
     orderMutation.mutate({
       items,
       clientName,

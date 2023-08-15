@@ -35,12 +35,14 @@ function OrderItem({ item,isEditing }:IProps) {
     return (
         <div
             key={item.product!.id}
+
             className={twMerge("flex flex-row whitespace-nowrap gap-2 ", isEditing? "justify-end items-center ": "justify-start items-end")}
         >
             <p className='text-2xl'>{convertToEmoji(item.product!.type)}</p>
             <p>{item.quantity} -</p>
             <p> {item.product!.name}</p>
             {isEditing ?<RemoveProductButton onClick={handleClickRemove}  />  : null }
+
         </div>
     )
 }
