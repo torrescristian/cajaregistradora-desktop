@@ -2,14 +2,15 @@ import useProductItem from "@/hooks/useProductItem";
 import {  IOrderItemExpanded } from "@/interfaces/IOrder";
 import { PRODUCT_TYPE } from "@/interfaces/IProduct"
 import { RemoveProductButton } from "./ProductItem.styles";
+import { twMerge } from "tailwind-merge";
 interface IProps{
     item : IOrderItemExpanded;
+    isEditing : boolean;
 }
-function OrderItem({ item }:IProps) {
+function OrderItem({ item,isEditing }:IProps) {
 
     const {
         handleClickRemove,
-        isService
       } = useProductItem(item.product!);
 
     function convertToEmoji(productType?: PRODUCT_TYPE) {
@@ -34,12 +35,12 @@ function OrderItem({ item }:IProps) {
     return (
         <div
             key={item.product!.id}
-            className="flex flex-row p-5 whitespace-nowrap justify-end items-center gap-5 "
+            className={twMerge("flex flex-row whitespace-nowrap gap-2 ", isEditing? "justify-end items-center ": "justify-start items-end")}
         >
-            <p className='text-3xl'>{convertToEmoji(item.product!.type)}</p>
-            <p>{item.product!.name}</p>
-            <p>x{item.quantity}</p>
-            <RemoveProductButton onClick={handleClickRemove}  />
+            <p className='text-2xl'>{convertToEmoji(item.product!.type)}</p>
+            <p>{item.quantity} -</p>
+            <p> {item.product!.name}</p>
+            {isEditing ?<RemoveProductButton onClick={handleClickRemove}  />  : null }
         </div>
     )
 }

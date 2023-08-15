@@ -1,4 +1,4 @@
-import { IOrder } from './IOrder';
+import { IOrder, IOrderExpanded } from './IOrder';
 import { IResponsePage } from './utils';
 
 export type ITicketResponse = IResponsePage<ITicket>;
@@ -17,4 +17,4 @@ export interface ITicket<ORDER = number> {
   status: TICKET_STATUS;
 }
 
-export type ITicketExpanded = ITicket<IOrder>;
+export type ITicketExpanded = ITicket<IOrderExpanded>;
