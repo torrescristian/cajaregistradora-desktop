@@ -1,10 +1,10 @@
 import strapi from '@/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
-import {TICKET_STATUS, ITicketExpanded, ITicketResponseExpanded } from '@/interfaces/ITicket';
+import { TICKET_STATUS, ITicket, ITicketResponse } from '@/interfaces/ITicket';
 
 export const getTicketsQueryKey = () => 'tickets';
 
-const parseTicketFacade = (ticketResponse: ITicketResponseExpanded): ITicketExpanded[] => {
+const parseTicketFacade = (ticketResponse: ITicketResponse): ITicket[] => {
   return ticketResponse.results.map((ticket) => {
     return {
       id: ticket.id,
@@ -16,9 +16,9 @@ const parseTicketFacade = (ticketResponse: ITicketResponseExpanded): ITicketExpa
 };
 
 export default function useOrderQuery() {
-  return useQuery<ITicketExpanded[]>([getTicketsQueryKey()], async () => {
+  return useQuery<ITicket[]>([getTicketsQueryKey()], async () => {
     const ticketResponse = await strapi.find(getTicketsQueryKey(),
-    { populate: ['order','order.client','order.items.product'] }) as unknown as ITicketResponseExpanded;
+      { populate: ['order', 'order.client', 'order.items.product'] }) as unknown as ITicketResponse;
     return parseTicketFacade(ticketResponse);
   });
 }

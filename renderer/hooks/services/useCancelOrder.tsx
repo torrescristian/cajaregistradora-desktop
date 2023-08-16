@@ -23,9 +23,10 @@ export default function useCancelOrderMutation() {
       const { stock } = stockPerVariant;
       const newStock = stock + quantity;
       await updateVariantMutation.mutateAsync({
-        stock: newStock,
-        stockPerVariant,
-        variant: selectedVariant
+        newStock: newStock,
+        stockPerVariantId : stockPerVariant.id!,
+        variantId : selectedVariant.id!,
+        price: selectedVariant.price,
       });
     });
 

@@ -97,7 +97,7 @@ async function updateStock(items: ICartItem[]) {
   const promises = updatedStockPerVariant.map(async (spv) => {
     const { id } = spv;
 
-    return await strapi.update('stock-per-variant', id, {
+    return await strapi.update('stock-per-variants', id, {
       stock: spv.stock
     });
   });

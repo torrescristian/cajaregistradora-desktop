@@ -8,22 +8,23 @@ import { getTicketsQueryKey } from './useTicketQuery';
 import { ORDER_STATUS } from '@/interfaces/IOrder';
 
 
-type ICreateTicketMutation = Omit<ITicket, 'id' | 'status'>;
+type ICreateTicketMutation = Omit<ITicket<number>, 'id' | 'status'>;
 
 export default function useCreateTicketMutation() {
   const queryClient = useQueryClient();
-  return useMutation(async (data: ICreateTicketMutation) => {
-    await TicketSchema().validate(data);
+  return useMutation(async (ticket: ICreateTicketMutation) => {
+    await TicketSchema().validate(ticket);
     const ticketRes = await strapi.create(getTicketsQueryKey(), {
-      ...data,
+      ...ticket,
       status: TICKET_STATUS.PAID,
-    } as ITicket);
+    } as ITicket<number>);
 
-    const orderRes = await strapi.update(getOrderQueryKey(),data.order,
+    const orderRes = await strapi.update(getOrderQueryKey(),ticket.order,
     {
       status: ORDER_STATUS.PAID
     });
-    queryClient.invalidateQueries([getOrderQueryKey(),getTicketsQueryKey()]);
+     queryClient.invalidateQueries([getOrderQueryKey()]);
+     queryClient.invalidateQueries([getTicketsQueryKey()]);
     return [ticketRes,orderRes];
   });
 }
