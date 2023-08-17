@@ -1,7 +1,6 @@
 import Loader from '@/components/Loader';
 import Order from '@/components/Order'
 import useOrderQuery from '@/hooks/services/useOrderQuery';
-import React from 'react'
 
 function ordenes() {
   const orderQuery = useOrderQuery();

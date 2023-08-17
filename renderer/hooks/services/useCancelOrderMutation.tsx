@@ -7,12 +7,12 @@ import useUpdateVariantMutation from './useUpdateVariantMutation';
 
 export default function useCancelOrderMutation() {
   const updateVariantMutation = useUpdateVariantMutation();
-
+  
   return useMutation(async (orderId: number) => {
     await yup.number().validate(orderId);
 
     const updateOrderResult = (await strapi.update('orders', orderId, {
-      status: ORDER_STATUS.CANCELED,
+      status: ORDER_STATUS.CANCELLED,
     })) as unknown as IOrderSingleResponse;
 
     await OrderSchema().validate(updateOrderResult.results);

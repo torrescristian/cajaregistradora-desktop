@@ -40,5 +40,5 @@ export type IOrderSingleResponse = ISingleResultResponsePage<IOrder>;
 export enum ORDER_STATUS {
   PENDING = 'PENDING',
   PAID = 'PAID',
-  CANCELED = 'CANCELED',
+  CANCELLED = 'CANCELLED',
 }

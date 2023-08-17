@@ -8,6 +8,7 @@ import { CalendarDaysIcon, CheckIcon, DevicePhoneMobileIcon, MapPinIcon, PencilI
 import { twMerge } from 'tailwind-merge';
 import { useForm } from 'react-hook-form';
 import FormFieldText from './FormFieldText';
+import useCancelOrderMutation from '@/hooks/services/useCancelOrderMutation';
 
 interface IProps {
   order: IOrderUI
@@ -41,7 +42,7 @@ function Order({ order }: IProps) {
     setIsEditing(!isEditing);
   }
 
-
+  const cancelOrderMutation = useCancelOrderMutation();
   const createTicketMutation = useCreateTicketMutation();
 
   const handleSubmit = () => {
@@ -51,6 +52,11 @@ function Order({ order }: IProps) {
         total_price: order.totalPrice
       })
 
+  }
+  const handleCancelOrder = () =>{
+    cancelOrderMutation.mutate(
+      order.id!
+    )    
   }
 
   if (createTicketMutation.isLoading) {
@@ -65,7 +71,7 @@ function Order({ order }: IProps) {
     switch (orderStatus) {
       case ORDER_STATUS.PAID:
         return 'Pagado'
-      case ORDER_STATUS.CANCELED:
+      case ORDER_STATUS.CANCELLED:
         return 'Cancelado'
       case ORDER_STATUS.PENDING:
         return 'Pendiente'
@@ -77,7 +83,7 @@ function Order({ order }: IProps) {
     switch (orderStatus) {
       case ORDER_STATUS.PAID:
         return 'text-success'
-      case ORDER_STATUS.CANCELED:
+      case ORDER_STATUS.CANCELLED:
         return 'text-error'
       case ORDER_STATUS.PENDING:
         return 'text-yellow-500'
@@ -187,7 +193,7 @@ function Order({ order }: IProps) {
             {isEditing ? <CheckIcon className='w-full h-6' /> : <PencilIcon className='w-full h-6 ' />}
 
           </button>
-          <button className="btn btn-error text-stone-50">
+          <button className="btn btn-error text-stone-50" onClick={handleCancelOrder}>
             <TrashIcon className='w-full h-6 ' />
           </button>
         </div>
