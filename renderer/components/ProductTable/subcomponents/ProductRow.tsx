@@ -30,7 +30,6 @@ const ProductRow = ({ product }: IProps) => {
     defaultValues: {
       stock: product.defaultVariant.stockPerVariant.stock,
       price: product.defaultVariant.price,
-
     },
   });
   const updateVariantMutation = useUpdateVariantMutation();
@@ -43,7 +42,7 @@ const ProductRow = ({ product }: IProps) => {
     updateVariantMutation.mutate({
       newStock: Number(data.stock),
       stockPerVariantId: product.defaultVariant.stockPerVariant.id,
-      variantPrice: product.defaultVariant.price
+      variantPrice: product.defaultVariant.price,
     });
   };
 

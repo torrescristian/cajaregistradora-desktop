@@ -7,7 +7,7 @@ import useUpdateVariantMutation from './useUpdateVariantMutation';
 
 export default function useCancelOrderMutation() {
   const updateVariantMutation = useUpdateVariantMutation();
-  
+
   return useMutation(async (orderId: number) => {
     await yup.number().validate(orderId);
 
@@ -18,14 +18,14 @@ export default function useCancelOrderMutation() {
     await OrderSchema().validate(updateOrderResult.results);
 
     const promises = updateOrderResult.results.items.map(async (item) => {
-      const {quantity,selectedVariant } = item;
+      const { quantity, selectedVariant } = item;
       const stockPerVariant = selectedVariant.stock_per_variant;
       const { stock } = stockPerVariant;
       const newStock = stock + quantity;
       await updateVariantMutation.mutateAsync({
         newStock: newStock,
-        stockPerVariantId : stockPerVariant.id!,
-        variantId : selectedVariant.id!,
+        stockPerVariantId: stockPerVariant.id!,
+        variantId: selectedVariant.id!,
         price: selectedVariant.price,
       });
     });

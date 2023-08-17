@@ -32,7 +32,7 @@ const parseProductFacade = (product: IProduct): IProductUI => {
           name: variant.name,
           price: variant.price,
           product: id,
-          stockPerVariant: variant.stock_per_variant
+          stockPerVariant: variant.stock_per_variant,
         }) as IVariantUI,
     ),
     image: (image as unknown as any)?.formats?.thumbnail?.url || '/default.png',
@@ -51,11 +51,10 @@ const parseProductFacade = (product: IProduct): IProductUI => {
       name: default_variant.name,
       price: default_variant.price,
       product: id,
-      stockPerVariant: default_variant.stock_per_variant
+      stockPerVariant: default_variant.stock_per_variant,
     } as IVariantUI,
     store: store,
     type: type,
-
   };
   return res;
 };
@@ -102,25 +101,25 @@ export default function useProductsQuery({
         options.filters =
           selectedCategories?.length === 0
             ? {
-              name: {
-                $containsi: query || '',
-              },
-            }
+                name: {
+                  $containsi: query || '',
+                },
+              }
             : {
-              name: {
-                $containsi: query || '',
-              },
-              $or: [
-                {
-                  variants: {
+                name: {
+                  $containsi: query || '',
+                },
+                $or: [
+                  {
+                    variants: {
+                      categories: selectedCategories,
+                    },
+                  },
+                  {
                     categories: selectedCategories,
                   },
-                },
-                {
-                  categories: selectedCategories,
-                },
-              ],
-            };
+                ],
+              };
 
         const res = (await strapi.find(
           getProductsQueryKey(),

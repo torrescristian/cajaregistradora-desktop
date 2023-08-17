@@ -1,5 +1,5 @@
 import Loader from '@/components/Loader';
-import Order from '@/components/Order'
+import Order from '@/components/Order';
 import useOrderQuery from '@/hooks/services/useOrderQuery';
 
 function ordenes() {
@@ -18,8 +18,7 @@ function ordenes() {
         <Order key={order.id} order={order} />
       ))}
     </section>
-
-  )
+  );
 }
 
-export default ordenes
+export default ordenes;

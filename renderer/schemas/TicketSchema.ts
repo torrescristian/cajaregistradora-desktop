@@ -11,6 +11,5 @@ const TicketSchema = (order: any = OrderSchema()) =>
     .defined()
     .required();
 
-
-export const TicketPayloadSchema = () => TicketSchema(yup.number())
+export const TicketPayloadSchema = () => TicketSchema(yup.number());
 export default TicketSchema;

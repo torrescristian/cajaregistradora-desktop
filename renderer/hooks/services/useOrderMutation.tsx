@@ -1,7 +1,9 @@
 import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
 import { IOrder, IOrderItem, ORDER_STATUS } from '@/interfaces/IOrder';
-import IStockPerVariant, { IStockPerVariantPages } from '@/interfaces/IStockPerVariant';
+import IStockPerVariant, {
+  IStockPerVariantPages,
+} from '@/interfaces/IStockPerVariant';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 
@@ -40,15 +42,14 @@ function parseOrderToPayLoad({
   items,
   totalPrice,
   additionalDetails,
-
-}: IProps): IOrder<number,IOrderItem<number,number>> {
+}: IProps): IOrder<number, IOrderItem<number, number>> {
   return {
-    items: items.map((item) : IOrderItem<number,number> => {
+    items: items.map((item): IOrderItem<number, number> => {
       return {
         product: item.product.id,
         quantity: item.quantity,
         price: item.selectedVariant.price,
-        selectedVariant: item.selectedVariant.id,        
+        selectedVariant: item.selectedVariant.id,
       };
     }),
     additional_details: additionalDetails,
@@ -71,25 +72,28 @@ async function updateStock(items: ICartItem[]) {
 
   console.log(stockPerVariant);
   const updatedStockPerVariant = stockPerVariant.data.map(
-    (spv): Pick<IStockPerVariant,"id" | "stock"> => {
-      const item = items.find((i) => spv.attributes.variant === i.selectedVariant.id);
+    (spv): Pick<IStockPerVariant, 'id' | 'stock'> => {
+      const item = items.find(
+        (i) => spv.attributes.variant === i.selectedVariant.id,
+      );
 
-      if (!item) return{
-        id: spv.id,
-        stock : spv.attributes.stock,
-      } 
+      if (!item)
+        return {
+          id: spv.id,
+          stock: spv.attributes.stock,
+        };
       return {
-        id : spv.id,
-        stock : spv.attributes.stock - item.quantity,
-      }
-    }
+        id: spv.id,
+        stock: spv.attributes.stock - item.quantity,
+      };
+    },
   );
 
   const promises = updatedStockPerVariant.map(async (spv) => {
     const { id } = spv;
 
     return await strapi.update('stock-per-variants', id!, {
-      stock: spv.stock
+      stock: spv.stock,
     });
   });
 

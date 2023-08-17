@@ -1,4 +1,4 @@
-import { IFixedNativeResponse } from "./utils";
+import { IFixedNativeResponse } from './utils';
 
 export type IStockPerVariantPages = IFixedNativeResponse<IStockPerVariant>;
 

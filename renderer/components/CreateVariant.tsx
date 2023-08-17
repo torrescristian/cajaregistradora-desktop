@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SelectCategories from '@/pages/admin/generador-de-productos-y-variantes/subcomponents/SelectCategories';
 import ErrorMessage from './ErrorMessage';
 
-
 const SubmitButton = ({ isLoading }: { isLoading: boolean }) => {
   if (isLoading) return <Loader />;
 

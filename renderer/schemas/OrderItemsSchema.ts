@@ -6,7 +6,7 @@ const OrderItemsSchema = (product: any = yup.number()) =>
     quantity: yup.number().required(),
     price: yup.number().required(),
     product,
-    selectedVariant : VariantSchema()
+    selectedVariant: VariantSchema(),
   });
 
 export default OrderItemsSchema;

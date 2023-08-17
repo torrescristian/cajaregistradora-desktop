@@ -70,15 +70,18 @@ const CartItem = ({ product }: ICollapseTitle) => {
         <section className="flex flex-row items-center justify-end whitespace-nowrap">
           <p>{formatPrice(product.defaultVariant.price)} x </p>
           <Badge className="mx-2">{cartItemQuantity}</Badge>
-          <p> = {formatPrice(product.defaultVariant.price * cartItemQuantity)}</p>
+          <p>
+            {' '}
+            = {formatPrice(product.defaultVariant.price * cartItemQuantity)}
+          </p>
         </section>
         <section className="flex flex-row justify-end">
           <p>
             {isService
               ? null
               : product.defaultVariant.stockPerVariant.stock === 0
-                ? '| Sin stock'
-                : `| ${product.defaultVariant.stockPerVariant.stock} en stock`}
+              ? '| Sin stock'
+              : `| ${product.defaultVariant.stockPerVariant.stock} en stock`}
           </p>
           <ClearButton onClick={handleClickClear} />
           <RemoveProductButton onClick={handleClickRemove} />

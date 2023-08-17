@@ -4,7 +4,9 @@ import { ICartItem } from '@/interfaces/ICart';
 import { ISaleItem, ISale, ISaleNativeResponse } from '@/interfaces/ISale';
 import { useMutation } from '@tanstack/react-query';
 import { io } from 'socket.io-client';
-import IStockPerVariant, { IStockPerVariantPages } from '@/interfaces/IStockPerVariant';
+import IStockPerVariant, {
+  IStockPerVariantPages,
+} from '@/interfaces/IStockPerVariant';
 
 interface IProps {
   items: ICartItem[];
@@ -98,7 +100,7 @@ async function updateStock(items: ICartItem[]) {
     const { id } = spv;
 
     return await strapi.update('stock-per-variants', id, {
-      stock: spv.stock
+      stock: spv.stock,
     });
   });
 

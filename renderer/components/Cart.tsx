@@ -55,7 +55,6 @@ const Cart = () => {
   const totalPrice = useCartSelect(getTotalAmount);
 
   const handleSubmit = () => {
-
     //FIXME: no limpia el carrito
 
     orderMutation.mutate({
@@ -95,7 +94,6 @@ const Cart = () => {
           </p>
         </section>
         <section className="w-1/2">
-
           {items.length ? (
             <button
               onClick={handleSubmit}

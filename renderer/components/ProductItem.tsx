@@ -17,10 +17,10 @@ const ProductItem = ({ product }: ICollapseTitle) => {
       >
         <div className="flex flex-col gap-5">
           <p className="font-bold text-lg">{product.name} </p>
-            <p>${product.defaultVariant.price}</p>
+          <p>${product.defaultVariant.price}</p>
           <p>
             {isService
-              ? "servicio"
+              ? 'servicio'
               : product.defaultVariant.stockPerVariant.stock === 0
               ? ' Sin stock'
               : ` ${product.defaultVariant.stockPerVariant.stock} en stock`}
