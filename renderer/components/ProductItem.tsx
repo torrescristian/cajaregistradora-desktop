@@ -1,13 +1,22 @@
-import { ICollapseTitle, IComponent } from '@/interfaces/ProductItem.interfaces';
+import {
+  ICollapseTitle,
+  IComponent,
+} from '@/interfaces/ProductItem.interfaces';
 import { AddProductButtonWithText } from './ProductItem.styles';
 import useProductItem from '@/hooks/useProductItem';
 
-const HighlightedText = ({children} : IComponent) => {
-  return (<p className="  font-bold text-2xl rounded-lg px-2 whitespace-nowrap text-center " style={{
-    background : 'rgba(0,0,0,0.3)'
-  }}>{children}</p>)
-}
-
+const HighlightedText = ({ children }: IComponent) => {
+  return (
+    <p
+      className="  font-bold text-2xl rounded-lg px-2 whitespace-nowrap text-center "
+      style={{
+        background: 'rgba(0,0,0,0.3)',
+      }}
+    >
+      {children}
+    </p>
+  );
+};
 
 const ProductItem = ({ product }: ICollapseTitle) => {
   const { disabled, handleClickAdd, isService } = useProductItem(product);
@@ -26,7 +35,6 @@ const ProductItem = ({ product }: ICollapseTitle) => {
       }}
       onClick={handleClickAdd}
     >
-     
       <section
         data-test="productItem.collapse.title.left"
         className="flex flex-1 items-center text-primary-content"
@@ -46,8 +54,7 @@ const ProductItem = ({ product }: ICollapseTitle) => {
       <section
         data-test="productItem.collapse.title.right"
         className="form-control flex flex-row items-center justify-end gap-x-1"
-      >
-      </section>
+      ></section>
     </section>
   );
 };

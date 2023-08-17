@@ -14,9 +14,7 @@ import CartItem from './CartItem';
 import useOrderMutation from '@/hooks/services/useOrderMutation';
 
 const ProductContainer = ({ children }: IComponent) => (
-  <section className="flex w-80  flex-col ">
-    {children}
-  </section>
+  <section className="flex w-80  flex-col ">{children}</section>
 );
 
 const Layout = ({
@@ -25,7 +23,7 @@ const Layout = ({
 }: IComponent & { totalAmount?: number }) => (
   <section className="flex w-4/12 flex-col items-center gap-5">
     {children}
-    <section >
+    <section>
       {totalAmount ? (
         <p className="text-2xl">
           <span className="text-base">Total:</span> {formatPrice(totalAmount)}
