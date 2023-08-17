@@ -17,7 +17,6 @@ const FormField = ({
   symbol,
   labelRight,
 }: IFormControl) => {
-
   return (
     <div className="form-control w-2/5">
       <label className="label-text whitespace-nowrap">{label}</label>

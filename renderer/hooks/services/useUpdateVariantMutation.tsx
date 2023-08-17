@@ -6,7 +6,7 @@ import IStockPerVariant from '@/interfaces/IStockPerVariant';
 export interface IUseUpdateVariantMutationProps {
   newStock: number;
   stockPerVariantId: number;
-  variantId : number;
+  variantId: number;
   price: number;
 }
 
@@ -14,18 +14,19 @@ export default function useUpdateVariantMutation() {
   const queryClient = useQueryClient();
 
   return useMutation(
-    async ({ newStock, stockPerVariantId, variantId,price}: IUseUpdateVariantMutationProps) => {
-
+    async ({
+      newStock,
+      stockPerVariantId,
+      variantId,
+      price,
+    }: IUseUpdateVariantMutationProps) => {
       const newStockPerVariant: Partial<IStockPerVariant> = {
-        stock: newStock, 
+        stock: newStock,
       };
 
-      const priceVariant = await strapi.update(
-        'variants',
-        variantId,
-        {price}
-      );
-
+      const priceVariant = await strapi.update('variants', variantId, {
+        price,
+      });
 
       const res = await strapi.update(
         'stock-per-variants',
@@ -36,7 +37,7 @@ export default function useUpdateVariantMutation() {
 
       await queryClient.invalidateQueries([getProductsQueryKey()]);
 
-      return [priceVariant,res];
+      return [priceVariant, res];
     },
   );
 }

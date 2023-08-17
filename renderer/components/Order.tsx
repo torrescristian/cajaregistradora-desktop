@@ -4,7 +4,16 @@ import OrderItem from './OrderItem';
 import { useState } from 'react';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
 import Loader from './Loader';
-import { CalendarDaysIcon, CheckIcon, DevicePhoneMobileIcon, MapPinIcon, PencilIcon, ShoppingCartIcon, TrashIcon, UserIcon } from '@heroicons/react/24/solid';
+import {
+  CalendarDaysIcon,
+  CheckIcon,
+  DevicePhoneMobileIcon,
+  MapPinIcon,
+  PencilIcon,
+  ShoppingCartIcon,
+  TrashIcon,
+  UserIcon,
+} from '@heroicons/react/24/solid';
 import { twMerge } from 'tailwind-merge';
 import { useForm } from 'react-hook-form';
 import FormFieldText from './FormFieldText';
@@ -87,8 +96,6 @@ function Order({ order }: IProps) {
     }
   }
 
-
-
   return (
     <div
       key={order.id}
@@ -153,27 +160,35 @@ function Order({ order }: IProps) {
         ) : (
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-bold">
-              <ShoppingCartIcon className='w-5 inline' /> Orden # {order.id} | <UserIcon className='w-5 inline' /> {order.clientName}
+              <ShoppingCartIcon className="w-5 inline" /> Orden # {order.id} |{' '}
+              <UserIcon className="w-5 inline" /> {order.clientName}
             </p>
-            <p className='flex flex-row items-center gap-3'> <CalendarDaysIcon className='w-5 inline' /> {parseDateToArgentinianFormat(order.createdAt)}</p>
-            <p className="flex flex-row items-center gap-3"><MapPinIcon className='w-5 inline' /> {order.clientAddress}</p>
-            <p className='flex flex-row items-center gap-3'><DevicePhoneMobileIcon className='w-5 inline' /> {order.clientPhone}</p>
+            <p className="flex flex-row items-center gap-3">
+              {' '}
+              <CalendarDaysIcon className="w-5 inline" />{' '}
+              {parseDateToArgentinianFormat(order.createdAt)}
+            </p>
+            <p className="flex flex-row items-center gap-3">
+              <MapPinIcon className="w-5 inline" /> {order.clientAddress}
+            </p>
+            <p className="flex flex-row items-center gap-3">
+              <DevicePhoneMobileIcon className="w-5 inline" />{' '}
+              {order.clientPhone}
+            </p>
             {order.additionalDetails && <p>{order.additionalDetails}</p>}
-            <p>SubTotal: {' '}
-              <span className='text-green-600'>
-                ${order.totalPrice}
-              </span>
+            <p>
+              SubTotal:{' '}
+              <span className="text-green-600">${order.totalPrice}</span>
             </p>
-            <p>Descuento: {'  '}
-              <span className='text-red-600'>
-                $1000
-              </span>
-              
+            <p>
+              Descuento: {'  '}
+              <span className="text-red-600">$1000</span>
             </p>
-            <p>pago: {' '}
-            <span className={twMerge(statusColor(order.status))}>
-            {statusTraslate(order.status)}
-            </span>
+            <p>
+              pago:{' '}
+              <span className={twMerge(statusColor(order.status))}>
+                {statusTraslate(order.status)}
+              </span>
             </p>
             <p className="text-xl font-bold">Total: ${order.totalPrice}</p>
           </div>

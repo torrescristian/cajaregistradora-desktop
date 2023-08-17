@@ -24,17 +24,15 @@ const Ventas = () => {
   function statusTraslate(ticketStatus: TICKET_STATUS) {
     switch (ticketStatus) {
       case TICKET_STATUS.PAID:
-        return 'Pagado'
+        return 'Pagado';
       case TICKET_STATUS.REFUNDED:
-        return 'Reembolsado'
+        return 'Reembolsado';
       case TICKET_STATUS.WAITING_FOR_REFUND:
-        return 'Esperando reembolso'
+        return 'Esperando reembolso';
       default:
-        return ''
+        return '';
     }
-
   }
-
 
   const ticketQuery = useTicketQuery();
   if (ticketQuery.isLoading)

@@ -17,8 +17,9 @@ const parseTicketFacade = (ticketResponse: ITicketResponse): ITicket[] => {
 
 export default function useOrderQuery() {
   return useQuery<ITicket[]>([getTicketsQueryKey()], async () => {
-    const ticketResponse = await strapi.find(getTicketsQueryKey(),
-      { populate: ['order', 'order.client', 'order.items.product'] }) as unknown as ITicketResponse;
+    const ticketResponse = (await strapi.find(getTicketsQueryKey(), {
+      populate: ['order', 'order.client', 'order.items.product'],
+    })) as unknown as ITicketResponse;
     return parseTicketFacade(ticketResponse);
   });
 }

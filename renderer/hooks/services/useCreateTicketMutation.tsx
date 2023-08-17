@@ -18,12 +18,11 @@ export default function useCreateTicketMutation() {
       status: TICKET_STATUS.PAID,
     } as ITicket<number>);
 
-    const orderRes = await strapi.update(getOrderQueryKey(),ticket.order,
-    {
-      status: ORDER_STATUS.PAID
+    const orderRes = await strapi.update(getOrderQueryKey(), ticket.order, {
+      status: ORDER_STATUS.PAID,
     });
-     queryClient.invalidateQueries([getOrderQueryKey()]);
-     queryClient.invalidateQueries([getTicketsQueryKey()]);
-    return [ticketRes,orderRes];
+    queryClient.invalidateQueries([getOrderQueryKey()]);
+    queryClient.invalidateQueries([getTicketsQueryKey()]);
+    return [ticketRes, orderRes];
   });
 }
