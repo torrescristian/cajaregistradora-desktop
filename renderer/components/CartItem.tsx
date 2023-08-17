@@ -61,9 +61,9 @@ const CartItem = ({ product }: ICollapseTitle) => {
     <section
       data-test="productItem"
       tabIndex={0}
-      className="flex flex-1 items-center gap-x-2 gap-y-5 rounded-3xl p-5 text-primary-content shadow-md"
+      className="flex flex-col flex-1 items-right gap-x-2 gap-y-5 rounded-3xl p-5 text-primary-content shadow-md"
     >
-      <section className="flex flex-1 flex-col gap-y-2">
+      <section className="flex flex-1 flex-col gap-y-2 justify-end items-end">
         <p className="font-bold">{product.name}</p>
       </section>
       <section className="flex flex-1 flex-col gap-y-2">
@@ -75,17 +75,19 @@ const CartItem = ({ product }: ICollapseTitle) => {
             = {formatPrice(product.defaultVariant.price * cartItemQuantity)}
           </p>
         </section>
-        <section className="flex flex-row justify-end">
+        <section className="flex flex-col justify-end items-end">
           <p>
             {isService
               ? null
               : product.defaultVariant.stockPerVariant.stock === 0
-              ? '| Sin stock'
-              : `| ${product.defaultVariant.stockPerVariant.stock} en stock`}
+              ? 'Sin stock'
+              : `${product.defaultVariant.stockPerVariant.stock} en stock`}
           </p>
-          <ClearButton onClick={handleClickClear} />
-          <RemoveProductButton onClick={handleClickRemove} />
-          <AddProductButton onClick={handleClickAdd} disabled={!!disabled} />
+          <section className="flex justify-end">
+            <ClearButton onClick={handleClickClear} />
+            <RemoveProductButton onClick={handleClickRemove} />
+            <AddProductButton onClick={handleClickAdd} disabled={!!disabled} />
+          </section>
         </section>
       </section>
     </section>

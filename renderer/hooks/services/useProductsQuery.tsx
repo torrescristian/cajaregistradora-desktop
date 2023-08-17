@@ -51,10 +51,11 @@ const parseProductFacade = (product: IProduct): IProductUI => {
       name: default_variant.name,
       price: default_variant.price,
       product: id,
-      stockPerVariant: default_variant.stock_per_variant,
+      stockPerVariant: default_variant.stock_per_variant
     } as IVariantUI,
     store: store,
     type: type,
+
   };
   return res;
 };

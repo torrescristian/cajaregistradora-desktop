@@ -9,14 +9,19 @@ const ProductItem = ({ product }: ICollapseTitle) => {
     <section
       data-test="productItem"
       tabIndex={0}
-      className="flex w-1/2 flex-col gap-y-5 rounded-3xl p-5 shadow-md"
+      className="flex w-3/12 flex-col gap-y-5 rounded-3xl p-5 shadow-md"
+      style={{
+        backgroundImage: `src("${product.image}")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       <section
         data-test="productItem.collapse.title.left"
         className="flex flex-1 items-center text-primary-content"
       >
         <div className="flex flex-col gap-5">
-          <p className="font-bold text-lg">{product.name} </p>
+          <p className="font-bold text-lg whitespace-nowrap">{product.name} </p>
           <p>${product.defaultVariant.price}</p>
           <p>
             {isService

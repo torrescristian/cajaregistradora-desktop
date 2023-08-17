@@ -21,6 +21,21 @@ const Ventas = () => {
     }
   }
 
+  function statusTraslate(ticketStatus: TICKET_STATUS) {
+    switch (ticketStatus) {
+      case TICKET_STATUS.PAID:
+        return 'Pagado'
+      case TICKET_STATUS.REFUNDED:
+        return 'Reembolsado'
+      case TICKET_STATUS.WAITING_FOR_REFUND:
+        return 'Esperando reembolso'
+      default:
+        return ''
+    }
+
+  }
+
+
   const ticketQuery = useTicketQuery();
   if (ticketQuery.isLoading)
     return (

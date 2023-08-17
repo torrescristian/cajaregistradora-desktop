@@ -42,9 +42,10 @@ function parseOrderToPayLoad({
   items,
   totalPrice,
   additionalDetails,
-}: IProps): IOrder<number, IOrderItem<number, number>> {
+
+}: IProps): IOrder<number,IOrderItem<number,number>> {
   return {
-    items: items.map((item): IOrderItem<number, number> => {
+    items: items.map((item) : IOrderItem<number,number> => {
       return {
         product: item.product.id,
         quantity: item.quantity,
@@ -72,28 +73,25 @@ async function updateStock(items: ICartItem[]) {
 
   console.log(stockPerVariant);
   const updatedStockPerVariant = stockPerVariant.data.map(
-    (spv): Pick<IStockPerVariant, 'id' | 'stock'> => {
-      const item = items.find(
-        (i) => spv.attributes.variant === i.selectedVariant.id,
-      );
+    (spv): Pick<IStockPerVariant,"id" | "stock"> => {
+      const item = items.find((i) => spv.attributes.variant === i.selectedVariant.id);
 
-      if (!item)
-        return {
-          id: spv.id,
-          stock: spv.attributes.stock,
-        };
-      return {
+      if (!item) return{
         id: spv.id,
-        stock: spv.attributes.stock - item.quantity,
-      };
-    },
+        stock : spv.attributes.stock,
+      } 
+      return {
+        id : spv.id,
+        stock : spv.attributes.stock - item.quantity,
+      }
+    }
   );
 
   const promises = updatedStockPerVariant.map(async (spv) => {
     const { id } = spv;
 
     return await strapi.update('stock-per-variants', id!, {
-      stock: spv.stock,
+      stock: spv.stock
     });
   });
 
