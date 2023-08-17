@@ -7,7 +7,7 @@ import { ICartItem } from '@/interfaces/ICart';
 const Productos = () => {
   const items = useCartSelect(getCartItems) as ICartItem[];
   return (
-    <section className="flex w-full flex-row items-start justify-between gap-10 px-5">
+    <section className="flex w-full flex-row items-start h-max justify-between gap-2 px-5">
       <Products />
       <Cart />
     </section>

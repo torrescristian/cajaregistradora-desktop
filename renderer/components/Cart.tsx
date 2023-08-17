@@ -24,14 +24,9 @@ const Layout = ({
   children,
   totalAmount,
 }: IComponent & { totalAmount?: number }) => (
-  <section className="flex w-1/2 flex-col items-center">
+  <section className="flex w-2/12 flex-col self-end items-center">
+    {children}
     <section>
-      <section className="flex w-full flex-col items-start text-center">
-        <h1 className="w-full text-2xl">🛒 Carrito</h1>
-        <p className="py-5">
-          Revisa y corrige los artículos que estás a punto de vender
-        </p>
-      </section>{' '}
       {totalAmount ? (
         <p className="text-2xl">
           <span className="text-base">Total:</span> {formatPrice(totalAmount)}
@@ -40,7 +35,6 @@ const Layout = ({
         ''
       )}
     </section>
-    {children}
   </section>
 );
 
@@ -55,7 +49,6 @@ const Cart = () => {
   const totalPrice = useCartSelect(getTotalAmount);
 
   const handleSubmit = () => {
-
     //FIXME: no limpia el carrito
 
     orderMutation.mutate({
@@ -88,20 +81,24 @@ const Cart = () => {
 
   return (
     <Layout>
-      <section className="flex pb-5">
+      <ProductContainer>
+        {items.map((item) => (
+          <CartItem key={item.product.id} product={item.product} />
+        ))}
+      </ProductContainer>
+      <section className="flex flex-col items-end pb-5">
         <section className="flex w-1/2 items-center">
           <p className="text-2xl">
             <span className="text-base">Total:</span> {formatPrice(totalAmount)}
           </p>
         </section>
         <section className="w-1/2">
-
           {items.length ? (
             <button
               onClick={handleSubmit}
               className="btn sticky top-0 z-20 w-fit whitespace-nowrap bg-green-400 text-xl text-stone-50 hover:bg-green-600"
             >
-              🖨️ Imprimir Ticket
+              Pasar orden
             </button>
           ) : (
             <section className="alert alert-warning w-full">
@@ -110,12 +107,6 @@ const Cart = () => {
           )}
         </section>
       </section>
-
-      <ProductContainer>
-        {items.map((item) => (
-          <CartItem key={item.product.id} product={item.product} />
-        ))}
-      </ProductContainer>
     </Layout>
   );
 };

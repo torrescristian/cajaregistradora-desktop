@@ -22,7 +22,7 @@ const Products = () => {
   const products = productsQuery.products as IProductUI[];
 
   return (
-    <section className="w-1/2">
+    <section className="w-full">
       <Fixed>
         <SearchInput {...searchProps} />
       </Fixed>
