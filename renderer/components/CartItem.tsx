@@ -8,40 +8,6 @@ import {
 } from './ProductItem.styles';
 import useProductItem from '@/hooks/useProductItem';
 
-/* interface ISelectPriceType {
-  product: IProductUI;
-  onChange: (value: number) => void;
-}
-
-const SelectPriceType = ({ product, onChange }: ISelectPriceType) => {
-  const [selectedPrice, setSelectedPrice] = useState(product.public_price || 0);
-
-  const handleClickSelectPrice = (e: React.SyntheticEvent) => {
-    const { value } = e.target as HTMLInputElement;
-
-    setSelectedPrice(Number(value));
-    onChange(Number(value));
-  };
-
-  return (
-    <select
-      className="select-bordered select-primary select select-sm w-full"
-      onChange={handleClickSelectPrice}
-      value={selectedPrice}
-    >
-      <option value={product.public_price || 0}>
-        Precio Público: {product.public_price || 0}
-      </option>
-      <option value={product.wholesale_price || 0}>
-        Precio Mayorista: {product.wholesale_price || 0}
-      </option>
-      <option value={product.special_price || 0}>
-        Precio Especial: {product.special_price || 0}
-      </option>
-    </select>
-  );
-};
- */
 const CartItem = ({ product }: ICollapseTitle) => {
   const {
     disabled,
@@ -61,7 +27,7 @@ const CartItem = ({ product }: ICollapseTitle) => {
     <section
       data-test="productItem"
       tabIndex={0}
-      className="flex flex-col flex-1 items-right gap-x-2 gap-y-5 rounded-3xl p-5 text-primary-content shadow-md"
+      className="flex flex-col flex-1 items-right gap-x-2 gap-y-5 rounded-3xl p-5 text-primary-content border-2 shadow-md"
     >
       <section className="flex flex-1 flex-col gap-y-2 justify-end items-end">
         <p className="font-bold">{product.name}</p>
@@ -83,7 +49,7 @@ const CartItem = ({ product }: ICollapseTitle) => {
               ? 'Sin stock'
               : `${product.defaultVariant.stockPerVariant.stock} en stock`}
           </p>
-          <section className="flex justify-end">
+          <section className="flex justify-end gap-3">
             <ClearButton onClick={handleClickClear} />
             <RemoveProductButton onClick={handleClickRemove} />
             <AddProductButton onClick={handleClickAdd} disabled={!!disabled} />

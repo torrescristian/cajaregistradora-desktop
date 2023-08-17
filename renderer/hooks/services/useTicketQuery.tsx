@@ -10,7 +10,7 @@ const parseTicketFacade = (ticketResponse: ITicketResponse): ITicket[] => {
       id: ticket.id,
       order: ticket.order,
       total_price: ticket.total_price,
-      status: TICKET_STATUS.PAID,
+      status: ticket.status,
     };
   });
 };

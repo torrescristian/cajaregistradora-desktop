@@ -64,7 +64,7 @@ export default function SearchInput({
   return (
     <section
       data-test="search-input"
-      className="form-control flex w-full flex-row bg-white"
+      className="form-control flex w-full flex-row justify-center"
     >
       {!disableFilter && filterMenuQuery.isLoading && (
         <Loader className="w-2/12" />
@@ -84,7 +84,7 @@ export default function SearchInput({
         onChange={onSearch}
         type="text"
         placeholder="Buscar producto..."
-        className="input-bordered input w-full shadow-inner hover:border-none"
+        className="input-bordered input w-96 shadow-inner hover:border-none"
       />
       {filterMenuQuery.isError && <ErrorMessage>Error</ErrorMessage>}
     </section>

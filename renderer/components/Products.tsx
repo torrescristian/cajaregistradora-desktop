@@ -26,7 +26,7 @@ const Products = () => {
       <Fixed>
         <SearchInput {...searchProps} />
       </Fixed>
-      <section className="mt-5 flex w-full flex-row flex-wrap justify-between gap-y-5">
+      <section className=" flex w-full flex-row gap-2 flex-wrap justify-end ">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
         {products.map((product) => (

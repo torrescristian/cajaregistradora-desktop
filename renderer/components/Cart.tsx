@@ -14,7 +14,7 @@ import CartItem from './CartItem';
 import useOrderMutation from '@/hooks/services/useOrderMutation';
 
 const ProductContainer = ({ children }: IComponent) => (
-  <section className="flex w-full flex-1 flex-col gap-y-2.5">
+  <section className="flex w-80  flex-col ">
     {children}
   </section>
 );
@@ -23,9 +23,9 @@ const Layout = ({
   children,
   totalAmount,
 }: IComponent & { totalAmount?: number }) => (
-  <section className="flex w-2/12 flex-col self-end items-center">
+  <section className="flex w-4/12 flex-col items-center gap-5">
     {children}
-    <section>
+    <section >
       {totalAmount ? (
         <p className="text-2xl">
           <span className="text-base">Total:</span> {formatPrice(totalAmount)}
@@ -82,13 +82,13 @@ const Cart = () => {
           <CartItem key={item.product.id} product={item.product} />
         ))}
       </ProductContainer>
-      <section className="flex flex-col items-end pb-5">
-        <section className="flex w-1/2 items-center">
-          <p className="text-2xl">
-            <span className="text-base">Total:</span> {formatPrice(totalAmount)}
+      <section className="flex flex-col items-end pb-5 gap-5 bottom-2 p-4 z-20 rounded-xl  fixed right-12 bg-[rgba(0,0,0,0.7)]">
+        <section className="flex w-max items-center">
+          <p className="text-2xl text-white">
+            <span className="text-xl ">Total:</span> {formatPrice(totalAmount)}
           </p>
         </section>
-        <section className="w-1/2">
+        <section className="w-max">
           {items.length ? (
             <button
               onClick={handleSubmit}

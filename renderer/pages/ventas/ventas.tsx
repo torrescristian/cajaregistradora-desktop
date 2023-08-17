@@ -63,7 +63,7 @@ const Ventas = () => {
           <p>
             Estado:{' '}
             <span className={twMerge(statusColor(ticket.status))}>
-              {ticket.status}
+              {statusTraslate(ticket.status)}
             </span>
           </p>
           <p>Total: ${ticket.total_price}</p>

@@ -1,6 +1,13 @@
-import { ICollapseTitle } from '@/interfaces/ProductItem.interfaces';
+import { ICollapseTitle, IComponent } from '@/interfaces/ProductItem.interfaces';
 import { AddProductButtonWithText } from './ProductItem.styles';
 import useProductItem from '@/hooks/useProductItem';
+
+const HighlightedText = ({children} : IComponent) => {
+  return (<p className="  font-bold text-2xl rounded-lg px-2 whitespace-nowrap text-center " style={{
+    background : 'rgba(0,0,0,0.3)'
+  }}>{children}</p>)
+}
+
 
 const ProductItem = ({ product }: ICollapseTitle) => {
   const { disabled, handleClickAdd, isService } = useProductItem(product);
@@ -9,44 +16,37 @@ const ProductItem = ({ product }: ICollapseTitle) => {
     <section
       data-test="productItem"
       tabIndex={0}
-      className="flex w-3/12 flex-col gap-y-5 rounded-3xl p-5 shadow-md"
+      className="flex flex-col w-72 p-8 rounded-3xl items-center bg-image border-4 border-white
+      hover:border-green-400
+      "
       style={{
-        backgroundImage: `src("${product.image}")`,
+        backgroundImage: `url(${product.image})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
+      onClick={handleClickAdd}
     >
+     
       <section
         data-test="productItem.collapse.title.left"
         className="flex flex-1 items-center text-primary-content"
       >
-        <div className="flex flex-col gap-5">
-          <p className="font-bold text-lg whitespace-nowrap">{product.name} </p>
-          <p>${product.defaultVariant.price}</p>
-          <p>
+        <div className="flex flex-col gap-4 text-white">
+          <HighlightedText>{product.name}</HighlightedText>
+          <HighlightedText>${product.defaultVariant.price}</HighlightedText>
+          <HighlightedText>
             {isService
-              ? 'servicio'
+              ? null
               : product.defaultVariant.stockPerVariant.stock === 0
               ? ' Sin stock'
               : ` ${product.defaultVariant.stockPerVariant.stock} en stock`}
-          </p>
-          <p>Una descripcion bien piola del producto</p>
+          </HighlightedText>
         </div>
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-1/3 m-2 rounded-xl"
-        />
       </section>
-
       <section
         data-test="productItem.collapse.title.right"
         className="form-control flex flex-row items-center justify-end gap-x-1"
       >
-        <AddProductButtonWithText
-          onClick={handleClickAdd}
-          disabled={!!disabled}
-        />
       </section>
     </section>
   );
