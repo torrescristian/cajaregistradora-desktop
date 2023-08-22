@@ -58,7 +58,7 @@ export const Badge = ({ children, className }: IComponent) =>
   children?.toString() === '0' ? null : (
     <span
       className={mergeClasses(
-        'text-2xs bg-red-500 font-bold text-white',
+        'text-2xs bg-secondary font-bold text-white',
         'flex h-8 w-12 items-center justify-center rounded-full rounded-l-full',
         className,
       )}

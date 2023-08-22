@@ -6,6 +6,7 @@ import IStockPerVariant, {
 } from '@/interfaces/IStockPerVariant';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
+import { getOrderQueryKey } from './useOrderQuery';
 
 interface IProps {
   items: ICartItem[];
@@ -13,13 +14,14 @@ interface IProps {
   clientName: string;
   clientPhone: string;
   additionalDetails: string;
+  clientId?: number;
 }
 
-export default function useOrderMutation() {
+export default function useCreateOrderMutation() {
   const dispatch = useCartDispatch();
   return useMutation(async (props: IProps) => {
     const resp = [null, null] as [any, any];
-    resp[0] = await strapi.create('orders', parseOrderToPayLoad(props));
+    resp[0] = await strapi.create(getOrderQueryKey(), parseOrderToPayLoad(props));
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -35,14 +37,14 @@ export default function useOrderMutation() {
     return resp;
   });
 }
-//FIXME:
-const clientId = 1;
+
 
 function parseOrderToPayLoad({
   items,
   totalPrice,
   additionalDetails,
-}: IProps): IOrder<number, IOrderItem<number, number>> {
+  clientId,
+}: IProps): IOrder<number | undefined, IOrderItem<number, number>> {
   return {
     items: items.map((item): IOrderItem<number, number> => {
       return {
@@ -54,7 +56,7 @@ function parseOrderToPayLoad({
     }),
     additional_details: additionalDetails,
     total_price: totalPrice,
-    client: clientId,
+    client: clientId || undefined,
     status: ORDER_STATUS.PENDING,
   };
 }

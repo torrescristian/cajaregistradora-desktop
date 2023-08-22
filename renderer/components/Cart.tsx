@@ -11,10 +11,12 @@ import {
 import { ICartItem } from '@/interfaces/ICart';
 import Loader from '@/components/Loader';
 import CartItem from './CartItem';
-import useOrderMutation from '@/hooks/services/useOrderMutation';
+import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
+import SelectClient from './SelectClient';
+import { useState } from 'react';
 
 const ProductContainer = ({ children }: IComponent) => (
-  <section className="flex w-80  flex-col ">{children}</section>
+  <section className="flex flex-col items-end overflow-y-scroll w-96 gap-2 h-[70vh]">{children}</section>
 );
 
 const Layout = ({
@@ -38,12 +40,13 @@ const Layout = ({
 const Cart = () => {
   const items = useCartSelect(getCartItems) as ICartItem[];
   const totalAmount = useCartSelect(getTotalAmount);
-  const orderMutation = useOrderMutation();
+  const orderMutation = useCreateOrderMutation();
   const clientName = useCartSelect(getClientName);
   const clientPhone = useCartSelect(getClientPhone);
   const additionalDetails = useCartSelect(getAdditionalDetails);
   const totalPrice = useCartSelect(getTotalAmount);
 
+  const [selectedCliendId, setSelectedClientId] = useState<number | undefined>(undefined);
   const handleSubmit = () => {
     orderMutation.mutate({
       items,
@@ -51,6 +54,8 @@ const Cart = () => {
       clientPhone,
       totalPrice,
       additionalDetails,
+      clientId: selectedCliendId,
+
     });
   };
   if (orderMutation.isLoading) {
@@ -75,12 +80,18 @@ const Cart = () => {
 
   return (
     <Layout>
+      <SelectClient
+        onChange={clientId => {
+          setSelectedClientId(clientId)
+          console.log({ clientId })
+        }}
+      />
       <ProductContainer>
         {items.map((item) => (
           <CartItem key={item.product.id} product={item.product} />
         ))}
       </ProductContainer>
-      <section className="flex flex-col items-end pb-5 gap-5 bottom-2 p-4 z-20 rounded-xl  fixed right-12 bg-[rgba(0,0,0,0.7)]">
+      <section className="flex flex-row items-center pb-5 gap-5 bottom-2 p-4 z-20 rounded-xl  fixed right-12 bg-[rgba(0,0,0,0.7)]">
         <section className="flex w-max items-center">
           <p className="text-2xl text-white">
             <span className="text-xl ">Total:</span> {formatPrice(totalAmount)}

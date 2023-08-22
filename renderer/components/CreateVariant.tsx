@@ -57,7 +57,7 @@ export default function CreateVarant() {
   });
   return (
     <form
-      className="flex w-96 flex-col px-10 py-12 gap-5 h-min bg-stone-50 rounded-xl shadow-xl"
+      className="flex w-96 flex-col px-10 py-12 gap-5 h-min  rounded-xl shadow-xl"
       onSubmit={onSubmit}
     >
       <h2 className="text-center text-2xl">Crear Variante</h2>

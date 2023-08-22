@@ -41,13 +41,14 @@ const ProductRow = ({ product }: IProps) => {
     });
     updateVariantMutation.mutate({
       newStock: Number(data.stock),
-      stockPerVariantId: product.defaultVariant.stockPerVariant.id,
-      variantPrice: product.defaultVariant.price,
+      variantId: product.defaultVariant.id,
+      stockPerVariantId: product.defaultVariant.stockPerVariant.id!,
+      price: product.defaultVariant.price
     });
   };
 
   return (
-    <section className="block-stone-200 flex w-2/5 flex-col flex-wrap justify-between rounded-xl bg-stone-200 p-8 shadow-xl">
+    <section className="block-stone-200 flex w-2/5 flex-col flex-wrap justify-between rounded-xl p-8 shadow-xl">
       <div className="divider">Nombre del Producto</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex gap-3">

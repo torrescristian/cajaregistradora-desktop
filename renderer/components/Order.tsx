@@ -1,5 +1,5 @@
 import { parseDateToArgentinianFormat } from '@/libs/utils';
-import { IOrderUI, ORDER_STATUS } from '@/interfaces/IOrder';
+import { IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
 import OrderItem from './OrderItem';
 import { useState } from 'react';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
@@ -18,9 +18,12 @@ import { twMerge } from 'tailwind-merge';
 import { useForm } from 'react-hook-form';
 import FormFieldText from './FormFieldText';
 import useCancelOrderMutation from '@/hooks/services/useCancelOrderMutation';
+import SelectClient from './SelectClient';
+import IClient from '@/interfaces/IClient';
+import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
 
 interface IProps {
-  order: IOrderUI;
+  order: IOrder;
 }
 interface IFormControl {
   clientName: string;
@@ -33,16 +36,18 @@ interface IFormControl {
 function Order({ order }: IProps) {
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
-      clientName: order.clientName,
-      clientAddress: order.clientAddress,
-      clientPhone: order.clientPhone,
-      additionalDetails: order.additionalDetails,
-      totalPrice: order.totalPrice,
+      clientAddress: order.client?.address,
+      clientPhone: order.client?.phone_number,
+      additionalDetails: order.additional_details,
+      totalPrice: order.total_price,
     },
   });
+
+  const [selectedClient, setSelectedClient] = useState<IClient | null>(null);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -50,18 +55,22 @@ function Order({ order }: IProps) {
     setIsEditing(!isEditing);
   };
 
+
+  const updateOrderMutation= useUpdateOrderMutation()
   const cancelOrderMutation = useCancelOrderMutation();
   const createTicketMutation = useCreateTicketMutation();
 
-  const handleSubmit = () => {
+  const handleSubmitOrderConfirm = () => {
     createTicketMutation.mutate({
       order: order.id!,
-      total_price: order.totalPrice,
+      total_price: order.total_price,
+
     });
   };
   const handleCancelOrder = () => {
     cancelOrderMutation.mutate(order.id!);
   };
+
 
   if (createTicketMutation.isLoading) {
     return <Loader />;
@@ -96,39 +105,52 @@ function Order({ order }: IProps) {
     }
   }
 
+  const handleSubmitOrderUpdate = (data: IFormControl) => {
+    updateOrderMutation.mutate({
+      order: {
+        id: order.id!,
+        client: selectedClient?.id || order.client?.id,
+        status: order.status,    
+        additional_details: data.additionalDetails,
+        total_price: order.items.map((item) => item.price * item.quantity).reduce((a, b) => a + b, 0),
+        items: order.items,
+        address: data.clientAddress,
+        phone_number: data.clientPhone,
+      },
+    })
+  }
   return (
-    <div
-      key={order.id}
+    <form onSubmit={handleSubmit(handleSubmitOrderUpdate)}
       className=" shadow-xl w-full justify-between p-10 flex flex-row"
     >
-      <div className="flex flex-col w-max gap-5 justify-between">
+      <section className="flex flex-col w-max gap-5 justify-between">
         {isEditing ? (
           <div className="flex flex-col gap-5">
             <p className="font-bold text-2xl">Orden # {order.id} -</p>
-            <FormFieldText
-              register={register}
-              label={'Cliente:'}
-              formKey="clientName"
-              errors={errors}
-              symbol={'👤'}
-              labelRight
+            <SelectClient selectedClientId={order.client?.id || 0 } onChange={(client) =>{
+                console.log({client})
+                setSelectedClient(client)}
+              }
             />
-            <FormFieldText
-              register={register}
-              label={'Direccion:'}
-              formKey="clientAddress"
-              errors={errors}
-              symbol={'🏠'}
-              labelRight
-            />
-            <FormFieldText
-              register={register}
-              label={'Telefono:'}
-              formKey="clientPhone"
-              errors={errors}
-              symbol={'📲'}
-              labelRight
-            />
+            <>
+              <FormFieldText
+                register={register}
+                label={'Direccion:'}
+                formKey={'clientAddress'}
+                errors={errors}
+                symbol={'🏠'}
+                labelRight
+              />
+              <FormFieldText
+                register={register}
+                label={'Telefono:'}
+                formKey={'clientPhone'}
+                errors={errors}
+                symbol={'📲'}
+                labelRight
+              />
+            </>
+
             <FormFieldText
               register={register}
               label={'Detalles adicionales:'}
@@ -137,14 +159,7 @@ function Order({ order }: IProps) {
               symbol={'📝'}
               labelRight
             />
-            <FormFieldText
-              register={register}
-              label={'Subtotal:'}
-              formKey="totalPrice"
-              errors={errors}
-              symbol={'💰'}
-              labelRight
-            />
+            <p>SubTotal: ${order.total_price}</p>
             <FormFieldText
               register={register}
               label={'Descuento:'}
@@ -153,15 +168,15 @@ function Order({ order }: IProps) {
               symbol={'🎫'}
               labelRight
             />
-            <p>pago: {order.status}</p>
+            <p>pago: {statusTraslate(order.status)}</p>
             <p>{parseDateToArgentinianFormat(order.createdAt)}</p>
-            <p className="text-xl font-bold">Total:${order.totalPrice}</p>
+            <p className="text-xl font-bold">Total:${order.total_price}</p>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-bold">
               <ShoppingCartIcon className="w-5 inline" /> Orden # {order.id} |{' '}
-              <UserIcon className="w-5 inline" /> {order.clientName}
+              <UserIcon className="w-5 inline" /> {order.client?.name}
             </p>
             <p className="flex flex-row items-center gap-3">
               {' '}
@@ -169,16 +184,16 @@ function Order({ order }: IProps) {
               {parseDateToArgentinianFormat(order.createdAt)}
             </p>
             <p className="flex flex-row items-center gap-3">
-              <MapPinIcon className="w-5 inline" /> {order.clientAddress}
+              <MapPinIcon className="w-5 inline" /> {order.address}
             </p>
             <p className="flex flex-row items-center gap-3">
               <DevicePhoneMobileIcon className="w-5 inline" />{' '}
-              {order.clientPhone}
+              {order.phone_number}
             </p>
-            {order.additionalDetails && <p>{order.additionalDetails}</p>}
+            {order.additional_details && <p>{order.additional_details}</p>}
             <p>
               SubTotal:{' '}
-              <span className="text-green-600">${order.totalPrice}</span>
+              <span className="text-green-600">${order.total_price}</span>
             </p>
             <p>
               Descuento: {'  '}
@@ -190,25 +205,21 @@ function Order({ order }: IProps) {
                 {statusTraslate(order.status)}
               </span>
             </p>
-            <p className="text-xl font-bold">Total: ${order.totalPrice}</p>
+            <p className="text-xl font-bold">Total: ${order.total_price}</p>
           </div>
         )}
-      </div>
-      <div className="flex flex-col ">
+      </section>
+      <section className="flex flex-col ">
         <div className="flex flex-row gap-5 justify-end">
-          <button
-            className={twMerge(
-              'btn text-stone-50',
-              isEditing ? 'btn-success' : 'btn-secondary',
-            )}
-            onClick={handleToggleEdit}
-          >
-            {isEditing ? (
+          {isEditing ? (
+            <button className='btn btn-success text-stone-50' onClick={handleToggleEdit} type='submit'>
               <CheckIcon className="w-full h-6" />
-            ) : (
+            </button>
+          ) : (
+            <button className='btn btn-secondary text-stone-50' onClick={handleToggleEdit}>
               <PencilIcon className="w-full h-6 " />
-            )}
-          </button>
+            </button>
+          )}
           <button
             className="btn btn-error text-stone-50"
             onClick={handleCancelOrder}
@@ -226,14 +237,14 @@ function Order({ order }: IProps) {
           ))}
         </div>
         <button
-          onClick={handleSubmit}
+          onClick={handleSubmitOrderConfirm}
           disabled={createTicketMutation.isLoading}
           className="btn btn-success disabled:btn-disabled text-stone-50"
         >
           {createTicketMutation.isLoading ? <Loader /> : 'Confirmar orden'}
         </button>
-      </div>
-    </div>
+      </section>
+    </form >
   );
 }
 

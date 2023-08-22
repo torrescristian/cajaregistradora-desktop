@@ -116,7 +116,7 @@ export default function CrearProducto({
     <section className={mergeClasses('mb-32', className)}>
       <form
         onSubmit={onSubmit}
-        className="flex flex-col bg-stone-50 rounded-lg shadow-lg shadow-stone-300 py-10 gap-5 items-center w-96"
+        className="flex flex-col rounded-lg shadow-lg py-10 gap-5 items-center w-96"
       >
         <h2 className="text-center text-2xl">Crear Producto</h2>
         {[
@@ -206,16 +206,18 @@ export default function CrearProducto({
             Producto creado con exito
           </p>
         )}
-        <label htmlFor="marcar" className="label">
-          Crear variante
-        </label>
+        <div className='flex whitespace-nowrap items-center gap-3'>
         <input
           type="checkbox"
           id="marcar"
           className="checkbox checkbox-primary"
           checked={show}
           onChange={handleChangeBox}
-        />
+          />
+        <label htmlFor="marcar" className="label ">
+          Crear variante
+        </label>
+          </div>
       </form>
     </section>
   );

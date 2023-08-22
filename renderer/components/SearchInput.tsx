@@ -64,7 +64,7 @@ export default function SearchInput({
   return (
     <section
       data-test="search-input"
-      className="form-control flex w-full flex-row justify-center"
+      className="form-control flex w-full flex-row justify-start"
     >
       {!disableFilter && filterMenuQuery.isLoading && (
         <Loader className="w-2/12" />
