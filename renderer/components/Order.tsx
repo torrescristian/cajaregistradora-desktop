@@ -1,4 +1,4 @@
-import { parseDateToArgentinianFormat } from '@/libs/utils';
+import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
 import { IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
 import OrderItem from './OrderItem';
 import { useState } from 'react';
@@ -21,6 +21,7 @@ import useCancelOrderMutation from '@/hooks/services/useCancelOrderMutation';
 import SelectClient from './SelectClient';
 import IClient from '@/interfaces/IClient';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
+import { DataItem } from './DataItem';
 
 interface IProps {
   order: IOrder;
@@ -40,8 +41,8 @@ function Order({ order }: IProps) {
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
-      clientAddress: order.client?.address,
-      clientPhone: order.client?.phone_number,
+      clientAddress: order.address,
+      clientPhone: order.phone_number,
       additionalDetails: order.additional_details,
       totalPrice: order.total_price,
     },
@@ -55,8 +56,7 @@ function Order({ order }: IProps) {
     setIsEditing(!isEditing);
   };
 
-
-  const updateOrderMutation= useUpdateOrderMutation()
+  const updateOrderMutation = useUpdateOrderMutation()
   const cancelOrderMutation = useCancelOrderMutation();
   const createTicketMutation = useCreateTicketMutation();
 
@@ -110,7 +110,7 @@ function Order({ order }: IProps) {
       order: {
         id: order.id!,
         client: selectedClient?.id || order.client?.id,
-        status: order.status,    
+        status: order.status,
         additional_details: data.additionalDetails,
         total_price: order.items.map((item) => item.price * item.quantity).reduce((a, b) => a + b, 0),
         items: order.items,
@@ -127,10 +127,10 @@ function Order({ order }: IProps) {
         {isEditing ? (
           <div className="flex flex-col gap-5">
             <p className="font-bold text-2xl">Orden # {order.id} -</p>
-            <SelectClient selectedClientId={order.client?.id || 0 } onChange={(client) =>{
-                console.log({client})
-                setSelectedClient(client)}
-              }
+            <SelectClient selectedClientId={order.client?.id || 0} onChange={(client) => {
+              console.log({ client })
+              setSelectedClient(client)
+              }}
             />
             <>
               <FormFieldText
@@ -173,40 +173,53 @@ function Order({ order }: IProps) {
             <p className="text-xl font-bold">Total:${order.total_price}</p>
           </div>
         ) : (
-          <div className="flex flex-col gap-4">
+          <datalist className="flex flex-col gap-4">
             <p className="text-2xl font-bold">
               <ShoppingCartIcon className="w-5 inline" /> Orden # {order.id} |{' '}
               <UserIcon className="w-5 inline" /> {order.client?.name}
             </p>
-            <p className="flex flex-row items-center gap-3">
+            <div className='divider' />
+            <p className="flex flex-row items-center gap-3 text-stone-500" >
               {' '}
               <CalendarDaysIcon className="w-5 inline" />{' '}
               {parseDateToArgentinianFormat(order.createdAt)}
             </p>
-            <p className="flex flex-row items-center gap-3">
+            {order.address ? <p className="flex flex-row items-center gap-3">
               <MapPinIcon className="w-5 inline" /> {order.address}
-            </p>
-            <p className="flex flex-row items-center gap-3">
-              <DevicePhoneMobileIcon className="w-5 inline" />{' '}
-              {order.phone_number}
-            </p>
+            </p> : null
+            }
+            {
+              order.phone_number ? <p className="flex flex-row items-center gap-3">
+                <DevicePhoneMobileIcon className="w-5 inline" />{' '}
+                {order.phone_number}
+              </p> : null
+            }
             {order.additional_details && <p>{order.additional_details}</p>}
-            <p>
-              SubTotal:{' '}
-              <span className="text-green-600">${order.total_price}</span>
-            </p>
-            <p>
-              Descuento: {'  '}
-              <span className="text-red-600">$1000</span>
-            </p>
-            <p>
-              pago:{' '}
-              <span className={twMerge(statusColor(order.status))}>
-                {statusTraslate(order.status)}
-              </span>
-            </p>
-            <p className="text-xl font-bold">Total: ${order.total_price}</p>
-          </div>
+            
+            <DataItem
+              label='Subtotal:'
+              value={formatPrice(order.total_price)}
+              defaultValue=''
+            />
+            {/* FIXME: replace value with variable */}
+            <DataItem
+              label='Descuento:'
+              value={formatPrice(1000)}
+              defaultValue=''
+            />
+            <DataItem
+              label='Pago:'
+              value={statusTraslate(order.status)}
+              defaultValue=''
+            />
+            <div className='divider' />
+            <DataItem
+              label='Total:'
+              value={formatPrice(order.total_price)}
+              defaultValue=''
+              className='text-2xl'
+            />
+          </datalist>
         )}
       </section>
       <section className="flex flex-col ">
