@@ -17,7 +17,6 @@ const FormField = ({
   symbol,
   labelRight,
 }: IFormControl) => {
-
   return (
     <div className="form-control w-2/5">
       <label className="label-text whitespace-nowrap">{label}</label>
@@ -38,7 +37,7 @@ const FormField = ({
               {...register(formKey)}
               className=" input-bordered input w-72 text-xl"
             />
-            <span className='text-2xl '>{symbol}</span>
+            <span className="text-2xl ">{symbol}</span>
           </>
         )}
       </label>

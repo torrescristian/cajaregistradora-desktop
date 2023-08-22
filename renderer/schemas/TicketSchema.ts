@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import OrderSchema from './OrderSchema';
 
-const TicketSchema = (order: any = yup.number()) =>
+const TicketSchema = (order: any = OrderSchema()) =>
   yup
     .object()
     .shape({
@@ -11,6 +11,5 @@ const TicketSchema = (order: any = yup.number()) =>
     .defined()
     .required();
 
-
-export const TicketSchemaExpanded = () => TicketSchema(OrderSchema())
+export const TicketPayloadSchema = () => TicketSchema(yup.number());
 export default TicketSchema;

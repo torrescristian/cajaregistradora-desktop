@@ -8,7 +8,6 @@ export interface ISaleItem {
   createdAt?: string;
   updatedAt?: string;
   product: IProduct | number;
-
 }
 
 export interface ISale {

@@ -4,9 +4,10 @@ import SearchInput, { useSearchProps } from '@/components/SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import IProductUI from '@/interfaces/IProduct';
 import Loader from '@/components/Loader';
+import SelectClient from './SelectClient';
 
 const Fixed = ({ children }: IComponent) => (
-  <section className="sticky top-0 z-20 mt-2.5 flex w-full flex-col gap-y-5 bg-white">
+  <section className="sticky top-0 z-20 mt-2.5 flex w-full flex-col gap-y-5 py-2">
     {children}
   </section>
 );
@@ -25,8 +26,9 @@ const Products = () => {
     <section className="w-full">
       <Fixed>
         <SearchInput {...searchProps} />
+        
       </Fixed>
-      <section className="mt-5 flex w-full flex-row flex-wrap justify-between gap-y-5">
+      <section className=" flex w-full flex-row gap-2 flex-wrap justify-start  ">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
         {products.map((product) => (

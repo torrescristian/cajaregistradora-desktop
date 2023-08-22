@@ -48,7 +48,8 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
 
         if (
           !cartItem.product.isService &&
-          cartItem.quantity >= productPayload.defaultVariant.stockPerVariant.stock
+          cartItem.quantity >=
+            productPayload.defaultVariant.stockPerVariant.stock
         ) {
           return state;
         }
@@ -57,7 +58,9 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
         return {
           ...state,
           cartItems: newCartItems,
-          totalAmount: fixPrice(state.totalAmount + productPayload.defaultVariant.price),
+          totalAmount: fixPrice(
+            state.totalAmount + productPayload.defaultVariant.price,
+          ),
           totalQuantity: state.totalQuantity + 1,
         };
       }
@@ -72,7 +75,9 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
             selectedVariant: productPayload.defaultVariant,
           },
         ],
-        totalAmount: fixPrice(state.totalAmount + productPayload.defaultVariant.price),
+        totalAmount: fixPrice(
+          state.totalAmount + productPayload.defaultVariant.price,
+        ),
         totalQuantity: state.totalQuantity + 1,
       };
     }
@@ -88,7 +93,10 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
             (item: ICartItem) => item.product.id !== productPayload.id,
           ),
           totalAmount: fixPrice(
-            Math.max(state.totalAmount - productPayload.defaultVariant.price, 0),
+            Math.max(
+              state.totalAmount - productPayload.defaultVariant.price,
+              0,
+            ),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -107,7 +115,10 @@ const cartReducer = (state: ICartState, action: ICartAction): ICartState => {
             return item;
           }),
           totalAmount: fixPrice(
-            Math.max(state.totalAmount - productPayload.defaultVariant.price, 0),
+            Math.max(
+              state.totalAmount - productPayload.defaultVariant.price,
+              0,
+            ),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,

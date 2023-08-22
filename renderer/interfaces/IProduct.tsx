@@ -44,7 +44,6 @@ export interface IProduct<DEFAULT_VARIANT = IVariant> {
   createdAt: string;
 }
 
-
 export type IProductPage = IResponsePage<IProduct<IVariant>>;
 
 export interface IProductUpdate {

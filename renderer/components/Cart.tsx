@@ -1,6 +1,5 @@
 import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import { formatPrice } from '@/libs/utils';
-import useSalesMutation from '@/hooks/services/useSalesMutation';
 import {
   getAdditionalDetails,
   getCartItems,
@@ -12,19 +11,19 @@ import {
 import { ICartItem } from '@/interfaces/ICart';
 import Loader from '@/components/Loader';
 import CartItem from './CartItem';
-import useOrderMutation from '@/hooks/services/useOrderMutation';
+import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
+import SelectClient from './SelectClient';
+import { useState } from 'react';
 
 const ProductContainer = ({ children }: IComponent) => (
-  <section className="flex w-full flex-1 flex-col gap-y-2.5">
-    {children}
-  </section>
+  <section className="flex flex-col items-end overflow-y-scroll w-96 gap-2 h-[70vh]">{children}</section>
 );
 
 const Layout = ({
   children,
   totalAmount,
 }: IComponent & { totalAmount?: number }) => (
-  <section className="flex w-2/12 flex-col self-end items-center">
+  <section className="flex w-4/12 flex-col items-center gap-5">
     {children}
     <section>
       {totalAmount ? (
@@ -41,25 +40,25 @@ const Layout = ({
 const Cart = () => {
   const items = useCartSelect(getCartItems) as ICartItem[];
   const totalAmount = useCartSelect(getTotalAmount);
-  const salesMutation = useSalesMutation();
-  const orderMutation = useOrderMutation();
+  const orderMutation = useCreateOrderMutation();
   const clientName = useCartSelect(getClientName);
   const clientPhone = useCartSelect(getClientPhone);
   const additionalDetails = useCartSelect(getAdditionalDetails);
   const totalPrice = useCartSelect(getTotalAmount);
 
+  const [selectedCliendId, setSelectedClientId] = useState<number | undefined>(undefined);
   const handleSubmit = () => {
-    //FIXME: no limpia el carrito
-
     orderMutation.mutate({
       items,
       clientName,
       clientPhone,
       totalPrice,
       additionalDetails,
+      clientId: selectedCliendId,
+
     });
   };
-  if (salesMutation.isLoading) {
+  if (orderMutation.isLoading) {
     return (
       <Layout>
         <Loader />
@@ -67,7 +66,7 @@ const Cart = () => {
     );
   }
 
-  if (salesMutation.isSuccess) {
+  if (orderMutation.isSuccess) {
     return (
       <Layout>
         <div className="p-10 toast toast-top toast-end">
@@ -81,18 +80,24 @@ const Cart = () => {
 
   return (
     <Layout>
+      <SelectClient
+        onChange={clientId => {
+          setSelectedClientId(clientId)
+          console.log({ clientId })
+        }}
+      />
       <ProductContainer>
         {items.map((item) => (
           <CartItem key={item.product.id} product={item.product} />
         ))}
       </ProductContainer>
-      <section className="flex flex-col items-end pb-5">
-        <section className="flex w-1/2 items-center">
-          <p className="text-2xl">
-            <span className="text-base">Total:</span> {formatPrice(totalAmount)}
+      <section className="flex flex-row items-center pb-5 gap-5 bottom-2 p-4 z-20 rounded-xl  fixed right-12 bg-[rgba(0,0,0,0.7)]">
+        <section className="flex w-max items-center">
+          <p className="text-2xl text-white">
+            <span className="text-xl ">Total:</span> {formatPrice(totalAmount)}
           </p>
         </section>
-        <section className="w-1/2">
+        <section className="w-max">
           {items.length ? (
             <button
               onClick={handleSubmit}

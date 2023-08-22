@@ -7,11 +7,7 @@ import { getProductsQueryKey } from './useProductsQuery';
 const parseProductToPayload = (
   product: Partial<IProductUI>,
 ): Partial<IProduct> => {
-  const {
-    id,
-    name,
-    image,
-  } = product;
+  const { id, name, image } = product;
 
   return {
     id,

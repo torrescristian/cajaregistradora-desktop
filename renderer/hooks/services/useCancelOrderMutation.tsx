@@ -12,20 +12,20 @@ export default function useCancelOrderMutation() {
     await yup.number().validate(orderId);
 
     const updateOrderResult = (await strapi.update('orders', orderId, {
-      status: ORDER_STATUS.CANCELED,
+      status: ORDER_STATUS.CANCELLED,
     })) as unknown as IOrderSingleResponse;
 
     await OrderSchema().validate(updateOrderResult.results);
 
     const promises = updateOrderResult.results.items.map(async (item) => {
-      const {quantity,selectedVariant } = item;
+      const { quantity, selectedVariant } = item;
       const stockPerVariant = selectedVariant.stock_per_variant;
       const { stock } = stockPerVariant;
       const newStock = stock + quantity;
       await updateVariantMutation.mutateAsync({
         newStock: newStock,
-        stockPerVariantId : stockPerVariant.id!,
-        variantId : selectedVariant.id!,
+        stockPerVariantId: stockPerVariant.id!,
+        variantId: selectedVariant.id!,
         price: selectedVariant.price,
       });
     });
