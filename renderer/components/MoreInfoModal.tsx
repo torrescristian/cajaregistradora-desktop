@@ -5,7 +5,6 @@ import { twMerge } from 'tailwind-merge';
 import { DataItem } from './DataItem';
 
 
-
 interface IMoreInfoModal {
   ticket: ITicket;
 }
@@ -24,7 +23,6 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
         <form method="dialog" className="modal-box gap-10">
           <dl className="flex flex-col gap-5 ">
             <div className='divider'>
-
               <DataItem
                 label='Ticket #'
                 value={String(ticket.id)}

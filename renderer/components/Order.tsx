@@ -56,7 +56,6 @@ function Order({ order }: IProps) {
     setIsEditing(!isEditing);
   };
 
-
   const updateOrderMutation = useUpdateOrderMutation()
   const cancelOrderMutation = useCancelOrderMutation();
   const createTicketMutation = useCreateTicketMutation();
@@ -131,8 +130,7 @@ function Order({ order }: IProps) {
             <SelectClient selectedClientId={order.client?.id || 0} onChange={(client) => {
               console.log({ client })
               setSelectedClient(client)
-            }
-            }
+              }}
             />
             <>
               <FormFieldText
