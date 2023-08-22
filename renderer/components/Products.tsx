@@ -4,7 +4,7 @@ import SearchInput, { useSearchProps } from '@/components/SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import IProductUI from '@/interfaces/IProduct';
 import Loader from '@/components/Loader';
-import SelectClient from './SelectClient';
+import ProductTypes from './ProductTypes';
 
 const Fixed = ({ children }: IComponent) => (
   <section className="sticky top-0 z-20 mt-2.5 flex w-full flex-col gap-y-5 py-2">
@@ -26,7 +26,7 @@ const Products = () => {
     <section className="w-full">
       <Fixed>
         <SearchInput {...searchProps} />
-        
+        <ProductTypes />
       </Fixed>
       <section className=" flex w-full flex-row gap-2 flex-wrap justify-start  ">
         {productsQuery.isLoading && <Loader />}
