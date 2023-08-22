@@ -19,7 +19,7 @@ const FormField = ({
 }: IFormControl) => {
   return (
     <div className="form-control w-2/5">
-      <label className="label-text whitespace-nowrap">{label}</label>
+      <label className="label-text whitespace-nowrap text-stone-500">{label}</label>
       <label className="input-group">
         {labelRight ? (
           <>
