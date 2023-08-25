@@ -50,7 +50,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
               className="btn text-red-500 btn-link no-underline "
               onClick={handleConfirmCancelTicket}
             >
-              Reenbolsar
+              Reembolsar
             </button>
             <button className="btn ">Mantener</button>
           </div>
