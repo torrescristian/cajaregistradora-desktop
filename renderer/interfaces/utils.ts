@@ -44,6 +44,20 @@ export interface IFixedNativeResponse<T> {
     };
   };
 }
+export interface ISingleFixedNativeResponse<T> {
+  data: {
+    id: number;
+    attributes: Omit<T, 'id'>;
+  };
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
 
 export interface IPayload<T> {
   data: T;

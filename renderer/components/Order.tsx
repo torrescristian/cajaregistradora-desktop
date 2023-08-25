@@ -14,7 +14,6 @@ import {
   TrashIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
-import { twMerge } from 'tailwind-merge';
 import { useForm } from 'react-hook-form';
 import FormFieldText from './FormFieldText';
 import useCancelOrderMutation from '@/hooks/services/useCancelOrderMutation';
@@ -55,7 +54,6 @@ function Order({ order }: IProps) {
   const handleToggleEdit = () => {
     setIsEditing(!isEditing);
   };
-
 
   const updateOrderMutation = useUpdateOrderMutation()
   const cancelOrderMutation = useCancelOrderMutation();
@@ -131,8 +129,7 @@ function Order({ order }: IProps) {
             <SelectClient selectedClientId={order.client?.id || 0} onChange={(client) => {
               console.log({ client })
               setSelectedClient(client)
-            }
-            }
+              }}
             />
             <>
               <FormFieldText

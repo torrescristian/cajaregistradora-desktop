@@ -1,17 +1,15 @@
-import { IProduct } from './IProduct';
-import { IResponsePage } from './utils';
-
-export interface IProductsSold {
-  quantity: number;
-  product: IProduct | number;
-}
-
-export interface ICashBalance {
+import { ITicket } from './ITicket';
+import IUser from './IUser';
+import {IFixedNativeResponse} from './utils';
+export interface ICashBalance<TICKET = ITicket<number,number>,USER = IUser, COMPLETED_AT = Date  > {
   id?: number;
-  total_amount: number;
-  products_sold: IProductsSold[];
-  createdAt?: string;
-  updatedAt?: string;
+  completedAt: COMPLETED_AT;
+  initialCashAmount: number;
+  newCashAmount: number;
+  seller: USER;
+  ticket: TICKET;
 }
 
-export type ICashBalancePage = IResponsePage<ICashBalance>;
+export type ICashBalanceExpanded = ICashBalance<ITicket>
+
+export type ICashBalancePage = IFixedNativeResponse<ICashBalanceExpanded>;

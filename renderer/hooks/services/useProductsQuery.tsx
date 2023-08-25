@@ -78,7 +78,7 @@ export default function useProductsQuery({
     total: 1,
   });
 
-  const { data, isLoading, isError, isSuccess } = useQuery<IProductUI[]>(
+  const { data, isLoading, isError, isSuccess, error } = useQuery<IProductUI[]>(
     [getProductsQueryKey(), query, selectedCategories, page],
     async () => {
       try {
@@ -148,5 +148,5 @@ export default function useProductsQuery({
 
   const products = data || [];
 
-  return { products, isLoading, isError, isSuccess, pagination };
+  return { products, isLoading, isError, isSuccess, pagination, error };
 }

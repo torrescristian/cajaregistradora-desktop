@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 import OrderItem from './OrderItem';
 import { ITicket } from '@/interfaces/ITicket';
-import { twMerge } from 'tailwind-merge';
 import { DataItem } from './DataItem';
-
 
 
 interface IMoreInfoModal {
@@ -24,7 +22,6 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
         <form method="dialog" className="modal-box gap-10">
           <dl className="flex flex-col gap-5 ">
             <div className='divider'>
-
               <DataItem
                 label='Ticket #'
                 value={String(ticket.id)}

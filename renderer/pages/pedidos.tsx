@@ -3,7 +3,7 @@ import Cart from '@/components/Cart';
 import { getCartItems, useCartSelect } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
 
-const Productos = () => {
+const Pedidos = () => {
   const items = useCartSelect(getCartItems) as ICartItem[];
   return (
     <section className="flex w-full flex-row items-start relative justify-between gap-2 ">
@@ -14,4 +14,4 @@ const Productos = () => {
   );
 };
 
-export default Productos;
+export default Pedidos;

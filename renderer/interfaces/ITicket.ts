@@ -1,3 +1,4 @@
+import { ICashBalance } from './ICashBalance';
 import { IOrder } from './IOrder';
 import { IResponsePage } from './utils';
 
@@ -9,9 +10,10 @@ export enum TICKET_STATUS {
   WAITING_FOR_REFUND = 'WAITING_FOR_REFUND',
 }
 
-export interface ITicket<ORDER = IOrder> {
+export interface ITicket<ORDER = IOrder, CASH_BALANCE = ICashBalance> {
   id?: number;
   total_price: number;
   order: ORDER;
   status: TICKET_STATUS;
+  cash_balance: CASH_BALANCE;
 }
