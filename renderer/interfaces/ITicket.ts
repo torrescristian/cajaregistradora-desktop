@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { ICashBalance } from './ICashBalance';
 import { IOrder } from './IOrder';
 import { IResponsePage } from './utils';
@@ -17,3 +18,5 @@ export interface ITicket<ORDER = IOrder, CASH_BALANCE = ICashBalance> {
   status: TICKET_STATUS;
   cash_balance: CASH_BALANCE;
 }
+
+export type ITicketPayload = ITicket<number,number>

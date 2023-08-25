@@ -1,14 +1,34 @@
 import Products from '@/components/Products';
 import Cart from '@/components/Cart';
-import { getCartItems, useCartSelect } from '@/contexts/CartContext';
-import { ICartItem } from '@/interfaces/ICart';
+import { RenderIf } from '@/components/RenderIf';
+import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
+import Loader from '@/components/Loader';
 
 const Pedidos = () => {
-  const items = useCartSelect(getCartItems) as ICartItem[];
+
+  const {
+    isLoading,
+    isError,
+    isSuccess,
+    cashIsActive
+  } = useActiveCashBalanceQuery();
+
+
+
   return (
     <section className="flex w-full flex-row items-start relative justify-between gap-2 ">
-      <Products />
-      <Cart />
+      <RenderIf condition={isLoading}>
+        <Loader />
+      </RenderIf>
+      <RenderIf condition={!isLoading}>
+        <RenderIf condition={cashIsActive}>
+          <Products />
+          <Cart />
+        </RenderIf>
+        <RenderIf condition={!cashIsActive}>
+          <p className='text-xl w-full text-center'>No hay caja activa</p>
+        </RenderIf>
+      </RenderIf>
     </section>
   );
 };

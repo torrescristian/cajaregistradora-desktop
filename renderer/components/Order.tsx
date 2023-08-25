@@ -21,6 +21,7 @@ import SelectClient from './SelectClient';
 import IClient from '@/interfaces/IClient';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
 import { DataItem } from './DataItem';
+import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
 
 interface IProps {
   order: IOrder;
@@ -58,11 +59,14 @@ function Order({ order }: IProps) {
   const updateOrderMutation = useUpdateOrderMutation()
   const cancelOrderMutation = useCancelOrderMutation();
   const createTicketMutation = useCreateTicketMutation();
+  const activeCashBalanceQuery = useActiveCashBalanceQuery();
 
+ 
   const handleSubmitOrderConfirm = () => {
     createTicketMutation.mutate({
       order: order.id!,
-      total_price: order.total_price,      
+      total_price: order.total_price,
+      cash_balance: activeCashBalanceQuery.cashBalance?.id!
     });
   };
   const handleCancelOrder = () => {
@@ -90,18 +94,7 @@ function Order({ order }: IProps) {
         return '';
     }
   }
-  function statusColor(orderStatus: ORDER_STATUS) {
-    switch (orderStatus) {
-      case ORDER_STATUS.PAID:
-        return 'text-success';
-      case ORDER_STATUS.CANCELLED:
-        return 'text-error';
-      case ORDER_STATUS.PENDING:
-        return 'text-yellow-500';
-      default:
-        return '';
-    }
-  }
+
 
   const handleSubmitOrderUpdate = (data: IFormControl) => {
     updateOrderMutation.mutate({
