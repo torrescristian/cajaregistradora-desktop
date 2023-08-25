@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import OrderItem from './OrderItem';
 import { ITicket } from '@/interfaces/ITicket';
+import { twMerge } from 'tailwind-merge';
 import { DataItem } from './DataItem';
 
 
