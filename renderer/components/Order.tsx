@@ -1,5 +1,5 @@
 import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
-import { IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
+import { DISCOUNT_TYPE, IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
 import OrderItem from './OrderItem';
 import { useState } from 'react';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
@@ -22,6 +22,8 @@ import IClient from '@/interfaces/IClient';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
 import { DataItem } from './DataItem';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
+import { DiscountTypeControl } from './DiscountTypeControl';
+import { RenderIf } from './RenderIf';
 
 interface IProps {
   order: IOrder;
@@ -32,21 +34,27 @@ interface IFormControl {
   clientPhone: string;
   additionalDetails: string;
   totalPrice: number;
+  discountAmount: number;
+  discountType: DISCOUNT_TYPE;
 }
 
 function Order({ order }: IProps) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
       clientAddress: order.address,
-      clientPhone: order.phone_number,
-      additionalDetails: order.additional_details,
-      totalPrice: order.total_price,
+      clientPhone: order.phoneNumber,
+      additionalDetails: order.additionalDetails,
+      totalPrice: order.totalPrice,
+      discountAmount: order.discount?.amount || 0,
+      discountType: order.discount?.type || DISCOUNT_TYPE.FIXED,
     },
   });
+
 
   const [selectedClient, setSelectedClient] = useState<IClient | null>(null);
 
@@ -61,11 +69,11 @@ function Order({ order }: IProps) {
   const createTicketMutation = useCreateTicketMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
 
- 
+
   const handleSubmitOrderConfirm = () => {
     createTicketMutation.mutate({
       order: order.id!,
-      total_price: order.total_price,
+      total_price: order.totalPrice,
       cash_balance: activeCashBalanceQuery.cashBalance?.id!
     });
   };
@@ -102,13 +110,32 @@ function Order({ order }: IProps) {
         id: order.id!,
         client: selectedClient?.id || order.client?.id,
         status: order.status,
-        additional_details: data.additionalDetails,
-        total_price: order.items.map((item) => item.price * item.quantity).reduce((a, b) => a + b, 0),
+        additionalDetails: data.additionalDetails,
+        totalPrice: order.items.map((item) => item.price * item.quantity).reduce((a, b) => a + b, 0),
         items: order.items,
         address: data.clientAddress,
-        phone_number: data.clientPhone,
+        phoneNumber: data.clientPhone,
+        discount: {
+          amount: data.discountAmount,
+          type: data.discountType,
+
+        }
       },
     })
+  }
+
+
+  const calcTotalDiscount = () => {
+    
+    if(!order.discount){
+      return order.totalPrice
+    }
+    
+    if (order.discount.type === DISCOUNT_TYPE.FIXED){
+      return order.totalPrice - order.discount.amount
+    }
+    return order.totalPrice * (1 - order.discount.amount / 100)
+  
   }
   return (
     <form onSubmit={handleSubmit(handleSubmitOrderUpdate)}
@@ -121,7 +148,7 @@ function Order({ order }: IProps) {
             <SelectClient selectedClientId={order.client?.id || 0} onChange={(client) => {
               console.log({ client })
               setSelectedClient(client)
-              }}
+            }}
             />
             <>
               <FormFieldText
@@ -150,18 +177,13 @@ function Order({ order }: IProps) {
               symbol={'📝'}
               labelRight
             />
-            <p>SubTotal: ${order.total_price}</p>
-            <FormFieldText
-              register={register}
-              label={'Descuento:'}
-              formKey="discount"
-              errors={errors}
-              symbol={'🎫'}
-              labelRight
+            <p>SubTotal: ${order.totalPrice}</p>
+            <DiscountTypeControl errors={errors} register={register} onChange={
+              (discountType) => setValue('discountType', discountType)}
             />
             <p>pago: {statusTraslate(order.status)}</p>
             <p>{parseDateToArgentinianFormat(order.createdAt)}</p>
-            <p className="text-xl font-bold">Total:${order.total_price}</p>
+            <p className="text-xl font-bold">Total:${order.totalPrice}</p>
           </div>
         ) : (
           <datalist className="flex flex-col gap-4">
@@ -180,24 +202,34 @@ function Order({ order }: IProps) {
             </p> : null
             }
             {
-              order.phone_number ? <p className="flex flex-row items-center gap-3">
+              order.phoneNumber ? <p className="flex flex-row items-center gap-3">
                 <DevicePhoneMobileIcon className="w-5 inline" />{' '}
-                {order.phone_number}
+                {order.phoneNumber}
               </p> : null
             }
-            {order.additional_details && <p>{order.additional_details}</p>}
-            
+            {order.additionalDetails && <p>{order.additionalDetails}</p>}
+
             <DataItem
               label='Subtotal:'
-              value={formatPrice(order.total_price)}
+              value={formatPrice(order.totalPrice)}
               defaultValue=''
             />
             {/* FIXME: replace value with variable */}
-            <DataItem
-              label='Descuento:'
-              value={formatPrice(1000)}
-              defaultValue=''
-            />
+            <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.FIXED}>
+              <DataItem
+                label='Descuento:'
+                value={formatPrice(order.discount?.amount!)}
+                defaultValue=''
+              />
+            </RenderIf>
+            <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.PERC}>
+              <DataItem
+                label='Descuento:'
+                value={order.discount?.amount! + '%'}
+                defaultValue=''
+              />
+            </RenderIf>
+
             <DataItem
               label='Pago:'
               value={statusTraslate(order.status)}
@@ -206,7 +238,7 @@ function Order({ order }: IProps) {
             <div className='divider' />
             <DataItem
               label='Total:'
-              value={formatPrice(order.total_price)}
+              value={formatPrice(calcTotalDiscount())}
               defaultValue=''
               className='text-2xl'
             />
