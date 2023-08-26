@@ -11,7 +11,7 @@ const OrderSchema = (orderItemsSchema = ProductSchema().required()) =>
     client: ClientSchema().required(),
     createAt: yup.string(),
     updatedAt: yup.string(),
-    additional_details: yup.string(),
+    additionalDetails: yup.string(),
     status: yup.string(),
   });
 
