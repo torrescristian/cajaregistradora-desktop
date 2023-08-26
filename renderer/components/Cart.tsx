@@ -83,7 +83,6 @@ const Cart = () => {
       <SelectClient
         onChange={clientId => {
           setSelectedClientId(clientId)
-          console.log({ clientId })
         }}
       />
       <ProductContainer>

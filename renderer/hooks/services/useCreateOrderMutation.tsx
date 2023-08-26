@@ -54,8 +54,8 @@ function parseOrderToPayLoad({
         selectedVariant: item.selectedVariant.id,
       };
     }),
-    additional_details: additionalDetails,
-    total_price: totalPrice,
+    additionalDetails: additionalDetails,
+    totalPrice: totalPrice,
     client: clientId || undefined,
     status: ORDER_STATUS.PENDING,
   };

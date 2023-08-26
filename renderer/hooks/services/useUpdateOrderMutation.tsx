@@ -23,7 +23,7 @@ export default function useUpdateOrderMutation() {
     if (order.client) {
       resp[1] = await strapi.update(getClientsQueryKey(), order.client!, {
         address: order.address,
-        phone_number: order.phone_number,
+        phone_number: order.phoneNumber,
       } as IClient)
     }
     const excludeServiceItem = (item: IOrderItem): boolean =>

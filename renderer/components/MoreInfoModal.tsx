@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import OrderItem from './OrderItem';
 import { ITicket } from '@/interfaces/ITicket';
-import { twMerge } from 'tailwind-merge';
 import { DataItem } from './DataItem';
 
 
@@ -41,7 +40,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             />
             <DataItem
               label="Teléfono:"
-              value={ticket.order.phone_number}
+              value={ticket.order.phoneNumber}
               defaultValue='Sin teléfono'
             />
             <div className='divider text-stone-500'>Productos</div>

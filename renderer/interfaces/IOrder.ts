@@ -11,18 +11,28 @@ export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
   selectedVariant: SELECTED_VARIANT;
 }
 
-
 export interface IOrder<CLIENT = IClient, ORDER_ITEM = IOrderItem> {
   items: ORDER_ITEM[];
   id?: number;
-  total_price: number;
-  additional_details: string;
+  totalPrice: number;
+  additionalDetails: string;
   client?: CLIENT;
   createdAt?: string;
   updatedAt?: string;
   status: ORDER_STATUS;
   address?: string;
-  phone_number?: string;
+  phoneNumber?: string;
+  discount?: IDiscount;
+}
+
+export interface IDiscount {
+  amount: number;
+  type: DISCOUNT_TYPE;
+}
+
+export enum DISCOUNT_TYPE {
+  PERC = 'perc',
+  FIXED = 'fixed',
 }
 export type IOrderResponse = IResponsePage<IOrder>;
 export type IOrderSingleResponse = ISingleResultResponsePage<IOrder>;
