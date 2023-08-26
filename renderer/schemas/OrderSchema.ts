@@ -6,7 +6,7 @@ import ProductSchema from './ProductSchema';
 const OrderSchema = (orderItemsSchema = ProductSchema().required()) =>
   yup.object().shape({
     id: yup.number().required(),
-    total_price: yup.number().required(),
+    totalPrice: yup.number().required(),
     items: yup.array().of(OrderItemsSchema(orderItemsSchema)).required(),
     client: ClientSchema().required(),
     createAt: yup.string(),
