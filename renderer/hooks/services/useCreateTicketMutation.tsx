@@ -27,11 +27,11 @@ export default function useCreateTicketMutation() {
       status: TICKET_STATUS.PAID,
     } as ITicketPayload);
 
-    const orderResPromise =  strapi.update(getOrderQueryKey(), ticket.order, {
+    const orderResPromise = strapi.update(getOrderQueryKey(), ticket.order, {
       status: ORDER_STATUS.PAID,
     });
-    const newCashBalancePromise =  strapi.update(getCashBalanceKey(), cashBalance?.id!, {
-      newCashAmount: cashBalance?.newCashAmount! + ticket.total_price,
+    const newCashBalancePromise = strapi.update(getCashBalanceKey(), cashBalance?.id!, {
+      newCashAmount: cashBalance?.newCashAmount! + ticket.totalPrice,
     })
     const res = await Promise.all([ticketResPromise, orderResPromise, newCashBalancePromise]);
     queryClient.invalidateQueries([getOrderQueryKey()]);

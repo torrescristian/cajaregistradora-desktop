@@ -24,6 +24,8 @@ import { DataItem } from './DataItem';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
 import { DiscountTypeControl } from './DiscountTypeControl';
 import { RenderIf } from './RenderIf';
+import { Payments } from './Payments';
+import { IPayment, PAYMENT_TYPE } from '@/interfaces/ITicket';
 
 interface IProps {
   order: IOrder;
@@ -36,6 +38,10 @@ interface IFormControl {
   totalPrice: number;
   discountAmount: number;
   discountType: DISCOUNT_TYPE;
+  payments: IPayment[];
+  [PAYMENT_TYPE.CASH]: number,
+  [PAYMENT_TYPE.CREDIT]: number,
+  [PAYMENT_TYPE.DEBIT]: number,
 }
 
 function Order({ order }: IProps) {
@@ -43,6 +49,7 @@ function Order({ order }: IProps) {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
@@ -52,43 +59,51 @@ function Order({ order }: IProps) {
       totalPrice: order.totalPrice,
       discountAmount: order.discount?.amount || 0,
       discountType: order.discount?.type || DISCOUNT_TYPE.FIXED,
+      [PAYMENT_TYPE.CASH]: 0,
+      [PAYMENT_TYPE.CREDIT]: 0,
+      [PAYMENT_TYPE.DEBIT]: 0,
     },
   });
 
+  // STATE
 
   const [selectedClient, setSelectedClient] = useState<IClient | null>(null);
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleToggleEdit = () => {
-    setIsEditing(!isEditing);
-  };
+  const [selectedPaymentType, setSelectedPaymentType] = useState(PAYMENT_TYPE.CASH);
 
+  //HOOKS
   const updateOrderMutation = useUpdateOrderMutation()
   const cancelOrderMutation = useCancelOrderMutation();
   const createTicketMutation = useCreateTicketMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
 
+  // METHODS
+
+  const handleToggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
 
   const handleSubmitOrderConfirm = () => {
+    const payments: IPayment[] = [];
+    if (selectedPaymentType) {
+      payments.push({
+        type: selectedPaymentType,
+        amount: getValues(selectedPaymentType),
+      });
+    }
     createTicketMutation.mutate({
       order: order.id!,
-      total_price: order.totalPrice,
-      cash_balance: activeCashBalanceQuery.cashBalance?.id!
+      totalPrice: order.totalPrice,
+      cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+      payments,
     });
   };
   const handleCancelOrder = () => {
     cancelOrderMutation.mutate(order.id!);
   };
 
-
-  if (createTicketMutation.isLoading) {
-    return <Loader />;
-  }
-
-  if (createTicketMutation.isError) {
-    return <p>Error</p>;
-  }
 
   function statusTraslate(orderStatus: ORDER_STATUS) {
     switch (orderStatus) {
@@ -118,24 +133,35 @@ function Order({ order }: IProps) {
         discount: {
           amount: data.discountAmount,
           type: data.discountType,
-
-        }
+        },
       },
     })
   }
-
+  const handleChangePaymentType = (_selectedPaymentType: PAYMENT_TYPE) => {
+    setSelectedPaymentType(_selectedPaymentType)
+  }
 
   const calcTotalDiscount = () => {
-    
-    if(!order.discount){
+
+    if (!order.discount) {
       return order.totalPrice
     }
-    
-    if (order.discount.type === DISCOUNT_TYPE.FIXED){
+
+    if (order.discount.type === DISCOUNT_TYPE.FIXED) {
       return order.totalPrice - order.discount.amount
     }
     return order.totalPrice * (1 - order.discount.amount / 100)
-  
+
+  }
+
+  // CONDITIONALS
+
+  if (createTicketMutation.isLoading) {
+    return <Loader />;
+  }
+
+  if (createTicketMutation.isError) {
+    return <p>Error</p>;
   }
   return (
     <form onSubmit={handleSubmit(handleSubmitOrderUpdate)}
@@ -214,7 +240,6 @@ function Order({ order }: IProps) {
               value={formatPrice(order.totalPrice)}
               defaultValue=''
             />
-            {/* FIXME: replace value with variable */}
             <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.FIXED}>
               <DataItem
                 label='Descuento:'
@@ -274,11 +299,12 @@ function Order({ order }: IProps) {
         </div>
         <button
           onClick={handleSubmitOrderConfirm}
-          disabled={createTicketMutation.isLoading}
+          disabled={createTicketMutation.isLoading || isEditing}
           className="btn btn-success disabled:btn-disabled text-stone-50"
         >
           {createTicketMutation.isLoading ? <Loader /> : 'Confirmar orden'}
         </button>
+        <Payments onChangeType={handleChangePaymentType} register={register} />
       </section>
     </form >
   );

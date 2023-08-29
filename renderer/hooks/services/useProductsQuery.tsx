@@ -85,7 +85,6 @@ export default function useProductsQuery({
         let options: any = {
           populate: [
             'categories',
-            'stock_per_product',
             'variants',
             'variants.categories',
             'variants.categories.parent',
