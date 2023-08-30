@@ -5,7 +5,7 @@ interface IFormControl {
   label: string;
   formKey: string;
   errors: FieldErrors;
-  symbol: string;
+  symbol?: string;
   labelRight?: boolean;
 }
 
@@ -19,11 +19,13 @@ const FormField = ({
 }: IFormControl) => {
   return (
     <div className="form-control w-2/5">
-      <label className="label-text whitespace-nowrap text-stone-500">{label}</label>
+      <label className="label-text whitespace-nowrap text-stone-500">
+        {label}
+      </label>
       <label className="input-group">
         {labelRight ? (
           <>
-            <span>{symbol}</span>
+            {symbol ? <span>{symbol}</span> : null}
             <input
               type="text"
               {...register(formKey)}
@@ -37,7 +39,7 @@ const FormField = ({
               {...register(formKey)}
               className=" input-bordered input w-72 text-xl"
             />
-            <span className="text-2xl ">{symbol}</span>
+            {symbol ? <span className="text-2xl">{symbol}</span> : null}
           </>
         )}
       </label>
