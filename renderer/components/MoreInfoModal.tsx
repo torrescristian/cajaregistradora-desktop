@@ -1,7 +1,8 @@
-import { useRef } from "react";
-import OrderItem from "./OrderItem";
-import { IPayment, ITicket } from "@/interfaces/ITicket";
-import { DataItem } from "./DataItem";
+import { useRef } from 'react';
+import OrderItem from './OrderItem';
+import { ITicket } from '@/interfaces/ITicket';
+import { DataItem } from './DataItem';
+
 
 interface IMoreInfoModal {
   ticket: ITicket;
@@ -40,7 +41,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             <DataItem
               label="Teléfono:"
               value={ticket.order.phoneNumber}
-              defaultValue="Sin teléfono"
+              defaultValue='Sin teléfono'
             />
             {ticket.payments.map((payment) => (
               <DataItem

@@ -7,7 +7,6 @@ import { getTicketsQueryKey } from './useTicketQuery';
 import { ORDER_STATUS } from '@/interfaces/IOrder';
 import useActiveCashBalanceQuery, { getCashBalanceKey } from './useActiveCashBalanceQuery';
 
-
 type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 
 export default function useCreateTicketMutation() {
