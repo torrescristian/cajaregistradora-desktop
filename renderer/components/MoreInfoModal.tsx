@@ -18,34 +18,42 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
       <button className="btn" onClick={() => handleClickMoreInfo()}>
         Más info
       </button>
-      <dialog ref={ref} className="bg-transparent p-10">
+      <dialog ref={ref} className="bg-transparent p-15">
         <form method="dialog" className="modal-box gap-10">
           <dl className="flex flex-col gap-5 ">
-            <div className='divider'>
+            <div className="divider">
               <DataItem
-                label='Ticket #'
+                label="Ticket #"
                 value={String(ticket.id)}
-                defaultValue=''
+                defaultValue=""
               />
             </div>
             <DataItem
               label="Cliente:"
               value={ticket.order.client?.name}
-              defaultValue='Consumidor final'
+              defaultValue="Consumidor final"
             />
             <DataItem
               label="Dirección:"
               value={ticket.order.address}
-              defaultValue='Sin dirección'
+              defaultValue="Sin dirección"
             />
             <DataItem
               label="Teléfono:"
               value={ticket.order.phoneNumber}
               defaultValue='Sin teléfono'
             />
-            <div className='divider text-stone-500'>Productos</div>
+            {ticket.payments.map((payment) => (
+              <DataItem
+                key={payment.type}
+                label="Otros pagos:"
+                value={payment.amount}
+                defaultValue={payment.type}
+              />
+            ))}
+            <div className="divider text-stone-500">Productos</div>
           </dl>
-          <div className="flex flex-col p-5">
+          <div className="flex flex-col p-5 overflow-y-scroll">
             {ticket.order.items.map((item) => (
               <OrderItem isEditing={false} key={item.product!.id} item={item} />
             ))}

@@ -3,7 +3,7 @@ import useArticlesQuery from '@/hooks/services/useArticlesQuery';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useCreateProductMutation from '@/hooks/services/useCreateProductMutation';
 import { mergeClasses, toLC } from '@/libs/utils';
 import FormField from './FormField';

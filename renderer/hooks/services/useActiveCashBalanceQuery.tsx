@@ -1,5 +1,5 @@
 import strapi from '@/libs/strapi';
-import { getError } from '@/libs/utils';
+import { getErrorMessage } from '@/libs/utils';
 import { ICashBalanceExpanded, ICashBalancePage } from '@/interfaces/ICashBalance';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
@@ -16,7 +16,8 @@ const parseCashBalanceFacade = (cashBalanceResponse: ICashBalancePage): ICashBal
     initialCashAmount: cashBalance.attributes.initialCashAmount,
     newCashAmount: cashBalance.attributes.newCashAmount,
     seller: cashBalance.attributes.seller,
-    ticket: cashBalance.attributes.ticket
+    ticket: cashBalance.attributes.ticket,
+    totalAmount: cashBalance.attributes.totalAmount
   }
 }
 
@@ -45,7 +46,7 @@ export default function useActiveCashBalanceQuery() {
 
       } catch (error: any) {
         // console.log('🚀 ~ file: useCashBalance.tsx:47 ~ error:', error);
-        if ([401, 403].includes(getError(error).status)) {
+        if ([401, 403].includes(getErrorMessage(error).status)) {
           router.push('/');
 
           return null;

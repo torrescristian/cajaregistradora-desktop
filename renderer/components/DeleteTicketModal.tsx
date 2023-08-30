@@ -40,7 +40,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
           <DataItem
             defaultValue=""
             label="Total:"
-            value={formatPrice(ticket.total_price)}
+            value={formatPrice(ticket.totalPrice)}
           />
           <p className="text-stone-500">
             El ticket se va a eliminar permanentemente.

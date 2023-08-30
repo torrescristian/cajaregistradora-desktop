@@ -1,5 +1,5 @@
 import strapi from '@/libs/strapi';
-import { getError } from '@/libs/utils';
+import { getErrorMessage } from '@/libs/utils';
 import IProductUI, { IProduct, IProductPage } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
@@ -85,7 +85,6 @@ export default function useProductsQuery({
         let options: any = {
           populate: [
             'categories',
-            'stock_per_product',
             'variants',
             'variants.categories',
             'variants.categories.parent',
@@ -135,7 +134,7 @@ export default function useProductsQuery({
         return parsedRes;
       } catch (error: any) {
         console.error('🚀 ~ file: useProductsQuery.tsx:71 ~ error:', error);
-        if ([401, 403].includes(getError(error).status)) {
+        if ([401, 403].includes(getErrorMessage(error).status)) {
           router.push('/');
 
           return [];

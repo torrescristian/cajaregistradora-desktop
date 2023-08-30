@@ -23,6 +23,7 @@ export interface IOrder<CLIENT = IClient, ORDER_ITEM = IOrderItem> {
   address?: string;
   phoneNumber?: string;
   discount?: IDiscount;
+  subtotalPrice: number;
 }
 
 export interface IDiscount {

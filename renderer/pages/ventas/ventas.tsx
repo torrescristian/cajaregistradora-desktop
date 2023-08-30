@@ -66,8 +66,8 @@ const Ventas = () => {
               {statusTraslate(ticket.status)}
             </span>
           </p>
-          <p>Total: ${ticket.total_price}</p>
-          <MoreInfoModal ticket={ticket} />
+          <p>Total: ${ticket.totalPrice}</p>
+          <MoreInfoModal ticket={ticket}/>
         </div>
       ))}
     </PageLayout>

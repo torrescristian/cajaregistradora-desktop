@@ -1,5 +1,5 @@
 import strapi from '@/libs/strapi';
-import { getError } from '@/libs/utils';
+import { getErrorMessage } from '@/libs/utils';
 import ISaleUI, { ISale, ISalePage } from '@/interfaces/ISale';
 import { useRouter } from 'next/router';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -50,7 +50,7 @@ export default function useSalesQuery() {
           return res;
         } catch (error: any) {
           console.log('🚀 ~ file: useSalesQuery.tsx:57 ~ error:', error);
-          if ([401, 403].includes(getError(error).status)) {
+          if ([401, 403].includes(getErrorMessage(error).status)) {
             router.push('/');
 
             return defaultSale;

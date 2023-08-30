@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
                 Correo Electrónico (e-mail)
               </label>
               <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
-                <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+                <EnvelopeIcon className="h-5 w-5" />
                 <input
                   id="email"
                   type="email"
@@ -85,7 +85,7 @@ const LoginPage: React.FC = () => {
                 Contraseña
               </label>
               <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
-                <LockClosedIcon className="h-5 w-5 text-gray-400" />
+                <LockClosedIcon className="h-5 w-5" />
                 <input
                   id="password"
                   type="password"

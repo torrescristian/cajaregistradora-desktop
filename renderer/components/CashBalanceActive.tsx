@@ -1,4 +1,6 @@
 import { ICashBalanceExpanded } from "@/interfaces/ICashBalance";
+import { formatPrice } from "@/libs/utils";
+import { DataItem } from "./DataItem";
 
 interface IProps {
     cashBalance: ICashBalanceExpanded | null;
@@ -6,12 +8,28 @@ interface IProps {
 
 export const CashBalanceActivate = ({ cashBalance }: IProps) => {
     return (
-        <section>
-            <h2>Caja activa</h2>
-            <div>
-                <p>{cashBalance?.initialCashAmount}</p>
-                <p>{cashBalance?.newCashAmount}</p>
-                <p>{cashBalance?.id}</p>
+        <section className="flex flex-col items-center">
+            <div className="flex flex-col gap-3 w-full shadow-2xl p-10 border-stone-500 border-2">
+                <h2 className="font-bold text-2xl text-center">Caja activa</h2>
+                <DataItem
+                    label="Caja #"
+                    value={cashBalance?.id!}
+                    defaultValue="Caja sin identificar" />
+                <DataItem
+                    label="Monto inicial:"
+                    value={formatPrice(cashBalance?.initialCashAmount!)}
+                    defaultValue="Monto inicial: $0.00"
+                />
+                <DataItem
+                    label="Total de caja efectivo:"
+                    value={formatPrice(cashBalance?.newCashAmount! + cashBalance?.initialCashAmount!)}
+                    defaultValue="Total de caja efectivo: $0.00"
+                />
+                <DataItem
+                    label="Total:"
+                    value={formatPrice(cashBalance?.totalAmount!)}
+                    defaultValue="Total $0.00"
+                />
             </div>
         </section>
     )
