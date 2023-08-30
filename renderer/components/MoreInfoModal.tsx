@@ -1,8 +1,7 @@
-import { useRef } from 'react';
-import OrderItem from './OrderItem';
-import { ITicket } from '@/interfaces/ITicket';
-import { DataItem } from './DataItem';
-
+import { useRef } from "react";
+import OrderItem from "./OrderItem";
+import { IPayment, ITicket } from "@/interfaces/ITicket";
+import { DataItem } from "./DataItem";
 
 interface IMoreInfoModal {
   ticket: ITicket;
@@ -21,33 +20,37 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
       <dialog ref={ref} className="bg-transparent p-15">
         <form method="dialog" className="modal-box gap-10">
           <dl className="flex flex-col gap-5 ">
-            <div className='divider'>
+            <div className="divider">
               <DataItem
-                label='Ticket #'
+                label="Ticket #"
                 value={String(ticket.id)}
-                defaultValue=''
+                defaultValue=""
               />
             </div>
             <DataItem
               label="Cliente:"
               value={ticket.order.client?.name}
-              defaultValue='Consumidor final'
+              defaultValue="Consumidor final"
             />
             <DataItem
               label="Dirección:"
               value={ticket.order.address}
-              defaultValue='Sin dirección'
+              defaultValue="Sin dirección"
             />
             <DataItem
               label="Teléfono:"
               value={ticket.order.phoneNumber}
-              defaultValue='Sin teléfono'
+              defaultValue="Sin teléfono"
             />
-            <DataItem
-            label='Otros pagos:'
-            value="$ 3.000,00"
-            defaultValue='efectivo'/>
-            <div className='divider text-stone-500'>Productos</div>
+            {ticket.payments.map((payment) => (
+              <DataItem
+                key={payment.type}
+                label="Otros pagos:"
+                value={payment.amount}
+                defaultValue={payment.type}
+              />
+            ))}
+            <div className="divider text-stone-500">Productos</div>
           </dl>
           <div className="flex flex-col p-5 overflow-y-scroll">
             {ticket.order.items.map((item) => (

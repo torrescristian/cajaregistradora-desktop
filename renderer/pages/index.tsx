@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
         <div className="flex w-full max-w-md flex-col items-center justify-start gap-y-5">
           <form
             onSubmit={handleSubmit}
-            className="flex h-full w-full flex-col gap-y-5 rounded-md bg-white p-6 shadow-md md:mt-16 md:h-fit md:w-full"
+            className="flex h-full w-full flex-col gap-y-5 rounded-md p-6 shadow-md md:mt-16 md:h-fit md:w-full"
           >
             <h2 data-test="form.title" className="text-2xl font-semibold">
               Iniciar Sesión
@@ -65,13 +65,13 @@ const LoginPage: React.FC = () => {
               >
                 Correo Electrónico (e-mail)
               </label>
-              <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
-                <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+              <div className="flex items-center rounded-md border  px-3 py-2">
+                <EnvelopeIcon className="h-5 w-5 " />
                 <input
                   id="email"
                   type="email"
                   required
-                  className="ml-2 w-full bg-transparent outline-none"
+                  className="ml-2 w-full bg-transparent  outline-none"
                   style={{
                     fontFamily: 'sans-serif',
                   }}
@@ -84,8 +84,8 @@ const LoginPage: React.FC = () => {
               <label htmlFor="password" className="mb-1 block">
                 Contraseña
               </label>
-              <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
-                <LockClosedIcon className="h-5 w-5 text-gray-400" />
+              <div className="flex items-center rounded-md border px-3 py-2">
+                <LockClosedIcon className="h-5 w-5" />
                 <input
                   id="password"
                   type="password"
@@ -101,7 +101,7 @@ const LoginPage: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full rounded-md bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
+              className="w-full rounded-md bg-primary px-4 py-2 font-semibold text-white hover:bg-blue-900"
             >
               Iniciar Sesión
             </button>

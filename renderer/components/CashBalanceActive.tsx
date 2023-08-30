@@ -18,17 +18,17 @@ export const CashBalanceActivate = ({ cashBalance }: IProps) => {
                 <DataItem
                     label="Monto inicial:"
                     value={formatPrice(cashBalance?.initialCashAmount!)}
-                    defaultValue="0.00"
+                    defaultValue="Monto inicial: $0.00"
                 />
                 <DataItem
                     label="Total de caja efectivo:"
-                    value={formatPrice(cashBalance?.newCashAmount!)}
-                    defaultValue="0.00"
+                    value={formatPrice(cashBalance?.newCashAmount! + cashBalance?.initialCashAmount!)}
+                    defaultValue="Total de caja efectivo: $0.00"
                 />
                 <DataItem
-                    label="Otros tipos de pagos:"
-                    value={formatPrice(cashBalance?.newCashAmount! - 3500)}
-                    defaultValue="0.00"
+                    label="Total:"
+                    value={formatPrice(cashBalance?.totalAmount!)}
+                    defaultValue="Total $0.00"
                 />
             </div>
         </section>

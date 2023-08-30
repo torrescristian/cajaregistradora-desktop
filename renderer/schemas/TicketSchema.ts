@@ -6,11 +6,11 @@ const TicketSchema = (order: any = OrderSchema()) =>
     .object()
     .shape({
       totalPrice: yup.number().required(),
-      order: order.required(),
+      order: order.required().required(),
       payments : yup.array().of(yup.object().shape({
         amount: yup.number().required(),
         type: yup.string().required(),
-      }))
+      })).required()
     })
     .defined()
     .required();

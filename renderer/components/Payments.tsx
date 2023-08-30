@@ -2,6 +2,7 @@ import { PAYMENT_TYPE } from "@/interfaces/ITicket";
 import { useState} from "react";
 import { twMerge } from "tailwind-merge";
 import { RenderIf } from "./RenderIf";
+import * as yup from 'yup';
 
 const paymentTypesAndLabels = [
   {
@@ -26,8 +27,6 @@ interface IProps {
 
 
 export const Payments = ({ onChangeType,register }: IProps) => {
-
-
   const [selectedPaymentType, setSelectedPaymentType] = useState(
     PAYMENT_TYPE.CASH
   );
@@ -39,11 +38,11 @@ export const Payments = ({ onChangeType,register }: IProps) => {
 
   return (
     <section className="w-full flex-col flex">
-      <section className="tabs tabs-boxed">
+      <section className="tabs w-full justify-around tabs-boxed">
         {paymentTypesAndLabels.map(({ label, type }) => (
           <a key={type}
             className={twMerge(
-              "tab",
+              "tab tab-lg tab-",
               selectedPaymentType === type && "tab-active"
             )}
             onClick={handlePaymentSelect(type)}

@@ -8,6 +8,7 @@ export interface ICashBalance<TICKET = ITicket<number,number>,USER = IUser, COMP
   newCashAmount: number;
   seller: USER;
   ticket: TICKET;
+  totalAmount: number;
 }
 
 export type ICashBalanceExpanded = ICashBalance<ITicket>

@@ -13,8 +13,8 @@ export const formatPrice = (price: number) => {
   });
 };
 
-export const getError = (error: any) => {
-  return error.error || error;
+export const getErrorMessage = (error: any) => {
+  return error?.error?.message || error?.error || error;
 };
 
 export const toPositiveNumber = (value: string | number) => {
