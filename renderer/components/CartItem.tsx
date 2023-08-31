@@ -31,9 +31,9 @@ const CartItem = ({ product }: ICollapseTitle) => {
     >
       <p className="font-bold">{product.name}</p>
       <section className="flex flex-row gap-3 items-center justify-end whitespace-nowrap">
-        <p className='flex flex-row whitespace-nowrap items-center gap-2'>
-        <Badge>x{cartItemQuantity}</Badge>
-          = {formatPrice(product.defaultVariant.price * cartItemQuantity)}
+        <p className="flex flex-row whitespace-nowrap items-center gap-2">
+          <Badge>x{cartItemQuantity}</Badge>={' '}
+          {formatPrice(product.defaultVariant.price * cartItemQuantity)}
         </p>
         <RemoveProductButton onClick={handleClickRemove} />
         <AddProductButton onClick={handleClickAdd} disabled={!!disabled} />

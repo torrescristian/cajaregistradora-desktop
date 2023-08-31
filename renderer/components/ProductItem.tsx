@@ -36,10 +36,11 @@ const ProductItem = ({ product }: ICollapseTitle) => {
       }}
       onClick={handleClickAdd}
     >
-      {isService ? null
-        : <Badge className='absolute top-3 right-3'>
+      {isService ? null : (
+        <Badge className="absolute top-3 right-3">
           {product.defaultVariant.stockPerVariant.stock}
-        </Badge>}
+        </Badge>
+      )}
 
       <section
         data-test="productItem.collapse.title.left"
@@ -47,7 +48,9 @@ const ProductItem = ({ product }: ICollapseTitle) => {
       >
         <div className="flex flex-col gap-4 text-white">
           <HighlightedText>{product.name}</HighlightedText>
-          <HighlightedText>{formatPrice(product.defaultVariant.price)}</HighlightedText>
+          <HighlightedText>
+            {formatPrice(product.defaultVariant.price)}
+          </HighlightedText>
         </div>
       </section>
       <section

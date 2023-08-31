@@ -2,12 +2,17 @@ import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import { formatPrice } from '@/libs/utils';
 import { ICartItem } from '@/interfaces/ICart';
 import CartItem from './CartItem';
-import { getCartItems,getTotalAmount, useCartStore } from '@/contexts/CartStore';
+import {
+  getCartItems,
+  getTotalAmount,
+  useCartStore,
+} from '@/contexts/CartStore';
 import { ConfirmOrder } from './ConfirmOrder';
 
-
 const ProductContainer = ({ children }: IComponent) => (
-  <section className="flex flex-col items-end overflow-y-scroll w-96 gap-2 h-[70vh]">{children}</section>
+  <section className="flex flex-col items-end overflow-y-scroll w-96 gap-2 h-[70vh]">
+    {children}
+  </section>
 );
 
 const Layout = ({
@@ -47,7 +52,7 @@ const Cart = () => {
         </section>
         <section className="w-max">
           {items.length ? (
-            <ConfirmOrder/>
+            <ConfirmOrder />
           ) : (
             <section className="alert alert-warning w-full">
               No hay productos en el carrito

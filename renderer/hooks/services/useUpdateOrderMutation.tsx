@@ -11,7 +11,6 @@ import IClient from '@/interfaces/IClient';
 
 interface IProps {
   order: IOrder<number>;
-
 }
 
 export default function useUpdateOrderMutation() {
@@ -24,7 +23,7 @@ export default function useUpdateOrderMutation() {
       resp[1] = await strapi.update(getClientsQueryKey(), order.client!, {
         address: order.address,
         phone_number: order.phoneNumber,
-      } as IClient)
+      } as IClient);
     }
     const excludeServiceItem = (item: IOrderItem): boolean =>
       !item.product!.isService;
@@ -40,8 +39,6 @@ export default function useUpdateOrderMutation() {
     return resp;
   });
 }
-
-
 
 async function updateStock(items: ICartItem[]) {
   const productIds = items.map((item) => item.product.id);

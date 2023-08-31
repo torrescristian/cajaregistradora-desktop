@@ -41,7 +41,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
     }),
   addProduct: (productPayload: IProductUI) => {
     set((state): Partial<ICartStore> => {
-      console.log('holis')
+      console.log('holis');
       const itemIndex = state.cartItems.findIndex(
         (item: any) => item.product.id === productPayload.id,
       );
@@ -179,7 +179,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         }),
       });
     }),
-    addClientId: (clientId: number) => set({clientId }),
+  addClientId: (clientId: number) => set({ clientId }),
 }));
 
 // selectors

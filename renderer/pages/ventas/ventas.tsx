@@ -67,7 +67,7 @@ const Ventas = () => {
             </span>
           </p>
           <p>Total: ${ticket.totalPrice}</p>
-          <MoreInfoModal ticket={ticket}/>
+          <MoreInfoModal ticket={ticket} />
         </div>
       ))}
     </PageLayout>

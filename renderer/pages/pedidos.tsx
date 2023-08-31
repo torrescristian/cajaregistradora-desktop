@@ -5,15 +5,8 @@ import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuer
 import Loader from '@/components/Loader';
 
 const Pedidos = () => {
-
-  const {
-    isLoading,
-    isError,
-    isSuccess,
-    cashIsActive
-  } = useActiveCashBalanceQuery();
-
-
+  const { isLoading, isError, isSuccess, cashIsActive } =
+    useActiveCashBalanceQuery();
 
   return (
     <section className="flex w-full flex-row items-start relative justify-between gap-2 ">
@@ -26,7 +19,7 @@ const Pedidos = () => {
           <Cart />
         </RenderIf>
         <RenderIf condition={!cashIsActive}>
-          <p className='text-xl w-full text-center'>No hay caja activa</p>
+          <p className="text-xl w-full text-center">No hay caja activa</p>
         </RenderIf>
       </RenderIf>
     </section>

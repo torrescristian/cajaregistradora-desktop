@@ -17,7 +17,8 @@ interface IProps {
 export const DiscountTypeControl = ({ register, errors, onChange }: IProps) => {
   const { value: discountType, handleChange: handleDiscountType } =
     useFormControl(DISCOUNT_TYPE.FIXED);
-  const {value: discountAmount, handleChange : handleChangeDiscountAmount, } = useFormControl('');
+  const { value: discountAmount, handleChange: handleChangeDiscountAmount } =
+    useFormControl('');
 
   useEffect(() => {
     onChange(discountType);
@@ -49,24 +50,24 @@ export const DiscountTypeControl = ({ register, errors, onChange }: IProps) => {
         </label>
       </section>
       <RenderIf condition={discountType === DISCOUNT_TYPE.PERC}>
-      <RenderIf condition={Boolean(register)}>
-        <FormFieldText
-          register={register}
-          label={'Descuento:'}
-          formKey="discountAmount"
-          errors={errors}
-          symbol={'%'}
-        />
-      </RenderIf>
-      <RenderIf condition={!register}>
-        <FormControl
-          text={'Descuento:'}
-          name='discountAmount'
-          type='text'
-          value={discountAmount}
-          onChange={handleChangeDiscountAmount}
-        />
-      </RenderIf>
+        <RenderIf condition={Boolean(register)}>
+          <FormFieldText
+            register={register}
+            label={'Descuento:'}
+            formKey="discountAmount"
+            errors={errors}
+            symbol={'%'}
+          />
+        </RenderIf>
+        <RenderIf condition={!register}>
+          <FormControl
+            text={'Descuento:'}
+            name="discountAmount"
+            type="text"
+            value={discountAmount}
+            onChange={handleChangeDiscountAmount}
+          />
+        </RenderIf>
       </RenderIf>
       <RenderIf condition={discountType === DISCOUNT_TYPE.FIXED}>
         <FormFieldText

@@ -43,7 +43,7 @@ const ProductRow = ({ product }: IProps) => {
       newStock: Number(data.stock),
       variantId: product.defaultVariant.id,
       stockPerVariantId: product.defaultVariant.stockPerVariant.id!,
-      price: product.defaultVariant.price
+      price: product.defaultVariant.price,
     });
   };
 

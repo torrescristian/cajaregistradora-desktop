@@ -97,7 +97,7 @@ export default function ClientForm({ onSelect }: IProps) {
       </RenderIf>
       <RenderIf condition={!clientQuery.isLoading}>
         <RenderIf condition={!!clientQuery?.data}>
-          <ul className='h-72 overflow-y-scroll'>
+          <ul className="h-72 overflow-y-scroll">
             {clientQuery.data?.map((client) => (
               <li
                 key={client.id}

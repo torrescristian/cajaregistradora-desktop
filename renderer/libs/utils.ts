@@ -59,7 +59,7 @@ export function calcDiscount({
   discountType,
 }: ICalcDiscount) {
   if (discountType === DISCOUNT_TYPE.FIXED) {
-      return price - discountAmount;
+    return price - discountAmount;
   }
   return price * (1 - discountAmount / 100);
 }

@@ -37,7 +37,7 @@ const defaultCartState = {
 
 // HOOKS
 export const useLoadShopCart = (): void => {
-  const cartStore = useCartStore(state => state);
+  const cartStore = useCartStore((state) => state);
 
   useEffect(() => {
     const _cartStore = getCartFromStorage();

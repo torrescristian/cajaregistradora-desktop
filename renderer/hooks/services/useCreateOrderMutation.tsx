@@ -19,10 +19,13 @@ interface IProps {
 }
 
 export default function useCreateOrderMutation() {
-  const clearCart = useCartStore(state => state.clearCart);
+  const clearCart = useCartStore((state) => state.clearCart);
   return useMutation(async (props: IProps) => {
     const resp = [null, null] as [any, any];
-    resp[0] = await strapi.create(getOrderQueryKey(), parseOrderToPayLoad(props));
+    resp[0] = await strapi.create(
+      getOrderQueryKey(),
+      parseOrderToPayLoad(props),
+    );
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -37,7 +40,6 @@ export default function useCreateOrderMutation() {
     return resp;
   });
 }
-
 
 function parseOrderToPayLoad({
   items,
@@ -59,7 +61,7 @@ function parseOrderToPayLoad({
     totalPrice: totalPrice,
     client: clientId || undefined,
     status: ORDER_STATUS.PENDING,
-    subtotalPrice: subtotalPrice
+    subtotalPrice: subtotalPrice,
   };
 }
 

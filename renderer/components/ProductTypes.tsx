@@ -30,7 +30,10 @@ export default function ProductTypes() {
   return (
     <section className="flex flex-row gap-5">
       {productsByTypes.map(({ type, products }) => (
-        <div className="flex flex-row items-center gap-2 btn btn-outline btn-accent" key={type}>
+        <div
+          className="flex flex-row items-center gap-2 btn btn-outline btn-accent"
+          key={type}
+        >
           <span>{type}</span>
         </div>
       ))}

@@ -3,7 +3,6 @@ import Order from '@/components/Order';
 import useOrderQuery from '@/hooks/services/useOrderQuery';
 
 function ordenes() {
-
   const orderQuery = useOrderQuery();
   if (orderQuery.isLoading) {
     return <Loader />;
@@ -11,8 +10,6 @@ function ordenes() {
   if (orderQuery.isError) {
     return <p>Error</p>;
   }
-
-
 
   return (
     <section className="flex flex-col items-center w-4/5 gap-5">
