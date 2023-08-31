@@ -1,3 +1,4 @@
+import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
 import { twMerge } from 'tailwind-merge';
 
 export const mergeClasses = (...classes: Array<string | null | undefined>) => {
@@ -44,4 +45,21 @@ export const toLC = (str: string) => str.toLowerCase();
 
 export function range(end: number) {
   return Array.from({ length: end }, (_, i) => i);
+}
+
+interface ICalcDiscount {
+  price: number;
+  discountAmount: number;
+  discountType: DISCOUNT_TYPE;
+}
+
+export function calcDiscount({
+  price,
+  discountAmount,
+  discountType,
+}: ICalcDiscount) {
+  if (discountType === DISCOUNT_TYPE.FIXED) {
+      return price - discountAmount;
+  }
+  return price * (1 - discountAmount / 100);
 }

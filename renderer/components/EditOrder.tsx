@@ -2,7 +2,7 @@ import { DISCOUNT_TYPE, IOrder, ORDER_STATUS } from "@/interfaces/IOrder";
 import { DiscountTypeControl } from "./DiscountTypeControl";
 import FormFieldText from "./FormFieldText";
 import SelectClient from "./SelectClient";
-import { formatPrice, getErrorMessage, parseDateToArgentinianFormat } from "@/libs/utils";
+import { calcDiscount, formatPrice, getErrorMessage, parseDateToArgentinianFormat } from "@/libs/utils";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import * as yup from "yup";
 import { PAYMENT_TYPE } from "@/interfaces/ITicket";
@@ -15,11 +15,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 interface IProps {
     order: IOrder;
     setIsEditing: (isEditing: boolean) => void;
-}
-interface ICalcDiscount {
-    price: number;
-    discountAmount: number;
-    discountType: DISCOUNT_TYPE;
 }
 
 interface IFormControl {
@@ -62,7 +57,6 @@ export const EditOrder = ({ order,setIsEditing }: IProps) => {
         register,
         handleSubmit,
         setValue,
-        getValues,
         formState: { errors },
     } = useForm<IFormControl>({
         // @ts-ignore
@@ -75,17 +69,6 @@ export const EditOrder = ({ order,setIsEditing }: IProps) => {
             discountAmount: order.discount?.amount || 0,
         },
     });
-    function calcDiscount({
-        price,
-        discountAmount,
-        discountType,
-    }: ICalcDiscount) {
-        if (discountType === DISCOUNT_TYPE.FIXED) {
-            return price - discountAmount;
-        }
-        return price * (1 - discountAmount / 100);
-    }
-
 
     const handleSubmitOrderUpdate = async (data: IFormControl) => {
         console.log("🔥");

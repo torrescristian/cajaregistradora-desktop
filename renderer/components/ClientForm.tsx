@@ -7,6 +7,7 @@ import { useDebounce } from 'use-debounce';
 import FormField from './FormFieldText';
 import Loader from './Loader';
 import { RenderIf } from './RenderIf';
+import useCreateClientMutation from '@/hooks/services/useCreateClientMutation';
 
 interface IProps {
   onSelect: (client: IClient) => void;
@@ -14,7 +15,7 @@ interface IProps {
 
 interface IClientForm {
   name: string;
-  phone: string;
+  phone_number: string;
   address: string;
 }
 
@@ -26,12 +27,15 @@ export default function ClientForm({ onSelect }: IProps) {
 
   const clientQuery = useClientsQuery(query);
 
+  const createClientMutation = useCreateClientMutation();
+
   const handleClick = (client: IClient) => () => {
     onSelect(client);
   };
 
   const handleSubmitCreateClient = (data: IClientForm) => {
     // client mutation
+    createClientMutation.mutate(data);
   };
 
   const {
@@ -55,7 +59,7 @@ export default function ClientForm({ onSelect }: IProps) {
           />
           <FormField
             errors={errors}
-            formKey="phone"
+            formKey="phone_number"
             label="Teléfono: "
             register={register}
           />
@@ -85,7 +89,7 @@ export default function ClientForm({ onSelect }: IProps) {
         <input
           onChange={handleChange}
           value={search}
-          className="input input-bordered"
+          className="input input-bordered my-3"
         />
       </label>
       <RenderIf condition={clientQuery.isLoading}>
@@ -93,7 +97,7 @@ export default function ClientForm({ onSelect }: IProps) {
       </RenderIf>
       <RenderIf condition={!clientQuery.isLoading}>
         <RenderIf condition={!!clientQuery?.data}>
-          <ul>
+          <ul className='h-72 overflow-y-scroll'>
             {clientQuery.data?.map((client) => (
               <li
                 key={client.id}

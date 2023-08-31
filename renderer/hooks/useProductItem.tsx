@@ -1,12 +1,4 @@
-import {
-  addProduct,
-  updatePrice,
-  getCartItemQuantityByProductId,
-  removeCartItem,
-  removeProduct,
-  useCartDispatch,
-  useCartSelect,
-} from '@/contexts/CartContext';
+import { getCartItemQuantityByProductId, useCartStore } from '@/contexts/CartStore';
 import IProductUI from '@/interfaces/IProduct';
 
 const useProductItem = (product: IProductUI) => {
@@ -14,25 +6,28 @@ const useProductItem = (product: IProductUI) => {
   const isDisabledOrWithoutStock = product?.disabled;
   const disabled = isNotService && isDisabledOrWithoutStock;
   const isService = !!product.isService;
-  const cartItemQuantity = useCartSelect(
-    getCartItemQuantityByProductId(product.id),
-  );
-  const dispatch = useCartDispatch();
+  const { cartItemQuantity,addProduct, updatePrice, removeCartItem, removeProduct } = useCartStore(state => ({
+    addProduct: state.addProduct,
+    updatePrice: state.updatePrice,
+    removeCartItem: state.removeCartItem,
+    removeProduct: state.removeProduct,
+    cartItemQuantity:getCartItemQuantityByProductId(product.id)(state)
+  }));
 
   const handleClickAdd = () => {
-    dispatch(addProduct(product));
+    addProduct(product);
   };
 
   const handleClickRemove = () => {
-    dispatch(removeProduct(product));
+    removeProduct(product);
   };
 
   const handleClickClear = () => {
-    dispatch(removeCartItem(product));
+    removeCartItem(product);
   };
 
   const handleClickSelectUpdatePrice = async (newPrice: number) => {
-    dispatch(updatePrice({ product, newPrice }));
+   updatePrice({ product, newPrice });
   };
 
   return {
