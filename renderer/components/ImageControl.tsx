@@ -4,18 +4,15 @@ import React, { useEffect, useState } from 'react';
 
 interface IProps {
   product?: IProductUI;
-   onChange: (imageName: string) => void;
+  onChange: (imageName: string) => void;
 }
 
-const ImageControl = ({ product,onChange }: IProps) => {
-
-  const [imageName,setImageName] = useState(product?.image ||'');
+const ImageControl = ({ product, onChange }: IProps) => {
+  const [imageName, setImageName] = useState(product?.image || '');
 
   useEffect(() => {
     onChange(imageName);
-  },[
-    imageName,
-  ])
+  }, [imageName]);
 
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
@@ -38,11 +35,7 @@ const ImageControl = ({ product,onChange }: IProps) => {
 
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-col items-center">
-      <img
-        src={imageName}
-        alt='imagen' 
-        className="w-max rounded-lg"
-      />
+      <img src={imageName} alt="imagen" className="w-max rounded-lg" />
       <input
         type="file"
         name="files"

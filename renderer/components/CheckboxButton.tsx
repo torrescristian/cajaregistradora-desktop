@@ -18,8 +18,12 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
 
   return (
     <div>
-      <label className='label w-fit gap-3'>
-        <input type="checkbox" className='checkbox checkbox-success' {...register(name)} />
+      <label className="label w-fit gap-3">
+        <input
+          type="checkbox"
+          className="checkbox checkbox-success"
+          {...register(name)}
+        />
         {label}
       </label>
       {error && <p style={{ color: 'red' }}>{error.message}</p>}
@@ -28,4 +32,3 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
 };
 
 export default CheckboxButton;
-

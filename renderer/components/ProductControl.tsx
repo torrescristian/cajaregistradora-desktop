@@ -1,67 +1,65 @@
 import FormFieldText from '@/components/FormFieldText';
 import { useForm } from 'react-hook-form';
 import IProductUI, {
-    IProductPayload,
-    PRODUCT_TYPE,
+  IProductPayload,
+  PRODUCT_TYPE,
 } from '@/interfaces/IProduct';
 import CheckboxButton from './CheckboxButton';
 import { RenderIf } from './RenderIf';
 import useCreateProductMutation from '@/hooks/services/useCreateProductMutation';
 import { useImageControl } from '@/hooks/useImageControl';
 
-
 interface IProps {
-    controlType: 'CREATE' | 'UPDATE';
-    product?: IProductUI;
+  controlType: 'CREATE' | 'UPDATE';
+  product?: IProductUI;
 }
 
 const ProductControl = ({ controlType, product }: IProps) => {
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm<IProductPayload>({
-        defaultValues: {
-            name: product?.name || '',
-            type: product?.type,
-            image: product?.image || '',
-            isService: product?.isService || true,
-        },
-    });
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<IProductPayload>({
+    defaultValues: {
+      name: product?.name || '',
+      type: product?.type,
+      image: product?.image || '',
+      isService: product?.isService || true,
+    },
+  });
 
-    const createProductMutation = useCreateProductMutation();
+  const createProductMutation = useCreateProductMutation();
 
-    const handleSubmitCreateProduct = (data: IProductPayload) => {
-        createProductMutation.mutate(data);
-    };
+  const handleSubmitCreateProduct = (data: IProductPayload) => {
+    createProductMutation.mutate(data);
+  };
 
-    const handleSubmitUpdateProduct = () => { };
+  const handleSubmitUpdateProduct = () => {};
 
-    const { processSubmit } = useImageControl();
+  const { processSubmit } = useImageControl();
 
-    const handleClickSubmit = (data: IProductPayload) => {
-        if (controlType === 'CREATE') {
-            handleSubmitCreateProduct(data);
-        }
-    };
+  const handleClickSubmit = (data: IProductPayload) => {
+    if (controlType === 'CREATE') {
+      handleSubmitCreateProduct(data);
+    }
+  };
 
-    const handleSubmitWrapper = async (e: any) => {
-        // 1. cargar imagen & obtener la url
-        const imageName = await processSubmit(e);
+  const handleSubmitWrapper = async (e: any) => {
+    // 1. cargar imagen & obtener la url
+    const imageName = await processSubmit(e);
 
-        // 2. procesar el react-hook-form para obtener la data
-        handleSubmit((data: any) => {
-            // ...se crea data...
-            handleClickSubmit({
-                ...data,
-                image: imageName,
-                type: data.type,
+    // 2. procesar el react-hook-form para obtener la data
+    handleSubmit((data: any) => {
+      // ...se crea data...
+      handleClickSubmit({
+        ...data,
+        image: imageName,
+        type: data.type,
+      });
+    })(e);
+  };
 
-            });
-        })(e);
-    };
-
-    return (
+  return (
     <form
       onSubmit={handleSubmitWrapper}
       className="flex flex-col p-5 gap-5 border-2 border-slate-500 shadow-2xl"
@@ -90,12 +88,11 @@ const ProductControl = ({ controlType, product }: IProps) => {
         </select>
       </RenderIf>
 
-      <select
-       {...register('type')}
-       className='select select-bordered'
-       >
-        {['SODA' ,'PIZZA','HAMBURGER'].map((type) => (
-            <option key={type} value={type}>{type}</option>
+      <select {...register('type')} className="select select-bordered">
+        {['SODA', 'PIZZA', 'HAMBURGER'].map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
         ))}
       </select>
       <input
@@ -112,7 +109,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
       <button type="submit" className="btn btn-primary">
         Crear producto
       </button>
-    </form >
+    </form>
   );
 };
 

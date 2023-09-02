@@ -10,7 +10,6 @@ import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation'
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import ImageControl from '@/components/ImageControl';
 
-
 interface IProps {
   product: IProductUI;
 }
@@ -50,7 +49,7 @@ const ProductRow = ({ product }: IProps) => {
   };
 
   return (
-     <section className="block-stone-200 flex w-2/5 flex-col flex-wrap justify-between rounded-xl p-8 shadow-xl">
+    <section className="block-stone-200 flex w-2/5 flex-col flex-wrap justify-between rounded-xl p-8 shadow-xl">
       <div className="divider">Nombre del Producto</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex gap-3">
@@ -107,9 +106,7 @@ const ProductRow = ({ product }: IProps) => {
       <section className="flex flex-col items-center gap-2">
         <ImageControl product={product} />
       </section>
-    </section> 
-
-
+    </section>
   );
 };
 

@@ -15,7 +15,7 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
           <NavButton href="/ventas">Recibos</NavButton>
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost">
-              <Bars3Icon className='w-6 h-6'/>
+              <Bars3Icon className="w-6 h-6" />
             </label>
             <ul
               tabIndex={0}
