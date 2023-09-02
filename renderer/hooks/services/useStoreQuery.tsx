@@ -16,7 +16,7 @@ const parseStoreFacade = (store: IStore): IStoreUI => {
 export default function useStoreQuery() {
   return useQuery<IStoreUI>([getStoreQueryKey()], async () => {
     const stores = (await strapi.find(
-      'store',
+      getStoreQueryKey(),
     )) as unknown as IResponsePage<IStore>;
     const [store] = stores.results.map(parseStoreFacade);
     return store;
