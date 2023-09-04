@@ -1,21 +1,21 @@
-import { PAYMENT_TYPE } from "@/interfaces/ITicket";
-import { useState} from "react";
-import { twMerge } from "tailwind-merge";
-import { RenderIf } from "./RenderIf";
+import { PAYMENT_TYPE } from '@/interfaces/ITicket';
+import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { RenderIf } from './RenderIf';
 import * as yup from 'yup';
 
 const paymentTypesAndLabels = [
   {
     type: PAYMENT_TYPE.CREDIT,
-    label: "Crédito",
+    label: 'Crédito',
   },
   {
     type: PAYMENT_TYPE.CASH,
-    label: "Efectivo",
+    label: 'Efectivo',
   },
   {
     type: PAYMENT_TYPE.DEBIT,
-    label: "Débito",
+    label: 'Débito',
   },
 ] as const;
 
@@ -24,26 +24,25 @@ interface IProps {
   register: any;
 }
 
-
-
-export const Payments = ({ onChangeType,register }: IProps) => {
+export const Payments = ({ onChangeType, register }: IProps) => {
   const [selectedPaymentType, setSelectedPaymentType] = useState(
-    PAYMENT_TYPE.CASH
+    PAYMENT_TYPE.CASH,
   );
 
   const handlePaymentSelect = (type: PAYMENT_TYPE) => () => {
     setSelectedPaymentType(type);
-    onChangeType(type)
+    onChangeType(type);
   };
 
   return (
     <section className="w-full flex-col flex">
       <section className="tabs w-full justify-around tabs-boxed">
         {paymentTypesAndLabels.map(({ label, type }) => (
-          <a key={type}
+          <a
+            key={type}
             className={twMerge(
-              "tab tab-lg tab-",
-              selectedPaymentType === type && "tab-active"
+              'tab tab-lg tab-',
+              selectedPaymentType === type && 'tab-active',
             )}
             onClick={handlePaymentSelect(type)}
           >
@@ -56,7 +55,12 @@ export const Payments = ({ onChangeType,register }: IProps) => {
           <RenderIf condition={selectedPaymentType === type} key={type}>
             <label className="label">
               {label}
-              <input {...register(type)} type="number" placeholder="0.00" className="input input-bordered" />
+              <input
+                {...register(type)}
+                type="number"
+                placeholder="0.00"
+                className="input input-bordered"
+              />
             </label>
           </RenderIf>
         ))}

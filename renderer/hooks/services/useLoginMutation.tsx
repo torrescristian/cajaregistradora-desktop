@@ -33,7 +33,7 @@ export default function useLoginMutation() {
       router.push('/pedidos');
     },
     {
-      onSuccess: () => { },
+      onSuccess: () => {},
     },
   );
 

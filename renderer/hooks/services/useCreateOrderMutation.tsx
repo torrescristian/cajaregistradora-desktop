@@ -1,4 +1,3 @@
-import { clearCart, useCartDispatch } from '@/contexts/CartContext';
 import { ICartItem } from '@/interfaces/ICart';
 import { IOrder, IOrderItem, ORDER_STATUS } from '@/interfaces/IOrder';
 import IStockPerVariant, {
@@ -7,6 +6,7 @@ import IStockPerVariant, {
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
+import { useCartStore } from '@/contexts/CartStore';
 
 interface IProps {
   items: ICartItem[];
@@ -15,13 +15,17 @@ interface IProps {
   clientPhone: string;
   additionalDetails: string;
   clientId?: number;
+  subtotalPrice: number;
 }
 
 export default function useCreateOrderMutation() {
-  const dispatch = useCartDispatch();
+  const clearCart = useCartStore((state) => state.clearCart);
   return useMutation(async (props: IProps) => {
     const resp = [null, null] as [any, any];
-    resp[0] = await strapi.create(getOrderQueryKey(), parseOrderToPayLoad(props));
+    resp[0] = await strapi.create(
+      getOrderQueryKey(),
+      parseOrderToPayLoad(props),
+    );
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;
@@ -31,19 +35,18 @@ export default function useCreateOrderMutation() {
     if (itemsToUpdate.length) {
       resp[1] = await updateStock(itemsToUpdate);
     }
-
-    dispatch(clearCart());
+    clearCart();
 
     return resp;
   });
 }
-
 
 function parseOrderToPayLoad({
   items,
   totalPrice,
   additionalDetails,
   clientId,
+  subtotalPrice,
 }: IProps): IOrder<number | undefined, IOrderItem<number, number>> {
   return {
     items: items.map((item): IOrderItem<number, number> => {
@@ -58,6 +61,7 @@ function parseOrderToPayLoad({
     totalPrice: totalPrice,
     client: clientId || undefined,
     status: ORDER_STATUS.PENDING,
+    subtotalPrice: subtotalPrice,
   };
 }
 

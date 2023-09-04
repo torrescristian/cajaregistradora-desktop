@@ -1,14 +1,9 @@
 import deepEqual from 'deep-equal';
 import { useEffect } from 'react';
-import {
-  getCartState,
-  initCartState,
-  useCartDispatch,
-  useCartSelect,
-} from '@/contexts/CartContext';
 import { ICartState } from '@/interfaces/ICart';
 import Cookie from 'js-cookie';
 import IUser from '@/interfaces/IUser';
+import { useCartStore } from '@/contexts/CartStore';
 
 // KEYS
 export const CART_KEY = 'cart';
@@ -42,23 +37,22 @@ const defaultCartState = {
 
 // HOOKS
 export const useLoadShopCart = (): void => {
-  const dispatch = useCartDispatch();
-  const cartState = useCartSelect(getCartState);
+  const cartStore = useCartStore((state) => state);
 
   useEffect(() => {
-    const _cartState = getCartFromStorage();
+    const _cartStore = getCartFromStorage();
 
-    if (_cartState) {
-      dispatch(initCartState(_cartState));
+    if (_cartStore) {
+      cartStore.initCart(_cartStore);
     }
   }, []);
 
   useEffect(() => {
-    const { reset, ...state } = cartState;
+    const { reset, ...state } = cartStore;
     const cartStateIsNotDefault = !deepEqual(state, defaultCartState);
 
     if (cartStateIsNotDefault || reset) {
       setCartInStorage(state);
     }
-  }, [cartState]);
+  }, [cartStore]);
 };

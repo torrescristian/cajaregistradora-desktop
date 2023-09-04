@@ -5,9 +5,10 @@ import IProductUI from '@/interfaces/IProduct';
 import ProductVariant from './ProductVariant';
 import { useForm } from 'react-hook-form';
 import FormField from '@/components/FormField';
-import UploadButton from '@/components/UploadButton';
+import UploadButton from '@/components/ImageControl';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
+import ImageControl from '@/components/ImageControl';
 
 interface IProps {
   product: IProductUI;
@@ -43,7 +44,7 @@ const ProductRow = ({ product }: IProps) => {
       newStock: Number(data.stock),
       variantId: product.defaultVariant.id,
       stockPerVariantId: product.defaultVariant.stockPerVariant.id!,
-      price: product.defaultVariant.price
+      price: product.defaultVariant.price,
     });
   };
 
@@ -103,7 +104,7 @@ const ProductRow = ({ product }: IProps) => {
         <div className="divider">Imagen</div>
       </form>
       <section className="flex flex-col items-center gap-2">
-        <UploadButton product={product} />
+        <ImageControl product={product} />
       </section>
     </section>
   );

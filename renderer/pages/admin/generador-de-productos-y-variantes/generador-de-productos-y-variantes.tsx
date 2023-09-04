@@ -1,6 +1,7 @@
 import CreateVariant from '@/components/CreateVariant';
 import CrearProducto from '@/components/CreateProduct';
 import { useState } from 'react';
+import ProductControl from '@/components/ProductControl';
 
 export default function GeneradorDeProductosYVariantes() {
   const [show, setShow] = useState(false);
@@ -11,11 +12,7 @@ export default function GeneradorDeProductosYVariantes() {
 
   return (
     <section className="flex w-full flex-row justify-evenly">
-      <CrearProducto
-        className="w-max flex gap-10 flex-row"
-        handleChangeBox={handleChangeBox}
-        show={show}
-      />
+      <ProductControl controlType={'CREATE'} />
       {show && <CreateVariant />}
     </section>
   );

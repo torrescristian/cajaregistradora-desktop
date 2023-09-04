@@ -206,18 +206,18 @@ export default function CrearProducto({
             Producto creado con exito
           </p>
         )}
-        <div className='flex whitespace-nowrap items-center gap-3'>
-        <input
-          type="checkbox"
-          id="marcar"
-          className="checkbox checkbox-primary"
-          checked={show}
-          onChange={handleChangeBox}
+        <div className="flex whitespace-nowrap items-center gap-3">
+          <input
+            type="checkbox"
+            id="marcar"
+            className="checkbox checkbox-primary"
+            checked={show}
+            onChange={handleChangeBox}
           />
-        <label htmlFor="marcar" className="label ">
-          Crear variante
-        </label>
-          </div>
+          <label htmlFor="marcar" className="label ">
+            Crear variante
+          </label>
+        </div>
       </form>
     </section>
   );

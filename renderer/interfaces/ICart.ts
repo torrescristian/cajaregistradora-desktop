@@ -16,6 +16,7 @@ export interface ICartState {
   clientAddress: string;
   totalPrice: number;
   additionalDetails: string;
+  subtotalPrice: number;
 }
 
 export interface ICartAction {

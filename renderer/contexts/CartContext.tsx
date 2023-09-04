@@ -1,4 +1,4 @@
-'use client';
+/* 'use client';
 import { ICartAction, ICartItem, ICartState } from '@/interfaces/ICart';
 import React, { createContext, useReducer } from 'react';
 import IProductUI from '@/interfaces/IProduct';
@@ -249,7 +249,7 @@ export const CartContext = createContext<{
   dispatch: () => null,
 });
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, defaultCartState);
 
   return (
@@ -257,7 +257,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </CartContext.Provider>
   );
-};
+}; 
 
 export const useCartState = () => {
   const { state } = React.useContext(CartContext);
@@ -273,3 +273,4 @@ export const useCartSelect = (fn: (state: ICartState) => any) => {
   const state = useCartState();
   return fn(state);
 };
+ */

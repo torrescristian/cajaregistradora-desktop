@@ -1,8 +1,7 @@
-import {useState } from 'react';
+import { useState } from 'react';
 
 const useFormControl = (initialValue: any) => {
   const [value, setValue] = useState<any>(initialValue);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
