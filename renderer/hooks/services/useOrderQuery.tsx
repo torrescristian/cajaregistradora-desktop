@@ -4,14 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 
 export const getOrderQueryKey = () => 'orders';
 
-
 export default function useOrderQuery() {
   return useQuery<IOrder[]>([getOrderQueryKey()], async () => {
     const orderResponse = (await strapi.find(getOrderQueryKey(), {
       filters: {
         status: ORDER_STATUS.PENDING,
       },
-      populate: ['client', 'items.product','discount','payments'],
+      populate: ['client', 'items.product', 'discount', 'payments'],
     })) as unknown as IOrderResponse;
     return orderResponse.results;
   });

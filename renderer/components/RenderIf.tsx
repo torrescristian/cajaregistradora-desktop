@@ -1,9 +1,8 @@
 interface IProps {
-    children: any;
-    condition: boolean;
+  children: any;
+  condition: boolean;
 }
 
-
 export const RenderIf = ({ children, condition }: IProps) => {
-    return condition ? children : null;
-  }
+  return condition ? children : null;
+};

@@ -8,18 +8,16 @@ import { RenderIf } from '@/components/RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 import { CloseCashBalance } from '@/components/CloseCashBalance';
 
-
 const Caja = () => {
-
   const {
     cashBalance,
     isLoading: activeCashLoading,
     isError,
     isSuccess,
-    cashIsActive
+    cashIsActive,
   } = useActiveCashBalanceQuery();
 
-  const { handleChange, value } = useFormControl(0)
+  const { handleChange, value } = useFormControl(0);
 
   const isLoading = activeCashLoading;
 
@@ -29,7 +27,7 @@ const Caja = () => {
     initCashMutation.mutate({
       initialCashAmount: Number(value),
     });
-  }
+  };
 
   return (
     <PageLayout>
@@ -42,7 +40,7 @@ const Caja = () => {
         <ul className="flex flex-col">
           <section className="flex w-full justify-center m-5">
             <RenderIf condition={isLoading}>
-              <Loader className='mt-5' />
+              <Loader className="mt-5" />
             </RenderIf>
             <RenderIf condition={!isLoading && isSuccess}>
               <RenderIf condition={cashIsActive}>
@@ -54,9 +52,9 @@ const Caja = () => {
             </RenderIf>
           </section>
           <section className="grid gap-5 grid-cols-3 justify-center justify-items-center content-center items-center w-full">
-             {isError && <p>Error</p>} 
-            <RenderIf condition={isLoading} >
-              <Loader className='mt-5' />
+            {isError && <p>Error</p>}
+            <RenderIf condition={isLoading}>
+              <Loader className="mt-5" />
             </RenderIf>
             <RenderIf condition={!isLoading && isSuccess}>
               <RenderIf condition={cashIsActive}>
@@ -66,7 +64,8 @@ const Caja = () => {
                 <CashBalance
                   cashBalance={cashBalance}
                   value={value}
-                  onChange={handleChange} />
+                  onChange={handleChange}
+                />
               </RenderIf>
             </RenderIf>
           </section>

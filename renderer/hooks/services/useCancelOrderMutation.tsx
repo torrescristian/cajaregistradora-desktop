@@ -8,7 +8,7 @@ import { getOrderQueryKey } from './useOrderQuery';
 
 export default function useCancelOrderMutation() {
   const updateVariantMutation = useUpdateVariantMutation();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation(async (orderId: number) => {
     await yup.number().validate(orderId);
@@ -42,7 +42,7 @@ export default function useCancelOrderMutation() {
       throw new Error('Failed to update stock');
     }
 
-    queryClient.invalidateQueries([getOrderQueryKey()])
+    queryClient.invalidateQueries([getOrderQueryKey()]);
 
     return {
       updateOrderResult,

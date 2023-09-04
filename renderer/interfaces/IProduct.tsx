@@ -30,13 +30,13 @@ export interface IVariantUI {
   name: string;
 }
 
-export interface IProduct<DEFAULT_VARIANT = IVariant> {
+export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant> {
   id: number;
   name: string;
   categories: ICategory[];
   store: number;
   isService: boolean;
-  variants: IVariant[];
+  variants: VARIANTS[];
   default_variant: DEFAULT_VARIANT;
   image: string;
   type: PRODUCT_TYPE;
@@ -64,3 +64,5 @@ export default interface IProductUI {
   type: PRODUCT_TYPE;
   disabled?: boolean;
 }
+
+export type IProductPayload = IProduct<number, number>;

@@ -1,15 +1,19 @@
-import { getProductsQueryKey } from '@/hooks/services/useProductsQuery';
 import IProductUI from '@/interfaces/IProduct';
 import strapi from '@/libs/strapi';
-import React, { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 
 interface IProps {
-  product: IProductUI;
+  product?: IProductUI;
+  onChange: (imageName: string) => void;
 }
 
-const UploadButton = ({ product }: IProps) => {
-  const queryClient = useQueryClient();
+const ImageControl = ({ product, onChange }: IProps) => {
+  const [imageName, setImageName] = useState(product?.image || '');
+
+  useEffect(() => {
+    onChange(imageName);
+  }, [imageName]);
+
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
     const [productImage] = await fetch(
@@ -26,19 +30,12 @@ const UploadButton = ({ product }: IProps) => {
         },
       },
     ).then((res) => res.json());
-    await strapi.update(getProductsQueryKey(), product.id, {
-      image: productImage,
-    });
-    queryClient.invalidateQueries([getProductsQueryKey()]);
+    setImageName(productImage);
   };
 
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-col items-center">
-      <img
-        src={product.image}
-        alt={product.name}
-        className="w-max rounded-lg"
-      />
+      <img src={imageName} alt="imagen" className="w-max rounded-lg" />
       <input
         type="file"
         name="files"
@@ -51,4 +48,4 @@ const UploadButton = ({ product }: IProps) => {
   );
 };
 
-export default UploadButton;
+export default ImageControl;

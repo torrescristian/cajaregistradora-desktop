@@ -1,13 +1,28 @@
-import { ICartState } from '@/interfaces/ICart';
+import { ICartItem, ICartState } from '@/interfaces/ICart';
 import IProductUI from '@/interfaces/IProduct';
 import { create } from 'zustand';
+
+interface IUpdatePriceProps {
+  newPrice: number;
+  product: IProductUI;
+}
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
 
 // uso:
 // const clientName = useCartStore(getClientName)
+type ICartStore = ICartState & {
+  initCart: (cartPayload: ICartState) => void;
+  addProduct: (productPayload: IProductUI) => void;
+  removeProduct: (productPayload: IProductUI) => void;
+  removeCartItem: (productPayload: IProductUI) => void;
+  clearCart: () => void;
+  updatePrice: (updatePriceProps: IUpdatePriceProps) => void;
+  addClientId: (clientId: number) => void;
+  clientId: number;
+};
 
-export const useCartStore = create<ICartState>((set) => ({
+export const useCartStore = create<ICartStore>()((set) => ({
   cartItems: [],
   totalAmount: 0,
   totalQuantity: 0,
@@ -16,16 +31,17 @@ export const useCartStore = create<ICartState>((set) => ({
   clientAddress: '',
   totalPrice: 0,
   additionalDetails: '',
+  subtotalPrice: 0,
+  clientId: 0,
   initCart: (cartPayload: ICartState) =>
-    set(() => {
-      return {
-        cartItems: cartPayload.cartItems,
-        totalAmount: cartPayload.totalAmount,
-        totalQuantity: cartPayload.totalQuantity,
-      };
+    set({
+      cartItems: cartPayload.cartItems,
+      totalAmount: cartPayload.totalAmount,
+      totalQuantity: cartPayload.totalQuantity,
     }),
-  addProduct: (productPayload: IProductUI) =>
-    set((state: any) => {
+  addProduct: (productPayload: IProductUI) => {
+    set((state): Partial<ICartStore> => {
+      console.log('holis');
       const itemIndex = state.cartItems.findIndex(
         (item: any) => item.product.id === productPayload.id,
       );
@@ -44,7 +60,6 @@ export const useCartStore = create<ICartState>((set) => ({
 
         cartItem.quantity += 1;
         return {
-          ...state,
           cartItems: newCartItems,
           totalAmount: fixPrice(
             state.totalAmount + productPayload.defaultVariant.price,
@@ -52,26 +67,140 @@ export const useCartStore = create<ICartState>((set) => ({
           totalQuantity: state.totalQuantity + 1,
         };
       }
+
+      return {
+        cartItems: [
+          ...state.cartItems,
+          {
+            product: productPayload,
+            quantity: 1,
+            selectedVariant: productPayload.defaultVariant,
+          },
+        ],
+        totalAmount: fixPrice(
+          state.totalAmount + productPayload.defaultVariant.price,
+        ),
+        totalQuantity: state.totalQuantity + 1,
+      };
+    });
+  },
+  removeProduct: (productPayload: IProductUI) =>
+    set((state) => {
+      const item: ICartItem | undefined = state.cartItems.find(
+        (item: ICartItem) => item.product.id === productPayload.id,
+      );
+
+      if (item?.quantity === 1) {
+        return {
+          cartItems: state.cartItems.filter(
+            (item: ICartItem) => item.product.id !== productPayload.id,
+          ),
+          totalAmount: fixPrice(
+            Math.max(
+              state.totalAmount - productPayload.defaultVariant.price,
+              0,
+            ),
+          ),
+          totalQuantity: Math.max(state.totalQuantity - 1, 0),
+          reset: true,
+        };
+      }
+      if (item) {
+        return {
+          cartItems: state.cartItems.map((item: ICartItem) => {
+            if (item.product.id === productPayload.id) {
+              const newItem = structuredClone(item);
+              newItem.quantity--;
+              return newItem;
+            }
+            return item;
+          }),
+          totalAmount: fixPrice(
+            Math.max(
+              state.totalAmount - productPayload.defaultVariant.price,
+              0,
+            ),
+          ),
+          totalQuantity: Math.max(state.totalQuantity - 1, 0),
+          reset: true,
+        };
+      }
+
+      return state;
     }),
+  removeCartItem: (productPayload: IProductUI) =>
+    set((state: any) => {
+      const totalQuantity =
+        state.totalQuantity -
+        state.cartItems.reduce((acc: number, item: ICartItem) => {
+          if (item.product.id === productPayload.id) {
+            return acc + item.quantity;
+          }
+          return acc;
+        }, 0);
+      const totalAmount =
+        state.totalAmount -
+        state.cartItems.reduce((acc: number, item: ICartItem) => {
+          if (item.product.id === productPayload.id) {
+            return acc + item.product.defaultVariant.price * item.quantity;
+          }
+          return acc;
+        }, 0);
+
+      return {
+        cartItems: state.cartItems.filter(
+          (item: ICartItem) => item.product.id !== productPayload.id,
+        ),
+        totalAmount:
+          Math.max(totalQuantity, 0) === 0
+            ? 0
+            : fixPrice(Math.max(totalAmount, 0)),
+        totalQuantity: Math.max(totalQuantity, 0),
+        reset: true,
+      };
+    }),
+  clearCart: () =>
+    set({
+      cartItems: [],
+      totalAmount: 0,
+      totalQuantity: 0,
+      reset: true,
+    }),
+  updatePrice: (updatePricePayload: IUpdatePriceProps) =>
+    set((state: any) => {
+      return structuredClone({
+        cartItems: state.cartItems.map((item: ICartItem) => {
+          if (item.product.id === updatePricePayload.product.id) {
+            const newItem = structuredClone(item);
+            newItem.product.defaultVariant.price = updatePricePayload.newPrice;
+            return newItem;
+          }
+          return item;
+        }),
+      });
+    }),
+  addClientId: (clientId: number) => set({ clientId }),
 }));
 
 // selectors
-export const getCartState = (state: ICartState) => state;
-export const getClientName = (state: ICartState) => state.clientName;
-export const getClientPhone = (state: ICartState) => state.clientPhone;
-export const getClientAddress = (state: ICartState) => state.clientAddress;
-export const getTotalPrice = (state: ICartState) => state.totalPrice;
-export const getCartItems = (state: ICartState) => state.cartItems;
-export const getTotalAmount = (state: ICartState) => state.totalAmount;
-export const getAdditionalDetails = (state: ICartState) =>
+export const getCartState = (state: ICartStore) => state;
+export const getClientName = (state: ICartStore) => state.clientName;
+export const getClientPhone = (state: ICartStore) => state.clientPhone;
+export const getClientAddress = (state: ICartStore) => state.clientAddress;
+export const getTotalPrice = (state: ICartStore) => state.totalPrice;
+export const getCartItems = (state: ICartStore) => state.cartItems;
+export const getTotalAmount = (state: ICartStore) => state.totalAmount;
+export const getAdditionalDetails = (state: ICartStore) =>
   state.additionalDetails;
-export const getTotalQuantity = (state: ICartState) => state.totalQuantity;
-export const getCartItemById = (id: number) => (state: ICartState) =>
+export const getTotalQuantity = (state: ICartStore) => state.totalQuantity;
+export const getCartItemById = (id: number) => (state: ICartStore) =>
   state.cartItems.find((cartItem: ICartItem) => cartItem.product.id === id);
 export const getCartItemQuantityByProductId =
-  (id: number) => (state: ICartState) => {
+  (id: number) => (state: ICartStore) => {
     return (
       state.cartItems.find((cartItem: ICartItem) => cartItem.product.id === id)
         ?.quantity || 0
     );
   };
+export const getSubtotalPrice = (state: ICartStore) => state.subtotalPrice;
+export const getClientId = (state: ICartStore) => state.clientId;
