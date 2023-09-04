@@ -50,7 +50,7 @@ export interface IProductUpdate {
   data: Partial<IProduct>;
 }
 
-export type PRODUCT_TYPE = 'SODA' | 'PIZZA' | 'HAMBURGER' | 'PAPAS';
+export type PRODUCT_TYPE = 'SODA' | 'PIZZA' | 'HAMBURGER';
 
 export default interface IProductUI {
   id: number;
