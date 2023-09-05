@@ -1,17 +1,15 @@
 import FormControl from '@/components/FormControl';
 import useUpdateProductForm from '@/hooks/useUpdateProduct';
 import { UpdateProductButton } from '@/components/ProductItem.styles';
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import ProductVariant from './ProductVariant';
 import { useForm } from 'react-hook-form';
-import FormField from '@/components/FormField';
-import UploadButton from '@/components/ImageControl';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import ImageControl from '@/components/ImageControl';
 
 interface IProps {
-  product: IProductUI;
+  product: IProduct;
 }
 interface IFormControl {
   stock: number;
@@ -29,8 +27,8 @@ const ProductRow = ({ product }: IProps) => {
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
-      stock: product.defaultVariant.stockPerVariant.stock,
-      price: product.defaultVariant.price,
+      stock: product.default_variant.stock_per_variant.stock,
+      price: product.default_variant.price,
     },
   });
   const updateVariantMutation = useUpdateVariantMutation();
@@ -42,14 +40,14 @@ const ProductRow = ({ product }: IProps) => {
     });
     updateVariantMutation.mutate({
       newStock: Number(data.stock),
-      variantId: product.defaultVariant.id,
-      stockPerVariantId: product.defaultVariant.stockPerVariant.id!,
-      price: product.defaultVariant.price,
+      variantId: product.default_variant.id!,
+      stockPerVariantId: product.default_variant.stock_per_variant.id!,
+      price: product.default_variant.price,
     });
   };
 
   return (
-    <section className="block-stone-200 flex w-2/5 flex-col flex-wrap justify-between rounded-xl p-8 shadow-xl">
+    <section className="block-stone-200 flex w-max flex-col flex-wrap justify-between rounded-xl p-8 shadow-xl">
       <div className="divider">Nombre del Producto</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex gap-3">
@@ -65,32 +63,13 @@ const ProductRow = ({ product }: IProps) => {
           />
         </section>
         <section className="my-5 flex w-full items-end justify-evenly gap-5">
-          <FormField
-            label="Stock del producto"
-            register={register}
-            formKey="stock"
-            errors={errors}
-            symbol="Unid."
-            labelRight={false}
-          />
           <UpdateProductButton
             onClick={handleSubmit(onSubmit)}
             pendingChanges={pendingChanges}
           />
         </section>
 
-        <section className="my-10 flex flex-col content-center items-center justify-center gap-3">
-          <div className="divider">Precios</div>
-          <section className="flex w-full justify-around  gap-4">
-            <FormField
-              label="Precio"
-              register={register}
-              formKey="price"
-              errors={errors}
-              symbol="$"
-            />
-          </section>
-        </section>
+        <section className="my-10 flex flex-col content-center items-center justify-center gap-3"></section>
         {product.variants.length ? (
           <>
             <div className="divider">Variantes</div>
@@ -104,7 +83,7 @@ const ProductRow = ({ product }: IProps) => {
         <div className="divider">Imagen</div>
       </form>
       <section className="flex flex-col items-center gap-2">
-        <ImageControl product={product} />
+        <ImageControl product={product} onChange={console.log} />
       </section>
     </section>
   );

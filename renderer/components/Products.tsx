@@ -2,7 +2,7 @@ import ProductItem from '@/components/ProductItem';
 import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import SearchInput, { useSearchProps } from '@/components/SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import Loader from '@/components/Loader';
 import ProductTypes from './ProductTypes';
 
@@ -20,7 +20,7 @@ const Products = () => {
     selectedCategories: searchProps.selectedCategories,
   });
 
-  const products = productsQuery.products as IProductUI[];
+  const products = productsQuery.products as IProduct[];
 
   return (
     <section className="w-full">

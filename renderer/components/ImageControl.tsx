@@ -1,9 +1,9 @@
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import strapi from '@/libs/strapi';
 import React, { useEffect, useState } from 'react';
 
 interface IProps {
-  product?: IProductUI;
+  product?: IProduct;
   onChange: (imageName: string) => void;
 }
 

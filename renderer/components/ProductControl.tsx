@@ -1,17 +1,19 @@
 import FormFieldText from '@/components/FormFieldText';
 import { useForm } from 'react-hook-form';
-import IProductUI, {
+import {
+  IProduct,
   IProductPayload,
+  IVariantPayload,
   PRODUCT_TYPE,
 } from '@/interfaces/IProduct';
-import CheckboxButton from './CheckboxButton';
-import { RenderIf } from './RenderIf';
-import useCreateProductMutation from '@/hooks/services/useCreateProductMutation';
 import { useImageControl } from '@/hooks/useImageControl';
+import CreateVariantsTable from '@/components/CreateVariantsTable';
+import { useState } from 'react';
+import useCreateProductAndVariantMutation from '@/hooks/services/useCreateProductAndVariantMutation';
 
 interface IProps {
   controlType: 'CREATE' | 'UPDATE';
-  product?: IProductUI;
+  product?: IProduct;
 }
 
 const ProductControl = ({ controlType, product }: IProps) => {
@@ -19,8 +21,10 @@ const ProductControl = ({ controlType, product }: IProps) => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm<IProductPayload>({
     defaultValues: {
+      variants: [],
       name: product?.name || '',
       type: product?.type,
       image: product?.image || '',
@@ -28,13 +32,28 @@ const ProductControl = ({ controlType, product }: IProps) => {
     },
   });
 
-  const createProductMutation = useCreateProductMutation();
+  // we need to create this control apart of react-hook-form
+  // because we need the reactivity of the selector to change the variant table
+  const [productType, setProductType] = useState<PRODUCT_TYPE>('PIZZA');
+  const [isService, setIsService] = useState(false);
+  const [variants, setVariants] = useState<IVariantPayload[]>([]);
+  const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
 
-  const handleSubmitCreateProduct = (data: IProductPayload) => {
-    createProductMutation.mutate(data);
+  const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+
+    setProductType(value as PRODUCT_TYPE);
+    setValue('type', productType);
   };
 
-  const handleSubmitUpdateProduct = () => {};
+  const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = !isService;
+
+    setIsService(newValue);
+    setValue('isService', newValue);
+  };
+
+  const createProductAndVariantMutation = useCreateProductAndVariantMutation();
 
   const { processSubmit } = useImageControl();
 
@@ -59,54 +78,73 @@ const ProductControl = ({ controlType, product }: IProps) => {
     })(e);
   };
 
+  const handleSubmitCreateProduct = async (data: IProductPayload) => {
+    const productResponse = await createProductAndVariantMutation.mutate({
+      data,
+      variants,
+      defaultVariantIndex,
+    });
+    console.log({ productResponse });
+  };
+
   return (
     <form
       onSubmit={handleSubmitWrapper}
-      className="flex flex-col p-5 gap-5 border-2 border-slate-500 shadow-2xl"
+      className="flex flex-col p-5 gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
     >
-      <FormFieldText
-        errors={errors}
-        formKey="name"
-        label="Nombre: "
-        register={register}
+      <section className="flex flex-row items-end gap-10 px-10 justify-between">
+        <FormFieldText
+          errors={errors}
+          formKey="name"
+          label="Nombre: "
+          register={register}
+        />
+        {product?.type!}
+        <label>
+          <span className="label-text whitespace-nowrap text-stone-500">
+            Menu:
+          </span>
+          <select
+            value={productType}
+            onChange={handleChangeProductType}
+            className="select select-bordered"
+          >
+            {['SODA', 'PIZZA', 'HAMBURGER'].map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="input-group">
+          <span className="label-text whitespace-nowrap text-stone-500">
+            Imagen:
+          </span>
+          <input
+            type="file"
+            name="files"
+            className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+          />
+        </label>
+      </section>
+      <label className="label w-fit gap-3">
+        <input
+          type="checkbox"
+          className="checkbox checkbox-success"
+          checked={!isService}
+          onChange={handleChangeIsService}
+        />
+        Es un servicio
+      </label>
+      <CreateVariantsTable
+        isService={isService}
+        selectedType={productType}
+        variants={variants}
+        setVariants={setVariants}
+        onChange={setDefaultVariantIndex}
+        defaultVariantIndex={defaultVariantIndex}
       />
-      {product?.type!}
-      <RenderIf condition={controlType === 'UPDATE'}>
-        <select
-          className="select-bordered select w-full max-w-xs "
-          {...register('default_variant')}
-        >
-          {product?.variants.map((variant) => (
-            <option
-              key={variant.id}
-              value={variant.id}
-              selected={product?.defaultVariant.id === variant.id}
-            >
-              {variant.name}
-            </option>
-          ))}
-        </select>
-      </RenderIf>
-
-      <select {...register('type')} className="select select-bordered">
-        {['SODA', 'PIZZA', 'HAMBURGER'].map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
-      <input
-        type="file"
-        name="files"
-        className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
-      />
-      <CheckboxButton
-        name="isService"
-        errors={errors}
-        label="Es un servicio"
-        register={register}
-      />
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-success text-slate-50 w-2/12 ">
         Crear producto
       </button>
     </form>

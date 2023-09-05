@@ -38,7 +38,7 @@ const ProductItem = ({ product }: ICollapseTitle) => {
     >
       {isService ? null : (
         <Badge className="absolute top-3 right-3">
-          {product.defaultVariant.stockPerVariant.stock}
+          {product.default_variant.stock_per_variant.stock}
         </Badge>
       )}
 
@@ -49,8 +49,9 @@ const ProductItem = ({ product }: ICollapseTitle) => {
         <div className="flex flex-col gap-4 text-white">
           <HighlightedText>{product.name}</HighlightedText>
           <HighlightedText>
-            {formatPrice(product.defaultVariant.price)}
+            {formatPrice(product.default_variant.price)}
           </HighlightedText>
+          <HighlightedText>{product.default_variant.name}</HighlightedText>
         </div>
       </section>
       <section

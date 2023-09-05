@@ -1,10 +1,10 @@
 import { ICartItem, ICartState } from '@/interfaces/ICart';
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import { create } from 'zustand';
 
 interface IUpdatePriceProps {
   newPrice: number;
-  product: IProductUI;
+  product: IProduct;
 }
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
@@ -13,9 +13,9 @@ const fixPrice = (price: number) => Math.round(price * 100) / 100;
 // const clientName = useCartStore(getClientName)
 type ICartStore = ICartState & {
   initCart: (cartPayload: ICartState) => void;
-  addProduct: (productPayload: IProductUI) => void;
-  removeProduct: (productPayload: IProductUI) => void;
-  removeCartItem: (productPayload: IProductUI) => void;
+  addProduct: (productPayload: IProduct) => void;
+  removeProduct: (productPayload: IProduct) => void;
+  removeCartItem: (productPayload: IProduct) => void;
   clearCart: () => void;
   updatePrice: (updatePriceProps: IUpdatePriceProps) => void;
   addClientId: (clientId: number) => void;
@@ -39,7 +39,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
       totalAmount: cartPayload.totalAmount,
       totalQuantity: cartPayload.totalQuantity,
     }),
-  addProduct: (productPayload: IProductUI) => {
+  addProduct: (productPayload: IProduct) => {
     set((state): Partial<ICartStore> => {
       console.log('holis');
       const itemIndex = state.cartItems.findIndex(
@@ -53,7 +53,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         if (
           !cartItem.product.isService &&
           cartItem.quantity >=
-            productPayload.defaultVariant.stockPerVariant.stock
+            productPayload.default_variant.stock_per_variant.stock
         ) {
           return state;
         }
@@ -62,7 +62,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         return {
           cartItems: newCartItems,
           totalAmount: fixPrice(
-            state.totalAmount + productPayload.defaultVariant.price,
+            state.totalAmount + productPayload.default_variant.price,
           ),
           totalQuantity: state.totalQuantity + 1,
         };
@@ -74,17 +74,17 @@ export const useCartStore = create<ICartStore>()((set) => ({
           {
             product: productPayload,
             quantity: 1,
-            selectedVariant: productPayload.defaultVariant,
+            selectedVariant: productPayload.default_variant,
           },
         ],
         totalAmount: fixPrice(
-          state.totalAmount + productPayload.defaultVariant.price,
+          state.totalAmount + productPayload.default_variant.price,
         ),
         totalQuantity: state.totalQuantity + 1,
       };
     });
   },
-  removeProduct: (productPayload: IProductUI) =>
+  removeProduct: (productPayload: IProduct) =>
     set((state) => {
       const item: ICartItem | undefined = state.cartItems.find(
         (item: ICartItem) => item.product.id === productPayload.id,
@@ -97,7 +97,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
           ),
           totalAmount: fixPrice(
             Math.max(
-              state.totalAmount - productPayload.defaultVariant.price,
+              state.totalAmount - productPayload.default_variant.price,
               0,
             ),
           ),
@@ -117,7 +117,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
           }),
           totalAmount: fixPrice(
             Math.max(
-              state.totalAmount - productPayload.defaultVariant.price,
+              state.totalAmount - productPayload.default_variant.price,
               0,
             ),
           ),
@@ -128,7 +128,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
 
       return state;
     }),
-  removeCartItem: (productPayload: IProductUI) =>
+  removeCartItem: (productPayload: IProduct) =>
     set((state: any) => {
       const totalQuantity =
         state.totalQuantity -
@@ -142,7 +142,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         state.totalAmount -
         state.cartItems.reduce((acc: number, item: ICartItem) => {
           if (item.product.id === productPayload.id) {
-            return acc + item.product.defaultVariant.price * item.quantity;
+            return acc + item.product.default_variant.price * item.quantity;
           }
           return acc;
         }, 0);
@@ -172,7 +172,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         cartItems: state.cartItems.map((item: ICartItem) => {
           if (item.product.id === updatePricePayload.product.id) {
             const newItem = structuredClone(item);
-            newItem.product.defaultVariant.price = updatePricePayload.newPrice;
+            newItem.product.default_variant.price = updatePricePayload.newPrice;
             return newItem;
           }
           return item;

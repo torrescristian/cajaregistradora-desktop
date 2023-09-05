@@ -1,10 +1,10 @@
 import useFormControl from './useFormControl';
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import { useMemo } from 'react';
 
 interface IUseUpdateProductFormProps {
-  product: IProductUI;
+  product: IProduct;
 }
 
 const useUpdateProductForm = ({ product }: IUseUpdateProductFormProps) => {

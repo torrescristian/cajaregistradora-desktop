@@ -1,25 +1,15 @@
 import strapi from '@/libs/strapi';
 import { getErrorMessage } from '@/libs/utils';
-import IProductUI, { IProduct, IProductPage } from '@/interfaces/IProduct';
+import { IProduct, IProductPage, IVariant } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { IVariantUI } from '@/interfaces/IProduct';
 
 export const getProductsQueryKey = () => 'products';
 
-const parseProductFacade = (product: IProduct): IProductUI => {
-  const {
-    name,
-    id,
-    isService,
-    variants,
-    image,
-    categories,
-    default_variant,
-    store,
-    type,
-  } = product;
+const parseProductFacade = (product: IProduct): IProduct => {
+  const { name, id, isService, variants, image, default_variant, store, type } =
+    product;
 
   const res = {
     id,
@@ -32,27 +22,17 @@ const parseProductFacade = (product: IProduct): IProductUI => {
           name: variant.name,
           price: variant.price,
           product: id,
-          stockPerVariant: variant.stock_per_variant,
-        }) as IVariantUI,
+          stock_per_variant: variant.stock_per_variant,
+        }) as IVariant,
     ),
     image: (image as unknown as any)?.formats?.thumbnail?.url || '/default.png',
-    categories: categories.map((category) => ({
-      id: category.id,
-      name: category.name,
-      product: category.products,
-      store: category.store,
-      emoji: category.emoji,
-      products: category.products,
-      childrens: category.childrens,
-      parent: category.parent,
-    })),
-    defaultVariant: {
-      id: default_variant.id,
-      name: default_variant.name,
-      price: default_variant.price,
+    default_variant: {
+      id: default_variant?.id,
+      name: default_variant?.name,
+      price: default_variant?.price,
       product: id,
-      stockPerVariant: default_variant.stock_per_variant,
-    } as IVariantUI,
+      stock_per_variant: default_variant?.stock_per_variant,
+    } as IVariant,
     store: store,
     type: type,
   };
@@ -78,7 +58,7 @@ export default function useProductsQuery({
     total: 1,
   });
 
-  const { data, isLoading, isError, isSuccess, error } = useQuery<IProductUI[]>(
+  const { data, isLoading, isError, isSuccess, error } = useQuery<IProduct[]>(
     [getProductsQueryKey(), query, selectedCategories, page],
     async () => {
       try {
