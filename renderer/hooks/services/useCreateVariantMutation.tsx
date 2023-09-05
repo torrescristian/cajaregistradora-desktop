@@ -13,7 +13,13 @@ export interface IUseCreateVariantMutationProps {
 
 export default function useCreateVariantMutation() {
   return useMutation(
-    async ({ name, price, product, stock, isDefaultVariant }: IUseCreateVariantMutationProps) => {
+    async ({
+      name,
+      price,
+      product,
+      stock,
+      isDefaultVariant,
+    }: IUseCreateVariantMutationProps) => {
       const stockPerVariant = await strapi.create<{ id: number }>(
         'stock-per-variants',
         {
@@ -28,7 +34,10 @@ export default function useCreateVariantMutation() {
         stock_per_variant: stockPerVariant.data.id,
       };
 
-      const res = await strapi.create('variants', newVariant) as ISingleFixedNativeResponse<IVariantPayload>
+      const res = (await strapi.create(
+        'variants',
+        newVariant,
+      )) as ISingleFixedNativeResponse<IVariantPayload>;
       if (isDefaultVariant) {
         await strapi.update('products', product, {
           default_variant: res.data.id,

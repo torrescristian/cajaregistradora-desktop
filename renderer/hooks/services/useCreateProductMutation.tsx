@@ -1,5 +1,5 @@
-import {IProductPayload } from '@/interfaces/IProduct';
-import {ISingleFixedNativeResponse } from '@/interfaces/utils';
+import { IProductPayload } from '@/interfaces/IProduct';
+import { ISingleFixedNativeResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 
@@ -10,7 +10,7 @@ export default function useCreateProductMutation() {
       '🚀 ~ file: useCreateProductMutation.tsx:8 ~ returnuseMutation ~ res:',
       res,
     );
-    console.log(res)
-    return res as ISingleFixedNativeResponse<IProductPayload>
+    console.log(res);
+    return res as ISingleFixedNativeResponse<IProductPayload>;
   });
 }

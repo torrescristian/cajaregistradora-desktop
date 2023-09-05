@@ -1,4 +1,4 @@
-import {IProduct} from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 
 export interface IActionButton {
   onClick: () => void;

@@ -1,5 +1,5 @@
 import useFormControl from './useFormControl';
-import {IProduct} from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import { useMemo } from 'react';
 

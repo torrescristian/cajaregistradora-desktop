@@ -37,7 +37,6 @@ export default function ProductVariant({ variant }: IProps) {
           textAlign="text-center"
         />
         <section className="flex items-end gap-5">
-
           <label className="input-group ">
             <span>Stock</span>
             <FormControl
@@ -51,7 +50,7 @@ export default function ProductVariant({ variant }: IProps) {
               textAlign="text-center"
             />
           </label>
-          <label className='input-group'>
+          <label className="input-group">
             <span>$</span>
             <FormControl
               className="w-28"

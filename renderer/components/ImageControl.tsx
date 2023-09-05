@@ -1,4 +1,3 @@
-
 import { IProduct } from '@/interfaces/IProduct';
 import strapi from '@/libs/strapi';
 import React, { useEffect, useState } from 'react';

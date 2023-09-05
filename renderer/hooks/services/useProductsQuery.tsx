@@ -8,16 +8,8 @@ import { useState } from 'react';
 export const getProductsQueryKey = () => 'products';
 
 const parseProductFacade = (product: IProduct): IProduct => {
-  const {
-    name,
-    id,
-    isService,
-    variants,
-    image,
-    default_variant,
-    store,
-    type,
-  } = product;
+  const { name, id, isService, variants, image, default_variant, store, type } =
+    product;
 
   const res = {
     id,

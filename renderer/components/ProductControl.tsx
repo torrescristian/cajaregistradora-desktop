@@ -55,9 +55,8 @@ const ProductControl = ({ controlType, product }: IProps) => {
 
   const createProductAndVariantMutation = useCreateProductAndVariantMutation();
 
-  
   const { processSubmit } = useImageControl();
-  
+
   const handleClickSubmit = (data: IProductPayload) => {
     if (controlType === 'CREATE') {
       handleSubmitCreateProduct(data);
@@ -79,9 +78,13 @@ const ProductControl = ({ controlType, product }: IProps) => {
     })(e);
   };
 
-  const handleSubmitCreateProduct = async (data : IProductPayload ) => {
-    const productResponse = await createProductAndVariantMutation.mutate({data, variants,defaultVariantIndex});
-    console.log({productResponse})
+  const handleSubmitCreateProduct = async (data: IProductPayload) => {
+    const productResponse = await createProductAndVariantMutation.mutate({
+      data,
+      variants,
+      defaultVariantIndex,
+    });
+    console.log({ productResponse });
   };
 
   return (
@@ -113,7 +116,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
             ))}
           </select>
         </label>
-        <label className='input-group'>
+        <label className="input-group">
           <span className="label-text whitespace-nowrap text-stone-500">
             Imagen:
           </span>
@@ -140,7 +143,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
         setVariants={setVariants}
         onChange={setDefaultVariantIndex}
         defaultVariantIndex={defaultVariantIndex}
-         />
+      />
       <button type="submit" className="btn btn-success text-slate-50 w-2/12 ">
         Crear producto
       </button>

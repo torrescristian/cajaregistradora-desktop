@@ -15,7 +15,7 @@ export interface IVariant<STOCK_PER_VARIANT = IStockPerVariant> {
   name: string;
 }
 
-export type IVariantPayload = IVariant<number>
+export type IVariantPayload = IVariant<number>;
 
 export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant> {
   id?: number;

@@ -69,8 +69,7 @@ const ProductRow = ({ product }: IProps) => {
           />
         </section>
 
-        <section className="my-10 flex flex-col content-center items-center justify-center gap-3">
-        </section>
+        <section className="my-10 flex flex-col content-center items-center justify-center gap-3"></section>
         {product.variants.length ? (
           <>
             <div className="divider">Variantes</div>

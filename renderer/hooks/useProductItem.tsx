@@ -2,11 +2,11 @@ import {
   getCartItemQuantityByProductId,
   useCartStore,
 } from '@/contexts/CartStore';
-import {IProduct} from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 
 const useProductItem = (product: IProduct) => {
   const isNotService = !product.isService;
-  const disabled = isNotService
+  const disabled = isNotService;
   const isService = !!product.isService;
   const {
     cartItemQuantity,
