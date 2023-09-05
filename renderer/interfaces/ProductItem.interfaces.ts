@@ -1,4 +1,4 @@
-import IProductUI from '@/interfaces/IProduct';
+import {IProduct} from '@/interfaces/IProduct';
 
 export interface IActionButton {
   onClick: () => void;
@@ -11,7 +11,7 @@ export interface IComponent {
 }
 
 export interface ICollapseTitle {
-  product: IProductUI;
+  product: IProduct;
 }
 
 export interface FormControl {

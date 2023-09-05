@@ -1,9 +1,9 @@
-import IProductUI, { IVariantUI } from './IProduct';
+import { IProduct, IVariant } from './IProduct';
 
 export interface ICartItem {
-  product: IProductUI;
+  product: IProduct;
   quantity: number;
-  selectedVariant: IVariantUI;
+  selectedVariant: IVariant;
 }
 
 export interface ICartState {
@@ -27,5 +27,5 @@ export interface ICartAction {
     | 'REMOVE_CART_ITEM'
     | 'INIT_CART'
     | 'UPDATE_PRICE';
-  payload?: ICartState | IProductUI | number | any;
+  payload?: ICartState | IProduct | number | any;
 }

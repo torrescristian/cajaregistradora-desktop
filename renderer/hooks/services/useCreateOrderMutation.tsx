@@ -54,7 +54,7 @@ function parseOrderToPayLoad({
         product: item.product.id,
         quantity: item.quantity,
         price: item.selectedVariant.price,
-        selectedVariant: item.selectedVariant.id,
+        selectedVariant: item.selectedVariant.id!
       };
     }),
     additionalDetails: additionalDetails,

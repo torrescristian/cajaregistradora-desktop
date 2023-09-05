@@ -1,11 +1,11 @@
 import strapi from '@/libs/strapi';
-import IProductUI, { IProduct } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
 
 // FUNCTIONS
 const parseProductToPayload = (
-  product: Partial<IProductUI>,
+  product: Partial<IProduct>,
 ): Partial<IProduct> => {
   const { id, name, image } = product;
 
@@ -19,7 +19,7 @@ const parseProductToPayload = (
 export default function useUpdateProductMutation() {
   const queryClient = useQueryClient();
 
-  return useMutation(async (product: Partial<IProductUI>) => {
+  return useMutation(async (product: Partial<IProduct>) => {
     const response = strapi.update(
       'products',
       product.id!,

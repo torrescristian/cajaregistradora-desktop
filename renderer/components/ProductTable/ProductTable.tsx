@@ -1,11 +1,11 @@
-import IProductUI, { IProductPage } from '@/interfaces/IProduct';
+import { IProduct, IProductPage } from '@/interfaces/IProduct';
 import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
 import Pagination from './subcomponents/Pagination';
 import ProductRow from './subcomponents/ProductRow';
 
 interface IProps {
-  products: IProductUI[];
+  products: IProduct[];
   isLoading: boolean;
   isError: boolean;
   setActivePage: (page: number) => void;

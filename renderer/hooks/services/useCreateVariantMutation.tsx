@@ -1,32 +1,39 @@
 import { IVariantPayload } from '@/interfaces/IProduct';
+import { ISingleFixedNativeResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 
 export interface IUseCreateVariantMutationProps {
-  categories: number[];
+  name: string;
+  price: number;
   product: number;
   stock: number;
+  isDefaultVariant: boolean;
 }
 
 export default function useCreateVariantMutation() {
   return useMutation(
-    async ({ categories, product, stock }: IUseCreateVariantMutationProps) => {
+    async ({ name, price, product, stock, isDefaultVariant }: IUseCreateVariantMutationProps) => {
       const stockPerVariant = await strapi.create<{ id: number }>(
         'stock-per-variants',
         {
-          sales_amount_per_variant: 0,
-          stock_amount_per_variant: stock,
+          stock,
         },
       );
 
       const newVariant: IVariantPayload = {
-        categories,
+        price: price,
+        name: name,
         product,
         stock_per_variant: stockPerVariant.data.id,
       };
 
-      const res = await strapi.create('variants', newVariant);
-
+      const res = await strapi.create('variants', newVariant) as ISingleFixedNativeResponse<IVariantPayload>
+      if (isDefaultVariant) {
+        await strapi.update('products', product, {
+          default_variant: res.data.id,
+        });
+      }
       return res;
     },
   );

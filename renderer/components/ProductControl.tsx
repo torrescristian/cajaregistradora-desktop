@@ -1,17 +1,19 @@
 import FormFieldText from '@/components/FormFieldText';
 import { useForm } from 'react-hook-form';
-import IProductUI, {
+import {
+  IProduct,
   IProductPayload,
+  IVariantPayload,
   PRODUCT_TYPE,
 } from '@/interfaces/IProduct';
-import useCreateProductMutation from '@/hooks/services/useCreateProductMutation';
 import { useImageControl } from '@/hooks/useImageControl';
 import CreateVariantsTable from '@/components/CreateVariantsTable';
 import { useState } from 'react';
+import useCreateProductAndVariantMutation from '@/hooks/services/useCreateProductAndVariantMutation';
 
 interface IProps {
   controlType: 'CREATE' | 'UPDATE';
-  product?: IProductUI;
+  product?: IProduct;
 }
 
 const ProductControl = ({ controlType, product }: IProps) => {
@@ -22,6 +24,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
     setValue,
   } = useForm<IProductPayload>({
     defaultValues: {
+      variants: [],
       name: product?.name || '',
       type: product?.type,
       image: product?.image || '',
@@ -33,6 +36,8 @@ const ProductControl = ({ controlType, product }: IProps) => {
   // because we need the reactivity of the selector to change the variant table
   const [productType, setProductType] = useState<PRODUCT_TYPE>('PIZZA');
   const [isService, setIsService] = useState(false);
+  const [variants, setVariants] = useState<IVariantPayload[]>([]);
+  const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
 
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
@@ -48,14 +53,11 @@ const ProductControl = ({ controlType, product }: IProps) => {
     setValue('isService', newValue);
   };
 
-  const createProductMutation = useCreateProductMutation();
+  const createProductAndVariantMutation = useCreateProductAndVariantMutation();
 
-  const handleSubmitCreateProduct = (data: IProductPayload) => {
-    createProductMutation.mutate(data);
-  };
-
+  
   const { processSubmit } = useImageControl();
-
+  
   const handleClickSubmit = (data: IProductPayload) => {
     if (controlType === 'CREATE') {
       handleSubmitCreateProduct(data);
@@ -77,12 +79,17 @@ const ProductControl = ({ controlType, product }: IProps) => {
     })(e);
   };
 
+  const handleSubmitCreateProduct = async (data : IProductPayload ) => {
+    const productResponse = await createProductAndVariantMutation.mutate({data, variants,defaultVariantIndex});
+    console.log({productResponse})
+  };
+
   return (
     <form
       onSubmit={handleSubmitWrapper}
-      className="flex flex-col p-5 gap-5 border-2 border-slate-500 shadow-2xl"
+      className="flex flex-col p-5 gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
     >
-      <section className="flex flex-row items-end gap-5">
+      <section className="flex flex-row items-end gap-10 px-10 justify-between">
         <FormFieldText
           errors={errors}
           formKey="name"
@@ -106,7 +113,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
             ))}
           </select>
         </label>
-        <label>
+        <label className='input-group'>
           <span className="label-text whitespace-nowrap text-stone-500">
             Imagen:
           </span>
@@ -126,8 +133,15 @@ const ProductControl = ({ controlType, product }: IProps) => {
         />
         Es un servicio
       </label>
-      <CreateVariantsTable isService={isService} selectedType={productType} />
-      <button type="submit" className="btn btn-primary">
+      <CreateVariantsTable
+        isService={isService}
+        selectedType={productType}
+        variants={variants}
+        setVariants={setVariants}
+        onChange={setDefaultVariantIndex}
+        defaultVariantIndex={defaultVariantIndex}
+         />
+      <button type="submit" className="btn btn-success text-slate-50 w-2/12 ">
         Crear producto
       </button>
     </form>

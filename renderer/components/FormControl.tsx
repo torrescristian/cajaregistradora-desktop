@@ -17,7 +17,7 @@ const FormControl = ({
   return (
     <section className={mergeClasses('form-control flex w-full', className)}>
       {hideLabel ? null : (
-        <label htmlFor={name} className="whitespace-nowrap">
+        <label htmlFor={name} className="whitespace-nowrap text-stone-500 text-center">
           {text}
         </label>
       )}

@@ -2,12 +2,11 @@ import {
   getCartItemQuantityByProductId,
   useCartStore,
 } from '@/contexts/CartStore';
-import IProductUI from '@/interfaces/IProduct';
+import {IProduct} from '@/interfaces/IProduct';
 
-const useProductItem = (product: IProductUI) => {
+const useProductItem = (product: IProduct) => {
   const isNotService = !product.isService;
-  const isDisabledOrWithoutStock = product?.disabled;
-  const disabled = isNotService && isDisabledOrWithoutStock;
+  const disabled = isNotService
   const isService = !!product.isService;
   const {
     cartItemQuantity,
@@ -20,7 +19,7 @@ const useProductItem = (product: IProductUI) => {
     updatePrice: state.updatePrice,
     removeCartItem: state.removeCartItem,
     removeProduct: state.removeProduct,
-    cartItemQuantity: getCartItemQuantityByProductId(product.id)(state),
+    cartItemQuantity: getCartItemQuantityByProductId(product.id!)(state),
   }));
 
   const handleClickAdd = () => {
