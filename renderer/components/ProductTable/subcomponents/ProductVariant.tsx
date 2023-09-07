@@ -20,7 +20,7 @@ export default function ProductVariant({ variant }: IProps) {
     useFormControl(nameVariants);
   const { handleChange: handleChangePrice, value: price } =
     useFormControl(priceVariants);
-        
+
   const updateVariantMutation = useUpdateVariantMutation();
 
   const isLoading = updateVariantMutation.isLoading;
@@ -80,7 +80,7 @@ export default function ProductVariant({ variant }: IProps) {
               className="w-28"
               hideLabel
               name="price"
-              onChange={handleChange}
+              onChange={handleChangePrice}
               text="Precio"
               type="number"
               value={variant.price}

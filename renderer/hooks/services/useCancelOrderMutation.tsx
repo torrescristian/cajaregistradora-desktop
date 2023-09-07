@@ -29,6 +29,7 @@ export default function useCancelOrderMutation() {
         stockPerVariantId: stockPerVariant.id!,
         variantId: selectedVariant.id!,
         price: selectedVariant.price,
+        name: selectedVariant.name,
       });
     });
 

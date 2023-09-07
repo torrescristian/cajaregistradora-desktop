@@ -21,9 +21,6 @@ function OrderItem({ item, isEditing }: IProps) {
       case 'SODA': {
         return '🥤';
       }
-      case 'PAPAS': {
-        return '🍟';
-      }
       default: {
         return '🔵';
       }

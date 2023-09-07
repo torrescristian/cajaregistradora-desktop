@@ -1,5 +1,5 @@
 import IClient from './IClient';
-import IProduct, { IVariant } from './IProduct';
+import { IVariant, IProduct } from './IProduct';
 import { IResponsePage, ISingleResultResponsePage } from './utils';
 
 export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {

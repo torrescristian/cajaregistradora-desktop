@@ -6,7 +6,6 @@ import useCreateVariantMutation, {
   IUseCreateVariantMutationProps,
 } from '@/hooks/services/useCreateVariantMutation';
 import { yupResolver } from '@hookform/resolvers/yup';
-import SelectCategories from '@/pages/admin/generador-de-productos-y-variantes/subcomponents/SelectCategories';
 import ErrorMessage from './ErrorMessage';
 
 const SubmitButton = ({ isLoading }: { isLoading: boolean }) => {
@@ -36,9 +35,8 @@ export default function CreateVarant() {
     formState: { errors },
     setValue,
   } = useForm<IUseCreateVariantMutationProps>({
-    resolver: yupResolver<IUseCreateVariantMutationProps>(schema),
+    resolver: yupResolver<any>(schema),
     defaultValues: {
-      categories: [],
       stock: 0,
       product: 0,
     },
@@ -50,9 +48,11 @@ export default function CreateVarant() {
 
   const onSubmit = handleSubmit((data) => {
     variantMutation.mutate({
-      categories: data.categories,
       product: data.product,
       stock: data.stock,
+      isDefaultVariant: data.isDefaultVariant,
+      name: data.name,
+      price: data.price,
     });
   });
   return (
@@ -73,8 +73,6 @@ export default function CreateVarant() {
       </select>
 
       <div className="flex flex-col">
-        <SelectCategories errors={errors} setValue={setValue} />
-
         <label className="label">
           <span className="label-text">Stock</span>
         </label>
