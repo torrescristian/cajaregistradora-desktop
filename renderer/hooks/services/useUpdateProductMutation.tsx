@@ -27,7 +27,6 @@ export default function useUpdateProductMutation() {
     );
 
     queryClient.invalidateQueries([getProductsQueryKey()]);
-    
 
     return response;
   });

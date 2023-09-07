@@ -40,12 +40,10 @@ const ProductControl = ({ controlType, product }: IProps) => {
   const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
 
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const  value  = e.target.value as PRODUCT_TYPE;
+    const value = e.target.value as PRODUCT_TYPE;
     setProductType(value);
     setValue('type', value);
-  }
-  ;
-
+  };
   const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = !isService;
 
@@ -109,7 +107,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
             onChange={handleChangeProductType}
             className="select select-bordered"
           >
-
             {['SODA', 'PIZZA', 'HAMBURGER'].map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -152,4 +149,4 @@ const ProductControl = ({ controlType, product }: IProps) => {
   );
 };
 
-export default ProductControl
+export default ProductControl;

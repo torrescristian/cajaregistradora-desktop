@@ -10,15 +10,16 @@ interface IProps {
 }
 
 export default function ProductVariant({ variant }: IProps) {
-
   const initialStock = variant.stock_per_variant.stock;
   const nameVariants = variant.name;
   const priceVariants = variant.price;
 
-  const { handleChange: handleChangeStock, value:stock } = useFormControl(initialStock);
-  const { handleChange: handleChangeName, value:name } = useFormControl(nameVariants);
-  const { handleChange: handleChangePrice, value:price } = useFormControl(priceVariants);
-
+  const { handleChange: handleChangeStock, value: stock } =
+    useFormControl(initialStock);
+  const { handleChange: handleChangeName, value: name } =
+    useFormControl(nameVariants);
+  const { handleChange: handleChangePrice, value: price } =
+    useFormControl(priceVariants);
 
   const updateVariantMutation = useUpdateVariantMutation();
 
@@ -78,7 +79,11 @@ export default function ProductVariant({ variant }: IProps) {
           <Loader />
         ) : (
           <StockButton
-            disabled={variant.stock_per_variant.stock === stock && variant.name === name && variant.price === price }
+            disabled={
+              variant.stock_per_variant.stock === stock &&
+              variant.name === name &&
+              variant.price === price
+            }
             handleSubmit={handleSubmit}
           />
         )}

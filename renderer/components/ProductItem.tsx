@@ -8,9 +8,7 @@ import { formatPrice } from '@/libs/utils';
 
 const Text = ({ children }: IComponent) => {
   return (
-    <p
-      className="font-bold text-xl rounded-lg whitespace-nowrap text-center "
-    >
+    <p className="font-bold text-xl rounded-lg whitespace-nowrap text-center ">
       {children}
     </p>
   );
@@ -49,22 +47,30 @@ const ProductItem = ({ product }: ICollapseTitle) => {
         className="flex flex-1 items-center w-72 text-primary-content"
       >
         <div className="flex flex-col w-full gap-2 text-white">
-            <HighlightedText>{product.name}</HighlightedText>
-          <div className='flex flex-col items-center'>
+          <HighlightedText>{product.name}</HighlightedText>
+          <div className="flex flex-col items-center">
             <img src={product.image} />
           </div>
           <HighlightedText>
             {formatPrice(product.default_variant.price)}
           </HighlightedText>
-            <select className='select w-full select-bordered'>
-              {product.variants.map((variant) => (
-                <option value={variant.name}>{variant.name}</option>
-              ))}
-            </select>
-          <section className='flex w-full justify-around items-center'>
-          <Text>{product.default_variant.stock_per_variant.stock ? product.default_variant.stock_per_variant.stock + ' unid' : 'Sin stock'}</Text>
-          <button className='btn btn-success text-stone-50 w-fit px-10 rounded-lg' onClick={handleClickAdd}>Agregar</button>
-
+          <select className="select w-full select-bordered">
+            {product.variants.map((variant) => (
+              <option value={variant.name}>{variant.name}</option>
+            ))}
+          </select>
+          <section className="flex w-full justify-around items-center">
+            <Text>
+              {product.default_variant.stock_per_variant.stock
+                ? product.default_variant.stock_per_variant.stock + ' unid'
+                : 'Sin stock'}
+            </Text>
+            <button
+              className="btn btn-success text-stone-50 w-fit px-10 rounded-lg"
+              onClick={handleClickAdd}
+            >
+              Agregar
+            </button>
           </section>
         </div>
       </section>

@@ -1,5 +1,5 @@
 interface IProps {
-  disabled:boolean;
+  disabled: boolean;
   handleSubmit: () => void;
 }
 

@@ -28,9 +28,11 @@ const CartItem = ({ product }: ICollapseTitle) => {
       className="flex flex-col gap-5 rounded-3xl p-5 items-start text-primary-content border-2 shadow-md"
     >
       <p className="font-bold">{product.name}</p>
-      <select className='select w-full'>
+      <select className="select w-full">
         {product.variants.map((variant) => (
-          <option value={variant.name} onClick={() => handleChange}>{variant.name}</option>
+          <option value={variant.name} onClick={() => handleChange}>
+            {variant.name}
+          </option>
         ))}
       </select>
       <section className="flex flex-row gap-3 items-center justify-end whitespace-nowrap">
