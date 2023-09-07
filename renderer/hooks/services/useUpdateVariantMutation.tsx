@@ -8,6 +8,7 @@ export interface IUseUpdateVariantMutationProps {
   stockPerVariantId: number;
   variantId: number;
   price: number;
+  name: string;
 }
 
 export default function useUpdateVariantMutation() {
@@ -16,6 +17,7 @@ export default function useUpdateVariantMutation() {
   return useMutation(
     async ({
       newStock,
+      name,
       stockPerVariantId,
       variantId,
       price,
@@ -26,6 +28,7 @@ export default function useUpdateVariantMutation() {
 
       const priceVariant = await strapi.update('variants', variantId, {
         price,
+        name,
       });
 
       const res = await strapi.update(
