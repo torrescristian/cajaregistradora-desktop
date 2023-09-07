@@ -43,7 +43,6 @@ export const useCartStore = create<ICartStore>()((set) => ({
       console.log('holis');
       const itemIndex = state.cartItems.findIndex(
         (item) => item.selectedVariant.id! === selectedVariant.id!,
-
       );
 
       if (itemIndex >= 0) {
@@ -52,8 +51,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
 
         if (
           !cartItem.product.isService &&
-          cartItem.quantity >=
-          selectedVariant.stock_per_variant.stock
+          cartItem.quantity >= selectedVariant.stock_per_variant.stock
         ) {
           return state;
         }
@@ -61,9 +59,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         cartItem.quantity += 1;
         return {
           cartItems: newCartItems,
-          totalAmount: fixPrice(
-            state.totalAmount + selectedVariant.price,
-          ),
+          totalAmount: fixPrice(state.totalAmount + selectedVariant.price),
           totalQuantity: state.totalQuantity + 1,
         };
       }
@@ -77,9 +73,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
             selectedVariant: selectedVariant,
           },
         ],
-        totalAmount: fixPrice(
-          state.totalAmount + selectedVariant.price,
-        ),
+        totalAmount: fixPrice(state.totalAmount + selectedVariant.price),
         totalQuantity: state.totalQuantity + 1,
       };
     });
@@ -93,13 +87,11 @@ export const useCartStore = create<ICartStore>()((set) => ({
       if (item?.quantity === 1) {
         return {
           cartItems: state.cartItems.filter(
-            (item: ICartItem) => item.selectedVariant.id! !== selectedVariant.id!,
+            (item: ICartItem) =>
+              item.selectedVariant.id! !== selectedVariant.id!,
           ),
           totalAmount: fixPrice(
-            Math.max(
-              state.totalAmount - selectedVariant.price,
-              0,
-            ),
+            Math.max(state.totalAmount - selectedVariant.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -116,10 +108,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
             return item;
           }),
           totalAmount: fixPrice(
-            Math.max(
-              state.totalAmount - selectedVariant.price,
-              0,
-            ),
+            Math.max(state.totalAmount - selectedVariant.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -128,7 +117,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
 
       return state;
     }),
-  removeCartItem: ({selectedVariant }: IAddProductProps) =>
+  removeCartItem: ({ selectedVariant }: IAddProductProps) =>
     set((state: any) => {
       const totalQuantity =
         state.totalQuantity -
@@ -185,8 +174,9 @@ export const getCartItemById = (id: number) => (state: ICartStore) =>
 export const getCartItemQuantityByVariantId =
   (id: number) => (state: ICartStore) => {
     return (
-      state.cartItems.find((cartItem: ICartItem) => cartItem.selectedVariant.id! === id)
-        ?.quantity || 0
+      state.cartItems.find(
+        (cartItem: ICartItem) => cartItem.selectedVariant.id! === id,
+      )?.quantity || 0
     );
   };
 export const getSubtotalPrice = (state: ICartStore) => state.subtotalPrice;

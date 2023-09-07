@@ -20,7 +20,7 @@ export default function ProductVariant({ variant }: IProps) {
     useFormControl(nameVariants);
   const { handleChange: handleChangePrice, value: price } =
     useFormControl(priceVariants);
-        
+
   const updateVariantMutation = useUpdateVariantMutation();
 
   const isLoading = updateVariantMutation.isLoading;
