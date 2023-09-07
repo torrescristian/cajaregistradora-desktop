@@ -1,5 +1,4 @@
 import CreateVariant from '@/components/CreateVariant';
-import CrearProducto from '@/components/CreateProduct';
 import { useState } from 'react';
 import ProductControl from '@/components/ProductControl';
 

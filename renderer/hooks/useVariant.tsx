@@ -1,7 +1,6 @@
 import * as yup from 'yup';
 
 const useVariant = () => {
-  const categorySchema = yup.number().positive().integer();
   const schema = yup
     .object({
       categories: yup
