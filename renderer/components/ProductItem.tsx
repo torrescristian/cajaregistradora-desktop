@@ -15,14 +15,6 @@ const Text = ({ children }: IComponent) => {
   );
 };
 
-const Text = ({ children }: IComponent) => {
-  return (
-    <p className="font-bold text-xl rounded-lg whitespace-nowrap text-center ">
-      {children}
-    </p>
-  );
-};
-
 const HighlightedText = ({ children }: IComponent) => {
   return (
     <p
