@@ -1,10 +1,10 @@
 import { ICartItem, ICartState } from '@/interfaces/ICart';
-import { IProduct } from '@/interfaces/IProduct';
+import { IProduct, IVariant } from '@/interfaces/IProduct';
 import { create } from 'zustand';
 
-interface IUpdatePriceProps {
-  newPrice: number;
+interface IAddProductProps {
   product: IProduct;
+  selectedVariant: IVariant;
 }
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
@@ -13,13 +13,12 @@ const fixPrice = (price: number) => Math.round(price * 100) / 100;
 // const clientName = useCartStore(getClientName)
 type ICartStore = ICartState & {
   initCart: (cartPayload: ICartState) => void;
-  addProduct: (productPayload: IProduct) => void;
-  removeProduct: (productPayload: IProduct) => void;
-  removeCartItem: (productPayload: IProduct) => void;
+  addProduct: ({ product, selectedVariant }: IAddProductProps) => void;
+  removeProduct: ({ product, selectedVariant }: IAddProductProps) => void;
+  removeCartItem: ({ product, selectedVariant }: IAddProductProps) => void;
   clearCart: () => void;
-  updatePrice: (updatePriceProps: IUpdatePriceProps) => void;
-  addClientId: (clientId: number) => void;
-  clientId: number;
+  addClientId: (clientId: number | null) => void;
+  clientId: number | null;
 };
 
 export const useCartStore = create<ICartStore>()((set) => ({
@@ -39,11 +38,11 @@ export const useCartStore = create<ICartStore>()((set) => ({
       totalAmount: cartPayload.totalAmount,
       totalQuantity: cartPayload.totalQuantity,
     }),
-  addProduct: (productPayload: IProduct) => {
+  addProduct: ({ product, selectedVariant }: IAddProductProps) => {
     set((state): Partial<ICartStore> => {
       console.log('holis');
       const itemIndex = state.cartItems.findIndex(
-        (item: any) => item.product.id === productPayload.id,
+        (item) => item.selectedVariant.id! === selectedVariant.id!,
       );
 
       if (itemIndex >= 0) {
@@ -52,8 +51,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
 
         if (
           !cartItem.product.isService &&
-          cartItem.quantity >=
-            productPayload.default_variant.stock_per_variant.stock
+          cartItem.quantity >= selectedVariant.stock_per_variant.stock
         ) {
           return state;
         }
@@ -61,9 +59,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         cartItem.quantity += 1;
         return {
           cartItems: newCartItems,
-          totalAmount: fixPrice(
-            state.totalAmount + productPayload.default_variant.price,
-          ),
+          totalAmount: fixPrice(state.totalAmount + selectedVariant.price),
           totalQuantity: state.totalQuantity + 1,
         };
       }
@@ -72,34 +68,30 @@ export const useCartStore = create<ICartStore>()((set) => ({
         cartItems: [
           ...state.cartItems,
           {
-            product: productPayload,
+            product: product,
             quantity: 1,
-            selectedVariant: productPayload.default_variant,
+            selectedVariant: selectedVariant,
           },
         ],
-        totalAmount: fixPrice(
-          state.totalAmount + productPayload.default_variant.price,
-        ),
+        totalAmount: fixPrice(state.totalAmount + selectedVariant.price),
         totalQuantity: state.totalQuantity + 1,
       };
     });
   },
-  removeProduct: (productPayload: IProduct) =>
+  removeProduct: ({ selectedVariant }: IAddProductProps) =>
     set((state) => {
       const item: ICartItem | undefined = state.cartItems.find(
-        (item: ICartItem) => item.product.id === productPayload.id,
+        (item) => item.selectedVariant.id! === selectedVariant.id!,
       );
 
       if (item?.quantity === 1) {
         return {
           cartItems: state.cartItems.filter(
-            (item: ICartItem) => item.product.id !== productPayload.id,
+            (item: ICartItem) =>
+              item.selectedVariant.id! !== selectedVariant.id!,
           ),
           totalAmount: fixPrice(
-            Math.max(
-              state.totalAmount - productPayload.default_variant.price,
-              0,
-            ),
+            Math.max(state.totalAmount - selectedVariant.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -108,7 +100,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
       if (item) {
         return {
           cartItems: state.cartItems.map((item: ICartItem) => {
-            if (item.product.id === productPayload.id) {
+            if (item.selectedVariant.id! === selectedVariant.id!) {
               const newItem = structuredClone(item);
               newItem.quantity--;
               return newItem;
@@ -116,10 +108,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
             return item;
           }),
           totalAmount: fixPrice(
-            Math.max(
-              state.totalAmount - productPayload.default_variant.price,
-              0,
-            ),
+            Math.max(state.totalAmount - selectedVariant.price, 0),
           ),
           totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
@@ -128,12 +117,12 @@ export const useCartStore = create<ICartStore>()((set) => ({
 
       return state;
     }),
-  removeCartItem: (productPayload: IProduct) =>
+  removeCartItem: ({ selectedVariant }: IAddProductProps) =>
     set((state: any) => {
       const totalQuantity =
         state.totalQuantity -
         state.cartItems.reduce((acc: number, item: ICartItem) => {
-          if (item.product.id === productPayload.id) {
+          if (item.selectedVariant.id! === selectedVariant.id!) {
             return acc + item.quantity;
           }
           return acc;
@@ -141,15 +130,15 @@ export const useCartStore = create<ICartStore>()((set) => ({
       const totalAmount =
         state.totalAmount -
         state.cartItems.reduce((acc: number, item: ICartItem) => {
-          if (item.product.id === productPayload.id) {
-            return acc + item.product.default_variant.price * item.quantity;
+          if (item.selectedVariant.id! === selectedVariant.id!) {
+            return acc + item.selectedVariant.price * item.quantity;
           }
           return acc;
         }, 0);
 
       return {
         cartItems: state.cartItems.filter(
-          (item: ICartItem) => item.product.id !== productPayload.id,
+          (item: ICartItem) => item.selectedVariant.id! !== selectedVariant.id!,
         ),
         totalAmount:
           Math.max(totalQuantity, 0) === 0
@@ -166,20 +155,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
       totalQuantity: 0,
       reset: true,
     }),
-  updatePrice: (updatePricePayload: IUpdatePriceProps) =>
-    set((state: any) => {
-      return structuredClone({
-        cartItems: state.cartItems.map((item: ICartItem) => {
-          if (item.product.id === updatePricePayload.product.id) {
-            const newItem = structuredClone(item);
-            newItem.product.default_variant.price = updatePricePayload.newPrice;
-            return newItem;
-          }
-          return item;
-        }),
-      });
-    }),
-  addClientId: (clientId: number) => set({ clientId }),
+  addClientId: (clientId: number | null) => set({ clientId }),
 }));
 
 // selectors
@@ -195,11 +171,12 @@ export const getAdditionalDetails = (state: ICartStore) =>
 export const getTotalQuantity = (state: ICartStore) => state.totalQuantity;
 export const getCartItemById = (id: number) => (state: ICartStore) =>
   state.cartItems.find((cartItem: ICartItem) => cartItem.product.id === id);
-export const getCartItemQuantityByProductId =
+export const getCartItemQuantityByVariantId =
   (id: number) => (state: ICartStore) => {
     return (
-      state.cartItems.find((cartItem: ICartItem) => cartItem.product.id === id)
-        ?.quantity || 0
+      state.cartItems.find(
+        (cartItem: ICartItem) => cartItem.selectedVariant.id! === id,
+      )?.quantity || 0
     );
   };
 export const getSubtotalPrice = (state: ICartStore) => state.subtotalPrice;

@@ -74,19 +74,6 @@ export default function ProductVariant({ variant }: IProps) {
               textAlign="text-center"
             />
           </label>
-          <label className="input-group">
-            <span>$</span>
-            <FormControl
-              className="w-28"
-              hideLabel
-              name="price"
-              onChange={handleChangePrice}
-              text="Precio"
-              type="number"
-              value={variant.price}
-              textAlign="text-center"
-            />
-          </label>
         </section>
         {isLoading ? (
           <Loader />

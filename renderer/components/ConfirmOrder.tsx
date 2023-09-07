@@ -62,18 +62,24 @@ export const ConfirmOrder = () => {
       <button className="btn btn-primary" onClick={handleClickConfirmOrder}>
         Pasar Orden
       </button>
-      <dialog
-        ref={ref}
-        className="bg-base-300 shadow-md shadow-neutral-content p-10"
-      >
-        <ClientForm onSelect={(client) => addClientId(client.id!)} />
+      <dialog ref={ref} className="border-4 rounded-3xl py-5 px-10">
+        <ClientForm onSelect={(client) => addClientId(client?.id || null)} />
 
-        <button
-          onClick={handleSubmit}
-          className="btn sticky top-0 z-20 w-fit whitespace-nowrap bg-green-400 text-xl text-stone-50 hover:bg-green-600"
-        >
-          Pasar orden
-        </button>
+        <div className="flex flex-col w-full items-center pt-5">
+          <button
+            onClick={handleSubmit}
+            className="btn sticky top-0 z-20 w-fit whitespace-nowrap bg-green-400 text-xl text-stone-50 hover:bg-green-600"
+          >
+            Crear orden pendiente
+          </button>
+
+          <button
+            className="btn btn-link text-stone-50"
+            onClick={() => ref.current?.close()}
+          >
+            Cancelar
+          </button>
+        </div>
       </dialog>
     </section>
   );

@@ -10,7 +10,13 @@ export default function useOrderQuery() {
       filters: {
         status: ORDER_STATUS.PENDING,
       },
-      populate: ['client', 'items.product', 'discount', 'payments'],
+      populate: [
+        'client',
+        'items.product',
+        'discount',
+        'payments',
+        'items.selectedVariant',
+      ],
     })) as unknown as IOrderResponse;
     return orderResponse.results;
   });

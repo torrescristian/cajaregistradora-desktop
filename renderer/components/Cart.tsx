@@ -41,7 +41,11 @@ const Cart = () => {
     <Layout>
       <ProductContainer>
         {items.map((item) => (
-          <CartItem key={item.product.id} product={item.product} />
+          <CartItem
+            key={item.product.id}
+            product={item.product}
+            variant={item.selectedVariant}
+          />
         ))}
       </ProductContainer>
       <section className="flex flex-row items-center pb-5 gap-5 bottom-2 p-4 z-20 rounded-xl  fixed right-12 bg-[rgba(0,0,0,0.7)]">

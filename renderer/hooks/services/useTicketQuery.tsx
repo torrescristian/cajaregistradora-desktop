@@ -7,7 +7,13 @@ export const getTicketsQueryKey = () => 'tickets';
 export default function useOrderQuery() {
   return useQuery<ITicket[]>([getTicketsQueryKey()], async () => {
     const ticketResponse = (await strapi.find(getTicketsQueryKey(), {
-      populate: ['order', 'order.client', 'order.items.product', 'payments'],
+      populate: [
+        'order',
+        'order.client',
+        'order.items.product',
+        'payments',
+        'order.items.selectedVariant',
+      ],
     })) as unknown as ITicketResponse;
     return ticketResponse.results;
   });

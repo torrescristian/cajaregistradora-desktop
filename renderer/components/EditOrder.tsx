@@ -65,8 +65,8 @@ export const EditOrder = ({ order, setIsEditing }: IProps) => {
     // @ts-ignore
     resolver: yupResolver<IFormControl>(schema),
     defaultValues: {
-      clientAddress: order.address,
-      clientPhone: order.phoneNumber,
+      clientAddress: order.address || '',
+      clientPhone: order.phoneNumber || '',
       additionalDetails: order.additionalDetails,
       totalPrice: order.totalPrice,
       discountAmount: order.discount?.amount || 0,
