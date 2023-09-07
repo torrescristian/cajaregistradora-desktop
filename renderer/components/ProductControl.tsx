@@ -46,7 +46,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
   };
   const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = !isService;
-
     setIsService(newValue);
     setValue('isService', newValue);
   };

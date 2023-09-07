@@ -78,7 +78,7 @@ const ProductRow = ({ product }: IProps) => {
         <div className="divider">Imagen</div>
       </form>
       <section className="flex flex-col items-center gap-2">
-        <ImageControl product={product} />
+        <ImageControl product={product} onChange={console.log} />
       </section>
     </section>
   );
