@@ -3,7 +3,6 @@ import { ICollapseTitle } from '@/interfaces/ProductItem.interfaces';
 import {
   AddProductButton,
   Badge,
-  ClearButton,
   RemoveProductButton,
 } from './ProductItem.styles';
 import useProductItem from '@/hooks/useProductItem';
@@ -14,7 +13,6 @@ const CartItem = ({ product }: ICollapseTitle) => {
     cartItemQuantity,
     handleClickAdd,
     handleClickRemove,
-    handleClickClear,
     isService,
     handleClickSelectUpdatePrice,
   } = useProductItem(product);
@@ -30,6 +28,13 @@ const CartItem = ({ product }: ICollapseTitle) => {
       className="flex flex-col gap-5 rounded-3xl p-5 items-start text-primary-content border-2 shadow-md"
     >
       <p className="font-bold">{product.name}</p>
+      <select className="select w-full">
+        {product.variants.map((variant) => (
+          <option value={variant.name} onClick={() => handleChange}>
+            {variant.name}
+          </option>
+        ))}
+      </select>
       <section className="flex flex-row gap-3 items-center justify-end whitespace-nowrap">
         <p className="flex flex-row whitespace-nowrap items-center gap-2">
           <Badge>x{cartItemQuantity}</Badge>={' '}

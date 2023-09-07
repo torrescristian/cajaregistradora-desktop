@@ -3,7 +3,7 @@ import useFormControl from '@/hooks/useFormControl';
 import { IVariant } from '@/interfaces/IProduct';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 import Loader from '@/components/Loader';
-import StockButton from '@/components/StockButton';
+import StockButton from '@/components/UpdateProductButton';
 
 interface IProps {
   variant: IVariant;
@@ -11,15 +11,26 @@ interface IProps {
 
 export default function ProductVariant({ variant }: IProps) {
   const initialStock = variant.stock_per_variant.stock;
-  const { handleChange, value } = useFormControl(initialStock);
+  const nameVariants = variant.name;
+  const priceVariants = variant.price;
+
+  const { handleChange: handleChangeStock, value: stock } =
+    useFormControl(initialStock);
+  const { handleChange: handleChangeName, value: name } =
+    useFormControl(nameVariants);
+  const { handleChange: handleChangePrice, value: price } =
+    useFormControl(priceVariants);
+        
   const updateVariantMutation = useUpdateVariantMutation();
+
   const isLoading = updateVariantMutation.isLoading;
 
   const handleSubmit = () => {
     updateVariantMutation.mutate({
-      newStock: Number(value),
+      newStock: Number(stock),
+      name: name,
+      price: price,
       stockPerVariantId: variant.stock_per_variant.id!,
-      price: variant.price,
       variantId: variant.id!,
     });
   };
@@ -30,10 +41,10 @@ export default function ProductVariant({ variant }: IProps) {
         <FormControl
           fullWidth
           name="name"
-          onChange={handleChange}
+          onChange={handleChangeName}
           text="Nombre"
           type="text"
-          value={variant.name}
+          value={name}
           textAlign="text-center"
         />
         <section className="flex items-end gap-5">
@@ -43,10 +54,23 @@ export default function ProductVariant({ variant }: IProps) {
               className="w-28"
               hideLabel
               name="stock"
-              onChange={handleChange}
+              onChange={handleChangeStock}
               text="Stock"
               type="number"
-              value={value}
+              value={stock}
+              textAlign="text-center"
+            />
+          </label>
+          <label className="input-group">
+            <span>$</span>
+            <FormControl
+              className="w-28"
+              hideLabel
+              name="price"
+              onChange={handleChangePrice}
+              text="Precio"
+              type="number"
+              value={price}
               textAlign="text-center"
             />
           </label>
@@ -68,9 +92,12 @@ export default function ProductVariant({ variant }: IProps) {
           <Loader />
         ) : (
           <StockButton
-            initialStock={initialStock}
+            disabled={
+              variant.stock_per_variant.stock === stock &&
+              variant.name === name &&
+              variant.price === price
+            }
             handleSubmit={handleSubmit}
-            currentStock={value}
           />
         )}
       </section>

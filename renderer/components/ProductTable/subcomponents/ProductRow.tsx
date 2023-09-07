@@ -4,7 +4,6 @@ import { UpdateProductButton } from '@/components/ProductItem.styles';
 import { IProduct } from '@/interfaces/IProduct';
 import ProductVariant from './ProductVariant';
 import { useForm } from 'react-hook-form';
-import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import ImageControl from '@/components/ImageControl';
 
@@ -31,18 +30,14 @@ const ProductRow = ({ product }: IProps) => {
       price: product.default_variant.price,
     },
   });
-  const updateVariantMutation = useUpdateVariantMutation();
+
   const updateProductMutation = useUpdateProductMutation();
+
   const onSubmit = (data: IFormControl) => {
     updateProductMutation.mutate({
       ...data,
       id: product.id,
-    });
-    updateVariantMutation.mutate({
-      newStock: Number(data.stock),
-      variantId: product.default_variant.id!,
-      stockPerVariantId: product.default_variant.stock_per_variant.id!,
-      price: product.default_variant.price,
+      name: name,
     });
   };
 

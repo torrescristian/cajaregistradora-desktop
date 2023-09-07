@@ -1,18 +1,15 @@
+import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import { IProduct } from '@/interfaces/IProduct';
 import strapi from '@/libs/strapi';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Loader from './Loader';
 
 interface IProps {
   product?: IProduct;
-  onChange: (imageName: string) => void;
 }
 
-const ImageControl = ({ product, onChange }: IProps) => {
-  const [imageName, setImageName] = useState(product?.image || '');
-
-  useEffect(() => {
-    onChange(imageName);
-  }, [imageName]);
+const ImageControl = ({ product }: IProps) => {
+  const updateProductMutation = useUpdateProductMutation();
 
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
@@ -30,20 +27,29 @@ const ImageControl = ({ product, onChange }: IProps) => {
         },
       },
     ).then((res) => res.json());
-    setImageName(productImage);
+    updateProductMutation.mutate({
+      id: product?.id!,
+      image: productImage,
+    });
   };
 
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-col items-center">
-      <img src={imageName} alt="imagen" className="w-max rounded-lg" />
-      <input
-        type="file"
-        name="files"
-        className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
-      />
-      <button type="submit" className="btn btn-success w-min">
-        Guardar foto
-      </button>
+      <img src={product?.image || 'default.png'} alt="" className="w-max" />
+      {updateProductMutation.isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <input
+            type="file"
+            name="files"
+            className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+          />
+          <button type="submit" className="btn btn-success w-min">
+            Guardar foto
+          </button>
+        </>
+      )}
     </form>
   );
 };

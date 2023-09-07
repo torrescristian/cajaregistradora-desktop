@@ -40,15 +40,12 @@ const ProductControl = ({ controlType, product }: IProps) => {
   const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
 
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target;
-
-    setProductType(value as PRODUCT_TYPE);
-    setValue('type', productType);
+    const value = e.target.value as PRODUCT_TYPE;
+    setProductType(value);
+    setValue('type', value);
   };
-
   const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = !isService;
-
     setIsService(newValue);
     setValue('isService', newValue);
   };

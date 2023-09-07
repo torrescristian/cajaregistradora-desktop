@@ -19,7 +19,7 @@ const Layout = ({
   children,
   totalAmount,
 }: IComponent & { totalAmount?: number }) => (
-  <section className="flex w-4/12 flex-col items-center gap-5">
+  <section className="flex w-[40vw] flex-col items-center gap-5">
     {children}
     <section>
       {totalAmount ? (
