@@ -28,7 +28,6 @@ export default function SelectClient({ selectedClientId, onChange }: IProps) {
 
   return (
     <section>
-      
       <select
         defaultValue={selectedClientId}
         className="select-bordered w-80 select "

@@ -141,7 +141,8 @@ export const CreateTicketForm = ({
         <datalist className="flex flex-col gap-4">
           <p className="text-2xl font-bold">
             <ShoppingCartIcon className="w-5 inline" /> Orden # {order.id} |{' '}
-            <UserIcon className="w-5 inline" /> {order.client?.name || 'Consumidor Final'} 
+            <UserIcon className="w-5 inline" />{' '}
+            {order.client?.name || 'Consumidor Final'}
           </p>
           <div className="divider" />
           <p className="flex flex-row items-center gap-3 ">
