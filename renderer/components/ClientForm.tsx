@@ -8,9 +8,11 @@ import FormField from './FormFieldText';
 import Loader from './Loader';
 import { RenderIf } from './RenderIf';
 import useCreateClientMutation from '@/hooks/services/useCreateClientMutation';
+import { PhoneIcon, TrashIcon } from '@heroicons/react/24/solid';
+
 
 interface IProps {
-  onSelect: (client: IClient) => void;
+  onSelect: (client: IClient | null) => void;
 }
 
 interface IClientForm {
@@ -21,6 +23,7 @@ interface IClientForm {
 
 export default function ClientForm({ onSelect }: IProps) {
   const { handleChange, value: search } = useFormControl('');
+  const { setValue: setClient, value: client } = useFormControl(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [query] = useDebounce(search, 500);
@@ -31,12 +34,17 @@ export default function ClientForm({ onSelect }: IProps) {
 
   const handleClick = (client: IClient) => () => {
     onSelect(client);
+    setClient(client)
   };
 
   const handleSubmitCreateClient = (data: IClientForm) => {
-    // client mutation
     createClientMutation.mutate(data);
   };
+
+  const handleDeleteClient = () => {
+    setClient(null);
+    onSelect(null);
+  }
 
   const {
     register,
@@ -45,7 +53,7 @@ export default function ClientForm({ onSelect }: IProps) {
   } = useForm<IClientForm>();
 
   return (
-    <section className="bg-red">
+    <section className="bg-red w-96">
       <dialog ref={dialogRef} className="p-10">
         <form
           onSubmit={handleSubmit(handleSubmitCreateClient)}
@@ -84,19 +92,35 @@ export default function ClientForm({ onSelect }: IProps) {
           </section>
         </form>
       </dialog>
-      <label>
-        Buscar cliente
+      <label className='input-group flex flex-col'>
+
+        <span className='text-stone-500'>Buscar cliente por Nombre, Direc. o Tel.</span>
         <input
           onChange={handleChange}
           value={search}
           className="input input-bordered my-3"
         />
+        <RenderIf condition={client?.name}>
+          <section className='flex flex-row justify-between gap-3 pt-1 pb-3 items-center'>
+            <div className='flex flex-col'>
+              <p className='text-stone-500'>Cliente Seleccionado: </p>
+              <p className='text-primary'>{client?.name}</p>
+            </div>
+            <button className='btn btn-error text-stone-50' onClick={handleDeleteClient}><TrashIcon className='h-4 w-4' /></button>
+          </section>
+        </RenderIf>
+        <RenderIf condition={!client?.name}>
+          <section className='pt-1 pb-3'>
+            <p className='text-stone-500'>Consumidor Final</p>
+          </section>
+        </RenderIf>
       </label>
       <RenderIf condition={clientQuery.isLoading}>
         <Loader />
       </RenderIf>
       <RenderIf condition={!clientQuery.isLoading}>
         <RenderIf condition={!!clientQuery?.data}>
+          <p></p>
           <ul className="h-72 overflow-y-scroll">
             {clientQuery.data?.map((client) => (
               <li
@@ -105,8 +129,13 @@ export default function ClientForm({ onSelect }: IProps) {
                 onClick={handleClick(client)}
               >
                 <p>{client.name}</p>
-                <p>{client.address}</p>
-                <p>{client.phone_number}</p>
+                <div className="flex flex-row justify-between">
+                  <p className='text-sm text-stone-500'>{client.address}</p>
+                  <RenderIf condition={Boolean(client.phone_number)}>
+                    <p className='text-sm text-stone-500 flex flex-row items-center gap-2'><PhoneIcon className='h-4 w-4' /> {client.phone_number}</p>
+                  </RenderIf>
+
+                </div>
               </li>
             ))}
           </ul>

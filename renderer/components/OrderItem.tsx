@@ -8,7 +8,7 @@ interface IProps {
   isEditing: boolean;
 }
 function OrderItem({ item, isEditing }: IProps) {
-  const { handleClickRemove } = useProductItem(item.product!);
+  const { handleClickRemove } = useProductItem({ product:item.product!, selectedVariant : item.selectedVariant });
 
   function convertToEmoji(productType?: PRODUCT_TYPE) {
     switch (productType) {
@@ -36,7 +36,7 @@ function OrderItem({ item, isEditing }: IProps) {
     >
       <p className="text-2xl">{convertToEmoji(item.product!.type)}</p>
       <p>{item.quantity} -</p>
-      <p> {item.product!.name}</p>
+      <p> {item.product!.name} - {item.selectedVariant!.name}</p>
       {isEditing ? <RemoveProductButton onClick={handleClickRemove} /> : null}
     </div>
   );

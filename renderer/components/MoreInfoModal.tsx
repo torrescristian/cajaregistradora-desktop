@@ -17,7 +17,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
       <button className="btn" onClick={() => handleClickMoreInfo()}>
         Más info
       </button>
-      <dialog ref={ref} className="bg-transparent p-15">
+      <dialog ref={ref} className="bg-transparent p-15 w-[40vw]">
         <form method="dialog" className="modal-box gap-10">
           <dl className="flex flex-col gap-5 ">
             <div className="divider">

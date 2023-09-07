@@ -27,17 +27,20 @@ export default function SelectClient({ selectedClientId, onChange }: IProps) {
   }
 
   return (
-    <select
-      defaultValue={selectedClientId}
-      className="select-bordered w-80 select "
-      onChange={handleChangeClient}
-    >
-      <option value={0}>👤 Usuario anonimo</option>
-      {clientsQuery.data?.map((client) => (
-        <option key={client.id} value={client.id}>
-          👤 {client.name}
-        </option>
-      ))}
-    </select>
+    <section>
+      
+      <select
+        defaultValue={selectedClientId}
+        className="select-bordered w-80 select "
+        onChange={handleChangeClient}
+      >
+        <option value={0}>👤 Usuario anonimo</option>
+        {clientsQuery.data?.map((client) => (
+          <option key={client.id} value={client.id}>
+            👤 {client.name}
+          </option>
+        ))}
+      </select>
+    </section>
   );
 }

@@ -14,7 +14,7 @@ interface IProps {
   clientName: string;
   clientPhone: string;
   additionalDetails: string;
-  clientId?: number;
+  clientId?: number | null;
   subtotalPrice: number;
 }
 

@@ -17,8 +17,8 @@ type ICartStore = ICartState & {
   removeProduct: ({ product, selectedVariant }: IAddProductProps) => void;
   removeCartItem: ({ product, selectedVariant }: IAddProductProps) => void;
   clearCart: () => void;
-  addClientId: (clientId: number) => void;
-  clientId: number;
+  addClientId: (clientId: number | null) => void;
+  clientId: number | null;
 };
 
 export const useCartStore = create<ICartStore>()((set) => ({
@@ -155,7 +155,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
       totalQuantity: 0,
       reset: true,
     }),
-  addClientId: (clientId: number) => set({ clientId }),
+  addClientId: (clientId: number | null) => set({ clientId }),
 }));
 
 // selectors
