@@ -59,19 +59,18 @@ function parseOrderToPayLoad({
     client: clientId || undefined,
     status: ORDER_STATUS.PENDING,
     subtotalPrice: subtotalPrice,
-
   };
 }
 
 async function updateStock(items: ICartItem[]) {
   const promises = items.map((item) => {
     if (!item.selectedVariant.id) throw new Error('No se encontro el id');
-    const { stock, id } = item.selectedVariant.stock_per_variant
+    const { stock, id } = item.selectedVariant.stock_per_variant;
     return strapi.update('stock-per-variants', id!, {
       stock: stock,
     });
-  })
- 
+  });
+
   const result = await Promise.allSettled(promises);
 
   if (

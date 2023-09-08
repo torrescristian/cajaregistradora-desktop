@@ -47,11 +47,7 @@ const ProductItem = ({ product }: ICollapseTitle) => {
   };
 
   return (
-    <Card
-      data-test="productItem"
-      tabIndex={0}
-  
-    >
+    <Card data-test="productItem" tabIndex={0}>
       <section
         data-test="productItem.collapse.title.left"
         className="flex flex-1 items-center w-72 text-primary-content"

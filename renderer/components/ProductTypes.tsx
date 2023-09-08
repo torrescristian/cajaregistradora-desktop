@@ -2,7 +2,6 @@ import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ErrorMessage from './ErrorMessage';
 import Loader from './Loader';
 
-
 export default function ProductTypes() {
   const productsQuery = useProductsQuery({
     query: '',

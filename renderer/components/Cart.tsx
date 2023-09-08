@@ -50,8 +50,8 @@ const Cart = () => {
             />
           ))}
         </div>
-        <Card >
-          <section className='p-5'>
+        <Card>
+          <section className="p-5">
             <p className="text-2xl text-primary-content">
               <span className="text-xl text-secondary">Total:</span>{' '}
               {formatPrice(totalAmount)}

@@ -23,10 +23,7 @@ const CartItem = ({ product, variant }: IProps) => {
   } = useProductItem({ product, selectedVariant: variant });
 
   return (
-    <Card
-      data-test="productItem"
-      tabIndex={0}
-      >
+    <Card data-test="productItem" tabIndex={0}>
       <p className="font-bold whitespace-nowrap">
         {product.name} - {variant.name}{' '}
       </p>

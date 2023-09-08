@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
 import useCreateVariantMutation from './useCreateVariantMutation';
 
-
 interface IProps {
   data: IProductPayload;
   variants: IVariantPayload[];
