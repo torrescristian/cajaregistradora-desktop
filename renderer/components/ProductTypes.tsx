@@ -1,12 +1,7 @@
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct } from '@/interfaces/IProduct';
 import ErrorMessage from './ErrorMessage';
 import Loader from './Loader';
-import { Badge } from './ProductItem.styles';
 
-type IProductsBySection = {
-  [section: string]: IProduct[];
-};
 
 export default function ProductTypes() {
   const productsQuery = useProductsQuery({

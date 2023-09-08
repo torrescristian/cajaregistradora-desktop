@@ -1,8 +1,5 @@
 import { ICartItem } from '@/interfaces/ICart';
 import { IOrder, IOrderItem, ORDER_STATUS } from '@/interfaces/IOrder';
-import IStockPerVariant, {
-  IStockPerVariantPages,
-} from '@/interfaces/IStockPerVariant';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
@@ -62,47 +59,19 @@ function parseOrderToPayLoad({
     client: clientId || undefined,
     status: ORDER_STATUS.PENDING,
     subtotalPrice: subtotalPrice,
+
   };
 }
 
 async function updateStock(items: ICartItem[]) {
-  const productIds = items.map((item) => item.product.id);
-
-  const stockPerVariant = (await strapi.find('stock-per-variants', {
-    filters: {
-      product: {
-        id: productIds,
-      },
-    },
-  })) as unknown as IStockPerVariantPages;
-
-  console.log(stockPerVariant);
-  const updatedStockPerVariant = stockPerVariant.data.map(
-    (spv): Pick<IStockPerVariant, 'id' | 'stock'> => {
-      const item = items.find(
-        (i) => spv.attributes.variant === i.selectedVariant.id,
-      );
-
-      if (!item)
-        return {
-          id: spv.id,
-          stock: spv.attributes.stock,
-        };
-      return {
-        id: spv.id,
-        stock: spv.attributes.stock - item.quantity,
-      };
-    },
-  );
-
-  const promises = updatedStockPerVariant.map(async (spv) => {
-    const { id } = spv;
-
-    return await strapi.update('stock-per-variants', id!, {
-      stock: spv.stock,
+  const promises = items.map((item) => {
+    if (!item.selectedVariant.id) throw new Error('No se encontro el id');
+    const { stock, id } = item.selectedVariant.stock_per_variant
+    return strapi.update('stock-per-variants', id!, {
+      stock: stock,
     });
-  });
-
+  })
+ 
   const result = await Promise.allSettled(promises);
 
   if (

@@ -28,7 +28,7 @@ const Products = () => {
         <SearchInput {...searchProps} />
         <ProductTypes />
       </Fixed>
-      <section className="flex flex-row gap-5 m-5 overflow-x-scroll w-full">
+      <section className="flex flex-row gap-5 m-5 p-2 overflow-x-scroll w-full">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
         {products.map((product) => (

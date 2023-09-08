@@ -1,9 +1,10 @@
 import { IProductPayload, IVariantPayload } from '@/interfaces/IProduct';
 import { ISingleFixedNativeResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
 import useCreateVariantMutation from './useCreateVariantMutation';
+
 
 interface IProps {
   data: IProductPayload;
@@ -35,7 +36,6 @@ export default function useCreateProductAndVariantMutation() {
           isDefaultVariant: Number(index) === defaultVariantIndex,
         });
       }
-
       return res;
     },
   );

@@ -8,6 +8,7 @@ import {
   useCartStore,
 } from '@/contexts/CartStore';
 import { ConfirmOrder } from './ConfirmOrder';
+import { Card } from './Card';
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-row w-full gap-5 justify-between">
@@ -49,10 +50,10 @@ const Cart = () => {
             />
           ))}
         </div>
-        <section className="flex flex-col items-center justify-around gap-5 p-4 rounded-xl bg-[rgba(0,0,0,0.7)]">
-          <section className="flex w-max items-center">
-            <p className="text-2xl text-white">
-              <span className="text-xl ">Total:</span>{' '}
+        <Card >
+          <section className='p-5'>
+            <p className="text-2xl text-primary-content">
+              <span className="text-xl text-secondary">Total:</span>{' '}
               {formatPrice(totalAmount)}
             </p>
           </section>
@@ -60,12 +61,12 @@ const Cart = () => {
             {items.length ? (
               <ConfirmOrder />
             ) : (
-              <section className="alert alert-warning w-full">
+              <section className="bg-info text-primary-content p-4 w-full">
                 No hay productos en el carrito
               </section>
             )}
           </section>
-        </section>
+        </Card>
       </ProductContainer>
     </Layout>
   );

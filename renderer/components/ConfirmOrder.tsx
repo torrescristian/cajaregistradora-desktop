@@ -36,6 +36,7 @@ export const ConfirmOrder = () => {
       additionalDetails,
       clientId,
       subtotalPrice,
+      
     });
   };
 
