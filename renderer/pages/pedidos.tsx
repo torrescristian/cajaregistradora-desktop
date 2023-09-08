@@ -9,7 +9,7 @@ const Pedidos = () => {
     useActiveCashBalanceQuery();
 
   return (
-    <section className="flex w-full flex-row items-start relative justify-between gap-2 ">
+    <section className="flex w-full flex-col items-start relative justify-between gap-2 ">
       <RenderIf condition={isLoading}>
         <Loader />
       </RenderIf>

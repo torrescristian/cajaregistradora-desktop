@@ -6,6 +6,7 @@ import ProductVariant from './ProductVariant';
 import { useForm } from 'react-hook-form';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import ImageControl from '@/components/ImageControl';
+import { Card } from '@/components/Card';
 
 interface IProps {
   product: IProduct;
@@ -42,7 +43,7 @@ const ProductRow = ({ product }: IProps) => {
   };
 
   return (
-    <section className="block-stone-200 flex w-max flex-col flex-wrap justify-between rounded-xl p-8 shadow-xl">
+    <Card>
       <div className="divider">Nombre del Producto</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex gap-3">
@@ -80,7 +81,7 @@ const ProductRow = ({ product }: IProps) => {
       <section className="flex flex-col items-center gap-2">
         <ImageControl product={product} />
       </section>
-    </section>
+    </Card>
   );
 };
 
