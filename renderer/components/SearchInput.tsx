@@ -3,7 +3,6 @@ import useFilterMenuQuery from '@/hooks/services/useFilterMenuQuery';
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
-
 export const useSearchProps = () => {
   const [search, setQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
@@ -43,10 +42,7 @@ interface ISearchInputProps {
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function SearchInput({
-  search,
-  onSearch,
-}: ISearchInputProps) {
+export default function SearchInput({ search, onSearch }: ISearchInputProps) {
   return (
     <section
       data-test="search-input"

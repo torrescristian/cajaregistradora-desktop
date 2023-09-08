@@ -40,7 +40,7 @@ const Cart = () => {
   return (
     <Layout>
       <ProductContainer>
-        <div className='flex flex-row gap-3 overflow-x-scroll'>
+        <div className="flex flex-row gap-3 overflow-x-scroll">
           {items.map((item) => (
             <CartItem
               key={item.product.id}
@@ -52,7 +52,8 @@ const Cart = () => {
         <section className="flex flex-col items-center justify-around gap-5 p-4 rounded-xl bg-[rgba(0,0,0,0.7)]">
           <section className="flex w-max items-center">
             <p className="text-2xl text-white">
-              <span className="text-xl ">Total:</span> {formatPrice(totalAmount)}
+              <span className="text-xl ">Total:</span>{' '}
+              {formatPrice(totalAmount)}
             </p>
           </section>
           <section className="w-max">

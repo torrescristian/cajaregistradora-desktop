@@ -58,7 +58,7 @@ export const ConfirmOrder = () => {
   }
   return (
     /* FIXME: Quitar el stock del producto */
-    <section >
+    <section>
       <button className="btn btn-primary" onClick={handleClickConfirmOrder}>
         Pasar Orden
       </button>

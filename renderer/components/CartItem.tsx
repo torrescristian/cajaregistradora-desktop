@@ -35,7 +35,7 @@ const CartItem = ({ product, variant }: IProps) => {
           <Badge>x{cartItemQuantity}</Badge>={' '}
           {formatPrice(variant.price * cartItemQuantity)}
         </p>
-        <div className='flex flex-row gap-3  w-full justify-end'>
+        <div className="flex flex-row gap-3  w-full justify-end">
           <RemoveProductButton onClick={handleClickRemove} />
           <AddProductButton onClick={handleClickAdd} disabled={!!disabled} />
         </div>

@@ -64,8 +64,8 @@ const ProductItem = ({ product }: ICollapseTitle) => {
       >
         <div className="flex flex-col w-full gap-2 text-white">
           <HighlightedText>{product.name}</HighlightedText>
-          <div className='flex flex-row'>
-            <img src={product.image} className='w-1/2'  />
+          <div className="flex flex-row">
+            <img src={product.image} className="w-1/2" />
             <div className="flex flex-col items-center justify-around w-1/2 ">
               <select
                 className="select select-bordered"
@@ -80,7 +80,6 @@ const ProductItem = ({ product }: ICollapseTitle) => {
               </HighlightedText>
             </div>
           </div>
-
 
           <section className="flex w-full justify-around items-center">
             <Text>
