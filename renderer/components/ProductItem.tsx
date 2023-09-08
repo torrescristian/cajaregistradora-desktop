@@ -18,7 +18,7 @@ const Text = ({ children }: IComponent) => {
 const HighlightedText = ({ children }: IComponent) => {
   return (
     <p
-      className="font-bold text-xl rounded-lg p-5 whitespace-nowrap text-center "
+      className="font-bold text-xl rounded-lg p-2 whitespace-nowrap text-center gap-2 "
       style={{
         background: 'rgba(0,0,0,0.3)',
       }}
@@ -64,20 +64,24 @@ const ProductItem = ({ product }: ICollapseTitle) => {
       >
         <div className="flex flex-col w-full gap-2 text-white">
           <HighlightedText>{product.name}</HighlightedText>
-          <div className="flex flex-col items-center">
-            <img src={product.image} />
+          <div className='flex flex-row'>
+            <img src={product.image} className='w-1/2'  />
+            <div className="flex flex-col items-center justify-around w-1/2 ">
+              <select
+                className="select select-bordered"
+                onChange={handleChangeVariant}
+              >
+                {product.variants.map((variant) => (
+                  <option value={variant.name}>{variant.name}</option>
+                ))}
+              </select>
+              <HighlightedText>
+                {formatPrice(selectedVariant.price)}
+              </HighlightedText>
+            </div>
           </div>
-          <HighlightedText>
-            {formatPrice(selectedVariant.price)}
-          </HighlightedText>
-          <select
-            className="select w-full select-bordered"
-            onChange={handleChangeVariant}
-          >
-            {product.variants.map((variant) => (
-              <option value={variant.name}>{variant.name}</option>
-            ))}
-          </select>
+
+
           <section className="flex w-full justify-around items-center">
             <Text>
               {product.default_variant.stock_per_variant.stock ? (

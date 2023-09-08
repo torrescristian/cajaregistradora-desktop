@@ -7,7 +7,7 @@ import Loader from '@/components/Loader';
 import ProductTypes from './ProductTypes';
 
 const Fixed = ({ children }: IComponent) => (
-  <section className="sticky top-0 z-20 mt-2.5 flex w-full flex-col gap-y-5 py-2">
+  <section className="sticky top-0 z-20 flex w-full justify-center flex-row gap-5">
     {children}
   </section>
 );
@@ -17,7 +17,7 @@ const Products = () => {
 
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedCategories: searchProps.selectedCategories,
+    selectedCategories: [],
   });
 
   const products = productsQuery.products as IProduct[];
@@ -28,7 +28,7 @@ const Products = () => {
         <SearchInput {...searchProps} />
         <ProductTypes />
       </Fixed>
-      <section className=" flex flex-row gap-5 m-5 overflow-x-scroll w-[60vw]">
+      <section className="flex flex-row gap-5 m-5 overflow-x-scroll w-full">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
         {products.map((product) => (

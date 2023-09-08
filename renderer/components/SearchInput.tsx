@@ -1,10 +1,8 @@
-import useCategories, { ICategoryUI } from '@/hooks/useCategories';
+import useCategories from '@/hooks/useCategories';
 import useFilterMenuQuery from '@/hooks/services/useFilterMenuQuery';
-import ErrorMessage from '@/components/ErrorMessage';
-import Loader from '@/components/Loader';
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import FilterMenu from './FilterMenu';
+
 
 export const useSearchProps = () => {
   const [search, setQuery] = useState('');
@@ -43,41 +41,17 @@ export const useSearchProps = () => {
 interface ISearchInputProps {
   search: string;
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  filterMenuQuery: any;
-  categories: ICategoryUI[];
-  initialize: any;
-  toggleSelectedCategory: any;
-  disableFilter?: boolean;
-  selectedCategories: number[];
 }
 
 export default function SearchInput({
   search,
   onSearch,
-  categories,
-  filterMenuQuery,
-  initialize,
-  toggleSelectedCategory,
-  disableFilter,
-  selectedCategories,
 }: ISearchInputProps) {
   return (
     <section
       data-test="search-input"
-      className="form-control flex w-full flex-row justify-start"
+      className="form-control flex flex-row justify-start"
     >
-      {!disableFilter && filterMenuQuery.isLoading && (
-        <Loader className="w-2/12" />
-      )}
-      {!disableFilter && filterMenuQuery.isSuccess && (
-        <FilterMenu
-          categories={categories}
-          data={filterMenuQuery.data}
-          initialize={initialize}
-          selectedCategories={selectedCategories}
-          toggleSelectedCategory={toggleSelectedCategory}
-        />
-      )}
       <input
         data-test="search-input-field"
         value={search}
@@ -86,7 +60,6 @@ export default function SearchInput({
         placeholder="Buscar producto..."
         className="input-bordered input w-96 shadow-inner hover:border-none"
       />
-      {filterMenuQuery.isError && <ErrorMessage>Error</ErrorMessage>}
     </section>
   );
 }
