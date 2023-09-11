@@ -1,8 +1,8 @@
 import useProductItem from '@/hooks/useProductItem';
 import { IOrderItem } from '@/interfaces/IOrder';
-import { PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { RemoveProductButton } from './ProductItem.styles';
 import { twMerge } from 'tailwind-merge';
+import { convertToEmoji } from '@/libs/utils';
 interface IProps {
   item: IOrderItem;
   isEditing: boolean;
@@ -13,22 +13,6 @@ function OrderItem({ item, isEditing }: IProps) {
     selectedVariant: item.selectedVariant,
   });
 
-  function convertToEmoji(productType?: PRODUCT_TYPE) {
-    switch (productType) {
-      case 'PIZZA': {
-        return '🍕';
-      }
-      case 'HAMBURGER': {
-        return '🍔';
-      }
-      case 'SODA': {
-        return '🥤';
-      }
-      default: {
-        return '🔵';
-      }
-    }
-  }
   return (
     <div
       key={item.product!.id}
