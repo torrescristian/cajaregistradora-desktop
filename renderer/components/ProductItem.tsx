@@ -28,7 +28,7 @@ const HighlightedText = ({ children }: IComponent) => {
   );
 };
 
-const ProductItem = ({ product,updateMode }: ICollapseTitle) => {
+const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
   const [selectedVariant, setSelectedVariant] = useState(
     product.default_variant,
   );

@@ -10,7 +10,7 @@ interface IProps {
 function Order({ order }: IProps) {
   // STATE
   const [isEditing, setIsEditing] = useState(false);
-  
+
   // METHODS
 
   const handleToggleEdit = () => {

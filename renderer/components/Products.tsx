@@ -13,10 +13,10 @@ const Fixed = ({ children }: IComponent) => (
 );
 
 interface IProps {
-  updateMode:boolean;
+  updateMode: boolean;
 }
 
-const Products = ({updateMode}:IProps) => {
+const Products = ({ updateMode }: IProps) => {
   const searchProps = useSearchProps();
 
   const productsQuery = useProductsQuery({

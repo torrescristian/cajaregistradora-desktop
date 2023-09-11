@@ -11,7 +11,6 @@ import { ConfirmOrder } from './ConfirmOrder';
 import { Card } from './Card';
 import { IOrder } from '@/interfaces/IOrder';
 
-
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-row w-full gap-5 justify-between">
     {children}
@@ -38,18 +37,16 @@ const Layout = ({
 
 interface IProps {
   updateMode: boolean;
-  order?:IOrder;
+  order?: IOrder;
 }
 
-const Cart = ({updateMode,order}: IProps) => {
+const Cart = ({ updateMode, order }: IProps) => {
   const items = useCartStore(getCartItems) as ICartItem[];
   const totalAmount = useCartStore(getTotalAmount);
 
-  if (updateMode && !order){
+  if (updateMode && !order) {
     throw new Error('Missing order to update');
-  
   }
-
 
   return (
     <Layout>
@@ -71,16 +68,15 @@ const Cart = ({updateMode,order}: IProps) => {
             </p>
           </section>
           <section className="w-max">
-            {items.length ? 
-                <ConfirmOrder updateMode order={order}/>
-                 : (
-                  <section className="bg-info text-primary-content p-4 w-full">
+            {items.length ? (
+              <ConfirmOrder updateMode order={order} />
+            ) : (
+              <section className="bg-info text-primary-content p-4 w-full">
                 No hay productos en el carrito
               </section>
-            )
-          }
+            )}
           </section>
-          </Card>
+        </Card>
       </ProductContainer>
     </Layout>
   );

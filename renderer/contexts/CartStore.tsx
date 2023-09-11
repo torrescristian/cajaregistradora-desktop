@@ -66,7 +66,6 @@ export const useCartStore = create<ICartStore>()((set) => ({
         return {
           cartItems: newCartItems,
           subtotalPrice: fixPrice(state.subtotalPrice + selectedVariant.price),
-
         };
       }
       return {
@@ -133,8 +132,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         cartItems: state.cartItems.filter(
           (item: ICartItem) => item.selectedVariant.id! !== selectedVariant.id!,
         ),
-        subtotalPrice:
-            fixPrice(Math.max(subtotalPrice, 0)),
+        subtotalPrice: fixPrice(Math.max(subtotalPrice, 0)),
         reset: true,
       };
     }),

@@ -6,36 +6,34 @@ import Cart from './Cart';
 import Products from './Products';
 
 interface IProps {
-    order: IOrder;
+  order: IOrder;
 }
 
 export const UpdateOrder = ({ order }: IProps) => {
-    const setCart = useCartStore(getSetCart);
+  const setCart = useCartStore(getSetCart);
 
-    const adaptOrderItemToCartItem = (orderItem: IOrderItem): ICartItem => {
-        return {
-            product: orderItem.product!,
-            quantity: orderItem.quantity,
-            selectedVariant: orderItem.selectedVariant!,
-        };
+  const adaptOrderItemToCartItem = (orderItem: IOrderItem): ICartItem => {
+    return {
+      product: orderItem.product!,
+      quantity: orderItem.quantity,
+      selectedVariant: orderItem.selectedVariant!,
     };
+  };
 
+  useEffect(() => {
+    setCart({
+      clientId: order.client?.id!,
+      additionalDetails: order.additionalDetails,
+      totalPrice: order.totalPrice,
+      subtotalPrice: order.subtotalPrice,
+      cartItems: order.items.map(adaptOrderItemToCartItem),
+    });
+  }, []);
 
-    useEffect(() => {
-        setCart({
-            clientId: order.client?.id!,
-            additionalDetails: order.additionalDetails,
-            totalPrice: order.totalPrice,
-            subtotalPrice: order.subtotalPrice,
-            cartItems: order.items.map(adaptOrderItemToCartItem),
-        });
-    }, []);
-
-
-    return (
-        <section className='flex flex-col w-screen'>
-            <Products updateMode/>
-            <Cart updateMode order={order} />
-        </section>
-    )
+  return (
+    <section className="flex flex-col w-screen">
+      <Products updateMode />
+      <Cart updateMode order={order} />
+    </section>
+  );
 };

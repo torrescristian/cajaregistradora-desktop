@@ -126,10 +126,10 @@ export const EditOrder = ({ order, setIsEditing }: IProps) => {
           </p>
         </div>
       ) : null}
-       <button className="btn btn-success text-stone-50" type="submit">
+      <button className="btn btn-success text-stone-50" type="submit">
         <CheckIcon className="w-full h-6" />
       </button>
-     <p className="font-bold text-2xl">Orden # {order.id} -</p>
+      <p className="font-bold text-2xl">Orden # {order.id} -</p>
       <SelectClient
         selectedClientId={order.client?.id || 0}
         onChange={(client) => {

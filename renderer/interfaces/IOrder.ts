@@ -12,7 +12,7 @@ export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
 }
 export type IOrderItemPayload = IOrderItem<number, number>;
 
-export interface IOrder<CLIENT = IClient,ORDER_ITEM = IOrderItem> {
+export interface IOrder<CLIENT = IClient, ORDER_ITEM = IOrderItem> {
   items: ORDER_ITEM[];
   id?: number;
   totalPrice: number;
@@ -38,7 +38,7 @@ export enum DISCOUNT_TYPE {
 }
 export type IOrderResponse = IResponsePage<IOrder>;
 export type IOrderSingleResponse = ISingleResultResponsePage<IOrder>;
-export type IOrderPayload = IOrder<number,number>;
+export type IOrderPayload = IOrder<number, number>;
 
 export enum ORDER_STATUS {
   PENDING = 'PENDING',

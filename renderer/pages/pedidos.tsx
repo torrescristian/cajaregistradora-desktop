@@ -8,7 +8,6 @@ const Pedidos = () => {
   const { isLoading, isError, isSuccess, cashIsActive } =
     useActiveCashBalanceQuery();
 
-
   return (
     <section className="flex w-full flex-col items-start relative justify-between gap-2 ">
       <RenderIf condition={isLoading}>
@@ -16,7 +15,7 @@ const Pedidos = () => {
       </RenderIf>
       <RenderIf condition={!isLoading}>
         <RenderIf condition={cashIsActive}>
-          <Products updateMode  />
+          <Products updateMode />
           <Cart updateMode />
         </RenderIf>
         <RenderIf condition={!cashIsActive}>

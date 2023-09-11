@@ -35,11 +35,11 @@ export const ConfirmOrder = ({ updateMode, order }: IProps) => {
   const adaptCartItemToOrderItem = (cartItem: ICartItem): IOrderItem => {
     return {
       product: cartItem.product,
-      quantity : cartItem.quantity,
+      quantity: cartItem.quantity,
       selectedVariant: cartItem.selectedVariant,
-      price : cartItem.selectedVariant.price 
-    }
-  }
+      price: cartItem.selectedVariant.price,
+    };
+  };
 
   const createOrder = () => {
     orderMutation.mutate({
@@ -59,7 +59,7 @@ export const ConfirmOrder = ({ updateMode, order }: IProps) => {
         totalPrice,
         additionalDetails,
         subtotalPrice,
-        items : items.map(adaptCartItemToOrderItem),
+        items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
       },
     });

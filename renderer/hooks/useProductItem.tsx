@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const useProductItem = ({ product, selectedVariant }: IProps) => {
- 
   const isService = !!product.isService;
   const { cartItemQuantity, addProduct, removeCartItem, removeProduct } =
     useCartStore((state) => ({

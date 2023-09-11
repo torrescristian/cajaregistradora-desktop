@@ -82,10 +82,7 @@ export const AddProductButtonWithText = ({
   </ActionButton>
 );
 
-export const AddProductButton = ({
-  onClick,
-}: IActionButton & {
-}) => (
+export const AddProductButton = ({ onClick }: IActionButton & {}) => (
   <ActionButton
     onClick={onClick}
     className="btn-square px-2  bg-green-400 text-stone-50 hover:bg-green-600 focus:bg-green-400"
