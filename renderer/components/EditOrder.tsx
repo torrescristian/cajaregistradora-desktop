@@ -81,7 +81,7 @@ export const EditOrder = ({ order, setIsEditing }: IProps) => {
     await updateOrderMutation.mutate({
       order: {
         id: order.id!,
-        client: selectedClient?.id || order.client?.id,
+
         status: order.status,
         additionalDetails: data.additionalDetails,
         totalPrice: calcDiscount({
@@ -155,7 +155,6 @@ export const EditOrder = ({ order, setIsEditing }: IProps) => {
           labelRight
         />
       </>
-
       <FormFieldText
         register={register}
         label={'Detalles adicionales:'}

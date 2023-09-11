@@ -8,8 +8,6 @@ import { useCartStore } from '@/contexts/CartStore';
 interface IProps {
   items: ICartItem[];
   totalPrice: number;
-  clientName: string;
-  clientPhone: string;
   additionalDetails: string;
   clientId?: number | null;
   subtotalPrice: number;

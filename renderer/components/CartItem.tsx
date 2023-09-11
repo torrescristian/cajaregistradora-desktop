@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const CartItem = ({ product, variant }: IProps) => {
-  const { disabled, cartItemQuantity, handleClickAdd, handleClickRemove } =
+  const { cartItemQuantity, handleClickAdd, handleClickRemove } =
     useProductItem({ product, selectedVariant: variant });
 
   return (
@@ -26,7 +26,7 @@ const CartItem = ({ product, variant }: IProps) => {
         <div className="flex flex-row gap-3 w-full justify-end items-center">
           <RemoveProductButton onClick={handleClickRemove} />
           <p>{cartItemQuantity} unid.</p>
-          <AddProductButton onClick={handleClickAdd} disabled={!!disabled} />
+          <AddProductButton onClick={handleClickAdd} />
         </div>
       </section>
     </Card>

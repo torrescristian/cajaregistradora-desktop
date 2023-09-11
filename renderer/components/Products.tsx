@@ -12,7 +12,11 @@ const Fixed = ({ children }: IComponent) => (
   </section>
 );
 
-const Products = () => {
+interface IProps {
+  updateMode: boolean;
+}
+
+const Products = ({ updateMode }: IProps) => {
   const searchProps = useSearchProps();
 
   const productsQuery = useProductsQuery({
@@ -32,7 +36,7 @@ const Products = () => {
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
         {products.map((product) => (
-          <ProductItem key={product.id} product={product} />
+          <ProductItem key={product.id} product={product} updateMode />
         ))}
       </section>
     </section>

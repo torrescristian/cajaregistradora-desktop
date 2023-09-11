@@ -4,8 +4,6 @@ import {
   getAdditionalDetails,
   getCartItems,
   getClientId,
-  getClientName,
-  getClientPhone,
   getSubtotalPrice,
   getTotalAmount,
   useCartStore,
@@ -13,25 +11,39 @@ import {
 import { ICartItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';
+import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
+import { IOrder, IOrderItem } from '@/interfaces/IOrder';
 
-export const ConfirmOrder = () => {
-  const clientName = useCartStore(getClientName);
-  const clientPhone = useCartStore(getClientPhone);
+interface IProps {
+  updateMode: boolean;
+  order?: IOrder;
+}
+
+export const ConfirmOrder = ({ updateMode, order }: IProps) => {
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalAmount);
   const subtotalPrice = useCartStore(getSubtotalPrice);
   const items = useCartStore(getCartItems) as ICartItem[];
   const addClientId = useCartStore((state) => state.addClientId);
   const clientId = useCartStore(getClientId);
+
   const orderMutation = useCreateOrderMutation();
+  const updateOrderMutation = useUpdateOrderMutation();
 
   const ref = useRef<HTMLDialogElement>(null);
 
-  const handleSubmit = () => {
+  const adaptCartItemToOrderItem = (cartItem: ICartItem): IOrderItem => {
+    return {
+      product: cartItem.product,
+      quantity: cartItem.quantity,
+      selectedVariant: cartItem.selectedVariant,
+      price: cartItem.selectedVariant.price,
+    };
+  };
+
+  const createOrder = () => {
     orderMutation.mutate({
       items,
-      clientName,
-      clientPhone,
       totalPrice,
       additionalDetails,
       clientId,
@@ -39,6 +51,27 @@ export const ConfirmOrder = () => {
     });
   };
 
+  const updateOrder = () => {
+    updateOrderMutation.mutate({
+      order: {
+        id: order!.id!,
+        client: clientId!,
+        totalPrice,
+        additionalDetails,
+        subtotalPrice,
+        items: items.map(adaptCartItemToOrderItem),
+        status: order!.status,
+      },
+    });
+  };
+
+  const handleSubmit = () => {
+    if (updateMode) {
+      updateOrder();
+    } else {
+      createOrder();
+    }
+  };
   const handleClickConfirmOrder = () => {
     ref.current?.showModal();
   };
@@ -70,7 +103,7 @@ export const ConfirmOrder = () => {
             onClick={handleSubmit}
             className="btn sticky top-0 z-20 w-fit whitespace-nowrap bg-green-400 text-xl text-stone-50 hover:bg-green-600"
           >
-            Crear orden pendiente
+            {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
           </button>
 
           <button

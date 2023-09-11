@@ -2,6 +2,7 @@ import { IOrder } from '@/interfaces/IOrder';
 import { useState } from 'react';
 import { EditOrder } from './EditOrder';
 import { CreateTicketForm } from './CreateTicketForm';
+import { UpdateOrder } from './UpdateOrder';
 interface IProps {
   order: IOrder;
 }
@@ -19,7 +20,7 @@ function Order({ order }: IProps) {
   return (
     <section className="flex shadow-2xl border-stone-100 border-2 p-5">
       {isEditing ? (
-        <EditOrder order={order} setIsEditing={setIsEditing} />
+        <UpdateOrder order={order} />
       ) : (
         <CreateTicketForm
           order={order}

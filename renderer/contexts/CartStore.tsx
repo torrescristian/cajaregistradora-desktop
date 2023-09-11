@@ -1,4 +1,5 @@
 import { ICartItem, ICartState } from '@/interfaces/ICart';
+import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
 import { IProduct, IVariant } from '@/interfaces/IProduct';
 import { create } from 'zustand';
 
@@ -6,6 +7,15 @@ interface IAddProductProps {
   product: IProduct;
   selectedVariant: IVariant;
 }
+
+type ISetCart = Pick<
+  ICartStore,
+  | 'cartItems'
+  | 'totalPrice'
+  | 'clientId'
+  | 'additionalDetails'
+  | 'subtotalPrice'
+>;
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
 
@@ -19,28 +29,32 @@ type ICartStore = ICartState & {
   clearCart: () => void;
   addClientId: (clientId: number | null) => void;
   clientId: number | null;
+  setCart: (cartPayload: ISetCart) => void;
 };
 
 export const useCartStore = create<ICartStore>()((set) => ({
   cartItems: [],
-  totalAmount: 0,
-  totalQuantity: 0,
-  clientName: '',
-  clientPhone: '',
-  clientAddress: '',
-  totalPrice: 0,
-  additionalDetails: '',
   subtotalPrice: 0,
+  totalPrice: 0,
+  discountType: DISCOUNT_TYPE.FIXED,
+  discountAmount: 0,
+  additionalDetails: '',
   clientId: 0,
   initCart: (cartPayload: ICartState) =>
     set({
       cartItems: cartPayload.cartItems,
-      totalAmount: cartPayload.totalAmount,
-      totalQuantity: cartPayload.totalQuantity,
+      subtotalPrice: cartPayload.subtotalPrice,
+    }),
+  setCart: (cartPayload: ISetCart) =>
+    set({
+      cartItems: cartPayload.cartItems,
+      clientId: cartPayload.clientId,
+      additionalDetails: cartPayload.additionalDetails,
+      subtotalPrice: cartPayload.subtotalPrice,
+      totalPrice: cartPayload.totalPrice,
     }),
   addProduct: ({ product, selectedVariant }: IAddProductProps) => {
     set((state): Partial<ICartStore> => {
-      console.log('holis');
       const itemIndex = state.cartItems.findIndex(
         (item) => item.selectedVariant.id! === selectedVariant.id!,
       );
@@ -48,22 +62,12 @@ export const useCartStore = create<ICartStore>()((set) => ({
       if (itemIndex >= 0) {
         const newCartItems = structuredClone(state.cartItems);
         const cartItem = newCartItems[itemIndex];
-
-        if (
-          !cartItem.product.isService &&
-          cartItem.quantity >= selectedVariant.stock_per_variant.stock
-        ) {
-          return state;
-        }
-
         cartItem.quantity += 1;
         return {
           cartItems: newCartItems,
-          totalAmount: fixPrice(state.totalAmount + selectedVariant.price),
-          totalQuantity: state.totalQuantity + 1,
+          subtotalPrice: fixPrice(state.subtotalPrice + selectedVariant.price),
         };
       }
-
       return {
         cartItems: [
           ...state.cartItems,
@@ -73,8 +77,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
             selectedVariant: selectedVariant,
           },
         ],
-        totalAmount: fixPrice(state.totalAmount + selectedVariant.price),
-        totalQuantity: state.totalQuantity + 1,
+        subtotalPrice: fixPrice(state.subtotalPrice + selectedVariant.price),
       };
     });
   },
@@ -90,10 +93,9 @@ export const useCartStore = create<ICartStore>()((set) => ({
             (item: ICartItem) =>
               item.selectedVariant.id! !== selectedVariant.id!,
           ),
-          totalAmount: fixPrice(
-            Math.max(state.totalAmount - selectedVariant.price, 0),
+          subtotalPrice: fixPrice(
+            Math.max(state.subtotalPrice - selectedVariant.price, 0),
           ),
-          totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
         };
       }
@@ -107,28 +109,18 @@ export const useCartStore = create<ICartStore>()((set) => ({
             }
             return item;
           }),
-          totalAmount: fixPrice(
-            Math.max(state.totalAmount - selectedVariant.price, 0),
+          subtotalPrice: fixPrice(
+            Math.max(state.subtotalPrice - selectedVariant.price, 0),
           ),
-          totalQuantity: Math.max(state.totalQuantity - 1, 0),
           reset: true,
         };
       }
-
       return state;
     }),
   removeCartItem: ({ selectedVariant }: IAddProductProps) =>
     set((state: any) => {
-      const totalQuantity =
-        state.totalQuantity -
-        state.cartItems.reduce((acc: number, item: ICartItem) => {
-          if (item.selectedVariant.id! === selectedVariant.id!) {
-            return acc + item.quantity;
-          }
-          return acc;
-        }, 0);
-      const totalAmount =
-        state.totalAmount -
+      const subtotalPrice =
+        state.subtotalPrice -
         state.cartItems.reduce((acc: number, item: ICartItem) => {
           if (item.selectedVariant.id! === selectedVariant.id!) {
             return acc + item.selectedVariant.price * item.quantity;
@@ -140,19 +132,15 @@ export const useCartStore = create<ICartStore>()((set) => ({
         cartItems: state.cartItems.filter(
           (item: ICartItem) => item.selectedVariant.id! !== selectedVariant.id!,
         ),
-        totalAmount:
-          Math.max(totalQuantity, 0) === 0
-            ? 0
-            : fixPrice(Math.max(totalAmount, 0)),
-        totalQuantity: Math.max(totalQuantity, 0),
+        subtotalPrice: fixPrice(Math.max(subtotalPrice, 0)),
         reset: true,
       };
     }),
   clearCart: () =>
     set({
       cartItems: [],
-      totalAmount: 0,
-      totalQuantity: 0,
+      totalPrice: 0,
+      subtotalPrice: 0,
       reset: true,
     }),
   addClientId: (clientId: number | null) => set({ clientId }),
@@ -160,15 +148,11 @@ export const useCartStore = create<ICartStore>()((set) => ({
 
 // selectors
 export const getCartState = (state: ICartStore) => state;
-export const getClientName = (state: ICartStore) => state.clientName;
-export const getClientPhone = (state: ICartStore) => state.clientPhone;
-export const getClientAddress = (state: ICartStore) => state.clientAddress;
 export const getTotalPrice = (state: ICartStore) => state.totalPrice;
 export const getCartItems = (state: ICartStore) => state.cartItems;
-export const getTotalAmount = (state: ICartStore) => state.totalAmount;
+export const getTotalAmount = (state: ICartStore) => state.subtotalPrice;
 export const getAdditionalDetails = (state: ICartStore) =>
   state.additionalDetails;
-export const getTotalQuantity = (state: ICartStore) => state.totalQuantity;
 export const getCartItemById = (id: number) => (state: ICartStore) =>
   state.cartItems.find((cartItem: ICartItem) => cartItem.product.id === id);
 export const getCartItemQuantityByVariantId =
@@ -181,3 +165,4 @@ export const getCartItemQuantityByVariantId =
   };
 export const getSubtotalPrice = (state: ICartStore) => state.subtotalPrice;
 export const getClientId = (state: ICartStore) => state.clientId;
+export const getSetCart = (state: ICartStore) => state.setCart;

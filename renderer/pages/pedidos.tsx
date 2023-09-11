@@ -15,8 +15,8 @@ const Pedidos = () => {
       </RenderIf>
       <RenderIf condition={!isLoading}>
         <RenderIf condition={cashIsActive}>
-          <Products />
-          <Cart />
+          <Products updateMode />
+          <Cart updateMode />
         </RenderIf>
         <RenderIf condition={!cashIsActive}>
           <p className="text-xl w-full text-center">No hay caja activa</p>

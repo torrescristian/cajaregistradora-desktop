@@ -1,5 +1,5 @@
 import { ICartItem } from '@/interfaces/ICart';
-import { IOrder, IOrderItem } from '@/interfaces/IOrder';
+import { IOrder, IOrderItem, IOrderPayload } from '@/interfaces/IOrder';
 import IStockPerVariant, {
   IStockPerVariantPages,
 } from '@/interfaces/IStockPerVariant';
@@ -20,7 +20,7 @@ export default function useUpdateOrderMutation() {
     const resp = [null, null] as [any, any];
     resp[0] = await strapi.update(getOrderQueryKey(), order.id!, order);
     if (order.client) {
-      resp[1] = await strapi.update(getClientsQueryKey(), order.client!, {
+      resp[1] = await strapi.update(getClientsQueryKey(), order.client, {
         address: order.address,
         phone_number: order.phoneNumber,
       } as IClient);
