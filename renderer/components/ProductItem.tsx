@@ -33,7 +33,7 @@ const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
     product.default_variant,
   );
 
-  const { disabled, handleClickAdd, isService } = useProductItem({
+  const {  handleClickAdd, isService } = useProductItem({
     product,
     selectedVariant,
   });
