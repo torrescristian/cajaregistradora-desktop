@@ -1,3 +1,4 @@
+import { DISCOUNT_TYPE } from './IOrder';
 import { IProduct, IVariant } from './IProduct';
 
 export interface ICartItem {
@@ -8,12 +9,8 @@ export interface ICartItem {
 
 export interface ICartState {
   cartItems: ICartItem[];
-  totalAmount: number;
-  totalQuantity: number;
   reset?: boolean;
-  clientName: string;
-  clientPhone: string;
-  clientAddress: string;
+  discountType?: DISCOUNT_TYPE;
   totalPrice: number;
   additionalDetails: string;
   subtotalPrice: number;

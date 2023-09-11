@@ -10,8 +10,7 @@ interface IProps {
 }
 
 const useProductItem = ({ product, selectedVariant }: IProps) => {
-  const isNotService = !product.isService;
-  const disabled = isNotService;
+ 
   const isService = !!product.isService;
   const { cartItemQuantity, addProduct, removeCartItem, removeProduct } =
     useCartStore((state) => ({
@@ -36,7 +35,6 @@ const useProductItem = ({ product, selectedVariant }: IProps) => {
   };
 
   return {
-    disabled,
     cartItemQuantity,
     handleClickAdd,
     handleClickRemove,

@@ -12,6 +12,7 @@ export interface IComponent {
 
 export interface ICollapseTitle {
   product: IProduct;
+  updateMode?: boolean;
 }
 
 export interface FormControl {

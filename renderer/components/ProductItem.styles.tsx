@@ -84,13 +84,10 @@ export const AddProductButtonWithText = ({
 
 export const AddProductButton = ({
   onClick,
-  disabled,
 }: IActionButton & {
-  disabled: boolean;
 }) => (
   <ActionButton
     onClick={onClick}
-    disabled={disabled}
     className="btn-square px-2  bg-green-400 text-stone-50 hover:bg-green-600 focus:bg-green-400"
   >
     <PlusIcon className="h-8 w-8" />

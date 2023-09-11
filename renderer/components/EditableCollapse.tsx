@@ -9,7 +9,7 @@ import {
 } from './ProductItem.styles';
 import FormControl from './FormControl';
 
-const EditableCollapse = ({ product }: ICollapseTitle) => {
+const EditableCollapse = ({ product}: ICollapseTitle) => {
   const {
     isError,
     isLoading,

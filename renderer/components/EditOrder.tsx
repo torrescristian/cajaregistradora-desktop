@@ -81,7 +81,7 @@ export const EditOrder = ({ order, setIsEditing }: IProps) => {
     await updateOrderMutation.mutate({
       order: {
         id: order.id!,
-        client: selectedClient?.id || order.client?.id,
+
         status: order.status,
         additionalDetails: data.additionalDetails,
         totalPrice: calcDiscount({
@@ -126,10 +126,10 @@ export const EditOrder = ({ order, setIsEditing }: IProps) => {
           </p>
         </div>
       ) : null}
-      <button className="btn btn-success text-stone-50" type="submit">
+       <button className="btn btn-success text-stone-50" type="submit">
         <CheckIcon className="w-full h-6" />
       </button>
-      <p className="font-bold text-2xl">Orden # {order.id} -</p>
+     <p className="font-bold text-2xl">Orden # {order.id} -</p>
       <SelectClient
         selectedClientId={order.client?.id || 0}
         onChange={(client) => {
@@ -155,7 +155,6 @@ export const EditOrder = ({ order, setIsEditing }: IProps) => {
           labelRight
         />
       </>
-
       <FormFieldText
         register={register}
         label={'Detalles adicionales:'}

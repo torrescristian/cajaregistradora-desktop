@@ -13,9 +13,12 @@ export default function useOrderQuery() {
       populate: [
         'client',
         'items.product',
+        'items.product.image',
+        
         'discount',
         'payments',
-        'items.selectedVariant',
+        'items.selectedVariant'
+        ,
       ],
     })) as unknown as IOrderResponse;
     return orderResponse.results;
