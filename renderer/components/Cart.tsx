@@ -4,7 +4,7 @@ import { ICartItem } from '@/interfaces/ICart';
 import CartItem from './CartItem';
 import {
   getCartItems,
-  getTotalAmount,
+  getSubtotalPrice,
   useCartStore,
 } from '@/contexts/CartStore';
 import { ConfirmOrder } from './ConfirmOrder';
@@ -45,7 +45,7 @@ interface IProps {
 
 const Cart = ({ updateMode, order, onSubmit }: IProps) => {
   const items = useCartStore(getCartItems) as ICartItem[];
-  const totalAmount = useCartStore(getTotalAmount);
+  const subtotalPrice = useCartStore(getSubtotalPrice);
 
   if (updateMode && !order) {
     throw new Error('Missing order to update');
@@ -67,7 +67,7 @@ const Cart = ({ updateMode, order, onSubmit }: IProps) => {
           <section className="p-5">
             <p className="text-2xl text-primary-content">
               <span className="text-xl text-secondary">Total:</span>{' '}
-              {formatPrice(totalAmount)}
+              {formatPrice(subtotalPrice)}
             </p>
           </section>
           <section className="w-max">

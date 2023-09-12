@@ -23,7 +23,6 @@ const SubmitButton = ({ isLoading }: { isLoading: boolean }) => {
 export default function CreateVarant() {
   const productsQuery = useProductsQuery({
     query: '',
-    selectedCategories: [],
     page: 1,
   });
 
