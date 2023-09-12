@@ -36,6 +36,8 @@ export interface IProductUpdate {
   data: Partial<IProduct>;
 }
 
-export type PRODUCT_TYPE = 'SODA' | 'PIZZA' | 'HAMBURGER';
+export type PRODUCT_TYPE = 'SODA' | 'PIZZA' | 'HAMBURGER' | '';
+
+export const productTypes: PRODUCT_TYPE[] = ['HAMBURGER', 'PIZZA', 'SODA', ''];
 
 export type IProductPayload = IProduct<number, number>;

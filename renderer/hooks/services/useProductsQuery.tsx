@@ -41,13 +41,13 @@ const parseProductFacade = (product: IProduct): IProduct => {
 
 interface IProductsQueryProps {
   query: string;
-  selectedCategories: number[];
+  selectedProductType: string;
   page?: number;
 }
 
 export default function useProductsQuery({
   query,
-  selectedCategories,
+  selectedProductType,
   page,
 }: IProductsQueryProps) {
   const router = useRouter();
@@ -59,7 +59,7 @@ export default function useProductsQuery({
   });
 
   const { data, isLoading, isError, isSuccess, error } = useQuery<IProduct[]>(
-    [getProductsQueryKey(), query, selectedCategories, page],
+    [getProductsQueryKey(), query, selectedProductType, page],
     async () => {
       try {
         let options: any = {
@@ -77,28 +77,11 @@ export default function useProductsQuery({
           pageSize: 9,
         };
 
-        options.filters =
-          selectedCategories?.length === 0
-            ? {
-                name: {
-                  $containsi: query || '',
-                },
-              }
-            : {
-                name: {
-                  $containsi: query || '',
-                },
-                $or: [
-                  {
-                    variants: {
-                      categories: selectedCategories,
-                    },
-                  },
-                  {
-                    categories: selectedCategories,
-                  },
-                ],
-              };
+        if (selectedProductType) {
+          options.filters = {
+            type: selectedProductType,
+          };
+        }
 
         const res = (await strapi.find(
           getProductsQueryKey(),

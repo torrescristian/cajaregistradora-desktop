@@ -2,6 +2,7 @@ import { IOrder } from '@/interfaces/IOrder';
 import { CreateTicketForm } from './CreateTicketForm';
 import { UpdateOrder } from './UpdateOrder';
 import { RenderIf } from './RenderIf';
+import { Card } from './Card';
 interface IProps {
   order: IOrder;
   updateMode?: boolean;
@@ -16,14 +17,14 @@ function Order({ order, updateMode, onSubmit }: IProps) {
   };
 
   return (
-    <section className="flex shadow-2xl border-stone-100 border-2 p-5">
+    <Card>
       <RenderIf condition={createMode}>
         <CreateTicketForm order={order} handleToggleEdit={handleToggleEdit} />
       </RenderIf>
       <RenderIf condition={updateMode}>
         <UpdateOrder order={order} onSubmit={handleToggleEdit} />
       </RenderIf>
-    </section>
+    </Card>
   );
 }
 

@@ -2,9 +2,10 @@ import ProductItem from '@/components/ProductItem';
 import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import SearchInput, { useSearchProps } from '@/components/SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct } from '@/interfaces/IProduct';
+import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import Loader from '@/components/Loader';
 import ProductTypes from './ProductTypes';
+import { useState } from 'react';
 
 const Fixed = ({ children }: IComponent) => (
   <section className="sticky top-0 z-20 flex w-full justify-center flex-row gap-5">
@@ -15,9 +16,12 @@ const Fixed = ({ children }: IComponent) => (
 const Products = () => {
   const searchProps = useSearchProps();
 
+  const [selectedProductType, setSelectedProductType] =
+    useState<PRODUCT_TYPE>('PIZZA');
+
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedCategories: [],
+    selectedProductType,
   });
 
   const products = productsQuery.products as IProduct[];
@@ -26,7 +30,10 @@ const Products = () => {
     <section className="w-full">
       <Fixed>
         <SearchInput {...searchProps} />
-        <ProductTypes />
+        <ProductTypes
+          onSelect={setSelectedProductType}
+          selectedProductType={selectedProductType}
+        />
       </Fixed>
       <section className="flex flex-row gap-5 m-5 p-2 overflow-x-scroll w-full">
         {productsQuery.isLoading && <Loader />}

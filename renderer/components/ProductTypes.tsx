@@ -1,36 +1,33 @@
-import useProductsQuery from '@/hooks/services/useProductsQuery';
-import ErrorMessage from './ErrorMessage';
-import Loader from './Loader';
-
-export default function ProductTypes() {
-  const productsQuery = useProductsQuery({
-    query: '',
-    selectedCategories: [],
-  });
-
-  if (productsQuery.isLoading) return <Loader />;
-
-  if (productsQuery.isError)
-    return <ErrorMessage>{productsQuery.error}</ErrorMessage>;
-
-  const productsByTypesMap = productsQuery.products.reduce((acc, curr) => {
-    return acc.set(curr.type, [...(acc.get(curr.type) || []), curr]);
-  }, new Map());
-
-  const productsByTypes = Array.from(productsByTypesMap.entries()).map(
-    ([type, products]) => ({ type, products }),
-  );
+import { productTypes, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { twMerge } from 'tailwind-merge';
+interface IProps {
+  onSelect: (type: PRODUCT_TYPE) => void;
+  selectedProductType: PRODUCT_TYPE;
+}
+export default function ProductTypes({
+  onSelect,
+  selectedProductType,
+}: IProps) {
+  const handleSelect = (type: PRODUCT_TYPE) => () => {
+    onSelect(type === selectedProductType ? '' : type);
+  };
 
   return (
     <section className="flex flex-row gap-5">
-      {productsByTypes.map(({ type, products }) => (
-        <div
-          className="flex flex-row items-center gap-2 btn btn-outline btn-accent"
-          key={type}
-        >
-          <span>{type}</span>
-        </div>
-      ))}
+      {productTypes
+        .filter((t) => t)
+        .map((type: PRODUCT_TYPE) => (
+          <div
+            className={twMerge(
+              'flex flex-row items-center gap-2 btn btn-outline btn-accent',
+              selectedProductType === type ? 'btn-active' : '',
+            )}
+            key={type}
+            onClick={handleSelect(type)}
+          >
+            <span>{type}</span>
+          </div>
+        ))}
     </section>
   );
 }
