@@ -11,6 +11,7 @@ export interface ICartState {
   cartItems: ICartItem[];
   reset?: boolean;
   discountType?: DISCOUNT_TYPE;
+  discountAmount?: number;
   totalPrice: number;
   additionalDetails: string;
   subtotalPrice: number;

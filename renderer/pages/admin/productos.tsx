@@ -14,7 +14,6 @@ const Productos = () => {
 
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedCategories: [],
     page: activePage,
   });
 

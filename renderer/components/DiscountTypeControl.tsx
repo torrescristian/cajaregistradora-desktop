@@ -1,28 +1,25 @@
-import { useEffect, useState } from 'react';
-import FormFieldText from './FormFieldText';
-import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
+import { useEffect } from 'react';
+import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { RenderIf } from './RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 import FormControl from './FormControl';
 
 interface IProps {
-  register?: any;
-  errors: any;
-  // en el onchange devolver discount type y discount amount
-  // onChange: ({ discountType, discountAmount }: { discountType: DISCOUNT_TYPE, discountAmount: number }) => void;
-  // recordar actualizar donde actualmente se usa
-  onChange: (discountType: DISCOUNT_TYPE) => void;
+  onChange: (discount: IDiscount) => void;
 }
 
-export const DiscountTypeControl = ({ register, errors, onChange }: IProps) => {
+export const DiscountTypeControl = ({ onChange }: IProps) => {
   const { value: discountType, handleChange: handleDiscountType } =
     useFormControl(DISCOUNT_TYPE.FIXED);
   const { value: discountAmount, handleChange: handleChangeDiscountAmount } =
     useFormControl('');
 
   useEffect(() => {
-    onChange(discountType);
-  }, [discountType]);
+    onChange({
+      type: discountType,
+      amount: Number(discountAmount),
+    });
+  }, [discountType, discountAmount]);
 
   return (
     <section>
@@ -50,33 +47,21 @@ export const DiscountTypeControl = ({ register, errors, onChange }: IProps) => {
         </label>
       </section>
       <RenderIf condition={discountType === DISCOUNT_TYPE.PERC}>
-        <RenderIf condition={Boolean(register)}>
-          <FormFieldText
-            register={register}
-            label={'Descuento:'}
-            formKey="discountAmount"
-            errors={errors}
-            symbol={'%'}
-          />
-        </RenderIf>
-        <RenderIf condition={!register}>
-          <FormControl
-            text={'Descuento:'}
-            name="discountAmount"
-            type="text"
-            value={discountAmount}
-            onChange={handleChangeDiscountAmount}
-          />
-        </RenderIf>
+        <FormControl
+          text={'Descuento:'}
+          name="discountAmount"
+          type="text"
+          value={discountAmount}
+          onChange={handleChangeDiscountAmount}
+        />
       </RenderIf>
       <RenderIf condition={discountType === DISCOUNT_TYPE.FIXED}>
-        <FormFieldText
-          register={register}
-          label={'Descuento:'}
-          formKey="discountAmount"
-          errors={errors}
-          symbol={'$'}
-          labelRight
+        <FormControl
+          text={'Descuento:'}
+          name="discountAmount"
+          type="text"
+          value={discountAmount}
+          onChange={handleChangeDiscountAmount}
         />
       </RenderIf>
     </section>

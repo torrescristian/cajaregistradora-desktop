@@ -1,6 +1,8 @@
 import { ICartItem, ICartState } from '@/interfaces/ICart';
 import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
 import { IProduct, IVariant } from '@/interfaces/IProduct';
+import { calcDiscount } from '@/libs/utils';
+import { stat } from 'fs';
 import { create } from 'zustand';
 
 interface IAddProductProps {
@@ -30,6 +32,9 @@ type ICartStore = ICartState & {
   addClientId: (clientId: number | null) => void;
   clientId: number | null;
   setCart: (cartPayload: ISetCart) => void;
+  setAdditionalDetails: (additionalDetails: string) => void;
+  setDiscountType: (discountType: DISCOUNT_TYPE) => void;
+  setDiscountAmount: (discountAmount: number) => void;
 };
 
 export const useCartStore = create<ICartStore>()((set) => ({
@@ -144,13 +149,34 @@ export const useCartStore = create<ICartStore>()((set) => ({
       reset: true,
     }),
   addClientId: (clientId: number | null) => set({ clientId }),
+
+  setAdditionalDetails: (additionalDetails: string) =>
+    set({ additionalDetails }),
+  setDiscountType: (discountType: DISCOUNT_TYPE) =>
+    set((state: ICartState) => ({
+      discountType,
+      totalPrice: calcDiscount({
+        discountAmount: state.discountAmount!,
+        discountType,
+        price: state.subtotalPrice,
+      }),
+    })),
+  setDiscountAmount: (discountAmount: number) =>
+    set((state) => ({
+      discountAmount,
+      totalPrice: calcDiscount({
+        discountAmount,
+        discountType: state.discountType!,
+        price: state.subtotalPrice,
+      }),
+    })),
 }));
 
 // selectors
 export const getCartState = (state: ICartStore) => state;
 export const getTotalPrice = (state: ICartStore) => state.totalPrice;
 export const getCartItems = (state: ICartStore) => state.cartItems;
-export const getTotalAmount = (state: ICartStore) => state.subtotalPrice;
+
 export const getAdditionalDetails = (state: ICartStore) =>
   state.additionalDetails;
 export const getCartItemById = (id: number) => (state: ICartStore) =>
@@ -166,3 +192,11 @@ export const getCartItemQuantityByVariantId =
 export const getSubtotalPrice = (state: ICartStore) => state.subtotalPrice;
 export const getClientId = (state: ICartStore) => state.clientId;
 export const getSetCart = (state: ICartStore) => state.setCart;
+export const getSetAdditionalDetails = (state: ICartStore) =>
+  state.setAdditionalDetails;
+export const getSetDiscountType = (state: ICartStore) => state.setDiscountType;
+export const getSetDiscountAmount = (state: ICartStore) =>
+  state.setDiscountAmount;
+
+export const getDiscountType = (state: ICartStore) => state.discountType;
+export const getDiscountAmount = (state: ICartStore) => state.discountAmount;

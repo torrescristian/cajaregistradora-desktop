@@ -4,15 +4,22 @@ import {
   getAdditionalDetails,
   getCartItems,
   getClientId,
+  getDiscountAmount,
+  getDiscountType,
+  getSetAdditionalDetails,
+  getSetDiscountAmount,
+  getSetDiscountType,
   getSubtotalPrice,
-  getTotalAmount,
+  getTotalPrice,
   useCartStore,
 } from '@/contexts/CartStore';
 import { ICartItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
-import { IOrder, IOrderItem } from '@/interfaces/IOrder';
+import { IDiscount, IOrder, IOrderItem } from '@/interfaces/IOrder';
+import { useForm } from 'react-hook-form';
+import { DiscountTypeControl } from './DiscountTypeControl';
 
 interface IProps {
   updateMode?: boolean;
@@ -21,15 +28,26 @@ interface IProps {
 }
 
 export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
+  const {} = useForm();
+
   const additionalDetails = useCartStore(getAdditionalDetails);
-  const totalPrice = useCartStore(getTotalAmount);
+  const totalPrice = useCartStore(getTotalPrice);
   const subtotalPrice = useCartStore(getSubtotalPrice);
   const items = useCartStore(getCartItems) as ICartItem[];
   const addClientId = useCartStore((state) => state.addClientId);
   const clientId = useCartStore(getClientId);
+  const setAdditionalDetails = useCartStore(getSetAdditionalDetails);
+  const setDiscountType = useCartStore(getSetDiscountType);
+  const setDiscountAmount = useCartStore(getSetDiscountAmount);
+  const discountType = useCartStore(getDiscountType);
+  const discountAmount = useCartStore(getDiscountAmount);
 
   const orderMutation = useCreateOrderMutation();
-  const updateOrderMutation = useUpdateOrderMutation();
+  const updateOrderMutation = useUpdateOrderMutation({
+    onSuccess: () => {
+      onSubmit?.();
+    },
+  });
 
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -60,6 +78,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
         totalPrice,
         additionalDetails,
         subtotalPrice,
+        discount: { amount: discountAmount!, type: discountType! },
         items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
       },
@@ -73,8 +92,19 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
       createOrder();
     }
   };
+
+  const handleChangeAdditionalsDetails = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setAdditionalDetails(e.target.value);
+  };
+
+  const handleChangeDiscountType = (discount: IDiscount) => {
+    setDiscountType(discount.type);
+    setDiscountAmount(discount.amount);
+  };
+
   const handleClickConfirmOrder = () => {
-    onSubmit?.();
     ref.current?.showModal();
   };
 
@@ -94,12 +124,29 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   return (
     /* FIXME: Quitar el stock del producto */
     <section>
-      <button className="btn btn-primary" onClick={handleClickConfirmOrder}>
-        Pasar Orden
-      </button>
+      <div className="flex flex-row gap-3 w-full">
+        <button className="btn btn-primary" onClick={handleClickConfirmOrder}>
+          Pasar Orden
+        </button>
+        {updateMode ? (
+          <button className="btn btn-error" onClick={onSubmit}>
+            Cancelar
+          </button>
+        ) : null}
+      </div>
       <dialog ref={ref} className="border-4 rounded-3xl py-5 px-10">
-        <ClientForm onSelect={(client) => addClientId(client?.id || null)} />
-
+        <section className="flex flex-row items-center gap-10">
+          <ClientForm onSelect={(client) => addClientId(client?.id || null)} />
+          <div className="flex flex-col">
+            <label className="label">Detalles adicionales:</label>
+            <textarea
+              className="textarea textarea-bordered h-36"
+              value={additionalDetails}
+              onChange={handleChangeAdditionalsDetails}
+            />
+            <DiscountTypeControl onChange={handleChangeDiscountType} />
+          </div>
+        </section>
         <div className="flex flex-col w-full items-center pt-5">
           <button
             onClick={handleSubmit}
@@ -107,7 +154,6 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
           >
             {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
           </button>
-
           <button
             className="btn btn-link text-stone-50"
             onClick={() => ref.current?.close()}
