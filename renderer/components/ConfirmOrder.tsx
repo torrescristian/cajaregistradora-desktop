@@ -137,10 +137,12 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
       </div>
       <dialog ref={ref} className="border-4 rounded-3xl py-5 px-10">
         <section className="flex flex-row items-center gap-10">
+
           <ClientForm
             onSelect={(client) => addClientId(client?.id || null)}
             defaultClient={order?.client}
           />
+
           <div className="flex flex-col">
             <label className="label">Detalles adicionales:</label>
             <textarea
@@ -153,6 +155,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
               discountAmount={order?.discount?.amount}
               discountType={order?.discount?.type}
             />
+
           </div>
         </section>
         <div className="flex flex-col w-full items-center pt-5">
