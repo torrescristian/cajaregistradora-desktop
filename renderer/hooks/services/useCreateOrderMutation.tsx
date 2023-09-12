@@ -1,5 +1,11 @@
 import { ICartItem } from '@/interfaces/ICart';
-import { DISCOUNT_TYPE, IDiscount, IOrder, IOrderItem, ORDER_STATUS } from '@/interfaces/IOrder';
+import {
+  DISCOUNT_TYPE,
+  IDiscount,
+  IOrder,
+  IOrderItem,
+  ORDER_STATUS,
+} from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';

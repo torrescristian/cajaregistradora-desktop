@@ -19,7 +19,6 @@ interface IClientForm {
   name: string;
   phone_number: string;
   address: string;
-
 }
 
 export default function ClientForm({ onSelect, defaultClient }: IProps) {
