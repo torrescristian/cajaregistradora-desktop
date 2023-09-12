@@ -17,8 +17,9 @@ export const DiscountTypeControl = ({ onChange }: IProps) => {
   useEffect(() => {
     onChange({
       type: discountType,
-      amount: Number(discountAmount),});
-  }, [discountType,discountAmount]);
+      amount: Number(discountAmount),
+    });
+  }, [discountType, discountAmount]);
 
   return (
     <section>
@@ -45,24 +46,23 @@ export const DiscountTypeControl = ({ onChange }: IProps) => {
           Porcentaje %
         </label>
       </section>
-      <RenderIf condition={discountType === DISCOUNT_TYPE.PERC}>  
-          <FormControl
-            text={'Descuento:'}
-            name="discountAmount"
-            type="text"
-            value={discountAmount}
-            onChange={handleChangeDiscountAmount}
-          />
-     
+      <RenderIf condition={discountType === DISCOUNT_TYPE.PERC}>
+        <FormControl
+          text={'Descuento:'}
+          name="discountAmount"
+          type="text"
+          value={discountAmount}
+          onChange={handleChangeDiscountAmount}
+        />
       </RenderIf>
       <RenderIf condition={discountType === DISCOUNT_TYPE.FIXED}>
         <FormControl
-        text={'Descuento:'}
-        name='discountAmount'
-        type='text'
-        value={discountAmount}
-        onChange={handleChangeDiscountAmount}
-         />
+          text={'Descuento:'}
+          name="discountAmount"
+          type="text"
+          value={discountAmount}
+          onChange={handleChangeDiscountAmount}
+        />
       </RenderIf>
     </section>
   );

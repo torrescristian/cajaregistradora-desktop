@@ -1,6 +1,11 @@
 import strapi from '@/libs/strapi';
 import { getErrorMessage } from '@/libs/utils';
-import { IProduct, IProductPage, IVariant, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import {
+  IProduct,
+  IProductPage,
+  IVariant,
+  PRODUCT_TYPE,
+} from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';

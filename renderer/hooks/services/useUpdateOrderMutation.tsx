@@ -16,7 +16,7 @@ interface IProps {
   onSuccess: () => void;
 }
 
-export default function useUpdateOrderMutation({onSuccess}:IProps ) {
+export default function useUpdateOrderMutation({ onSuccess }: IProps) {
   const queryClient = useQueryClient();
 
   return useMutation(

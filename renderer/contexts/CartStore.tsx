@@ -152,17 +152,19 @@ export const useCartStore = create<ICartStore>()((set) => ({
 
   setAdditionalDetails: (additionalDetails: string) =>
     set({ additionalDetails }),
-  setDiscountType: (discountType: DISCOUNT_TYPE) => set((state : ICartState) =>({ discountType,totalPrice:
-  calcDiscount({
-    discountAmount : state.discountAmount!,
-    discountType,
-    price : state.subtotalPrice,
-  }) })),
+  setDiscountType: (discountType: DISCOUNT_TYPE) =>
+    set((state: ICartState) => ({
+      discountType,
+      totalPrice: calcDiscount({
+        discountAmount: state.discountAmount!,
+        discountType,
+        price: state.subtotalPrice,
+      }),
+    })),
   setDiscountAmount: (discountAmount: number) =>
     set((state) => ({
       discountAmount,
-      totalPrice:
-       calcDiscount({
+      totalPrice: calcDiscount({
         discountAmount,
         discountType: state.discountType!,
         price: state.subtotalPrice,
