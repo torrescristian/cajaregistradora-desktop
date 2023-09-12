@@ -1,6 +1,6 @@
 interface IProps {
   children: any;
-  condition: boolean;
+  condition: any;
 }
 
 export const RenderIf = ({ children, condition }: IProps) => {

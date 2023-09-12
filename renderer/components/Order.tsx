@@ -9,17 +9,19 @@ interface IProps {
 }
 
 function Order({ order, updateMode, onSubmit }: IProps) {
+  const createMode = !updateMode;
+
   const handleToggleEdit = () => {
     onSubmit(order);
   };
 
   return (
     <section className="flex shadow-2xl border-stone-100 border-2 p-5">
-      <RenderIf condition={!!updateMode}>
-        <UpdateOrder order={order} onSubmit={handleToggleEdit} />
-      </RenderIf>
-      <RenderIf condition={!updateMode}>
+      <RenderIf condition={createMode}>
         <CreateTicketForm order={order} handleToggleEdit={handleToggleEdit} />
+      </RenderIf>
+      <RenderIf condition={updateMode}>
+        <UpdateOrder order={order} onSubmit={handleToggleEdit} />
       </RenderIf>
     </section>
   );
