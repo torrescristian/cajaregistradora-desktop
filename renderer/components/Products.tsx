@@ -6,6 +6,7 @@ import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import Loader from '@/components/Loader';
 import ProductTypes from './ProductTypes';
 import { useState } from 'react';
+import { Divider } from './Sale/Sale.styles';
 
 const Fixed = ({ children }: IComponent) => (
   <section className="sticky top-0 z-20 flex w-full justify-center flex-row gap-5">
@@ -17,7 +18,7 @@ const Products = () => {
   const searchProps = useSearchProps();
 
   const [selectedProductType, setSelectedProductType] =
-    useState<PRODUCT_TYPE>('PIZZA');
+    useState<PRODUCT_TYPE>('');
 
   const productsQuery = useProductsQuery({
     query: searchProps.query,
@@ -28,6 +29,7 @@ const Products = () => {
 
   return (
     <section className="w-full">
+      <Divider>Productos</Divider>
       <Fixed>
         <SearchInput {...searchProps} />
         <ProductTypes

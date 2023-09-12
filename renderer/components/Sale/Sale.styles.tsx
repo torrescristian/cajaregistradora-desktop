@@ -4,8 +4,8 @@ import React from 'react';
 import { IContainerProps, ISaleItemProps } from '@/interfaces/Sale.interfaces';
 import { useSale } from '@/contexts/SaleContext';
 
-export const Divider = () => (
-  <div className="divider h-1 w-full bg-stone-300" />
+export const Divider = ({ children }: { children?: any }) => (
+  <div className="divider h-1 w-ful">{children}</div>
 );
 
 export const Container = ({ children }: IContainerProps) => (

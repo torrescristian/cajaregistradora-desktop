@@ -10,6 +10,7 @@ import {
 import { ConfirmOrder } from './ConfirmOrder';
 import { Card } from './Card';
 import { IOrder } from '@/interfaces/IOrder';
+import { Divider } from './Sale/Sale.styles';
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-row w-full gap-5 justify-between">
@@ -22,6 +23,7 @@ const Layout = ({
   totalAmount,
 }: IComponent & { totalAmount?: number }) => (
   <section className="flex w-full flex-col items-center gap-5">
+    <Divider>Carrito</Divider>
     {children}
     <section>
       {totalAmount ? (

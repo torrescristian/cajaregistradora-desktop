@@ -4,7 +4,6 @@ import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import FilterMenu from './FilterMenu';
 
 export const useSearchProps = () => {
   const [search, setQuery] = useState('');
@@ -54,12 +53,8 @@ interface ISearchInputProps {
 export default function SearchInput({
   search,
   onSearch,
-  categories,
   filterMenuQuery,
-  initialize,
-  toggleSelectedCategory,
   disableFilter,
-  selectedCategories,
 }: ISearchInputProps) {
   return (
     <section
@@ -69,21 +64,12 @@ export default function SearchInput({
       {!disableFilter && filterMenuQuery.isLoading && (
         <Loader className="w-2/12" />
       )}
-      {!disableFilter && filterMenuQuery.isSuccess && (
-        <FilterMenu
-          categories={categories}
-          data={filterMenuQuery.data}
-          initialize={initialize}
-          selectedCategories={selectedCategories}
-          toggleSelectedCategory={toggleSelectedCategory}
-        />
-      )}
       <input
         data-test="search-input-field"
         value={search}
         onChange={onSearch}
         type="text"
-        placeholder="Buscar producto..."
+        placeholder="Buscar por nombre..."
         className="input-bordered input w-96 shadow-inner hover:border-none"
       />
       {filterMenuQuery.isError && <ErrorMessage>Error</ErrorMessage>}
