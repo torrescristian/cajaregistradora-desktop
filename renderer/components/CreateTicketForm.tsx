@@ -27,7 +27,7 @@ import { useState } from 'react';
 
 interface IProps {
   order: IOrder;
-  isEditing: boolean;
+  updateMode?: boolean;
   handleToggleEdit: () => void;
 }
 interface IFormControl {
@@ -42,7 +42,7 @@ interface IFormControl {
 
 export const CreateTicketForm = ({
   order,
-  isEditing,
+  updateMode,
   handleToggleEdit,
 }: IProps) => {
   const createTicketMutation = useCreateTicketMutation();
@@ -200,8 +200,8 @@ export const CreateTicketForm = ({
         <div className="flex flex-col p-5 overflow-y-auto ">
           {order.items.map((item) => (
             <OrderItem
-              isEditing={isEditing}
-              key={item.product!.id}
+              updateMode={updateMode}
+              key={item.selectedVariant!.id}
               item={item}
             />
           ))}
@@ -214,7 +214,7 @@ export const CreateTicketForm = ({
           />
           <button
             type="submit"
-            disabled={createTicketMutation.isLoading || isEditing}
+            disabled={createTicketMutation.isLoading || updateMode}
             className="btn btn-success disabled:btn-disabled text-stone-50"
           >
             {createTicketMutation.isLoading ? <Loader /> : 'Confirmar orden'}

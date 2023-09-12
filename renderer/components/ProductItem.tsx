@@ -63,7 +63,9 @@ const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
                 defaultValue={product.default_variant.name}
               >
                 {product.variants.map((variant) => (
-                  <option value={variant.name}>{variant.name}</option>
+                  <option key={variant.name} value={variant.name}>
+                    {variant.name}
+                  </option>
                 ))}
               </select>
               <HighlightedText>

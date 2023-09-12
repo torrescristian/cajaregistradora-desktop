@@ -54,7 +54,11 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
           </dl>
           <div className="flex flex-col p-5 overflow-y-scroll">
             {ticket.order.items.map((item) => (
-              <OrderItem isEditing={false} key={item.product!.id} item={item} />
+              <OrderItem
+                updateMode={false}
+                key={item.product!.id}
+                item={item}
+              />
             ))}
           </div>
           <div className="modal-action">

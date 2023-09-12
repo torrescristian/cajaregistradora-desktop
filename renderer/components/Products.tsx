@@ -12,11 +12,7 @@ const Fixed = ({ children }: IComponent) => (
   </section>
 );
 
-interface IProps {
-  updateMode: boolean;
-}
-
-const Products = ({ updateMode }: IProps) => {
+const Products = () => {
   const searchProps = useSearchProps();
 
   const productsQuery = useProductsQuery({

@@ -7,9 +7,10 @@ import Products from './Products';
 
 interface IProps {
   order: IOrder;
+  onSubmit: () => void;
 }
 
-export const UpdateOrder = ({ order }: IProps) => {
+export const UpdateOrder = ({ order, onSubmit }: IProps) => {
   const setCart = useCartStore(getSetCart);
 
   const adaptOrderItemToCartItem = (orderItem: IOrderItem): ICartItem => {
@@ -32,8 +33,8 @@ export const UpdateOrder = ({ order }: IProps) => {
 
   return (
     <section className="flex flex-col w-screen">
-      <Products updateMode />
-      <Cart updateMode order={order} />
+      <Products />
+      <Cart updateMode order={order} onSubmit={onSubmit} />
     </section>
   );
 };

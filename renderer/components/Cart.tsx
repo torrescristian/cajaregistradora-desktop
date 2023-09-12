@@ -36,11 +36,12 @@ const Layout = ({
 );
 
 interface IProps {
-  updateMode: boolean;
+  updateMode?: boolean;
   order?: IOrder;
+  onSubmit?: () => void;
 }
 
-const Cart = ({ updateMode, order }: IProps) => {
+const Cart = ({ updateMode, order, onSubmit }: IProps) => {
   const items = useCartStore(getCartItems) as ICartItem[];
   const totalAmount = useCartStore(getTotalAmount);
 
@@ -54,7 +55,7 @@ const Cart = ({ updateMode, order }: IProps) => {
         <div className="flex flex-row gap-3 overflow-x-scroll">
           {items.map((item) => (
             <CartItem
-              key={item.product.id}
+              key={item.selectedVariant.id}
               product={item.product}
               variant={item.selectedVariant}
             />
@@ -69,7 +70,11 @@ const Cart = ({ updateMode, order }: IProps) => {
           </section>
           <section className="w-max">
             {items.length ? (
-              <ConfirmOrder updateMode order={order} />
+              <ConfirmOrder
+                updateMode={updateMode}
+                order={order}
+                onSubmit={onSubmit}
+              />
             ) : (
               <section className="bg-info text-primary-content p-4 w-full">
                 No hay productos en el carrito

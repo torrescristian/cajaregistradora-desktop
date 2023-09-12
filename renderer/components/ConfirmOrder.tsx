@@ -15,11 +15,12 @@ import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
 import { IOrder, IOrderItem } from '@/interfaces/IOrder';
 
 interface IProps {
-  updateMode: boolean;
+  updateMode?: boolean;
   order?: IOrder;
+  onSubmit?: () => void;
 }
 
-export const ConfirmOrder = ({ updateMode, order }: IProps) => {
+export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalAmount);
   const subtotalPrice = useCartStore(getSubtotalPrice);
@@ -73,6 +74,7 @@ export const ConfirmOrder = ({ updateMode, order }: IProps) => {
     }
   };
   const handleClickConfirmOrder = () => {
+    onSubmit?.();
     ref.current?.showModal();
   };
 

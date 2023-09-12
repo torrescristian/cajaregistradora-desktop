@@ -1,33 +1,26 @@
 import { IOrder } from '@/interfaces/IOrder';
-import { useState } from 'react';
-import { EditOrder } from './EditOrder';
 import { CreateTicketForm } from './CreateTicketForm';
 import { UpdateOrder } from './UpdateOrder';
+import { RenderIf } from './RenderIf';
 interface IProps {
   order: IOrder;
+  updateMode?: boolean;
+  onSubmit: (order: IOrder) => void;
 }
 
-function Order({ order }: IProps) {
-  // STATE
-  const [isEditing, setIsEditing] = useState(false);
-
-  // METHODS
-
+function Order({ order, updateMode, onSubmit }: IProps) {
   const handleToggleEdit = () => {
-    setIsEditing(!isEditing);
+    onSubmit(order);
   };
 
   return (
     <section className="flex shadow-2xl border-stone-100 border-2 p-5">
-      {isEditing ? (
-        <UpdateOrder order={order} />
-      ) : (
-        <CreateTicketForm
-          order={order}
-          isEditing={isEditing}
-          handleToggleEdit={handleToggleEdit}
-        />
-      )}
+      <RenderIf condition={!!updateMode}>
+        <UpdateOrder order={order} onSubmit={handleToggleEdit} />
+      </RenderIf>
+      <RenderIf condition={!updateMode}>
+        <CreateTicketForm order={order} handleToggleEdit={handleToggleEdit} />
+      </RenderIf>
     </section>
   );
 }
