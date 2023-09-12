@@ -17,6 +17,8 @@ type ISetCart = Pick<
   | 'clientId'
   | 'additionalDetails'
   | 'subtotalPrice'
+  | 'discountAmount'
+  | 'discountType'
 >;
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
@@ -57,6 +59,8 @@ export const useCartStore = create<ICartStore>()((set) => ({
       additionalDetails: cartPayload.additionalDetails,
       subtotalPrice: cartPayload.subtotalPrice,
       totalPrice: cartPayload.totalPrice,
+      discountType: cartPayload.discountType,
+      discountAmount: cartPayload.discountAmount,
     }),
   addProduct: ({ product, selectedVariant }: IAddProductProps) => {
     set((state): Partial<ICartStore> => {

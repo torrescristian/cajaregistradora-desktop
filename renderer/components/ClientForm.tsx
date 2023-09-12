@@ -12,6 +12,7 @@ import { PhoneIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 interface IProps {
   onSelect: (client: IClient | null) => void;
+  defaultClient?: IClient;
 }
 
 interface IClientForm {
@@ -20,9 +21,9 @@ interface IClientForm {
   address: string;
 }
 
-export default function ClientForm({ onSelect }: IProps) {
+export default function ClientForm({ onSelect, defaultClient }: IProps) {
   const { handleChange, value: search } = useFormControl('');
-  const { setValue: setClient, value: client } = useFormControl(null);
+  const { setValue: setClient, value: client } = useFormControl(defaultClient);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [query] = useDebounce(search, 500);

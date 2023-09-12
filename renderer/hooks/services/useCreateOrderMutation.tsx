@@ -1,5 +1,11 @@
 import { ICartItem } from '@/interfaces/ICart';
-import { IOrder, IOrderItem, ORDER_STATUS } from '@/interfaces/IOrder';
+import {
+  DISCOUNT_TYPE,
+  IDiscount,
+  IOrder,
+  IOrderItem,
+  ORDER_STATUS,
+} from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
@@ -11,6 +17,7 @@ interface IProps {
   additionalDetails: string;
   clientId?: number | null;
   subtotalPrice: number;
+  discount?: IDiscount;
 }
 
 export default function useCreateOrderMutation() {
@@ -42,6 +49,7 @@ function parseOrderToPayLoad({
   additionalDetails,
   clientId,
   subtotalPrice,
+  discount,
 }: IProps): IOrder<number | undefined, IOrderItem<number, number>> {
   return {
     items: items.map((item): IOrderItem<number, number> => {
@@ -57,6 +65,7 @@ function parseOrderToPayLoad({
     client: clientId || undefined,
     status: ORDER_STATUS.PENDING,
     subtotalPrice: subtotalPrice,
+    discount: discount,
   };
 }
 
