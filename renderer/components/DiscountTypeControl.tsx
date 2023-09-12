@@ -6,16 +6,18 @@ import FormControl from './FormControl';
 
 interface IProps {
   onChange: (discount: IDiscount) => void;
+  discountType?: DISCOUNT_TYPE;
+  discountAmount?: number | string;
 }
 
-export const DiscountTypeControl = ({ onChange }: IProps) => {
+export const DiscountTypeControl = (props: IProps) => {
   const { value: discountType, handleChange: handleDiscountType } =
-    useFormControl(DISCOUNT_TYPE.FIXED);
+    useFormControl(props.discountType || DISCOUNT_TYPE.FIXED);
   const { value: discountAmount, handleChange: handleChangeDiscountAmount } =
-    useFormControl('');
+    useFormControl(props.discountAmount || '');
 
   useEffect(() => {
-    onChange({
+    props.onChange({
       type: discountType,
       amount: Number(discountAmount),
     });
@@ -31,6 +33,7 @@ export const DiscountTypeControl = ({ onChange }: IProps) => {
             className="radio"
             onChange={handleDiscountType}
             value={DISCOUNT_TYPE.FIXED}
+            checked={discountType === DISCOUNT_TYPE.FIXED}
           />
           Fijo $
         </label>

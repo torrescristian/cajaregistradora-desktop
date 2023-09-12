@@ -28,6 +28,8 @@ export const UpdateOrder = ({ order, onSubmit }: IProps) => {
       totalPrice: order.totalPrice,
       subtotalPrice: order.subtotalPrice,
       cartItems: order.items.map(adaptOrderItemToCartItem),
+      discountAmount: order.discount!.amount,
+      discountType: order.discount!.type,
     });
   }, []);
 
