@@ -6,6 +6,7 @@ import useProductItem from '@/hooks/useProductItem';
 import { formatPrice } from '@/libs/utils';
 import { useState } from 'react';
 import { Card } from './Card';
+import { Selector } from './Selector';
 
 const Text = ({ children }: IComponent) => {
   return (
@@ -57,17 +58,14 @@ const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
           <div className="flex flex-row">
             <img src={product.image} className="w-1/2" />
             <div className="flex flex-col items-center justify-around w-1/2 ">
-              <select
-                className="select select-bordered text-base-content"
+              <Selector
                 onChange={handleChangeVariant}
                 defaultValue={product.default_variant.name}
-              >
-                {product.variants.map((variant) => (
-                  <option key={variant.name} value={variant.name}>
-                    {variant.name}
-                  </option>
-                ))}
-              </select>
+                values={product.variants.map((variant) => ({
+                  label: variant.name,
+                  value: variant.name,
+                }))}
+              />
               <HighlightedText>
                 {formatPrice(selectedVariant.price)}
               </HighlightedText>

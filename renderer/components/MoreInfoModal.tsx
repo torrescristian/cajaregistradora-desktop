@@ -2,6 +2,9 @@ import { useRef } from 'react';
 import OrderItem from './OrderItem';
 import { ITicket } from '@/interfaces/ITicket';
 import { DataItem } from './DataItem';
+import { getLabelByPaymentType } from './Payments/utils';
+import { Divider } from './Sale/Sale.styles';
+import { formatPrice } from '@/libs/utils';
 
 interface IMoreInfoModal {
   ticket: ITicket;
@@ -42,11 +45,12 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
               value={ticket.order.phoneNumber}
               defaultValue="Sin teléfono"
             />
+            <Divider className="text-stone-500">Metodos de pago</Divider>
             {ticket.payments.map((payment) => (
               <DataItem
                 key={payment.type}
-                label="Otros pagos:"
-                value={payment.amount}
+                label={getLabelByPaymentType(payment.type)}
+                value={formatPrice(payment.amount)}
                 defaultValue={payment.type}
               />
             ))}
