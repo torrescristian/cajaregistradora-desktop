@@ -4,7 +4,7 @@ import { MoreInfoModal } from '@/components/MoreInfoModal';
 import PageLayout from '@/components/PageLayout';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
 import { TICKET_STATUS } from '@/interfaces/ITicket';
-import { parseDateToArgentinianFormat } from '@/libs/utils';
+import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
 import { twMerge } from 'tailwind-merge';
 
 const Ventas = () => {
@@ -66,7 +66,7 @@ const Ventas = () => {
               {statusTraslate(ticket.status)}
             </span>
           </p>
-          <p>Total: ${ticket.totalPrice}</p>
+          <p>Total: {formatPrice(ticket.totalPrice)}</p>
           <MoreInfoModal ticket={ticket} />
         </div>
       ))}

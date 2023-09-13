@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { ICashBalance } from './ICashBalance';
 import { IOrder } from './IOrder';
 import { IResponsePage } from './utils';
