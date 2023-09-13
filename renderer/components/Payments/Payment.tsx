@@ -3,15 +3,19 @@ import { Selector } from '../Selector';
 import { ChevronDoubleDownIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { paymentTypesAndLabels } from './utils';
 
-
 interface IProps {
   onChange: (payment: IPayment) => void;
   onNewPayment: (e: React.SyntheticEvent<HTMLButtonElement>) => void;
-  onDelete: React.MouseEventHandler
-  payment: IPayment
+  onDelete: React.MouseEventHandler;
+  payment: IPayment;
 }
 
-export const Payment = ({ onChange, onNewPayment, onDelete, payment }: IProps) => {
+export const Payment = ({
+  onChange,
+  onNewPayment,
+  onDelete,
+  payment,
+}: IProps) => {
   const handleSelectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as PAYMENT_TYPE;
     onChange({
@@ -45,14 +49,11 @@ export const Payment = ({ onChange, onNewPayment, onDelete, payment }: IProps) =
         placeholder="0.00"
         className="input input-bordered w-36"
       />
-      <div className='flex flex-row gap-2'>
-        <button
-          className="btn btn-primary btn-square"
-          onClick={onNewPayment}
-        >
+      <div className="flex flex-row gap-2">
+        <button className="btn btn-primary btn-square" onClick={onNewPayment}>
           <ChevronDoubleDownIcon className="w-4 h-4" />
         </button>
-        <button className='btn btn-error btn-square' onClick={onDelete}>
+        <button className="btn btn-error btn-square" onClick={onDelete}>
           <TrashIcon className="w-4 h-4" />
         </button>
       </div>

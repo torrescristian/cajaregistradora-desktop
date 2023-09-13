@@ -45,7 +45,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
               value={ticket.order.phoneNumber}
               defaultValue="Sin teléfono"
             />
-            <Divider className='text-stone-500'>Metodos de pago</Divider>
+            <Divider className="text-stone-500">Metodos de pago</Divider>
             {ticket.payments.map((payment) => (
               <DataItem
                 key={payment.type}

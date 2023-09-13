@@ -45,15 +45,15 @@ export const CreateTicketForm = ({
   const createTicketMutation = useCreateTicketMutation();
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
-  const [payments, setPayments] = useState<IPayment[]>([])
+  const [payments, setPayments] = useState<IPayment[]>([]);
 
   const handleCancelOrder = () => {
     cancelOrderMutation.mutate(order.id!);
   };
 
   const handleChangePayments = (newPayments: IPayment[]) => {
-    setPayments(newPayments)
-  }
+    setPayments(newPayments);
+  };
 
   const {
     handleSubmit,
@@ -84,7 +84,7 @@ export const CreateTicketForm = ({
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
       <div className="flex flex-row justify-between gap-3">
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           <p className="text-2xl font-bold">
             <ShoppingCartIcon className="w-5 inline" /> Orden # {order.id}{' '}
           </p>
@@ -93,7 +93,7 @@ export const CreateTicketForm = ({
             {order.client?.name || 'Consumidor Final'}
           </p>
         </div>
-        <div className='flex flex-row gap-3'>
+        <div className="flex flex-row gap-3">
           <button
             className="btn btn-secondary text-stone-50"
             onClick={handleToggleEdit}

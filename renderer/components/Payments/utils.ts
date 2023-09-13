@@ -1,4 +1,4 @@
-import { PAYMENT_TYPE } from "@/interfaces/ITicket";
+import { PAYMENT_TYPE } from '@/interfaces/ITicket';
 
 export const paymentTypesAndLabels = [
   {
@@ -16,9 +16,9 @@ export const paymentTypesAndLabels = [
 ] as const;
 
 export const getLabelByPaymentType = (type: PAYMENT_TYPE) => {
-  const label = paymentTypesAndLabels.find(p => p.type === type)!.label
+  const label = paymentTypesAndLabels.find((p) => p.type === type)!.label;
 
-  if (!label) throw new Error(`Missing Payment Type ${type}`)
+  if (!label) throw new Error(`Missing Payment Type ${type}`);
 
-  return label
-}
+  return label;
+};

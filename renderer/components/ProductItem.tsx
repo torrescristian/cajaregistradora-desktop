@@ -59,12 +59,12 @@ const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
             <img src={product.image} className="w-1/2" />
             <div className="flex flex-col items-center justify-around w-1/2 ">
               <Selector
-              onChange={handleChangeVariant}
-              defaultValue={product.default_variant.name}
-              values={product.variants.map((variant) => ({
-                label : variant.name,
-                value :  variant.name,
-              }))}
+                onChange={handleChangeVariant}
+                defaultValue={product.default_variant.name}
+                values={product.variants.map((variant) => ({
+                  label: variant.name,
+                  value: variant.name,
+                }))}
               />
               <HighlightedText>
                 {formatPrice(selectedVariant.price)}
