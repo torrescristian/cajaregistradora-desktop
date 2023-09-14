@@ -1,15 +1,17 @@
 import FormControl from '@/components/FormControl';
 import useFormControl from '@/hooks/useFormControl';
-import { IVariant } from '@/interfaces/IProduct';
+import { IProduct, IVariant } from '@/interfaces/IProduct';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 import Loader from '@/components/Loader';
-import StockButton from '@/components/UpdateProductButton';
+import UpdateProductButton from '@/components/UpdateProductButton';
+import { RenderIf } from '@/components/RenderIf';
 
 interface IProps {
   variant: IVariant;
+  product: IProduct;
 }
 
-export default function ProductVariant({ variant }: IProps) {
+export default function ProductVariant({ variant, product }: IProps) {
   const initialStock = variant.stock_per_variant.stock;
   const nameVariants = variant.name;
   const priceVariants = variant.price;
@@ -38,33 +40,32 @@ export default function ProductVariant({ variant }: IProps) {
   return (
     <section className="flex w-full flex-row justify-between self-center whitespace-nowrap">
       <section className="flex flex-col items-end justify-end gap-2">
-        <FormControl
-          fullWidth
-          name="name"
-          onChange={handleChangeName}
-          text="Nombre"
-          type="text"
-          value={name}
-          textAlign="text-center"
-        />
-        <section className="flex items-end gap-5">
-          <label className="input-group ">
-            <span>Stock</span>
+        <section className="flex w-full">
+          <FormControl
+            fullWidth
+            name="name"
+            onChange={handleChangeName}
+            text="Nombre"
+            type="text"
+            value={name}
+            textAlign="text-center"
+          />
+          <RenderIf condition={!product.isService}>
             <FormControl
-              className="w-28"
-              hideLabel
               name="stock"
               onChange={handleChangeStock}
               text="Stock"
               type="number"
               value={stock}
               textAlign="text-center"
+              className="w-24"
             />
-          </label>
+          </RenderIf>
+        </section>
+        <section className="flex">
           <label className="input-group">
             <span>$</span>
             <FormControl
-              className="w-28"
               hideLabel
               name="price"
               onChange={handleChangePrice}
@@ -74,19 +75,20 @@ export default function ProductVariant({ variant }: IProps) {
               textAlign="text-center"
             />
           </label>
+          <RenderIf condition={isLoading}>
+            <Loader className="w-24" />
+          </RenderIf>
+          <RenderIf condition={!isLoading}>
+            <UpdateProductButton
+              disabled={
+                variant.stock_per_variant.stock === stock &&
+                variant.name === name &&
+                variant.price === price
+              }
+              handleSubmit={handleSubmit}
+            />
+          </RenderIf>
         </section>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <StockButton
-            disabled={
-              variant.stock_per_variant.stock === stock &&
-              variant.name === name &&
-              variant.price === price
-            }
-            handleSubmit={handleSubmit}
-          />
-        )}
       </section>
     </section>
   );

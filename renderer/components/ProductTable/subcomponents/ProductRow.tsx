@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import ImageControl from '@/components/ImageControl';
 import { Card } from '@/components/Card';
+import { RenderIf } from '@/components/RenderIf';
 
 interface IProps {
   product: IProduct;
@@ -57,8 +58,6 @@ const ProductRow = ({ product }: IProps) => {
             type="text"
             value={name}
           />
-        </section>
-        <section className="my-5 flex w-full items-end justify-evenly gap-5">
           <UpdateProductButton
             onClick={handleSubmit(onSubmit)}
             pendingChanges={pendingChanges}
@@ -66,16 +65,14 @@ const ProductRow = ({ product }: IProps) => {
         </section>
 
         <section className="my-10 flex flex-col content-center items-center justify-center gap-3"></section>
-        {product.variants.length ? (
-          <>
-            <div className="divider">Variantes</div>
-            <section className="my-10 flex w-full flex-col justify-items-center gap-7 text-xl">
-              {product.variants.map((v) => (
-                <ProductVariant key={v.id} variant={v} />
-              ))}
-            </section>
-          </>
-        ) : null}
+        <RenderIf condition={product.variants.length}>
+          <div className="divider">Variantes</div>
+          <section className="h-64 overflow-y-scroll my-5 flex w-full flex-col justify-items-center gap-7 text-xl">
+            {product.variants.map((v) => (
+              <ProductVariant key={v.id} variant={v} product={product} />
+            ))}
+          </section>
+        </RenderIf>
         <div className="divider">Imagen</div>
       </form>
       <section className="flex flex-col items-center gap-2">

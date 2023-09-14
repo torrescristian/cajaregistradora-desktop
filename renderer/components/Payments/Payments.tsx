@@ -48,12 +48,16 @@ export default function Payments({ onChange }: IProps) {
     onChange(newPayments);
   };
 
-  return payments.map((payment: IPayment, index) => (
-    <Payment
-      onChange={handleChange(index)}
-      onNewPayment={handleClickAddPaymentMethod}
-      onDelete={handleDelete(index)}
-      payment={payment}
-    />
-  ));
+  return (
+    <section>
+      {payments.map((payment: IPayment, index) => (
+        <Payment
+          onChange={handleChange(index)}
+          onNewPayment={handleClickAddPaymentMethod}
+          onDelete={handleDelete(index)}
+          payment={payment}
+        />
+      ))}
+    </section>
+  );
 }

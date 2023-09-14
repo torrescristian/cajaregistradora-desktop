@@ -1,5 +1,6 @@
 import { mergeClasses } from '@/libs/utils';
 import { FormControl } from '@/interfaces/ProductItem.interfaces';
+import { RenderIf } from './RenderIf';
 
 const FormControl = ({
   text,
@@ -16,14 +17,14 @@ const FormControl = ({
 }: FormControl) => {
   return (
     <section className={mergeClasses('form-control flex w-full', className)}>
-      {hideLabel ? null : (
+      <RenderIf condition={!hideLabel}>
         <label
           htmlFor={name}
           className="whitespace-nowrap text-stone-500 text-center"
         >
           {text}
         </label>
-      )}
+      </RenderIf>
       <section
         className={mergeClasses('flex items-center', fullWidth ? 'w-full' : '')}
       >

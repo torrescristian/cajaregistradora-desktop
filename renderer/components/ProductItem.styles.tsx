@@ -98,8 +98,9 @@ export const UpdateProductButton = ({
   onClick: any;
   pendingChanges: boolean;
 }) => (
-  // TODO:  <ActionButton onClick={onClick} disabled={!pendingChanges}>
-  <ActionButton onClick={onClick}>Guardar</ActionButton>
+  <ActionButton onClick={onClick} disabled={!pendingChanges}>
+    Guardar
+  </ActionButton>
 );
 
 export const RemoveProductButton = ({ onClick }: IActionButton) => (

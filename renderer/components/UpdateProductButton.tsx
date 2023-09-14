@@ -6,7 +6,7 @@ interface IProps {
 function UpdateProductButton({ disabled, handleSubmit }: IProps) {
   return (
     <button
-      className="btn-success btn text-white w-full"
+      className="btn-success btn text-white"
       disabled={disabled}
       onClick={handleSubmit}
     >
