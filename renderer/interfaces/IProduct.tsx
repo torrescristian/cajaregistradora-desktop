@@ -7,9 +7,9 @@ export interface IAditionalPrice {
   amount: number;
 }
 
-export interface IVariant<STOCK_PER_VARIANT = IStockPerVariant> {
+export interface IVariant<STOCK_PER_VARIANT = IStockPerVariant, PRODUCT = number> {
   id?: number;
-  product: number;
+  product: PRODUCT;
   stock_per_variant: STOCK_PER_VARIANT;
   price: number;
   name: string;

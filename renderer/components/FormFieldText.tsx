@@ -9,7 +9,7 @@ interface IFormControl {
   labelRight?: boolean;
 }
 
-const FormField = ({
+const FormFieldText = ({
   register,
   label,
   formKey,
@@ -54,4 +54,4 @@ const FormField = ({
   );
 };
 
-export default FormField;
+export default FormFieldText;
