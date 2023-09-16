@@ -1,5 +1,5 @@
 import strapi from '@/libs/strapi';
-import { getErrorMessage } from '@/libs/utils';
+import { getErrorMessage, getUrlFromImage } from '@/libs/utils';
 import {
   IProduct,
   IProductPage,
@@ -30,7 +30,7 @@ const parseProductFacade = (product: IProduct): IProduct => {
           stock_per_variant: variant.stock_per_variant,
         }) as IVariant,
     ),
-    image: (image as unknown as any)?.formats?.thumbnail?.url || '/default.png',
+    image: getUrlFromImage(image),
     default_variant: {
       id: default_variant?.id,
       name: default_variant?.name,

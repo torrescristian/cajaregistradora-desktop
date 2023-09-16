@@ -34,6 +34,9 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                       Crear Producto
                     </NavButton>
                   </li>
+                  <li>
+                    <NavButton href="/admin/cupones">Crear cupones</NavButton>
+                  </li>
                 </>
               ) : null}
               <li>

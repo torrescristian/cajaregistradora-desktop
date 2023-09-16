@@ -8,7 +8,7 @@ export const DataItem = ({
 }: {
   label: string;
   value?: any;
-  defaultValue: any;
+  defaultValue?: any;
   className?: string;
 }) => {
   return (
