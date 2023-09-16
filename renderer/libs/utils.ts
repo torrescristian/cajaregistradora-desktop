@@ -82,6 +82,6 @@ export const convertToEmoji = (productType?: PRODUCT_TYPE) => {
   }
 };
 
-export const getUrlFromImage = (image:any) =>{
-  return (image as unknown as any)?.formats?.thumbnail?.url || '/default.png'
-}
+export const getUrlFromImage = (image: any) => {
+  return (image as unknown as any)?.formats?.thumbnail?.url || '/default.png';
+};

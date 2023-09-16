@@ -24,6 +24,8 @@ export interface ICoupon<VARIANT = IPartialVariant> {
 
 export type ICouponResponse = IFixedNativeResponse<
   ICoupon<
-    ISingleFixedNativeResponse<IVariant<number,ISingleFixedNativeResponse<IProduct>>>
+    ISingleFixedNativeResponse<
+      IVariant<number, ISingleFixedNativeResponse<IProduct>>
+    >
   >
 >;

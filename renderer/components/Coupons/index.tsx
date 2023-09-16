@@ -1,1 +1,1 @@
-export {default} from './Coupon';
+export { default } from './Coupon';
