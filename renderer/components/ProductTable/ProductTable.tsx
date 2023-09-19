@@ -23,7 +23,7 @@ export default function ProductTable({
 
   return (
     <section className="flex flex-col gap-5">
-      <section className="flex gap-5">
+      <section className="flex gap-5 overflow-x-scroll w-[90vw]">
         {isLoading && <Loader className="w-full text-center" />}
         {isError && <ErrorMessage>Error</ErrorMessage>}
         {!isLoading &&
