@@ -15,7 +15,7 @@ export interface IPartialVariant {
 export interface ICoupon<VARIANT = IPartialVariant> {
   id?: number;
   code: string;
-  variant: VARIANT;
+  variant: VARIANT | null;
   dueDate: string;
   discount: IDiscount;
   maxAmount: number;
@@ -29,3 +29,5 @@ export type ICouponResponse = IFixedNativeResponse<
     >
   >
 >;
+
+export type ICouponPayload = ICoupon<number>;

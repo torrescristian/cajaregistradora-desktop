@@ -41,7 +41,7 @@ const Products = () => {
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
         {products.map((product) => (
-          <ProductItem key={product.id} product={product} updateMode />
+          <ProductItem key={product.id} product={product} />
         ))}
       </section>
     </section>

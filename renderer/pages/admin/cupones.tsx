@@ -11,9 +11,9 @@ const Cupones = () => {
   }
 
   return (
-    <section className="flex flex-row gap-4 justify-between w-full">
+    <section className="flex flex-col gap-7 justify-between w-full">
       <CreateCoupon />
-      <div className="flex flex-col gap-4 overflow-y-scroll">
+      <div className="flex gap-4 overflow-x-scroll">
         {couponQuery.data?.map((coupon) => <Coupon coupon={coupon} />)}
       </div>
     </section>
