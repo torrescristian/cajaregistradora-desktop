@@ -1,4 +1,5 @@
 import IClient from './IClient';
+import { ICoupon } from './ICoupon';
 import { IVariant, IProduct } from './IProduct';
 import { IResponsePage, ISingleResultResponsePage } from './utils';
 

@@ -1,10 +1,10 @@
 import Coupon from '@/components/Coupons/Coupon';
 import { CreateCoupon } from '@/components/Coupons/CreateCoupon';
 import Loader from '@/components/Loader';
-import useCouponQuery from '@/hooks/services/useCouponQuery';
+import useCouponsQuery from '@/hooks/services/useCouponsQuery';
 
 const Cupones = () => {
-  const couponQuery = useCouponQuery();
+  const couponQuery = useCouponsQuery();
 
   if (couponQuery.isLoading) {
     return <Loader />;

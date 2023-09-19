@@ -24,6 +24,7 @@ import useCancelOrderMutation from '@/hooks/services/useCancelOrderMutation';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
 import { useState } from 'react';
 import Payments from './Payments';
+import ValidateCoupon from './Coupons/ValidateCoupon';
 
 interface IProps {
   order: IOrder;
@@ -46,6 +47,9 @@ export const CreateTicketForm = ({
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const [payments, setPayments] = useState<IPayment[]>([]);
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
+
+  const finalTotalPrice = order.totalPrice - couponDiscount;
 
   const handleCancelOrder = () => {
     cancelOrderMutation.mutate(order.id!);
@@ -70,11 +74,15 @@ export const CreateTicketForm = ({
   const handleSubmitCreateTicket = () => {
     createTicketMutation.mutate({
       order: order.id!,
-      totalPrice: order.totalPrice,
+      totalPrice: finalTotalPrice,
       cashBalance: activeCashBalanceQuery.cashBalance?.id!,
       payments,
     });
   };
+
+  const handleCouponDiscountAmount = (couponDiscount: number) => {
+    setCouponDiscount(couponDiscount || 0);  
+  }
 
   return (
     <form
@@ -153,6 +161,7 @@ export const CreateTicketForm = ({
             />
           ))}
         </div>
+        
         <div className="divider">Pagos</div>
         <div className="flex flex-col gap-4">
           <DataItem
@@ -160,6 +169,7 @@ export const CreateTicketForm = ({
             value={formatPrice(order.subtotalPrice)}
             defaultValue=""
           />
+          <ValidateCoupon subtotalPrice={order.subtotalPrice} onChange={handleCouponDiscountAmount}/>
           <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.FIXED}>
             <DataItem
               label="Descuento:"
@@ -183,7 +193,7 @@ export const CreateTicketForm = ({
           </RenderIf>
           <DataItem
             label="Total:"
-            value={formatPrice(order.totalPrice)}
+            value={formatPrice(finalTotalPrice)}
             defaultValue=""
             className="text-2xl"
           />

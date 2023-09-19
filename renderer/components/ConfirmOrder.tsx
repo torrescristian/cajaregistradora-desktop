@@ -82,6 +82,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
         discount: { amount: discountAmount!, type: discountType! },
         items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
+        
       },
     });
   };
