@@ -12,7 +12,7 @@ const parseCouponFacade = (couponResponse: ICouponResponse): ICoupon[] => {
     discount: coupon.attributes.discount,
     dueDate: coupon.attributes.dueDate,
     maxAmount: coupon.attributes.maxAmount,
-    variant: {
+    variant: coupon.attributes.variant?.data ? {
       name: coupon.attributes.variant.data.attributes.name,
       id: coupon.attributes.variant.data.id,
       product: {
@@ -26,7 +26,7 @@ const parseCouponFacade = (couponResponse: ICouponResponse): ICoupon[] => {
             .image,
         ),
       },
-    },
+    } : null,
     availableUses: coupon.attributes.availableUses,
   }));
 };

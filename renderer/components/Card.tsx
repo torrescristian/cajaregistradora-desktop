@@ -5,7 +5,7 @@ interface IProps {
 
 export const Card = ({ children, tabIndex }: IProps) => {
   return (
-    <section className="flex flex-col relative p-4 rounded-3xl items-center justify-between border-2 border-secondary">
+    <section className="flex flex-col relative p-4 items-center justify-between border-2 border-secondary">
       {children}
     </section>
   );

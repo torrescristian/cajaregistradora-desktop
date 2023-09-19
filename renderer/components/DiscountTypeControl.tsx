@@ -56,6 +56,7 @@ export const DiscountTypeControl = (props: IProps) => {
           type="text"
           value={discountAmount}
           onChange={handleChangeDiscountAmount}
+          fullWidth
         />
       </RenderIf>
       <RenderIf condition={discountType === DISCOUNT_TYPE.FIXED}>
@@ -65,6 +66,7 @@ export const DiscountTypeControl = (props: IProps) => {
           type="text"
           value={discountAmount}
           onChange={handleChangeDiscountAmount}
+          fullWidth
         />
       </RenderIf>
     </section>

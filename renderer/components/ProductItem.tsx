@@ -7,6 +7,7 @@ import { formatPrice } from '@/libs/utils';
 import { useState } from 'react';
 import { Card } from './Card';
 import { Selector } from './Selector';
+import { IProduct, IVariant } from '@/interfaces/IProduct';
 
 const Text = ({ children }: IComponent) => {
   return (
@@ -28,8 +29,11 @@ const HighlightedText = ({ children }: IComponent) => {
     </p>
   );
 };
-
-const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
+interface IProps{
+  product:IProduct,
+  onClick?:(props:{product : IProduct,variant:IVariant})=>void    
+}
+const ProductItem = ({ product,onClick }: IProps) => {
   const [selectedVariant, setSelectedVariant] = useState(
     product.default_variant,
   );
@@ -46,6 +50,19 @@ const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
       }
     });
   };
+
+  const handleClick = (e : React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (onClick){
+      onClick({product,variant : selectedVariant})
+      console.table({product,selectedVariant})
+      return
+    }
+
+    handleClickAdd();
+      
+  }
 
   return (
     <Card data-test="productItem" tabIndex={0}>
@@ -82,7 +99,7 @@ const ProductItem = ({ product, updateMode }: ICollapseTitle) => {
             </Text>
             <button
               className="btn btn-primary w-fit px-10 rounded-lg"
-              onClick={handleClickAdd}
+              onClick={handleClick}
             >
               Agregar
             </button>
