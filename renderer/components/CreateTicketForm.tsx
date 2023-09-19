@@ -81,8 +81,8 @@ export const CreateTicketForm = ({
   };
 
   const handleCouponDiscountAmount = (couponDiscount: number) => {
-    setCouponDiscount(couponDiscount || 0);  
-  }
+    setCouponDiscount(couponDiscount || 0);
+  };
 
   return (
     <form
@@ -161,7 +161,7 @@ export const CreateTicketForm = ({
             />
           ))}
         </div>
-        
+
         <div className="divider">Pagos</div>
         <div className="flex flex-col gap-4">
           <DataItem
@@ -169,7 +169,10 @@ export const CreateTicketForm = ({
             value={formatPrice(order.subtotalPrice)}
             defaultValue=""
           />
-          <ValidateCoupon subtotalPrice={order.subtotalPrice} onChange={handleCouponDiscountAmount}/>
+          <ValidateCoupon
+            subtotalPrice={order.subtotalPrice}
+            onChange={handleCouponDiscountAmount}
+          />
           <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.FIXED}>
             <DataItem
               label="Descuento:"
