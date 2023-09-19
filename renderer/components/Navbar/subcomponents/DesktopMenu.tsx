@@ -12,7 +12,7 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
         <ul className="flex items-center space-x-4">
           <NavButton href="/pedidos">Crear orden</NavButton>
           <NavButton href="/ordenes">Ordenes pendientes</NavButton>
-          <NavButton href="/ventas">Recibos</NavButton>
+          <NavButton href="/recibos">Recibos</NavButton>
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost">
               <Bars3Icon className="w-6 h-6" />

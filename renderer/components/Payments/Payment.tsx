@@ -25,8 +25,9 @@ export const Payment = ({
   };
 
   const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const amount = Number(e.target.value);
-    onChange({
+    const {value} = e.target
+    const amount = value === '' ? '' : Number(value)
+        onChange({
       ...payment,
       amount,
     });

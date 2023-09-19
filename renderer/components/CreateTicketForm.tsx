@@ -57,8 +57,6 @@ export const CreateTicketForm = ({
 
   const {
     handleSubmit,
-    register,
-    getValues,
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {

@@ -62,7 +62,6 @@ const Caja = () => {
               </RenderIf>
               <RenderIf condition={!cashIsActive}>
                 <CashBalance
-                  cashBalance={cashBalance}
                   value={value}
                   onChange={handleChange}
                 />
