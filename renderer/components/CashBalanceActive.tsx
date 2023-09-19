@@ -17,21 +17,21 @@ export const CashBalanceActivate = ({ cashBalance }: IProps) => {
           defaultValue="Caja sin identificar"
         />
         <DataItem
-          label="Monto inicial:"
+          label="Efectivo al iniciar:"
           value={formatPrice(cashBalance?.initialCashAmount!)}
           defaultValue="Monto inicial: $0.00"
         />
         <DataItem
-          label="Total de caja efectivo:"
+          label="Efectivo actual:"
           value={formatPrice(
             cashBalance?.newCashAmount! + cashBalance?.initialCashAmount!,
           )}
           defaultValue="Total de caja efectivo: $0.00"
         />
         <DataItem
-          label="Total:"
+          label="Ingresos netos:"
           value={formatPrice(cashBalance?.totalAmount!)}
-          defaultValue="Total $0.00"
+          defaultValue="$0.00"
         />
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { ICoupon } from '@/interfaces/ICoupon';
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getCouponQueryKey } from './useCouponQuery';
+import { getCouponQueryKey } from './useCouponsQuery';
 
 export default function useCreateCouponMutation() {
   const queryClient = useQueryClient();

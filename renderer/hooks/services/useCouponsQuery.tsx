@@ -5,7 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 
 export const getCouponQueryKey = () => 'coupons';
 
-const parseCouponFacade = (couponResponse: ICouponResponse): ICoupon[] => {
+export const parseCouponFacade = (
+  couponResponse: ICouponResponse,
+): ICoupon[] => {
   return couponResponse.data.map((coupon) => ({
     id: coupon.id,
     code: coupon.attributes.code,
@@ -33,7 +35,7 @@ const parseCouponFacade = (couponResponse: ICouponResponse): ICoupon[] => {
   }));
 };
 
-export default function useCouponQuery() {
+export default function useCouponsQuery() {
   return useQuery<ICoupon[]>([getCouponQueryKey()], async () => {
     const resp = (await strapi.find(getCouponQueryKey(), {
       populate: ['discount', 'variant', 'variant.product'],

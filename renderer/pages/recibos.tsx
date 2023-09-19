@@ -7,7 +7,7 @@ import { TICKET_STATUS } from '@/interfaces/ITicket';
 import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
 import { twMerge } from 'tailwind-merge';
 
-const Ventas = () => {
+const Recibos = () => {
   function statusColor(ticketStatus: TICKET_STATUS) {
     switch (ticketStatus) {
       case TICKET_STATUS.PAID:
@@ -74,4 +74,4 @@ const Ventas = () => {
   );
 };
 
-export default Ventas;
+export default Recibos;

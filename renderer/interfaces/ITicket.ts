@@ -3,7 +3,7 @@ import { IOrder } from './IOrder';
 import { IResponsePage } from './utils';
 
 export interface IPayment {
-  amount: number;
+  amount: number | '';
   type: PAYMENT_TYPE;
 }
 

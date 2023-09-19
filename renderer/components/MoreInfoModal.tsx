@@ -50,7 +50,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
               <DataItem
                 key={payment.type}
                 label={getLabelByPaymentType(payment.type)}
-                value={formatPrice(payment.amount)}
+                value={formatPrice(Number(payment.amount))}
                 defaultValue={payment.type}
               />
             ))}
