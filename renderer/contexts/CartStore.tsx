@@ -51,6 +51,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
     set({
       cartItems: cartPayload.cartItems,
       subtotalPrice: cartPayload.subtotalPrice,
+      totalPrice: cartPayload.subtotalPrice,
     }),
   setCart: (cartPayload: ISetCart) =>
     set({
@@ -68,13 +69,24 @@ export const useCartStore = create<ICartStore>()((set) => ({
         (item) => item.selectedVariant.id! === selectedVariant.id!,
       );
 
+      const subtotalPrice = fixPrice(
+        state.subtotalPrice + selectedVariant.price,
+      );
+
       if (itemIndex >= 0) {
         const newCartItems = structuredClone(state.cartItems);
         const cartItem = newCartItems[itemIndex];
         cartItem.quantity += 1;
         return {
           cartItems: newCartItems,
-          subtotalPrice: fixPrice(state.subtotalPrice + selectedVariant.price),
+          subtotalPrice,
+          totalPrice: state.discountAmount
+            ? calcDiscount({
+                discountAmount: state.discountAmount!,
+                discountType: state.discountType!,
+                price: state.subtotalPrice,
+              })
+            : subtotalPrice,
         };
       }
       return {
@@ -86,7 +98,14 @@ export const useCartStore = create<ICartStore>()((set) => ({
             selectedVariant: selectedVariant,
           },
         ],
-        subtotalPrice: fixPrice(state.subtotalPrice + selectedVariant.price),
+        subtotalPrice,
+        totalPrice: state.discountAmount
+          ? calcDiscount({
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: state.subtotalPrice,
+            })
+          : subtotalPrice,
       };
     });
   },
@@ -96,15 +115,24 @@ export const useCartStore = create<ICartStore>()((set) => ({
         (item) => item.selectedVariant.id! === selectedVariant.id!,
       );
 
+      const subtotalPrice = fixPrice(
+        Math.max(state.subtotalPrice - selectedVariant.price, 0),
+      );
+
       if (item?.quantity === 1) {
         return {
           cartItems: state.cartItems.filter(
             (item: ICartItem) =>
               item.selectedVariant.id! !== selectedVariant.id!,
           ),
-          subtotalPrice: fixPrice(
-            Math.max(state.subtotalPrice - selectedVariant.price, 0),
-          ),
+          subtotalPrice,
+          totalPrice: state.discountAmount
+            ? calcDiscount({
+                discountAmount: state.discountAmount!,
+                discountType: state.discountType!,
+                price: state.subtotalPrice,
+              })
+            : subtotalPrice,
           reset: true,
         };
       }
@@ -118,9 +146,14 @@ export const useCartStore = create<ICartStore>()((set) => ({
             }
             return item;
           }),
-          subtotalPrice: fixPrice(
-            Math.max(state.subtotalPrice - selectedVariant.price, 0),
-          ),
+          subtotalPrice,
+          totalPrice: state.discountAmount
+            ? calcDiscount({
+                discountAmount: state.discountAmount!,
+                discountType: state.discountType!,
+                price: state.subtotalPrice,
+              })
+            : subtotalPrice,
           reset: true,
         };
       }
@@ -128,7 +161,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
     }),
   removeCartItem: ({ selectedVariant }: IAddProductProps) =>
     set((state: any) => {
-      const subtotalPrice =
+      const _subtotalPrice =
         state.subtotalPrice -
         state.cartItems.reduce((acc: number, item: ICartItem) => {
           if (item.selectedVariant.id! === selectedVariant.id!) {
@@ -137,11 +170,20 @@ export const useCartStore = create<ICartStore>()((set) => ({
           return acc;
         }, 0);
 
+      const subtotalPrice = fixPrice(Math.max(_subtotalPrice, 0));
+
       return {
         cartItems: state.cartItems.filter(
           (item: ICartItem) => item.selectedVariant.id! !== selectedVariant.id!,
         ),
         subtotalPrice: fixPrice(Math.max(subtotalPrice, 0)),
+        totalPrice: state.discountAmount
+          ? calcDiscount({
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: state.subtotalPrice,
+            })
+          : subtotalPrice,
         reset: true,
       };
     }),
