@@ -143,7 +143,7 @@ export const CreateCoupon = () => {
           <RenderIf condition={showProductList}>
             <RenderIf condition={!selectedVariant}>
               <SearchInput {...searchProps} />
-              <div className="flex flex-row overflow-x-scroll gap-5 p-5">
+              <div className="flex flex-row overflow-x-scroll gap-5 p-5 w-[80vw]">
                 {products.map((product) => (
                   <ProductItem
                     key={product.id}

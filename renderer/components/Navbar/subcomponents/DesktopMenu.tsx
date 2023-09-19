@@ -24,23 +24,34 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
               {isOwner ? (
                 <>
                   <li>
-                    <NavButton href="/admin/caja">Caja</NavButton>
+                    <NavButton className="w-full" href="/admin/caja">
+                      Caja
+                    </NavButton>
                   </li>
                   <li>
-                    <NavButton href="/admin/productos">Reabastecer</NavButton>
+                    <NavButton className="w-full" href="/admin/productos">
+                      Reabastecer
+                    </NavButton>
                   </li>
                   <li>
-                    <NavButton href="/admin/generador-de-productos-y-variantes">
+                    <NavButton
+                      className="w-full"
+                      href="/admin/generador-de-productos-y-variantes"
+                    >
                       Crear Producto
                     </NavButton>
                   </li>
                   <li>
-                    <NavButton href="/admin/cupones">Crear cupones</NavButton>
+                    <NavButton className="w-full" href="/admin/cupones">
+                      Crear cupones
+                    </NavButton>
                   </li>
                 </>
               ) : null}
               <li>
-                <NavButton onClick={onLogout}>Cerrar Sesión</NavButton>
+                <NavButton className="w-full" onClick={onLogout}>
+                  Cerrar Sesión
+                </NavButton>
               </li>
             </ul>
           </div>

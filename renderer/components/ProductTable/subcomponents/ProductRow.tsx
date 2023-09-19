@@ -45,7 +45,7 @@ const ProductRow = ({ product }: IProps) => {
 
   return (
     <Card>
-      <div className="divider">Nombre del Producto</div>
+      <div className="divider">Producto</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex gap-3">
           <FormControl
@@ -63,8 +63,6 @@ const ProductRow = ({ product }: IProps) => {
             pendingChanges={pendingChanges}
           />
         </section>
-
-        <section className="my-10 flex flex-col content-center items-center justify-center gap-3"></section>
         <RenderIf condition={product.variants.length}>
           <div className="divider">Variantes</div>
           <section className="h-64 overflow-y-scroll my-5 flex w-full flex-col justify-items-center gap-7 text-xl">

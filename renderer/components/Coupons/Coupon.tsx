@@ -8,6 +8,7 @@ import { DataItem } from '../DataItem';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { format } from 'path';
 import { TrashIcon } from '@heroicons/react/24/solid';
+import { Card } from '../Card';
 
 interface IProps {
   coupon: ICoupon;
@@ -28,9 +29,9 @@ export default function Coupon({ coupon }: IProps) {
   const handleCancelCupon = () => {};
 
   return (
-    <section className="flex flex-col border-2 border-primary-content shrink-0 p-3 gap-4">
-      <div className="flex flex-row  justify-between">
-        <DataItem label={'CÓDIGO:'} value={coupon.code} />
+    <Card className="items-start gap-3">
+      <div className="flex flex-row justify-between w-full">
+        <DataItem label={'Código:'} value={coupon.code} />
         <button className="btn btn-error" onClick={handleCancelCupon}>
           <TrashIcon className="h-5 w-5" />
         </button>
@@ -44,13 +45,16 @@ export default function Coupon({ coupon }: IProps) {
         value={parseDateToArgentinianFormat(coupon.dueDate)}
       />
       <DataItem
-        label="tipo de descuento:"
+        label="Tipo de descuento:"
         value={convertDiscount(coupon.discount)}
       />
-      <DataItem label="Limite:" value={formatPrice(coupon.maxAmount)} />
+      <DataItem
+        label="Descuento máximo:"
+        value={formatPrice(coupon.maxAmount)}
+      />
 
       <DataItem
-        label="Producto:"
+        label="Producto Asociado:"
         value={
           coupon.variant
             ? `${convertToEmoji(coupon.variant.product.type)} ${
@@ -61,6 +65,6 @@ export default function Coupon({ coupon }: IProps) {
       />
 
       <DataItem label="Uso restantes:" value={coupon.availableUses} />
-    </section>
+    </Card>
   );
 }
