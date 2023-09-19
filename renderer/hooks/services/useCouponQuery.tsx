@@ -12,21 +12,23 @@ const parseCouponFacade = (couponResponse: ICouponResponse): ICoupon[] => {
     discount: coupon.attributes.discount,
     dueDate: coupon.attributes.dueDate,
     maxAmount: coupon.attributes.maxAmount,
-    variant: coupon.attributes.variant?.data ? {
-      name: coupon.attributes.variant.data.attributes.name,
-      id: coupon.attributes.variant.data.id,
-      product: {
-        id: coupon.attributes.variant.data.attributes.product.data.id,
-        name: coupon.attributes.variant.data.attributes.product.data.attributes
-          .name,
-        type: coupon.attributes.variant.data.attributes.product.data.attributes
-          .type,
-        image: getUrlFromImage(
-          coupon.attributes.variant.data.attributes.product.data.attributes
-            .image,
-        ),
-      },
-    } : null,
+    variant: coupon.attributes.variant?.data
+      ? {
+          name: coupon.attributes.variant.data.attributes.name,
+          id: coupon.attributes.variant.data.id,
+          product: {
+            id: coupon.attributes.variant.data.attributes.product.data.id,
+            name: coupon.attributes.variant.data.attributes.product.data
+              .attributes.name,
+            type: coupon.attributes.variant.data.attributes.product.data
+              .attributes.type,
+            image: getUrlFromImage(
+              coupon.attributes.variant.data.attributes.product.data.attributes
+                .image,
+            ),
+          },
+        }
+      : null,
     availableUses: coupon.attributes.availableUses,
   }));
 };

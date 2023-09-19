@@ -29,11 +29,11 @@ const HighlightedText = ({ children }: IComponent) => {
     </p>
   );
 };
-interface IProps{
-  product:IProduct,
-  onClick?:(props:{product : IProduct,variant:IVariant})=>void    
+interface IProps {
+  product: IProduct;
+  onClick?: (props: { product: IProduct; variant: IVariant }) => void;
 }
-const ProductItem = ({ product,onClick }: IProps) => {
+const ProductItem = ({ product, onClick }: IProps) => {
   const [selectedVariant, setSelectedVariant] = useState(
     product.default_variant,
   );
@@ -51,18 +51,17 @@ const ProductItem = ({ product,onClick }: IProps) => {
     });
   };
 
-  const handleClick = (e : React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (onClick){
-      onClick({product,variant : selectedVariant})
-      console.table({product,selectedVariant})
-      return
+    if (onClick) {
+      onClick({ product, variant: selectedVariant });
+      console.table({ product, selectedVariant });
+      return;
     }
 
     handleClickAdd();
-      
-  }
+  };
 
   return (
     <Card data-test="productItem" tabIndex={0}>

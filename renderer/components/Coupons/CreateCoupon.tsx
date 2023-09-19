@@ -12,9 +12,12 @@ import { RenderIf } from '../RenderIf';
 import { ICouponPayload } from '@/interfaces/ICoupon';
 import { DiscountTypeControl } from '../DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
-import { getSetDiscountAmount, getSetDiscountType, useCartStore } from '@/contexts/CartStore';
+import {
+  getSetDiscountAmount,
+  getSetDiscountType,
+  useCartStore,
+} from '@/contexts/CartStore';
 import { Card } from '../Card';
-
 
 export const CreateCoupon = () => {
   const {
@@ -32,7 +35,7 @@ export const CreateCoupon = () => {
 
   const [selectedProductType, setSelectedProductType] =
     useState<PRODUCT_TYPE>('');
-  const searchProps = useSearchProps()
+  const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
     selectedProductType,
@@ -46,17 +49,22 @@ export const CreateCoupon = () => {
   const [discountAmount, setDiscountAmount] = useState<number>();
 
   const [selectedVariant, setSelectedVariant] = useState<IVariant | null>(
-    products[0]?.default_variant
+    products[0]?.default_variant,
   );
 
-  const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(products[0]);
+  const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(
+    products[0],
+  );
 
   const [showProductList, setShowProductList] = useState(false);
 
-  const handleClickAddProduct = (props: { product: IProduct, variant: IVariant }) => {
-    setSelectedProduct(props.product)
-    setSelectedVariant(props.variant)
-  }
+  const handleClickAddProduct = (props: {
+    product: IProduct;
+    variant: IVariant;
+  }) => {
+    setSelectedProduct(props.product);
+    setSelectedVariant(props.variant);
+  };
 
   const handleSubmitCreateCoupon = (data: any) => {
     createCouponMutation.mutate({
@@ -66,93 +74,109 @@ export const CreateCoupon = () => {
         amount: discountAmount,
         type: discountType,
       },
-      
     });
   };
   const handleClickRemoveProduct = () => {
     setSelectedProduct(null);
     setSelectedVariant(null);
-  }
+  };
   const handleChangeDiscountType = (discount: IDiscount) => {
     setDiscountType(discount.type);
     setDiscountAmount(discount.amount);
-
   };
   const handleCheckProduct = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowProductList(e.target.checked);
-  }
+  };
 
   return (
     <Card>
-    <form
-      onSubmit={handleSubmit(handleSubmitCreateCoupon)}
-      className="flex flex-col p-4 gap-10"
-    >
-      <div className='flex flex-row gap-4 w-full justify-between'>
-        <div className='flex flex-col gap-3'>
-          <FormFieldText
-            register={register}
-            errors={errors}
-            formKey="code"
-            label="Nombre del cupon:"
+      <form
+        onSubmit={handleSubmit(handleSubmitCreateCoupon)}
+        className="flex flex-col p-4 gap-10"
+      >
+        <div className="flex flex-row gap-4 w-full justify-between">
+          <div className="flex flex-col gap-3">
+            <FormFieldText
+              register={register}
+              errors={errors}
+              formKey="code"
+              label="Nombre del cupon:"
+            />
+            <label className="label">Fecha de expiracion:</label>
+            <input
+              type="date"
+              {...register('dueDate')}
+              className="w-full input-secondary"
+            />
+          </div>
+          <DiscountTypeControl
+            onChange={handleChangeDiscountType}
+            discountAmount={discountAmount}
+            discountType={discountType}
           />
-          <label className="label">Fecha de expiracion:</label>
-          <input type="date" {...register('dueDate')} className="w-full input-secondary" />
-        </div>
-        <DiscountTypeControl
-          onChange={handleChangeDiscountType}
-          discountAmount={discountAmount}
-          discountType={discountType}
-        />
 
-        <div className='flex flex-col'>
-          <FormFieldText
-            register={register}
-            errors={errors}
-            formKey="maxAmount"
-            label="Monto máximo:"
-          />
-          <FormFieldText
-            errors={errors}
-            register={register}
-            formKey="availableUses"
-            label="Cantidad de usos:"
-          />
+          <div className="flex flex-col">
+            <FormFieldText
+              register={register}
+              errors={errors}
+              formKey="maxAmount"
+              label="Monto máximo:"
+            />
+            <FormFieldText
+              errors={errors}
+              register={register}
+              formKey="availableUses"
+              label="Cantidad de usos:"
+            />
+          </div>
         </div>
-      </div>
-      <label className='label w-fit gap-2'>
-        <input type='checkbox' className='checkbox checkbox-primary' checked={showProductList} onChange={handleCheckProduct} /> Agregar un producto
-      </label>
-      <div className='flex flex-col items-end gap-4'>
-        <RenderIf condition={showProductList}>
-          <RenderIf condition={!selectedVariant}>
-            <SearchInput {...searchProps} />
-            <div className='flex flex-row overflow-x-scroll gap-5 p-5'>
-              {products.map((product) => (
-                <ProductItem key={product.id} product={product} onClick={handleClickAddProduct} />
-              ))}
-            </div>
-          </RenderIf>
-          <RenderIf condition={selectedVariant}>
-            <div className='flex flex-col p-3 border-2 gap-5 items-center'>
-              <div className='flex flex-row gap-5 justify-between items-center'>
-                <p className='font-bold'>
-                  {`${convertToEmoji(selectedProduct?.type)} ${selectedProduct?.name} ${selectedVariant?.name}`}
-                </p>
-                <button className='btn btn-error' onClick={handleClickRemoveProduct}>
-                  <MinusIcon className='w-3 h-3' />
-                </button>
+        <label className="label w-fit gap-2">
+          <input
+            type="checkbox"
+            className="checkbox checkbox-primary"
+            checked={showProductList}
+            onChange={handleCheckProduct}
+          />{' '}
+          Agregar un producto
+        </label>
+        <div className="flex flex-col items-end gap-4">
+          <RenderIf condition={showProductList}>
+            <RenderIf condition={!selectedVariant}>
+              <SearchInput {...searchProps} />
+              <div className="flex flex-row overflow-x-scroll gap-5 p-5">
+                {products.map((product) => (
+                  <ProductItem
+                    key={product.id}
+                    product={product}
+                    onClick={handleClickAddProduct}
+                  />
+                ))}
               </div>
-              <img src={selectedProduct?.image} className='w-min' />
-            </div>
+            </RenderIf>
+            <RenderIf condition={selectedVariant}>
+              <div className="flex flex-col p-3 border-2 gap-5 items-center">
+                <div className="flex flex-row gap-5 justify-between items-center">
+                  <p className="font-bold">
+                    {`${convertToEmoji(
+                      selectedProduct?.type,
+                    )} ${selectedProduct?.name} ${selectedVariant?.name}`}
+                  </p>
+                  <button
+                    className="btn btn-error"
+                    onClick={handleClickRemoveProduct}
+                  >
+                    <MinusIcon className="w-3 h-3" />
+                  </button>
+                </div>
+                <img src={selectedProduct?.image} className="w-min" />
+              </div>
+            </RenderIf>
           </RenderIf>
-        </RenderIf>
-        <button className="btn btn-square w-64 btn-primary" type="submit">
-          Crear cupon
-        </button>
-      </div>
-    </form>
+          <button className="btn btn-square w-64 btn-primary" type="submit">
+            Crear cupon
+          </button>
+        </div>
+      </form>
     </Card>
-
   );
 };
