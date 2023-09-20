@@ -15,9 +15,7 @@ interface IProps {
 }
 
 export default function Coupon({ coupon }: IProps) {
-
   const cancelCouponMutation = useCancelCouponMutation();
-
 
   function convertDiscount(discount: IDiscount) {
     switch (discount.type) {
@@ -30,9 +28,8 @@ export default function Coupon({ coupon }: IProps) {
     }
   }
 
-
   const handleCancelCupon = () => {
-    cancelCouponMutation.mutate(coupon.id!)
+    cancelCouponMutation.mutate(coupon.id!);
   };
 
   return (

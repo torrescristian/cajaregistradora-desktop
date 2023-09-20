@@ -14,7 +14,7 @@ export default function useOrderQuery() {
         'payments',
         'order.items.selectedVariant',
         'order.coupon',
-        'order.discount.amount'
+        'order.discount.amount',
       ],
     })) as unknown as ITicketResponse;
     return ticketResponse.results;

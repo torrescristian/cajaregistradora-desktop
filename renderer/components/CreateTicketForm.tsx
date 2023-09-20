@@ -49,7 +49,7 @@ export const CreateTicketForm = ({
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const [payments, setPayments] = useState<IPayment[]>([]);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  const [coupon, setCoupon] = useState<ICoupon |undefined>(order.coupon);
+  const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
 
   const finalTotalPrice = order.totalPrice - couponDiscount;
 
@@ -70,7 +70,6 @@ export const CreateTicketForm = ({
       discountAmount: order.discount?.amount || 0,
       discountType: order.discount?.type || DISCOUNT_TYPE.FIXED,
       totalPrice: order.totalPrice,
-      
     },
   });
 
@@ -83,14 +82,20 @@ export const CreateTicketForm = ({
         payments,
         couponDiscount,
       },
-      coupon : {
+      coupon: {
         id: coupon?.id,
         availableUses: coupon?.availableUses!,
-      }
+      },
     });
   };
 
-  const handleCouponDiscountAmount = ({couponDiscount,coupon} : {couponDiscount:number,coupon:ICoupon}) => {
+  const handleCouponDiscountAmount = ({
+    couponDiscount,
+    coupon,
+  }: {
+    couponDiscount: number;
+    coupon: ICoupon;
+  }) => {
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
   };

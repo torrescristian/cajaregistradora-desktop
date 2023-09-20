@@ -52,8 +52,8 @@ function parseOrderToPayLoad({
   clientId,
   subtotalPrice,
   discount,
-  coupon
-}: IProps): IOrder<number | undefined, IOrderItem<number, number>,number> {
+  coupon,
+}: IProps): IOrder<number | undefined, IOrderItem<number, number>, number> {
   return {
     items: items.map((item): IOrderItem<number, number> => {
       return {

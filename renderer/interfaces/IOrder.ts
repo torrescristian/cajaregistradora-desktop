@@ -13,7 +13,11 @@ export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
 }
 export type IOrderItemPayload = IOrderItem<number, number>;
 
-export interface IOrder<CLIENT = IClient, ORDER_ITEM = IOrderItem, COUPON = ICoupon> {
+export interface IOrder<
+  CLIENT = IClient,
+  ORDER_ITEM = IOrderItem,
+  COUPON = ICoupon,
+> {
   items: ORDER_ITEM[];
   id?: number;
   totalPrice: number;

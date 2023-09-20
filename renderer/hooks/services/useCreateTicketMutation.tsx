@@ -63,13 +63,13 @@ export default function useCreateTicketMutation() {
 
     const orderResPromise = strapi.update(getOrderQueryKey(), ticket.order, {
       status: ORDER_STATUS.PAID,
-      coupon: coupon?.id
+      coupon: coupon?.id,
     });
-    let couponRestPromise
+    let couponRestPromise;
     if (coupon?.id) {
-       couponRestPromise = strapi.update(getCouponQueryKey(), coupon.id, {
-        availableUses: coupon.availableUses - 1
-      } as Partial<ICoupon>)
+      couponRestPromise = strapi.update(getCouponQueryKey(), coupon.id, {
+        availableUses: coupon.availableUses - 1,
+      } as Partial<ICoupon>);
     }
 
     const newCashBalancePromise = strapi.update(
@@ -85,7 +85,7 @@ export default function useCreateTicketMutation() {
       ticketResPromise,
       orderResPromise,
       newCashBalancePromise,
-      couponRestPromise
+      couponRestPromise,
     ]);
     queryClient.invalidateQueries([getOrderQueryKey()]);
     queryClient.invalidateQueries([getTicketsQueryKey()]);

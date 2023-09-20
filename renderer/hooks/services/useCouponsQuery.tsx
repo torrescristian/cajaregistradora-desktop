@@ -39,11 +39,11 @@ export default function useCouponsQuery() {
   return useQuery<ICoupon[]>([getCouponQueryKey()], async () => {
     const resp = (await strapi.find(getCouponQueryKey(), {
       populate: ['discount', 'variant', 'variant.product'],
-      filters:{
+      filters: {
         availableUses: {
-          $gt:0
-        }
-      }
+          $gt: 0,
+        },
+      },
     })) as unknown as ICouponResponse;
     return parseCouponFacade(resp);
   });

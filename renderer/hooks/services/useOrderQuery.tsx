@@ -17,7 +17,7 @@ export default function useOrderQuery() {
         'discount',
         'payments',
         'items.selectedVariant',
-        'coupon'
+        'coupon',
       ],
     })) as unknown as IOrderResponse;
     return orderResponse.results;
