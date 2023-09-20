@@ -12,8 +12,15 @@ import { ORDER_STATUS } from '@/interfaces/IOrder';
 import useActiveCashBalanceQuery, {
   getCashBalanceKey,
 } from './useActiveCashBalanceQuery';
+import { getCouponQueryKey } from './useCouponsQuery';
+import { ICoupon } from '@/interfaces/ICoupon';
 
 type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
+
+interface IProps {
+  ticket: ICreateTicketMutation;
+  coupon?: Pick<ICoupon, 'id' | 'availableUses'>;
+}
 
 export default function useCreateTicketMutation() {
   const queryClient = useQueryClient();
@@ -36,7 +43,7 @@ export default function useCreateTicketMutation() {
     return Number(cashBalance.newCashAmount) + Number(cashPayment.amount);
   }
 
-  return useMutation(async (ticket: ICreateTicketMutation) => {
+  return useMutation(async ({ ticket, coupon }: IProps) => {
     await TicketPayloadSchema().validate(ticket);
     console.log(ticket.payments);
     const sum = ticket.payments.reduce(
@@ -56,7 +63,14 @@ export default function useCreateTicketMutation() {
 
     const orderResPromise = strapi.update(getOrderQueryKey(), ticket.order, {
       status: ORDER_STATUS.PAID,
+      coupon: coupon?.id,
     });
+    let couponRestPromise;
+    if (coupon?.id) {
+      couponRestPromise = strapi.update(getCouponQueryKey(), coupon.id, {
+        availableUses: coupon.availableUses - 1,
+      } as Partial<ICoupon>);
+    }
 
     const newCashBalancePromise = strapi.update(
       getCashBalanceKey(),
@@ -71,6 +85,7 @@ export default function useCreateTicketMutation() {
       ticketResPromise,
       orderResPromise,
       newCashBalancePromise,
+      couponRestPromise,
     ]);
     queryClient.invalidateQueries([getOrderQueryKey()]);
     queryClient.invalidateQueries([getTicketsQueryKey()]);

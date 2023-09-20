@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import ClientForm from './ClientForm';
 import {
   getAdditionalDetails,
@@ -20,6 +20,8 @@ import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
 import { IDiscount, IOrder, IOrderItem } from '@/interfaces/IOrder';
 import { useForm } from 'react-hook-form';
 import { DiscountTypeControl } from './DiscountTypeControl';
+import ValidateCoupon from './Coupons/ValidateCoupon';
+import { ICoupon } from '@/interfaces/ICoupon';
 
 interface IProps {
   updateMode?: boolean;
@@ -41,6 +43,11 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   const setDiscountAmount = useCartStore(getSetDiscountAmount);
   const discountType = useCartStore(getDiscountType);
   const discountAmount = useCartStore(getDiscountAmount);
+
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  const [coupon, setCoupon] = useState<ICoupon>();
+
+  const finalTotalPrice = order?.totalPrice! - couponDiscount;
 
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
@@ -68,6 +75,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
       clientId,
       subtotalPrice,
       discount: { amount: discountAmount!, type: discountType! },
+      coupon,
     });
   };
 
@@ -82,6 +90,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
         discount: { amount: discountAmount!, type: discountType! },
         items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
+        coupon,
       },
     });
   };
@@ -107,6 +116,17 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
 
   const handleClickConfirmOrder = () => {
     ref.current?.showModal();
+  };
+
+  const handleCouponDiscountAmount = ({
+    couponDiscount,
+    coupon,
+  }: {
+    couponDiscount: number;
+    coupon: ICoupon;
+  }) => {
+    setCouponDiscount(couponDiscount || 0);
+    setCoupon(coupon);
   };
 
   if (orderMutation.isLoading) {
@@ -153,6 +173,10 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
               onChange={handleChangeDiscountType}
               discountAmount={order?.discount?.amount}
               discountType={order?.discount?.type}
+            />
+            <ValidateCoupon
+              onChange={handleCouponDiscountAmount}
+              subtotalPrice={order?.subtotalPrice!}
             />
           </div>
         </section>

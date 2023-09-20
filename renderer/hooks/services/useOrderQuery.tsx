@@ -14,10 +14,10 @@ export default function useOrderQuery() {
         'client',
         'items.product',
         'items.product.image',
-
         'discount',
         'payments',
         'items.selectedVariant',
+        'coupon',
       ],
     })) as unknown as IOrderResponse;
     return orderResponse.results;

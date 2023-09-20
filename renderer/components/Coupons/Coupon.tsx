@@ -6,15 +6,17 @@ import {
 } from '@/libs/utils';
 import { DataItem } from '../DataItem';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
-import { format } from 'path';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { Card } from '../Card';
+import useCancelCouponMutation from '@/hooks/services/useCancelCouponMutation';
 
 interface IProps {
   coupon: ICoupon;
 }
 
 export default function Coupon({ coupon }: IProps) {
+  const cancelCouponMutation = useCancelCouponMutation();
+
   function convertDiscount(discount: IDiscount) {
     switch (discount.type) {
       case DISCOUNT_TYPE.FIXED:
@@ -26,7 +28,9 @@ export default function Coupon({ coupon }: IProps) {
     }
   }
 
-  const handleCancelCupon = () => {};
+  const handleCancelCupon = () => {
+    cancelCouponMutation.mutate(coupon.id!);
+  };
 
   return (
     <Card className="items-start gap-3">

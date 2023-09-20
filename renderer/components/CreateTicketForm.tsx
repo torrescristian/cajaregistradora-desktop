@@ -16,7 +16,7 @@ import { DataItem } from './DataItem';
 import { RenderIf } from './RenderIf';
 import { DISCOUNT_TYPE, IOrder } from '@/interfaces/IOrder';
 import { IPayment, PAYMENT_TYPE } from '@/interfaces/ITicket';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import OrderItem from './OrderItem';
 import Loader from './Loader';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
@@ -25,6 +25,7 @@ import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuer
 import { useState } from 'react';
 import Payments from './Payments';
 import ValidateCoupon from './Coupons/ValidateCoupon';
+import { ICoupon } from '@/interfaces/ICoupon';
 
 interface IProps {
   order: IOrder;
@@ -48,6 +49,7 @@ export const CreateTicketForm = ({
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const [payments, setPayments] = useState<IPayment[]>([]);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
 
   const finalTotalPrice = order.totalPrice - couponDiscount;
 
@@ -73,15 +75,29 @@ export const CreateTicketForm = ({
 
   const handleSubmitCreateTicket = () => {
     createTicketMutation.mutate({
-      order: order.id!,
-      totalPrice: finalTotalPrice,
-      cashBalance: activeCashBalanceQuery.cashBalance?.id!,
-      payments,
+      ticket: {
+        order: order.id!,
+        totalPrice: finalTotalPrice,
+        cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+        payments,
+        couponDiscount,
+      },
+      coupon: {
+        id: coupon?.id,
+        availableUses: coupon?.availableUses!,
+      },
     });
   };
 
-  const handleCouponDiscountAmount = (couponDiscount: number) => {
+  const handleCouponDiscountAmount = ({
+    couponDiscount,
+    coupon,
+  }: {
+    couponDiscount: number;
+    coupon: ICoupon;
+  }) => {
     setCouponDiscount(couponDiscount || 0);
+    setCoupon(coupon);
   };
 
   return (
@@ -172,6 +188,7 @@ export const CreateTicketForm = ({
           <ValidateCoupon
             subtotalPrice={order.subtotalPrice}
             onChange={handleCouponDiscountAmount}
+            coupon={coupon}
           />
           <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.FIXED}>
             <DataItem
