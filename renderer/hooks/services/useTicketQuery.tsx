@@ -13,6 +13,8 @@ export default function useOrderQuery() {
         'order.items.product',
         'payments',
         'order.items.selectedVariant',
+        'order.coupon',
+        'order.discount.amount'
       ],
     })) as unknown as ITicketResponse;
     return ticketResponse.results;

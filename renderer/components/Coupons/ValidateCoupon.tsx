@@ -4,14 +4,16 @@ import ErrorMessage from '../ErrorMessage';
 import { useDebounce } from 'use-debounce';
 import { RenderIf } from '../RenderIf';
 import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
+import { ICoupon } from '@/interfaces/ICoupon';
 
 interface IProps {
   subtotalPrice: number;
-  onChange: (couponDiscount: number) => void;
+  onChange: ({couponDiscount,coupon}: {couponDiscount:number, coupon: ICoupon}) => void;
+  coupon?: ICoupon;
 }
 
-const ValidateCoupon = ({ subtotalPrice, onChange }: IProps) => {
-  const [code, setCode] = useState('');
+const ValidateCoupon = ({ subtotalPrice, onChange,coupon }: IProps) => {
+  const [code, setCode] = useState(coupon?.code || '');
   const [error, setError] = useState('');
 
   const [couponDiscount, setCouponDiscount] = useState(0);
@@ -19,6 +21,8 @@ const ValidateCoupon = ({ subtotalPrice, onChange }: IProps) => {
   const [query] = useDebounce(code, 500);
 
   const couponByCodeQuery = useCouponByCodeQuery(query);
+
+
 
   const calcDiscount = () => {
     const { discount, maxAmount } = couponByCodeQuery.data!;
@@ -55,7 +59,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange }: IProps) => {
   }, [couponByCodeQuery.data]);
 
   useEffect(() => {
-    onChange(couponDiscount);
+    onChange({couponDiscount,coupon : couponByCodeQuery.data!});
   }, [couponDiscount]);
   const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCode(e.target.value);
@@ -65,7 +69,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange }: IProps) => {
     <section>
       <label className="text-primary-content">
         Cupon:{' '}
-        <input className="input input-bordered" onChange={handleChangeCode} />
+        <input className="input input-bordered" onChange={handleChangeCode} value={code} />
       </label>
       <RenderIf condition={error && query !== ''}>
         <ErrorMessage>{error}</ErrorMessage>

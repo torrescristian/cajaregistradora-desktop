@@ -5,6 +5,7 @@ import { DataItem } from './DataItem';
 import { getLabelByPaymentType } from './Payments/utils';
 import { Divider } from './Sale/Sale.styles';
 import { formatPrice } from '@/libs/utils';
+import { RenderIf } from './RenderIf';
 
 interface IMoreInfoModal {
   ticket: ITicket;
@@ -45,7 +46,34 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
               value={ticket.order.phoneNumber}
               defaultValue="Sin teléfono"
             />
+            <RenderIf condition={ticket.order.additionalDetails}>
+              <DataItem
+                label='detalles adicionales:'
+                value={ticket.order.additionalDetails}
+              />
+            </RenderIf>
             <Divider className="text-stone-500">Metodos de pago</Divider>
+            <DataItem
+              label='Subtotal:'
+              value={formatPrice(ticket.order.subtotalPrice)}
+            />
+            <RenderIf condition={ticket.order.coupon!}>
+              <DataItem
+                label='Nombre de cupon:'
+                value={ticket.order.coupon?.code}
+                defaultValue={ticket.order.coupon?.code}
+              />
+              <DataItem
+                label='Descuento del cupon:'
+                value={formatPrice(ticket.couponDiscount)}
+                defaultValue={'$0.00'} />
+            </RenderIf>
+            <RenderIf condition={ticket.order.discount!}>
+              <DataItem
+                label='Otros descuentos:'
+                value={formatPrice(ticket.order.discount?.amount!)}
+              />
+            </RenderIf>
             {ticket.payments.map((payment) => (
               <DataItem
                 key={payment.type}
@@ -65,6 +93,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
               />
             ))}
           </div>
+
           <div className="modal-action">
             <button className="btn">Cerrar</button>
           </div>

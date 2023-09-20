@@ -10,6 +10,7 @@ import strapi from '@/libs/strapi';
 import { useMutation } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
 import { useCartStore } from '@/contexts/CartStore';
+import { ICoupon } from '@/interfaces/ICoupon';
 
 interface IProps {
   items: ICartItem[];
@@ -18,6 +19,7 @@ interface IProps {
   clientId?: number | null;
   subtotalPrice: number;
   discount?: IDiscount;
+  coupon?: ICoupon;
 }
 
 export default function useCreateOrderMutation() {
@@ -50,7 +52,8 @@ function parseOrderToPayLoad({
   clientId,
   subtotalPrice,
   discount,
-}: IProps): IOrder<number | undefined, IOrderItem<number, number>> {
+  coupon
+}: IProps): IOrder<number | undefined, IOrderItem<number, number>,number> {
   return {
     items: items.map((item): IOrderItem<number, number> => {
       return {
@@ -66,6 +69,7 @@ function parseOrderToPayLoad({
     status: ORDER_STATUS.PENDING,
     subtotalPrice: subtotalPrice,
     discount: discount,
+    coupon: coupon?.id!,
   };
 }
 

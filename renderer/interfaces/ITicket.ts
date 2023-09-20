@@ -28,6 +28,7 @@ export interface ITicket<ORDER = IOrder, CASH_BALANCE = ICashBalance> {
   status: TICKET_STATUS;
   cashBalance: CASH_BALANCE;
   payments: IPayment[];
+  couponDiscount: number;
 }
 
 export type ITicketPayload = ITicket<number, number>;
