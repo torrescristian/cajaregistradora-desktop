@@ -17,10 +17,13 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
   };
   const cancelTicketMutation = useCancelTicketMutation();
 
-  const handleConfirmCancelTicket = () => {
+  const handleConfirmCancelTicket = (returnType: 'cash' | 'other') => () => {
     cancelTicketMutation.mutate({
       ticketId: ticket.id!,
       orderId: ticket.order.id!,
+      amountTicket: ticket.totalPrice,
+      cashBalance: ticket.cashBalance,
+      returnType,
     });
   };
 
@@ -45,12 +48,18 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
           <p className="text-stone-500">
             El ticket se va a eliminar permanentemente.
           </p>
-          <div className="modal-action">
+          <div className="modal-action gap-5 flex flex-col">
             <button
-              className="btn text-red-500 btn-link no-underline "
-              onClick={handleConfirmCancelTicket}
+              className="btn btn-error text-info-content"
+              onClick={handleConfirmCancelTicket('cash')}
             >
-              Reembolsar
+              Reembolsar Efectivo
+            </button>
+            <button
+              className="btn text-red-500 btn-link no-underline whitespace-nowrap"
+              onClick={handleConfirmCancelTicket('other')}
+            >
+              Reembolsar otras formas de pago
             </button>
             <button className="btn ">Mantener</button>
           </div>
