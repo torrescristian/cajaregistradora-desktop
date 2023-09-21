@@ -17,16 +17,15 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
   };
   const cancelTicketMutation = useCancelTicketMutation();
 
-
   const handleConfirmCancelTicket = (returnType: 'cash' | 'other') => () => {
-      cancelTicketMutation.mutate({
-        ticketId: ticket.id!,
-        orderId: ticket.order.id!,
-        amountTicket: ticket.totalPrice,
-        cashBalance: ticket.cashBalance,
-        returnType 
-      });
-    }
+    cancelTicketMutation.mutate({
+      ticketId: ticket.id!,
+      orderId: ticket.order.id!,
+      amountTicket: ticket.totalPrice,
+      cashBalance: ticket.cashBalance,
+      returnType,
+    });
+  };
 
   return (
     <>
@@ -56,7 +55,10 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
             >
               Reembolsar Efectivo
             </button>
-            <button className='btn text-red-500 btn-link no-underline whitespace-nowrap' onClick={handleConfirmCancelTicket('other')}>
+            <button
+              className="btn text-red-500 btn-link no-underline whitespace-nowrap"
+              onClick={handleConfirmCancelTicket('other')}
+            >
               Reembolsar otras formas de pago
             </button>
             <button className="btn ">Mantener</button>
