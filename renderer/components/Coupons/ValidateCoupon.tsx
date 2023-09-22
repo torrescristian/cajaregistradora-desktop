@@ -37,7 +37,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
     if (discount?.type === DISCOUNT_TYPE.PERC) {
       const discountAmount = (discount?.amount / 100) * subtotalPrice;
       setCouponDiscount(Math.min(discountAmount, maxAmount));
-      console.log({discountAmount,discount,subtotalPrice})
+      console.log({ discountAmount, discount, subtotalPrice });
       return;
     }
   };

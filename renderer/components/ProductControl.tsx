@@ -39,7 +39,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
   const createProductAndVariantMutation = useCreateProductAndVariantMutation();
   const { processSubmit } = useImageControl();
 
-
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as PRODUCT_TYPE;
     setProductType(value);
@@ -122,7 +121,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
           type="checkbox"
           className="checkbox checkbox-success"
           checked={isService}
-          onChange={handleChangeIsService}   
+          onChange={handleChangeIsService}
         />
         Es un servicio
       </label>

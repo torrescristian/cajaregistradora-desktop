@@ -17,7 +17,12 @@ import { ICartItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
-import { DISCOUNT_TYPE, IDiscount, IOrder, IOrderItem } from '@/interfaces/IOrder';
+import {
+  DISCOUNT_TYPE,
+  IDiscount,
+  IOrder,
+  IOrderItem,
+} from '@/interfaces/IOrder';
 import { useForm } from 'react-hook-form';
 import { DiscountTypeControl } from './DiscountTypeControl';
 import ValidateCoupon from './Coupons/ValidateCoupon';
@@ -38,7 +43,7 @@ interface IProps {
 }
 
 export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
-  const { } = useForm();
+  const {} = useForm();
 
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
@@ -56,7 +61,11 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   const [coupon, setCoupon] = useState<ICoupon>();
   const [payments, setPayments] = useState<IPayment[]>([]);
 
-  const finalTotalPrice = calcDiscount({ discountAmount, discountType, price: (order?.totalPrice || subtotalPrice) - couponDiscount })
+  const finalTotalPrice = calcDiscount({
+    discountAmount,
+    discountType,
+    price: (order?.totalPrice || subtotalPrice) - couponDiscount,
+  });
 
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
@@ -139,7 +148,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   }) => {
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
-    console.log(couponDiscount)
+    console.log(couponDiscount);
   };
 
   const handleChangePayments = (newPayments: IPayment[]) => {
@@ -147,22 +156,22 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   };
 
   const handleCreateTicket = async () => {
-    const sum = payments.reduce(
-      (acc, curr) => acc + Number(curr.amount),
-      0,
-    );
+    const sum = payments.reduce((acc, curr) => acc + Number(curr.amount), 0);
     if (sum !== finalTotalPrice) {
-      toast(`No se está cobrando correctamente (total: ${finalTotalPrice}, cobrando: ${sum})`, {
-        position: "top-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      return
+      toast(
+        `No se está cobrando correctamente (total: ${finalTotalPrice}, cobrando: ${sum})`,
+        {
+          position: 'top-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        },
+      );
+      return;
     }
 
     const [orderResp] = await orderMutation.mutateAsync({
