@@ -12,11 +12,6 @@ import { RenderIf } from '../RenderIf';
 import { ICouponPayload } from '@/interfaces/ICoupon';
 import { DiscountTypeControl } from '../DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
-import {
-  getSetDiscountAmount,
-  getSetDiscountType,
-  useCartStore,
-} from '@/contexts/CartStore';
 import { Card } from '../Card';
 
 export const CreateCoupon = () => {

@@ -17,11 +17,24 @@ import { ICartItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
-import { IDiscount, IOrder, IOrderItem } from '@/interfaces/IOrder';
+import {
+  DISCOUNT_TYPE,
+  IDiscount,
+  IOrder,
+  IOrderItem,
+} from '@/interfaces/IOrder';
 import { useForm } from 'react-hook-form';
 import { DiscountTypeControl } from './DiscountTypeControl';
 import ValidateCoupon from './Coupons/ValidateCoupon';
 import { ICoupon } from '@/interfaces/ICoupon';
+import Payments from './Payments';
+import { IPayment } from '@/interfaces/ITicket';
+import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
+import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
+import { calcDiscount, formatPrice } from '@/libs/utils';
+import { DataItem } from './DataItem';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IProps {
   updateMode?: boolean;
@@ -41,13 +54,18 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   const setAdditionalDetails = useCartStore(getSetAdditionalDetails);
   const setDiscountType = useCartStore(getSetDiscountType);
   const setDiscountAmount = useCartStore(getSetDiscountAmount);
-  const discountType = useCartStore(getDiscountType);
-  const discountAmount = useCartStore(getDiscountAmount);
+  const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
+  const discountAmount = useCartStore(getDiscountAmount) || 0;
 
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon>();
+  const [payments, setPayments] = useState<IPayment[]>([]);
 
-  const finalTotalPrice = order?.totalPrice! - couponDiscount;
+  const finalTotalPrice = calcDiscount({
+    discountAmount,
+    discountType,
+    price: (order?.totalPrice || subtotalPrice) - couponDiscount,
+  });
 
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
@@ -55,6 +73,9 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
       onSubmit?.();
     },
   });
+
+  const createTicketMutation = useCreateTicketMutation();
+  const activeCashBalanceQuery = useActiveCashBalanceQuery();
 
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -127,6 +148,53 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   }) => {
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
+    console.log(couponDiscount);
+  };
+
+  const handleChangePayments = (newPayments: IPayment[]) => {
+    setPayments(newPayments);
+  };
+
+  const handleCreateTicket = async () => {
+    const sum = payments.reduce((acc, curr) => acc + Number(curr.amount), 0);
+    if (sum !== finalTotalPrice) {
+      toast(
+        `No se está cobrando correctamente (total: ${finalTotalPrice}, cobrando: ${sum})`,
+        {
+          position: 'top-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        },
+      );
+      return;
+    }
+
+    const [orderResp] = await orderMutation.mutateAsync({
+      items,
+      totalPrice: finalTotalPrice,
+      additionalDetails,
+      clientId,
+      subtotalPrice,
+      discount: { amount: discountAmount!, type: discountType! },
+    });
+    createTicketMutation.mutate({
+      ticket: {
+        order: orderResp.data.id,
+        totalPrice: finalTotalPrice,
+        cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+        payments,
+        couponDiscount,
+      },
+      coupon: {
+        id: coupon?.id,
+        availableUses: coupon?.availableUses!,
+      },
+    });
   };
 
   if (orderMutation.isLoading) {
@@ -145,6 +213,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   return (
     /* FIXME: Quitar el stock del producto */
     <section>
+      <ToastContainer></ToastContainer>
       <div className="flex flex-row gap-3 w-full">
         <button className="btn btn-primary" onClick={handleClickConfirmOrder}>
           Pasar Orden
@@ -176,22 +245,33 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
             />
             <ValidateCoupon
               onChange={handleCouponDiscountAmount}
-              subtotalPrice={order?.subtotalPrice!}
+              subtotalPrice={order?.subtotalPrice! || subtotalPrice}
+              coupon={coupon}
+            />
+            <Payments onChange={handleChangePayments} />
+            <DataItem
+              label="Total:"
+              value={formatPrice(finalTotalPrice)}
+              defaultValue=""
+              className="text-2xl"
             />
           </div>
         </section>
-        <div className="flex flex-col w-full items-center pt-5">
+        <div className="flex flex-row  w-full justify-between pt-5">
           <button
-            onClick={handleSubmit}
-            className="btn sticky top-0 z-20 w-fit whitespace-nowrap bg-green-400 text-xl text-stone-50 hover:bg-green-600"
-          >
-            {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
-          </button>
-          <button
-            className="btn btn-link text-stone-50"
+            className="btn btn-link text-error"
             onClick={() => ref.current?.close()}
           >
             Cancelar
+          </button>
+          <button className="btn btn-info" onClick={handleCreateTicket}>
+            Finalizar venta
+          </button>
+          <button
+            onClick={handleSubmit}
+            className="btn sticky top-0 z-20 w-fit whitespace-nowrap btn-primary text-xl text-primary-content"
+          >
+            {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
           </button>
         </div>
       </dialog>

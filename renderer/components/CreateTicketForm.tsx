@@ -15,8 +15,8 @@ import {
 import { DataItem } from './DataItem';
 import { RenderIf } from './RenderIf';
 import { DISCOUNT_TYPE, IOrder } from '@/interfaces/IOrder';
-import { IPayment, PAYMENT_TYPE } from '@/interfaces/ITicket';
-import { set, useForm } from 'react-hook-form';
+import { IPayment } from '@/interfaces/ITicket';
+import { useForm } from 'react-hook-form';
 import OrderItem from './OrderItem';
 import Loader from './Loader';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
@@ -47,6 +47,7 @@ export const CreateTicketForm = ({
   const createTicketMutation = useCreateTicketMutation();
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
+
   const [payments, setPayments] = useState<IPayment[]>([]);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);

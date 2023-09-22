@@ -1,5 +1,5 @@
 import { ICartItem } from '@/interfaces/ICart';
-import { IOrder, IOrderItem, IOrderPayload } from '@/interfaces/IOrder';
+import { IOrder, IOrderItem } from '@/interfaces/IOrder';
 import IStockPerVariant, {
   IStockPerVariantPages,
 } from '@/interfaces/IStockPerVariant';

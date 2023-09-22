@@ -1,7 +1,4 @@
-import {
-  ICollapseTitle,
-  IComponent,
-} from '@/interfaces/ProductItem.interfaces';
+import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import useProductItem from '@/hooks/useProductItem';
 import { formatPrice } from '@/libs/utils';
 import { useState } from 'react';

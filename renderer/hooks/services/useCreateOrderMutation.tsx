@@ -1,6 +1,5 @@
 import { ICartItem } from '@/interfaces/ICart';
 import {
-  DISCOUNT_TYPE,
   IDiscount,
   IOrder,
   IOrderItem,

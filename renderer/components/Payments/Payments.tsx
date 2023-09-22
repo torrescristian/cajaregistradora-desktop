@@ -10,7 +10,7 @@ export default function Payments({ onChange }: IProps) {
   const [payments, setPayments] = useState<IPayment[]>([
     {
       amount: 0,
-      type: PAYMENT_TYPE.CREDIT,
+      type: PAYMENT_TYPE.CASH,
     },
   ]);
 

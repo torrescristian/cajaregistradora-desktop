@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import useCancelOrderMutation from './useCancelOrderMutation';
-import { IPayment, TICKET_STATUS } from '@/interfaces/ITicket';
+import { TICKET_STATUS } from '@/interfaces/ITicket';
 import strapi from '@/libs/strapi';
 import * as yup from 'yup';
 import { getTicketsQueryKey } from './useTicketQuery';
