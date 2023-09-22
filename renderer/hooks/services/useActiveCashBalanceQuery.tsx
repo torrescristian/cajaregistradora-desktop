@@ -39,7 +39,7 @@ export default function useActiveCashBalanceQuery() {
               $null: true,
             },
           },
-          populate: ['*'],
+          populate: ['seller'],
         })) as unknown as ICashBalancePage;
 
         if (!res) return null;

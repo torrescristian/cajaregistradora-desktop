@@ -1,9 +1,10 @@
 import useCancelTicketMutation from '@/hooks/services/useCancelTicketMutation';
-import { ITicket } from '@/interfaces/ITicket';
+import { ITicket, TICKET_STATUS } from '@/interfaces/ITicket';
 import { formatPrice } from '@/libs/utils';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import { DataItem } from './DataItem';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface IDeleteTicketModalProps {
   ticket: ITicket;
@@ -17,21 +18,40 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
   };
   const cancelTicketMutation = useCancelTicketMutation();
 
-  const handleConfirmCancelTicket = (returnType: 'cash' | 'other') => () => {
-    cancelTicketMutation.mutate({
-      ticketId: ticket.id!,
-      orderId: ticket.order.id!,
-      amountTicket: ticket.totalPrice,
-      cashBalance: ticket.cashBalance,
-      returnType,
-    });
-  };
+  const handleConfirmCancelTicket =
+    (returnType: 'cash' | 'other') => async () => {
+      try {
+        await cancelTicketMutation.mutateAsync({
+          ticketId: ticket.id!,
+          orderId: ticket.order.id!,
+          amountTicket: ticket.totalPrice,
+          cashBalance: ticket.cashBalance,
+          returnType,
+        });
+        toast.success('Reembolsado con exito');
+      } catch (error) {
+        toast.error(`No se logro reembolsar`);
+      }
+    };
 
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      ></ToastContainer>
       <button
         className="btn w-min btn-error"
         onClick={() => handleClickDeleteTicket()}
+        disabled={ticket.status === TICKET_STATUS.REFUNDED}
       >
         <TrashIcon className="h-5 text-white" />
       </button>

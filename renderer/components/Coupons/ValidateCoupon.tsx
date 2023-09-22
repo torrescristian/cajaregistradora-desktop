@@ -5,6 +5,7 @@ import { useDebounce } from 'use-debounce';
 import { RenderIf } from '../RenderIf';
 import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
 import { ICoupon } from '@/interfaces/ICoupon';
+import SuccessMessage from '../SuccessMessage';
 
 interface IProps {
   subtotalPrice: number;
@@ -79,26 +80,37 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
           value={code}
         />
       </label>
-      <RenderIf condition={error && query !== ''}>
-        <ErrorMessage>{error}</ErrorMessage>
-      </RenderIf>
-      <RenderIf condition={couponByCodeQuery.isSuccess && query && !error}>
-        <p className="text-primary-content">Cupón Valido</p>
-        <RenderIf
-          condition={
-            couponByCodeQuery.data?.discount?.type === DISCOUNT_TYPE.FIXED
-          }
-        >
-          <p>Descuento: ${couponByCodeQuery.data?.discount?.amount}</p>
+      <div className="flex flex-row w-full whitespace-nowrap justify-between">
+        <RenderIf condition={error && query !== ''}>
+          <ErrorMessage>{error}</ErrorMessage>
         </RenderIf>
-        <RenderIf
-          condition={
-            couponByCodeQuery.data?.discount?.type === DISCOUNT_TYPE.PERC
-          }
-        >
-          <p>Descuento: {couponByCodeQuery.data?.discount?.amount}%</p>
+        <RenderIf condition={couponByCodeQuery.isSuccess && query && !error}>
+          <RenderIf
+            condition={
+              couponByCodeQuery.data?.discount?.type === DISCOUNT_TYPE.FIXED
+            }
+          >
+            <SuccessMessage className="flex justify-between">
+              <div>Cupón Valido</div>
+              <div>
+                descuento de: ${couponByCodeQuery.data?.discount?.amount}
+              </div>
+            </SuccessMessage>
+          </RenderIf>
+          <RenderIf
+            condition={
+              couponByCodeQuery.data?.discount?.type === DISCOUNT_TYPE.PERC
+            }
+          >
+            <SuccessMessage className="flex justify-between">
+              <div>Cupón Valido</div>
+              <div>
+                descuento de: {couponByCodeQuery.data?.discount?.amount}%
+              </div>
+            </SuccessMessage>
+          </RenderIf>
         </RenderIf>
-      </RenderIf>
+      </div>
     </section>
   );
 };
