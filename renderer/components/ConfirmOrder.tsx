@@ -36,7 +36,7 @@ interface IProps {
 }
 
 export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
-  const { } = useForm();
+  const {} = useForm();
 
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
@@ -101,7 +101,6 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
         items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
         coupon,
-
       },
     });
   };
@@ -165,9 +164,8 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
         id: coupon?.id,
         availableUses: coupon?.availableUses!,
       },
-
     });
-  }
+  };
 
   if (orderMutation.isLoading) {
     return <Loader />;
@@ -219,9 +217,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
               subtotalPrice={order?.subtotalPrice!}
               coupon={coupon}
             />
-            <Payments
-              onChange={handleChangePayments}
-            />
+            <Payments onChange={handleChangePayments} />
             <DataItem
               label="Total:"
               value={formatPrice(finalTotalPrice)}
@@ -237,7 +233,9 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
           >
             Cancelar
           </button>
-          <button className='btn btn-info' onClick={handleCreateTicket}>Finalizar venta</button>
+          <button className="btn btn-info" onClick={handleCreateTicket}>
+            Finalizar venta
+          </button>
           <button
             onClick={handleSubmit}
             className="btn sticky top-0 z-20 w-fit whitespace-nowrap btn-primary text-xl text-primary-content"
