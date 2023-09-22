@@ -91,12 +91,10 @@ export const CreateTicketForm = ({
           availableUses: coupon?.availableUses!,
         },
       });
-      toast.success('Pagado con exito')
+      toast.success('Pagado con exito');
+    } catch (error) {
+      toast.error(`No se está cobrando correctamente`);
     }
-    catch (error) {
-      toast.error(`No se está cobrando correctamente`)
-    }
-
   };
 
   const handleCouponDiscountAmount = ({
@@ -125,7 +123,8 @@ export const CreateTicketForm = ({
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"></ToastContainer>
+        theme="colored"
+      ></ToastContainer>
       <div className="flex flex-row justify-between gap-3">
         <div className="flex flex-col">
           <p className="text-2xl font-bold">

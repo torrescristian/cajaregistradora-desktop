@@ -70,18 +70,15 @@ const ProductControl = ({ controlType, product }: IProps) => {
 
   const handleSubmitCreateProduct = async (data: IProductPayload) => {
     try {
-
       await createProductAndVariantMutation.mutateAsync({
         data,
         variants,
         defaultVariantIndex,
       });
-      toast.success('Producto creado correctamente')
+      toast.success('Producto creado correctamente');
+    } catch (error) {
+      toast.error(`No se logro crear el producto`);
     }
-    catch (error) {
-      toast.error(`No se logro crear el producto`)
-    }
-
   };
 
   return (

@@ -80,7 +80,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
           value={code}
         />
       </label>
-      <div className='flex flex-row w-full whitespace-nowrap justify-between'>
+      <div className="flex flex-row w-full whitespace-nowrap justify-between">
         <RenderIf condition={error && query !== ''}>
           <ErrorMessage>{error}</ErrorMessage>
         </RenderIf>
@@ -90,10 +90,8 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
               couponByCodeQuery.data?.discount?.type === DISCOUNT_TYPE.FIXED
             }
           >
-            <SuccessMessage className='flex justify-between'>
-              <div >
-                Cupón Valido
-              </div>
+            <SuccessMessage className="flex justify-between">
+              <div>Cupón Valido</div>
               <div>
                 descuento de: ${couponByCodeQuery.data?.discount?.amount}
               </div>
@@ -104,10 +102,8 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
               couponByCodeQuery.data?.discount?.type === DISCOUNT_TYPE.PERC
             }
           >
-            <SuccessMessage className='flex justify-between'>
-              <div>
-                Cupón Valido
-              </div>
+            <SuccessMessage className="flex justify-between">
+              <div>Cupón Valido</div>
               <div>
                 descuento de: {couponByCodeQuery.data?.discount?.amount}%
               </div>
@@ -115,8 +111,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
           </RenderIf>
         </RenderIf>
       </div>
-
-    </section >
+    </section>
   );
 };
 

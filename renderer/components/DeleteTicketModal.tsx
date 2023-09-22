@@ -18,21 +18,21 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
   };
   const cancelTicketMutation = useCancelTicketMutation();
 
-  const handleConfirmCancelTicket = (returnType: 'cash' | 'other') =>async() => {
-    try {
-      await cancelTicketMutation.mutateAsync({
-        ticketId: ticket.id!,
-        orderId: ticket.order.id!,
-        amountTicket: ticket.totalPrice,
-        cashBalance: ticket.cashBalance,
-        returnType,
-      });
-      toast.success('Reembolsado con exito')
-    }
-    catch (error) {
-      toast.error(`No se logro reembolsar`)
-    }
-  };
+  const handleConfirmCancelTicket =
+    (returnType: 'cash' | 'other') => async () => {
+      try {
+        await cancelTicketMutation.mutateAsync({
+          ticketId: ticket.id!,
+          orderId: ticket.order.id!,
+          amountTicket: ticket.totalPrice,
+          cashBalance: ticket.cashBalance,
+          returnType,
+        });
+        toast.success('Reembolsado con exito');
+      } catch (error) {
+        toast.error(`No se logro reembolsar`);
+      }
+    };
 
   return (
     <>
@@ -46,7 +46,8 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"></ToastContainer>
+        theme="colored"
+      ></ToastContainer>
       <button
         className="btn w-min btn-error"
         onClick={() => handleClickDeleteTicket()}
