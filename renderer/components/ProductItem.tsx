@@ -1,5 +1,4 @@
 import {
-  ICollapseTitle,
   IComponent,
 } from '@/interfaces/ProductItem.interfaces';
 import useProductItem from '@/hooks/useProductItem';

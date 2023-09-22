@@ -22,6 +22,12 @@ import { useForm } from 'react-hook-form';
 import { DiscountTypeControl } from './DiscountTypeControl';
 import ValidateCoupon from './Coupons/ValidateCoupon';
 import { ICoupon } from '@/interfaces/ICoupon';
+import Payments from './Payments';
+import { IPayment } from '@/interfaces/ITicket';
+import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
+import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
+import { formatPrice } from '@/libs/utils';
+import { DataItem } from './DataItem';
 
 interface IProps {
   updateMode?: boolean;
@@ -30,7 +36,7 @@ interface IProps {
 }
 
 export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
-  const {} = useForm();
+  const { } = useForm();
 
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
@@ -46,8 +52,9 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
 
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon>();
+  const [payments, setPayments] = useState<IPayment[]>([]);
 
-  const finalTotalPrice = order?.totalPrice! - couponDiscount;
+  const finalTotalPrice = (order?.totalPrice || subtotalPrice) - couponDiscount;
 
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
@@ -55,6 +62,9 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
       onSubmit?.();
     },
   });
+
+  const createTicketMutation = useCreateTicketMutation();
+  const activeCashBalanceQuery = useActiveCashBalanceQuery();
 
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -91,6 +101,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
         items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
         coupon,
+
       },
     });
   };
@@ -128,6 +139,35 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
   };
+
+  const handleChangePayments = (newPayments: IPayment[]) => {
+    setPayments(newPayments);
+  };
+
+  const handleCreateTicket = async () => {
+    const [orderResp] = await orderMutation.mutateAsync({
+      items,
+      totalPrice,
+      additionalDetails,
+      clientId,
+      subtotalPrice,
+      discount: { amount: discountAmount!, type: discountType! },
+    });
+    createTicketMutation.mutate({
+      ticket: {
+        order: orderResp.data.id,
+        totalPrice: finalTotalPrice,
+        cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+        payments,
+        couponDiscount,
+      },
+      coupon: {
+        id: coupon?.id,
+        availableUses: coupon?.availableUses!,
+      },
+
+    });
+  }
 
   if (orderMutation.isLoading) {
     return <Loader />;
@@ -177,21 +217,32 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
             <ValidateCoupon
               onChange={handleCouponDiscountAmount}
               subtotalPrice={order?.subtotalPrice!}
+              coupon={coupon}
+            />
+            <Payments
+              onChange={handleChangePayments}
+            />
+            <DataItem
+              label="Total:"
+              value={formatPrice(finalTotalPrice)}
+              defaultValue=""
+              className="text-2xl"
             />
           </div>
         </section>
-        <div className="flex flex-col w-full items-center pt-5">
+        <div className="flex flex-row  w-full justify-between pt-5">
           <button
-            onClick={handleSubmit}
-            className="btn sticky top-0 z-20 w-fit whitespace-nowrap bg-green-400 text-xl text-stone-50 hover:bg-green-600"
-          >
-            {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
-          </button>
-          <button
-            className="btn btn-link text-stone-50"
+            className="btn btn-link text-error"
             onClick={() => ref.current?.close()}
           >
             Cancelar
+          </button>
+          <button className='btn btn-info' onClick={handleCreateTicket}>Finalizar venta</button>
+          <button
+            onClick={handleSubmit}
+            className="btn sticky top-0 z-20 w-fit whitespace-nowrap btn-primary text-xl text-primary-content"
+          >
+            {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
           </button>
         </div>
       </dialog>
