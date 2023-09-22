@@ -17,7 +17,7 @@ import { ICartItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
-import { IDiscount, IOrder, IOrderItem } from '@/interfaces/IOrder';
+import { DISCOUNT_TYPE, IDiscount, IOrder, IOrderItem } from '@/interfaces/IOrder';
 import { useForm } from 'react-hook-form';
 import { DiscountTypeControl } from './DiscountTypeControl';
 import ValidateCoupon from './Coupons/ValidateCoupon';
@@ -26,8 +26,10 @@ import Payments from './Payments';
 import { IPayment } from '@/interfaces/ITicket';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
-import { formatPrice } from '@/libs/utils';
+import { calcDiscount, formatPrice } from '@/libs/utils';
 import { DataItem } from './DataItem';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IProps {
   updateMode?: boolean;
@@ -36,7 +38,7 @@ interface IProps {
 }
 
 export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
-  const {} = useForm();
+  const { } = useForm();
 
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
@@ -47,14 +49,14 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   const setAdditionalDetails = useCartStore(getSetAdditionalDetails);
   const setDiscountType = useCartStore(getSetDiscountType);
   const setDiscountAmount = useCartStore(getSetDiscountAmount);
-  const discountType = useCartStore(getDiscountType);
-  const discountAmount = useCartStore(getDiscountAmount);
+  const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
+  const discountAmount = useCartStore(getDiscountAmount) || 0;
 
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon>();
   const [payments, setPayments] = useState<IPayment[]>([]);
 
-  const finalTotalPrice = (order?.totalPrice || subtotalPrice) - couponDiscount;
+  const finalTotalPrice = calcDiscount({ discountAmount, discountType, price: (order?.totalPrice || subtotalPrice) - couponDiscount })
 
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
@@ -137,6 +139,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   }) => {
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
+    console.log(couponDiscount)
   };
 
   const handleChangePayments = (newPayments: IPayment[]) => {
@@ -144,9 +147,27 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   };
 
   const handleCreateTicket = async () => {
+    const sum = payments.reduce(
+      (acc, curr) => acc + Number(curr.amount),
+      0,
+    );
+    if (sum !== finalTotalPrice) {
+      toast(`No se está cobrando correctamente (total: ${finalTotalPrice}, cobrando: ${sum})`, {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+
     const [orderResp] = await orderMutation.mutateAsync({
       items,
-      totalPrice,
+      totalPrice: finalTotalPrice,
       additionalDetails,
       clientId,
       subtotalPrice,
@@ -183,6 +204,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
   return (
     /* FIXME: Quitar el stock del producto */
     <section>
+      <ToastContainer></ToastContainer>
       <div className="flex flex-row gap-3 w-full">
         <button className="btn btn-primary" onClick={handleClickConfirmOrder}>
           Pasar Orden
@@ -214,7 +236,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
             />
             <ValidateCoupon
               onChange={handleCouponDiscountAmount}
-              subtotalPrice={order?.subtotalPrice!}
+              subtotalPrice={order?.subtotalPrice! || subtotalPrice}
               coupon={coupon}
             />
             <Payments onChange={handleChangePayments} />

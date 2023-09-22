@@ -12,8 +12,8 @@ export const Selector = ({ defaultValue, onChange, values }: IProps) => {
         onChange={onChange}
         defaultValue={defaultValue}
       >
-        {values.map(({ label, value }) => (
-          <option key={value} value={value}>
+        {values.map(({ label, value },index) => (
+          <option key={index} value={value}>
             {label}
           </option>
         ))}

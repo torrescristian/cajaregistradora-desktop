@@ -28,16 +28,17 @@ const ProductControl = ({ controlType, product }: IProps) => {
       name: product?.name || '',
       type: product?.type,
       image: product?.image || '',
-      isService: product?.isService || true,
+      isService: product?.isService || false,
     },
   });
 
-  // we need to create this control apart of react-hook-form
-  // because we need the reactivity of the selector to change the variant table
   const [productType, setProductType] = useState<PRODUCT_TYPE>('PIZZA');
   const [isService, setIsService] = useState(false);
   const [variants, setVariants] = useState<IVariantPayload[]>([]);
   const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
+  const createProductAndVariantMutation = useCreateProductAndVariantMutation();
+  const { processSubmit } = useImageControl();
+
 
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as PRODUCT_TYPE;
@@ -45,14 +46,10 @@ const ProductControl = ({ controlType, product }: IProps) => {
     setValue('type', value);
   };
   const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = !isService;
+    const newValue = e.target.checked;
     setIsService(newValue);
     setValue('isService', newValue);
   };
-
-  const createProductAndVariantMutation = useCreateProductAndVariantMutation();
-
-  const { processSubmit } = useImageControl();
 
   const handleClickSubmit = (data: IProductPayload) => {
     if (controlType === 'CREATE') {
@@ -61,12 +58,8 @@ const ProductControl = ({ controlType, product }: IProps) => {
   };
 
   const handleSubmitWrapper = async (e: any) => {
-    // 1. cargar imagen & obtener la url
     const imageName = await processSubmit(e);
-
-    // 2. procesar el react-hook-form para obtener la data
     handleSubmit((data: any) => {
-      // ...se crea data...
       handleClickSubmit({
         ...data,
         image: imageName,
@@ -128,8 +121,8 @@ const ProductControl = ({ controlType, product }: IProps) => {
         <input
           type="checkbox"
           className="checkbox checkbox-success"
-          checked={!isService}
-          onChange={handleChangeIsService}
+          checked={isService}
+          onChange={handleChangeIsService}   
         />
         Es un servicio
       </label>

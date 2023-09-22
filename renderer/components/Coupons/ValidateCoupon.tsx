@@ -37,6 +37,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
     if (discount?.type === DISCOUNT_TYPE.PERC) {
       const discountAmount = (discount?.amount / 100) * subtotalPrice;
       setCouponDiscount(Math.min(discountAmount, maxAmount));
+      console.log({discountAmount,discount,subtotalPrice})
       return;
     }
   };
@@ -53,7 +54,6 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
       setError('Este cupón ya se encuentra usado');
       return;
     }
-    console.log(couponByCodeQuery.data.dueDate);
     if (Number(new Date(couponByCodeQuery.data.dueDate)) < Date.now()) {
       setError('Este cupón ya expiro');
       return;

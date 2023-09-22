@@ -106,13 +106,13 @@ export default function CreateVariantsTable({
                 </td>
                 <td>
                   {isService ? (
+                    'Sin control de stock'
+                  ) : (
                     <input
                       className="input input-bordered"
                       value={stock_per_variant}
                       onChange={handleChangeVariantStock(index)}
                     />
-                  ) : (
-                    'Sin control de stock'
                   )}
                 </td>
                 <td>
