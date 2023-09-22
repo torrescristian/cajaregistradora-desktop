@@ -1,7 +1,7 @@
 import { IVariantPayload } from '@/interfaces/IProduct';
 import { ISingleFixedNativeResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export interface IUseCreateVariantMutationProps {
   name: string;
@@ -10,8 +10,10 @@ export interface IUseCreateVariantMutationProps {
   stock: number;
   isDefaultVariant: boolean;
 }
+export const getStockPerVariantsKey = () => 'stock-per-variants';
 
 export default function useCreateVariantMutation() {
+  const queryClient = useQueryClient();
   return useMutation(
     async ({
       name,
@@ -21,7 +23,7 @@ export default function useCreateVariantMutation() {
       isDefaultVariant,
     }: IUseCreateVariantMutationProps) => {
       const stockPerVariant = await strapi.create<{ id: number }>(
-        'stock-per-variants',
+        getStockPerVariantsKey(),
         {
           stock,
         },
@@ -43,6 +45,7 @@ export default function useCreateVariantMutation() {
           default_variant: res.data.id,
         });
       }
+      queryClient.invalidateQueries([getStockPerVariantsKey()]);
       return res;
     },
   );

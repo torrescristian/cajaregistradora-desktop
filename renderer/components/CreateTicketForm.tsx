@@ -26,6 +26,8 @@ import { useState } from 'react';
 import Payments from './Payments';
 import ValidateCoupon from './Coupons/ValidateCoupon';
 import { ICoupon } from '@/interfaces/ICoupon';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IProps {
   order: IOrder;
@@ -74,20 +76,27 @@ export const CreateTicketForm = ({
     },
   });
 
-  const handleSubmitCreateTicket = () => {
-    createTicketMutation.mutate({
-      ticket: {
-        order: order.id!,
-        totalPrice: finalTotalPrice,
-        cashBalance: activeCashBalanceQuery.cashBalance?.id!,
-        payments,
-        couponDiscount,
-      },
-      coupon: {
-        id: coupon?.id,
-        availableUses: coupon?.availableUses!,
-      },
-    });
+  const handleSubmitCreateTicket = async () => {
+    try {
+      await createTicketMutation.mutateAsync({
+        ticket: {
+          order: order.id!,
+          totalPrice: finalTotalPrice,
+          cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+          payments,
+          couponDiscount,
+        },
+        coupon: {
+          id: coupon?.id,
+          availableUses: coupon?.availableUses!,
+        },
+      });
+      toast.success('Pagado con exito')
+    }
+    catch (error) {
+      toast.error(`No se está cobrando correctamente`)
+    }
+
   };
 
   const handleCouponDiscountAmount = ({
@@ -106,6 +115,17 @@ export const CreateTicketForm = ({
       className="flex w-full h-full flex-col gap-5"
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"></ToastContainer>
       <div className="flex flex-row justify-between gap-3">
         <div className="flex flex-col">
           <p className="text-2xl font-bold">
@@ -134,13 +154,6 @@ export const CreateTicketForm = ({
       </div>
 
       <div className="flex flex-col">
-        {createTicketMutation.isError ? (
-          <div className="alert alert-error toast toast-center toast-top mt-10 w-fit">
-            <p className="text-error-content">
-              {getErrorMessage(createTicketMutation)}
-            </p>
-          </div>
-        ) : null}
         <datalist className="flex flex-col gap-4">
           <p className="flex flex-row items-center gap-3 ">
             {' '}
