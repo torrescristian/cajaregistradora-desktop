@@ -21,11 +21,10 @@ export default function useCreateProductAndVariantMutation() {
         getProductsQueryKey(),
         data,
       )) as ISingleFixedNativeResponse<IProductPayload>;
-      console.log(
-        '🚀 ~ file: useCreateProductMutation.tsx:8 ~ returnuseMutation ~ res:',
-        res,
-      );
-      for (const index in variants) {
+
+      const validVariants = variants.filter((v) => v.name.trim());
+
+      for (const index in validVariants) {
         const variant = variants[index];
 
         createVariantMutation.mutate({

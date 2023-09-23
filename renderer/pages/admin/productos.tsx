@@ -20,11 +20,11 @@ const Productos = () => {
   const isMobile = useIsMobile();
 
   return (
-    <PageLayout className="max-w-full">
+    <PageLayout className="w-full">
       <div className="flex flex-row justify-between w-full">
+        <h1 className="text-2xl whitespace-nowrap">Reabastecer & Actualizar</h1>
         {/* FIXME: filter */}
         <SearchInput {...searchProps} disableFilter />
-        <h1 className="text-2xl whitespace-nowrap">Reabastecer & Actualizar</h1>
       </div>
       <section className="flex w-full">
         {isMobile ? (

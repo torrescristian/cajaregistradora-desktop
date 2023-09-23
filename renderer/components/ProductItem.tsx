@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Card } from './Card';
 import { Selector } from './Selector';
 import { IProduct, IVariant } from '@/interfaces/IProduct';
+import { RenderIf } from './RenderIf';
 
 const Text = ({ children }: IComponent) => {
   return (
@@ -71,20 +72,21 @@ const ProductItem = ({ product, onClick }: IProps) => {
           <div className="flex flex-row h-32 items-center">
             <img src={product.image} className="w-1/2 h-fit" />
             <div className="flex flex-col items-center justify-around w-1/2 ">
-              <Selector
-                onChange={handleChangeVariant}
-                defaultValue={product.default_variant.name}
-                values={product.variants.map((variant) => ({
-                  label: variant.name,
-                  value: variant.name,
-                }))}
-              />
+              <RenderIf condition={product.variants.length}>
+                <Selector
+                  onChange={handleChangeVariant}
+                  defaultValue={product.default_variant.name}
+                  values={product.variants.map((variant) => ({
+                    label: variant.name,
+                    value: variant.name,
+                  }))}
+                />
+              </RenderIf>
               <HighlightedText>
                 {formatPrice(selectedVariant.price)}
               </HighlightedText>
             </div>
           </div>
-
           <section className="flex w-full justify-around items-center">
             <Text>
               {product.isService ? (
