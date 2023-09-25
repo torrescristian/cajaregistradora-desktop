@@ -48,9 +48,9 @@ export default function print({ items, createdAt, id, totalAmount }: IProps) {
           .println(item.product.name)
           .align('RT')
           .println(
-            `${formatPrice(item.product.price)} x ${
+            `${formatPrice(item.selectedVariant.price)} x ${
               item.quantity
-            } = ${formatPrice(item.product.price * item.quantity)}`,
+            } = ${formatPrice(item.selectedVariant.price * item.quantity)}`,
           );
       }
 
