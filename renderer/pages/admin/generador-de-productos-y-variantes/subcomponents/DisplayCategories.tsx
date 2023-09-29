@@ -1,8 +1,8 @@
-import { ICategoryUI } from '@/hooks/useCategories';
+import { ICategory } from '@/hooks/useCategories';
 import { TrashIcon } from '@heroicons/react/24/solid';
 
 interface IDisplayCategoriesProps {
-  categories: ICategoryUI[];
+  categories: ICategory[];
   handleChangeRemoveCategory: (id: number) => () => void;
 }
 

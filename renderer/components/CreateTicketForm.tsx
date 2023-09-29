@@ -1,6 +1,5 @@
 import {
   formatPrice,
-  getErrorMessage,
   parseDateToArgentinianFormat,
 } from '@/libs/utils';
 import {

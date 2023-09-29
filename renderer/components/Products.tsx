@@ -31,7 +31,7 @@ const Products = () => {
     <section className="w-full">
       <Divider>Productos</Divider>
       <Fixed>
-        <SearchInput {...searchProps} />
+        <SearchInput  {...searchProps} /> 
         <ProductTypes
           onSelect={setSelectedProductType}
           selectedProductType={selectedProductType}

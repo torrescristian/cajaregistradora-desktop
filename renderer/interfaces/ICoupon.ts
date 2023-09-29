@@ -1,5 +1,6 @@
 import { IDiscount } from './IOrder';
-import { IProduct, IVariant, PRODUCT_TYPE } from './IProduct';
+import { IProduct, PRODUCT_TYPE } from './IProduct';
+import { IVariant } from './IVariants';
 import { IFixedNativeResponse, ISingleFixedNativeResponse } from './utils';
 
 export interface IPartialVariant {

@@ -3,12 +3,12 @@ import { getErrorMessage, getUrlFromImage } from '@/libs/utils';
 import {
   IProduct,
   IProductPage,
-  IVariant,
   PRODUCT_TYPE,
 } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { IVariant } from '@/interfaces/IVariants';
 
 export const getProductsQueryKey = () => 'products';
 
@@ -69,10 +69,9 @@ export default function useProductsQuery({
       try {
         let options: any = {
           populate: [
-            'categories',
+            
             'variants',
             'variants.categories',
-            'variants.categories.parent',
             'variants.stock_per_variant',
             'image',
             'default_variant',
@@ -86,6 +85,14 @@ export default function useProductsQuery({
           options.filters = {
             type: selectedProductType,
           };
+        }
+        if (query){
+          options.filters = {
+            ...options.filters,
+            name: {
+              $containsi: query
+            }
+          }
         }
 
         const res = (await strapi.find(

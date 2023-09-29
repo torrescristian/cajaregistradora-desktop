@@ -1,5 +1,7 @@
-import { IVariantPayload, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IVariantPayload } from '@/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
+import { RenderIf } from './RenderIf';
 
 interface IProps {
   selectedType: PRODUCT_TYPE;
@@ -48,6 +50,14 @@ export default function CreateVariantsTable({
       setVariants(newVariants);
     };
 
+  const handleChangeMinimumStock = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVariants = [...variants];
+    const newStockMin = Number(e.target.value);
+    if (isNaN(newStockMin) && e.target.value !== '') return;
+    newVariants[index].minimum_stock = newStockMin;
+    setVariants(newVariants);
+  }
+
   const handleClickAddVariant = (e: any) => {
     e.preventDefault();
     const newVariants = [...variants];
@@ -56,7 +66,9 @@ export default function CreateVariantsTable({
       price: 0,
       stock_per_variant: 0,
       product: 0,
-    });
+      minimum_stock: 0,
+    }
+    );
     setVariants(newVariants);
   };
 
@@ -66,25 +78,31 @@ export default function CreateVariantsTable({
     setVariants(newVariants);
   };
 
+
   return (
-    <div className="overflow-x-auto w-full justify-center flex flex-col items-center gap-4">
-      <table className="table table-zebra w-full">
-        <thead>
+    <div className="overflow-x-auto w-full justify-center flex flex-col items-center gap-4 p-4">
+      <table className="table table-zebra">
+        <thead >
           <tr>
             <th>Variante inicial</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
+            <RenderIf condition={isService}>
+            </RenderIf>
+            <RenderIf condition={!isService}>
+              <th>Alerta de stock faltante</th>
+            </RenderIf>
           </tr>
         </thead>
         <tbody>
           {variants.map(
-            ({ name, price, product, stock_per_variant }, index) => (
+            ({ name, price, product, stock_per_variant, minimum_stock }, index) => (
               <tr key={index}>
                 <td>
                   <input
                     type="radio"
-                    className="input radio"
+                    className="input radio w-3"
                     onChange={handleChangeDefaultVariant(index)}
                     checked={index === defaultVariantIndex}
                   />
@@ -92,13 +110,13 @@ export default function CreateVariantsTable({
                 <td>
                   <input
                     value={name}
-                    className="input input-bordered"
+                    className="input input-bordered w-44"
                     onChange={handleChangeVariantName(index)}
                   />
                 </td>
                 <td>
                   <input
-                    className="input input-bordered"
+                    className="input input-bordered w-32"
                     type="number"
                     value={price}
                     onChange={handleChangeVariantPrice(index)}
@@ -109,12 +127,21 @@ export default function CreateVariantsTable({
                     'Sin control de stock'
                   ) : (
                     <input
-                      className="input input-bordered"
+                      className="input input-bordered w-32"
                       value={stock_per_variant}
                       onChange={handleChangeVariantStock(index)}
                     />
                   )}
                 </td>
+                <RenderIf condition={!isService}>
+                  <td>
+                    <input
+                      className='input input-bordered w-32'
+                      value={minimum_stock}
+                      onChange={handleChangeMinimumStock(index)}
+                    />
+                  </td>
+                </RenderIf>
                 <td>
                   <button
                     className="btn btn-error text-stone-50"
