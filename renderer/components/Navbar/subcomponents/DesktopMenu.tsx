@@ -46,6 +46,11 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                       Crear cupones
                     </NavButton>
                   </li>
+                  <li>
+                    <NavButton className="w-full" href="/admin/promo">
+                      Promos
+                    </NavButton>
+                  </li>
                 </>
               ) : null}
               <li>

@@ -1,4 +1,4 @@
-import IStockPerVariant from './IStockPerVariant';
+import { IVariant } from './IVariants';
 import { IResponsePage } from './utils';
 
 export interface IAditionalPrice {
@@ -7,23 +7,10 @@ export interface IAditionalPrice {
   amount: number;
 }
 
-export interface IVariant<
-  STOCK_PER_VARIANT = IStockPerVariant,
-  PRODUCT = number,
-> {
-  id?: number;
-  product: PRODUCT;
-  stock_per_variant: STOCK_PER_VARIANT;
-  price: number;
-  name: string;
-}
-
-export type IVariantPayload = IVariant<number>;
-
-export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant> {
+export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant[]> {
   id?: number;
   name: string;
-  variants: VARIANTS[];
+  variants: VARIANTS;
   store: number;
   isService: boolean;
   default_variant: DEFAULT_VARIANT;
@@ -34,7 +21,6 @@ export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant> {
 }
 
 export type IProductPage = IResponsePage<IProduct<IVariant>>;
-
 export interface IProductUpdate {
   data: Partial<IProduct>;
 }

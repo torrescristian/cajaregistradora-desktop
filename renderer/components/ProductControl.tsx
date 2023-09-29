@@ -1,16 +1,12 @@
 import FormFieldText from '@/components/FormFieldText';
 import { useForm } from 'react-hook-form';
-import {
-  IProduct,
-  IProductPayload,
-  IVariantPayload,
-  PRODUCT_TYPE,
-} from '@/interfaces/IProduct';
+import { IProduct, IProductPayload, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { useImageControl } from '@/hooks/useImageControl';
 import CreateVariantsTable from '@/components/CreateVariantsTable';
 import { useState } from 'react';
 import useCreateProductAndVariantMutation from '@/hooks/services/useCreateProductAndVariantMutation';
 import { ToastContainer, toast } from 'react-toastify';
+import { IVariantPayload } from '@/interfaces/IVariants';
 
 interface IProps {
   controlType: 'CREATE' | 'UPDATE';
@@ -25,7 +21,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
     setValue,
   } = useForm<IProductPayload>({
     defaultValues: {
-      variants: [],
       name: product?.name || '',
       type: product?.type,
       image: product?.image || '',

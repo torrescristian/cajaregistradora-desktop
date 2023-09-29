@@ -28,7 +28,7 @@ const ProductRow = ({ product }: IProps) => {
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
-      stock: product.default_variant.stock_per_variant.stock,
+      stock: product.default_variant.stock_per_variant?.stock,
       price: product.default_variant.price,
     },
   });

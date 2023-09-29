@@ -1,46 +1,16 @@
 import { IProduct } from './IProduct';
-import { INativeResponse, IPayload, IResponsePage } from './utils';
+import { IVariant } from './IVariants';
+import { IFixedNativeResponse, IPayload, IResponsePage } from './utils';
 
-export interface ICategory {
-  id: number;
+export interface ICategory<VARIANT = IVariant<null, IProduct>[]> {
+  id?: number;
   name: string;
-  products: IProduct[];
-  store: number;
-  parent: ICategory;
-  childrens: ICategory[];
-  emoji: string;
+  variants: VARIANT;
+  store?: number;
 }
 
-export interface ICategoryField {
-  id: number;
-  attributes: Omit<ICategory, 'id'>;
-}
-
-export interface ICategoryFieldPopulate {
-  id: number;
-  attributes: {
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-    products: {
-      data: IProduct[];
-    };
-    store: {
-      data: any;
-    };
-    parent: {
-      data: ICategoryFieldPopulate | null;
-    };
-    children: {
-      data: ICategoryFieldPopulate[];
-    };
-  };
-}
-
-export type ICategoryPayload = IPayload<ICategory>;
+export type ICategoryPayload = ICategory<number[]>;
 
 export type ICategoryPage = IResponsePage<ICategory>;
 
-export type ICategoryResponse = INativeResponse<ICategoryField>;
-
-export type ICategoryResponsePopulate = INativeResponse<ICategoryFieldPopulate>;
+export type ICategoryResponse = IFixedNativeResponse<ICategory>;

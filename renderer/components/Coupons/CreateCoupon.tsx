@@ -3,7 +3,7 @@ import FormFieldText from '../FormFieldText';
 import useCreateCouponMutation from '@/hooks/services/useCreateCouponMutation';
 import { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
-import { IProduct, IVariant, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ProductItem from '../ProductItem';
 import { convertToEmoji } from '@/libs/utils';
@@ -13,6 +13,7 @@ import { ICouponPayload } from '@/interfaces/ICoupon';
 import { DiscountTypeControl } from '../DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { Card } from '../Card';
+import { IVariant } from '@/interfaces/IVariants';
 
 export const CreateCoupon = () => {
   const {

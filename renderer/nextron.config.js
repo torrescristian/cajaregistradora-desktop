@@ -6,7 +6,7 @@ module.exports = {
         __dirname: true,
       };
     }
-    
+
     config.output.globalObject = 'this';
 
     return config;

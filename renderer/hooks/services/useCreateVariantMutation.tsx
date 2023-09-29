@@ -1,4 +1,4 @@
-import { IVariantPayload } from '@/interfaces/IProduct';
+import { IVariantPayload } from '@/interfaces/IVariants';
 import { ISingleFixedNativeResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ export interface IUseCreateVariantMutationProps {
   product: number;
   stock: number;
   isDefaultVariant: boolean;
+  minimum_stock: number;
 }
 export const getStockPerVariantsKey = () => 'stock-per-variants';
 
@@ -21,6 +22,7 @@ export default function useCreateVariantMutation() {
       product,
       stock,
       isDefaultVariant,
+      minimum_stock,
     }: IUseCreateVariantMutationProps) => {
       const stockPerVariant = await strapi.create<{ id: number }>(
         getStockPerVariantsKey(),
@@ -34,6 +36,7 @@ export default function useCreateVariantMutation() {
         name: name,
         product,
         stock_per_variant: stockPerVariant.data.id,
+        minimum_stock: minimum_stock,
       };
 
       const res = (await strapi.create(

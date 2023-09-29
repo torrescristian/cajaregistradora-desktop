@@ -1,6 +1,7 @@
 import { ICartItem, ICartState } from '@/interfaces/ICart';
 import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
-import { IProduct, IVariant } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
+import { IVariant } from '@/interfaces/IVariants';
 import { calcDiscount } from '@/libs/utils';
 import { create } from 'zustand';
 

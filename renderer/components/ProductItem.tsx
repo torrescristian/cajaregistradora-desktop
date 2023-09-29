@@ -4,8 +4,9 @@ import { formatPrice } from '@/libs/utils';
 import { useState } from 'react';
 import { Card } from './Card';
 import { Selector } from './Selector';
-import { IProduct, IVariant } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import { RenderIf } from './RenderIf';
+import { IVariant } from '@/interfaces/IVariants';
 
 const Text = ({ children }: IComponent) => {
   return (
@@ -89,7 +90,7 @@ const ProductItem = ({ product, onClick }: IProps) => {
               {product.isService ? (
                 <span className="text-5xl">∞</span>
               ) : (
-                selectedVariant.stock_per_variant.stock + ' unid'
+                selectedVariant.stock_per_variant?.stock + ' unid'
               )}
             </Text>
             <button

@@ -1,6 +1,7 @@
 import IClient from './IClient';
 import { ICoupon } from './ICoupon';
-import { IVariant, IProduct } from './IProduct';
+import { IProduct } from './IProduct';
+import { IVariant } from './IVariants';
 import { IResponsePage, ISingleResultResponsePage } from './utils';
 
 export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
