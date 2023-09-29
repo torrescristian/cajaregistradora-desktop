@@ -41,7 +41,6 @@ interface IProps {
   updateMode?: boolean;
   order?: IOrder;
   onSubmit?: () => void;
-  
 }
 
 const Cart = ({ updateMode, order, onSubmit }: IProps) => {

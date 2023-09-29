@@ -35,10 +35,7 @@ interface ISearchInputProps {
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function SearchInput({
-  search,
-  onSearch,
-}: ISearchInputProps) {
+export default function SearchInput({ search, onSearch }: ISearchInputProps) {
   return (
     <section
       data-test="search-input"

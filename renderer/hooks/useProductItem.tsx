@@ -2,7 +2,7 @@ import {
   getCartItemQuantityByVariantId as getCartItemQuantityByVariantId,
   useCartStore,
 } from '@/contexts/CartStore';
-import { IProduct} from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import { IVariant } from '@/interfaces/IVariants';
 
 interface IProps {

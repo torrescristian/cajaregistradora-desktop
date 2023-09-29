@@ -50,13 +50,14 @@ export default function CreateVariantsTable({
       setVariants(newVariants);
     };
 
-  const handleChangeMinimumStock = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVariants = [...variants];
-    const newStockMin = Number(e.target.value);
-    if (isNaN(newStockMin) && e.target.value !== '') return;
-    newVariants[index].minimum_stock = newStockMin;
-    setVariants(newVariants);
-  }
+  const handleChangeMinimumStock =
+    (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newVariants = [...variants];
+      const newStockMin = Number(e.target.value);
+      if (isNaN(newStockMin) && e.target.value !== '') return;
+      newVariants[index].minimum_stock = newStockMin;
+      setVariants(newVariants);
+    };
 
   const handleClickAddVariant = (e: any) => {
     e.preventDefault();
@@ -67,8 +68,7 @@ export default function CreateVariantsTable({
       stock_per_variant: 0,
       product: 0,
       minimum_stock: 0,
-    }
-    );
+    });
     setVariants(newVariants);
   };
 
@@ -78,18 +78,16 @@ export default function CreateVariantsTable({
     setVariants(newVariants);
   };
 
-
   return (
     <div className="overflow-x-auto w-full justify-center flex flex-col items-center gap-4 p-4">
       <table className="table table-zebra">
-        <thead >
+        <thead>
           <tr>
             <th>Variante inicial</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
-            <RenderIf condition={isService}>
-            </RenderIf>
+            <RenderIf condition={isService}></RenderIf>
             <RenderIf condition={!isService}>
               <th>Alerta de stock faltante</th>
             </RenderIf>
@@ -97,7 +95,10 @@ export default function CreateVariantsTable({
         </thead>
         <tbody>
           {variants.map(
-            ({ name, price, product, stock_per_variant, minimum_stock }, index) => (
+            (
+              { name, price, product, stock_per_variant, minimum_stock },
+              index,
+            ) => (
               <tr key={index}>
                 <td>
                   <input
@@ -136,7 +137,7 @@ export default function CreateVariantsTable({
                 <RenderIf condition={!isService}>
                   <td>
                     <input
-                      className='input input-bordered w-32'
+                      className="input input-bordered w-32"
                       value={minimum_stock}
                       onChange={handleChangeMinimumStock(index)}
                     />

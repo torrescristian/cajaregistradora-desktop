@@ -1,7 +1,4 @@
-import {
-  formatPrice,
-  parseDateToArgentinianFormat,
-} from '@/libs/utils';
+import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
 import {
   CalendarDaysIcon,
   DevicePhoneMobileIcon,

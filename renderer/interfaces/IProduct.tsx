@@ -7,7 +7,6 @@ export interface IAditionalPrice {
   amount: number;
 }
 
-
 export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant[]> {
   id?: number;
   name: string;

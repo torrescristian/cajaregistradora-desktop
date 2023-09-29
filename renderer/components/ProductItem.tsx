@@ -4,7 +4,7 @@ import { formatPrice } from '@/libs/utils';
 import { useState } from 'react';
 import { Card } from './Card';
 import { Selector } from './Selector';
-import { IProduct} from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import { RenderIf } from './RenderIf';
 import { IVariant } from '@/interfaces/IVariants';
 

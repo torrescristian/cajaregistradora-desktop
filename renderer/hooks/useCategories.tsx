@@ -1,4 +1,3 @@
-
 import { IVariant } from '@/interfaces/IVariants';
 import { useEffect, useReducer } from 'react';
 
@@ -18,9 +17,7 @@ export interface IUseCategoriesResponse {
   initialize: (data: ICategory[]) => void;
 }
 
-const useCategories = (
-  data: ICategory[],
-): IUseCategoriesResponse => {
+const useCategories = (data: ICategory[]): IUseCategoriesResponse => {
   const [categories, dispatch] = useReducer(
     (state: ICategory[], action: any) => {
       switch (action.type) {
@@ -29,12 +26,15 @@ const useCategories = (
             return {
               id: category.id,
               name: category.name,
-              variants: category.variants.map((variant) => ({
-                id: variant.id!,
-                name: variant.name,
-                price: variant.price!,
-                product: variant.product
-              }as IVariant)),
+              variants: category.variants.map(
+                (variant) =>
+                  ({
+                    id: variant.id!,
+                    name: variant.name,
+                    price: variant.price!,
+                    product: variant.product,
+                  }) as IVariant,
+              ),
             };
           });
 

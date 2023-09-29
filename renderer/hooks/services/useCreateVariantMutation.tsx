@@ -1,4 +1,3 @@
-
 import { IVariantPayload } from '@/interfaces/IVariants';
 import { ISingleFixedNativeResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';

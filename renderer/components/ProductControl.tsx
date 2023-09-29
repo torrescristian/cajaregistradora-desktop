@@ -1,10 +1,6 @@
 import FormFieldText from '@/components/FormFieldText';
 import { useForm } from 'react-hook-form';
-import {
-  IProduct,
-  IProductPayload,
-  PRODUCT_TYPE,
-} from '@/interfaces/IProduct';
+import { IProduct, IProductPayload, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { useImageControl } from '@/hooks/useImageControl';
 import CreateVariantsTable from '@/components/CreateVariantsTable';
 import { useState } from 'react';

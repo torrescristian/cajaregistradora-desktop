@@ -20,8 +20,7 @@ export const parsePromoFacade = (promoResponse: IPromoResponse): IPromo[] => {
             name: variant.attributes.name,
             price: variant.attributes.price,
             product: variant.attributes.product.data.attributes.name,
- 
-          }) as IVariant<null,string>,
+          }) as IVariant<null, string>,
       ),
     })),
     variants: promo.attributes.variants.data.map(
@@ -30,8 +29,8 @@ export const parsePromoFacade = (promoResponse: IPromoResponse): IPromo[] => {
           id: variant.id!,
           name: variant.attributes.name,
           price: variant.attributes.price,
-          product: variant.attributes.product.data.attributes.name
-        }) as IVariant<null,string>,
+          product: variant.attributes.product.data.attributes.name,
+        }) as IVariant<null, string>,
     ),
   }));
 };

@@ -22,7 +22,7 @@ export const CreateCategories = () => {
   const products = productsQuery.products as IProduct[];
 
   const [newVariantSelected, setNewVariantSelected] = useState<IVariant[]>([]);
-  const { value : name,handleChange :handleChangeName} = useFormControl('');
+  const { value: name, handleChange: handleChangeName } = useFormControl('');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
@@ -38,29 +38,39 @@ export const CreateCategories = () => {
       },
     ]);
   };
-  
-  const handleClickRemoveVariant =(indexToRemove: number) => (e : React.MouseEvent) => {
-    e.preventDefault();
-    setNewVariantSelected(newVariantSelected.filter((_, index) => index !== indexToRemove));
-  };
 
+  const handleClickRemoveVariant =
+    (indexToRemove: number) => (e: React.MouseEvent) => {
+      e.preventDefault();
+      setNewVariantSelected(
+        newVariantSelected.filter((_, index) => index !== indexToRemove),
+      );
+    };
 
   const handleSubmitCategory = (e: React.FormEvent) => {
     e.preventDefault();
     return createCategoryMutation.mutate({
-        name,
-        variants: newVariantSelected.map((variant) => variant.id!),
+      name,
+      variants: newVariantSelected.map((variant) => variant.id!),
     });
   };
   return (
     <section className="w-full">
       <div className="flex flex-col items-center">
         <p>Crea tu categoria</p>
-        <form className="flex flex-col gap-3 w-[80vw]" onSubmit={handleSubmitCategory}>
+        <form
+          className="flex flex-col gap-3 w-[80vw]"
+          onSubmit={handleSubmitCategory}
+        >
           <div className="flex flex-col items-start gap-3">
             <label className="label">
               Nombre de la categoria:
-              <input type="text" className="input input-bordered" value={name} onChange={handleChangeName} />
+              <input
+                type="text"
+                className="input input-bordered"
+                value={name}
+                onChange={handleChangeName}
+              />
             </label>
           </div>
           <div className="flex flex-col">
@@ -76,14 +86,12 @@ export const CreateCategories = () => {
             </div>
           </div>
           <div className="flex flex-row">
-            <RenderIf condition={!newVariantSelected}>
-
-            </RenderIf>
+            <RenderIf condition={!newVariantSelected}> </RenderIf>
             <RenderIf condition={newVariantSelected}>
               <div className="flex flex-col gap-5">
                 <div className="flex flex-row gap-5 items-center overflow-x-scroll w-[80vw] ">
-                  {newVariantSelected.map((variant,index) => (
-                    <div className='flex flex-row items-center gap-3 p-3 border-2 '>
+                  {newVariantSelected.map((variant, index) => (
+                    <div className="flex flex-row items-center gap-3 p-3 border-2 ">
                       <p>{variant.name}</p>
                       <p>{formatPrice(variant.price)}</p>
                       <button
@@ -98,9 +106,12 @@ export const CreateCategories = () => {
               </div>
             </RenderIf>
           </div>
-        <button className="btn btn-success text-neutral-content" type='submit'>
-          Crear Categoria
-        </button>
+          <button
+            className="btn btn-success text-neutral-content"
+            type="submit"
+          >
+            Crear Categoria
+          </button>
         </form>
       </div>
     </section>

@@ -35,7 +35,7 @@ export default function useCreateProductAndVariantMutation() {
           price: variant.price,
           stock: variant.stock_per_variant!,
           isDefaultVariant: Number(index) === defaultVariantIndex,
-          minimum_stock : variant.minimum_stock!
+          minimum_stock: variant.minimum_stock!,
         });
       }
       queryClient.invalidateQueries([getProductsQueryKey()]);
