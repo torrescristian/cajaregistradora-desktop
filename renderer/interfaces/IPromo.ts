@@ -1,25 +1,34 @@
 import { ICategory } from './ICategory';
-import { IProduct } from './IProduct';
 import { IVariant, IVariantPromo } from './IVariants';
-import { IFixedNativeResponse } from './utils';
+import { IStrapiResponse, IStrapiSingleResponse } from './utils';
 
 export interface IPromo<
-  VARIANT = IVariant<null, string>[],
-  CATEGORIES = ICategory<IVariant<null, string>[]>[],
+  VARIANT = IVariant<null, string>,
+  CATEGORY = ICategory<IVariant<null, string>[]>,
 > {
   id?: number;
-  variants: VARIANT;
-  categories: CATEGORIES;
+  variants: IVariantAndQuantity<VARIANT>[];
+  categories: ICategoryAndQuantity<CATEGORY>[];
   name: string;
   price: number;
 }
 
-export type IVariantExpanded = IFixedNativeResponse<IVariantPromo>;
+export interface ICategoryAndQuantity<CATEGORY = ICategory>{
+  category: CATEGORY;
+  quantity: number;
+}
 
-export type ICategoryExpanded = IFixedNativeResponse<
-  ICategory<IVariantExpanded>
->;
+export interface IVariantAndQuantity<VARIANT = IVariant>{
+  variant: VARIANT;
+  quantity: number;
+}
 
-export type IPromoResponse = IFixedNativeResponse<
+export type IVariantExpanded = IStrapiSingleResponse<IVariantPromo>;
+
+export type ICategoryExpanded = IStrapiSingleResponse<ICategory<IStrapiResponse<IVariantPromo>>>;
+
+export type IPromoResponse = IStrapiResponse<
   IPromo<IVariantExpanded, ICategoryExpanded>
 >;
+
+export type IPromoPayload = IPromo<number,number>;

@@ -1,4 +1,4 @@
-import { CreateCategories } from '@/components/CreateCategories';
+import { CreateCategories } from '@/components/Categories/CreateCategories';
 import { CreatePromo } from '@/components/Promo/CreatePromo';
 import RenderPromos from '@/components/Promo/RenderPromo';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
@@ -12,10 +12,8 @@ const Promo = () => {
   }
   return (
     <section className="flex flex-col w-full gap-5">
-      <div className="flex flex-col justify-between gap-3">
-        <CreatePromo />
-        <CreateCategories />
-      </div>
+      <CreatePromo />
+      <p className='text-xl text-center'>Promos creadas</p>
       <RenderPromos promos={promos} />
     </section>
   );

@@ -1,8 +1,9 @@
 import { ICategoryPayload } from '@/interfaces/ICategory';
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getCategoryQueryKey } from './useCategoryQuery';
 
-export const getCategoryQueryKey = () => 'categories';
+
 
 export default function useCreateCategoryMutation() {
   const queryClient = useQueryClient();

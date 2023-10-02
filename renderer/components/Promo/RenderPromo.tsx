@@ -7,34 +7,32 @@ interface IProps {
 
 export default function RenderPromos({ promos }: IProps) {
   return (
-    <div className="flex flex-row border-2 gap-3 overflow-x-scroll">
+    <div className="flex flex-row gap-3 overflow-x-scroll p-5">
       {promos.map((promo) => (
-        <div className="flex flex-col items-center bg-blue-600" key={promo.id!}>
-          <p>{promo.name}</p>
-          <p>{formatPrice(promo.price)}</p>
-          <div className="flex flex-row justify-between">
-            <div className="w-full bg-slate-600">
-              {promo.categories.map((category) => (
+        <div className="flex flex-col p-4 items-center border-2" key={promo.id!}>
+          <p className='text-xl font-bold'>{promo.name}</p>
+          <p className='text-xl'>{formatPrice(promo.price)}</p>
+          <div className="flex flex-col justify-between p-4 gap-5">
+            <div className="w-full shadow-2xl p-4">
+              {promo.categories.map(({category}) => (
                 <div key={category.id}>
                   <p className="text-xl">{category.name}</p>
                   {category.variants.map((variant) => (
-                    <div key={variant.id}>
-                      <p>
-                        {variant.product} - {variant.name}
+                    <div key={variant.id} className='whitespace-nowrap'>
+                      <p >
+                        {variant.product} - {variant.name}: {formatPrice(variant.price)}
                       </p>
-                      <p>${variant.price}</p>
                     </div>
                   ))}
                 </div>
               ))}
             </div>
-            <div className="w-full bg-orange-700">
-              {promo.variants.map((variant) => (
-                <div key={variant.id}>
+            <div className="w-full p-4 shadow-2xl">
+              {promo.variants.map(({variant}) => (
+                <div key={variant.id} className='whitespace-nowrap'>
                   <p>
-                    {variant.product}-{variant.name}
+                    {variant.product} - {variant.name} : {formatPrice(variant.price)}
                   </p>
-                  <p>${variant.price}</p>
                 </div>
               ))}
             </div>

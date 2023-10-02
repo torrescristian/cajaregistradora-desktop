@@ -1,6 +1,6 @@
-import { IFixedNativeResponse } from './utils';
+import { IStrapiResponse } from './utils';
 
-export type IStockPerVariantPages = IFixedNativeResponse<IStockPerVariant>;
+export type IStockPerVariantPages = IStrapiResponse<IStockPerVariant>;
 
 export default interface IStockPerVariant {
   id?: number;

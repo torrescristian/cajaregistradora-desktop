@@ -1,4 +1,4 @@
-import { IFixedNativeResponse } from './utils';
+import { IStrapiResponse } from './utils';
 
 export default interface IClient {
   name: string;
@@ -7,4 +7,4 @@ export default interface IClient {
   id?: number;
 }
 
-export type IClientResponse = IFixedNativeResponse<IClient>;
+export type IClientResponse = IStrapiResponse<IClient>;

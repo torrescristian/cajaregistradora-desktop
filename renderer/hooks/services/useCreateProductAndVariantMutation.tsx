@@ -1,5 +1,5 @@
 import { IProductPayload } from '@/interfaces/IProduct';
-import { ISingleFixedNativeResponse } from '@/interfaces/utils';
+import { IStrapiSingleResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
@@ -21,7 +21,7 @@ export default function useCreateProductAndVariantMutation() {
       const res = (await strapi.create(
         getProductsQueryKey(),
         data,
-      )) as ISingleFixedNativeResponse<IProductPayload>;
+      )) as IStrapiSingleResponse<IProductPayload>;
 
       const validVariants = variants.filter((v) => v.name.trim());
 

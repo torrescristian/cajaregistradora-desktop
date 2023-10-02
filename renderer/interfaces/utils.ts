@@ -30,7 +30,7 @@ export interface INativeResponse<T> {
   };
 }
 
-export interface IFixedNativeResponse<T> {
+export interface IStrapiResponse<T> {
   data: {
     id: number;
     attributes: Omit<T, 'id'>;
@@ -44,7 +44,7 @@ export interface IFixedNativeResponse<T> {
     };
   };
 }
-export interface ISingleFixedNativeResponse<T> {
+export interface IStrapiSingleResponse<T> {
   data: {
     id: number;
     attributes: Omit<T, 'id'>;

@@ -1,6 +1,6 @@
 import { IProduct } from './IProduct';
 import IStockPerVariant from './IStockPerVariant';
-import { IFixedNativeResponse, ISingleFixedNativeResponse } from './utils';
+import { IStrapiResponse, IStrapiSingleResponse } from './utils';
 
 export interface IVariant<
   STOCK_PER_VARIANT = IStockPerVariant,
@@ -16,9 +16,6 @@ export interface IVariant<
   categories?: CATEGORIES;
 }
 // export type IProductPromo = IProduct;
-export type IVariantPromo = IVariant<
-  null,
-  ISingleFixedNativeResponse<IProduct>
->;
+export type IVariantPromo = IVariant<null, IStrapiSingleResponse<IProduct>>;
 export type IVariantPayload = IVariant<number>;
-export type IVariantResponse = IFixedNativeResponse<IVariant>;
+export type IVariantResponse = IStrapiResponse<IVariant>;

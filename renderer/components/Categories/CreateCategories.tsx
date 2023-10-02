@@ -2,12 +2,12 @@ import useCreateCategoryMutation from '@/hooks/services/useCreateCategoryMutatio
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
-import SearchInput, { useSearchProps } from './SearchInput';
-import ProductItem from './ProductItem';
+import SearchInput, { useSearchProps } from '../SearchInput';
+import ProductItem from '../ProductItem';
 import { IVariant } from '@/interfaces/IVariants';
 import { formatPrice } from '@/libs/utils';
 import { MinusIcon } from '@heroicons/react/24/solid';
-import { RenderIf } from './RenderIf';
+import { RenderIf } from '../RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 
 export const CreateCategories = () => {
