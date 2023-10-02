@@ -26,18 +26,15 @@ export const parsePromoFacade = (promoResponse: IPromoResponse): IPromo[] => {
         ),
       },
     })),
-    variants: promo.attributes.variants.map(
-      ({ variant, quantity }) =>
-      ({
-        quantity,
-        variant: {
-          id: variant.data.id,
-          name: variant.data.attributes.name,
-          price: variant.data.attributes.price,
-          product: variant.data.attributes.product.data.attributes.name,
-        } as IVariant<null, string>,
-      }),
-    ),
+    variants: promo.attributes.variants.map(({ variant, quantity }) => ({
+      quantity,
+      variant: {
+        id: variant.data.id,
+        name: variant.data.attributes.name,
+        price: variant.data.attributes.price,
+        product: variant.data.attributes.product.data.attributes.name,
+      } as IVariant<null, string>,
+    })),
   }));
 };
 

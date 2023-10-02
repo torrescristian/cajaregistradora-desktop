@@ -13,22 +13,24 @@ export interface IPromo<
   price: number;
 }
 
-export interface ICategoryAndQuantity<CATEGORY = ICategory>{
+export interface ICategoryAndQuantity<CATEGORY = ICategory> {
   category: CATEGORY;
   quantity: number;
 }
 
-export interface IVariantAndQuantity<VARIANT = IVariant>{
+export interface IVariantAndQuantity<VARIANT = IVariant> {
   variant: VARIANT;
   quantity: number;
 }
 
 export type IVariantExpanded = IStrapiSingleResponse<IVariantPromo>;
 
-export type ICategoryExpanded = IStrapiSingleResponse<ICategory<IStrapiResponse<IVariantPromo>>>;
+export type ICategoryExpanded = IStrapiSingleResponse<
+  ICategory<IStrapiResponse<IVariantPromo>>
+>;
 
 export type IPromoResponse = IStrapiResponse<
   IPromo<IVariantExpanded, ICategoryExpanded>
 >;
 
-export type IPromoPayload = IPromo<number,number>;
+export type IPromoPayload = IPromo<number, number>;

@@ -1,9 +1,9 @@
-import { CreateCategories } from "./CreateCategories";
+import { CreateCategories } from './CreateCategories';
 
-export default function Categories(){
-    return (
-        <section>
-            <CreateCategories/>
-        </section>
-    )
+export default function Categories() {
+  return (
+    <section>
+      <CreateCategories />
+    </section>
+  );
 }

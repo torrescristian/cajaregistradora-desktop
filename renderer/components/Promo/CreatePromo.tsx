@@ -80,13 +80,15 @@ export const CreatePromo = () => {
           return { category, quantity };
         }),
       );
-      return
+      return;
     }
-    setSelectedCategoryList([...selectedCategoryList,
-    {
-      category: selectedCategory,
-      quantity: 1,
-    }]);
+    setSelectedCategoryList([
+      ...selectedCategoryList,
+      {
+        category: selectedCategory,
+        quantity: 1,
+      },
+    ]);
   };
   const handleChangeSelectedCategory = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -117,8 +119,14 @@ export const CreatePromo = () => {
     return createPromoMutation.mutate({
       name,
       price,
-      variants: selectedVariantList.map(({ variant, quantity }) => ({ variant: variant.id!, quantity })),
-      categories: selectedCategoryList.map(({ category, quantity }) => ({ category: category.id!, quantity })),
+      variants: selectedVariantList.map(({ variant, quantity }) => ({
+        variant: variant.id!,
+        quantity,
+      })),
+      categories: selectedCategoryList.map(({ category, quantity }) => ({
+        category: category.id!,
+        quantity,
+      })),
     });
   };
 
@@ -174,15 +182,17 @@ export const CreatePromo = () => {
                 <div className="flex">
                   {selectedCategoryList.map(({ category, quantity }, index) => (
                     <div className="flex flex-row  border-2 p-3 gap-4">
-                      <div className='flex flex-col text-center whitespace-nowrap'>
-                        <p key={category.id} className='text-2xl font-bold'>{category.name}</p>
-                        <div className='flex flex-row items-center p-4 gap-4'>
-                          <button className='btn btn-success'>
-                            <PlusIcon className='w-5 h-5' />
+                      <div className="flex flex-col text-center whitespace-nowrap">
+                        <p key={category.id} className="text-2xl font-bold">
+                          {category.name}
+                        </p>
+                        <div className="flex flex-row items-center p-4 gap-4">
+                          <button className="btn btn-success">
+                            <PlusIcon className="w-5 h-5" />
                           </button>
-                          <p className='text-xl'>x{quantity}</p>
-                          <button className='btn btn-error'>
-                            <MinusIcon className='w-5 h-5' />
+                          <p className="text-xl">x{quantity}</p>
+                          <button className="btn btn-error">
+                            <MinusIcon className="w-5 h-5" />
                           </button>
                         </div>
                       </div>
@@ -217,8 +227,10 @@ export const CreatePromo = () => {
             <div className="flex flex-row gap-5 overflow-x-scroll w-[80vw] ">
               {selectedVariantList.map(({ variant, quantity }, index) => (
                 <div className="flex flex-col gap-3 items-center p-3 border-2 ">
-                  <div className='flex flex-row justify-between gap-3 w-full items-center'>
-                    <p className='text-xl'>{variant.name} {formatPrice(variant.price)}</p>
+                  <div className="flex flex-row justify-between gap-3 w-full items-center">
+                    <p className="text-xl">
+                      {variant.name} {formatPrice(variant.price)}
+                    </p>
                     <button
                       className="btn btn-error"
                       onClick={handleClickRemoveVariant(index)}
@@ -226,13 +238,13 @@ export const CreatePromo = () => {
                       <TrashIcon className="w-5 h-5" />
                     </button>
                   </div>
-                  <div className='flex flex-row items-center p-4 gap-4'>
-                    <button className='btn btn-success'>
-                      <PlusIcon className='w-5 h-5' />
+                  <div className="flex flex-row items-center p-4 gap-4">
+                    <button className="btn btn-success">
+                      <PlusIcon className="w-5 h-5" />
                     </button>
-                    <p className='text-xl'>x{quantity}</p>
-                    <button className='btn btn-error'>
-                      <MinusIcon className='w-5 h-5' />
+                    <p className="text-xl">x{quantity}</p>
+                    <button className="btn btn-error">
+                      <MinusIcon className="w-5 h-5" />
                     </button>
                   </div>
                 </div>

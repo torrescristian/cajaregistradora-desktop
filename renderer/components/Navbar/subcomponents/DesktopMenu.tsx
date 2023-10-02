@@ -52,7 +52,7 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                     </NavButton>
                   </li>
                   <li>
-                    <NavButton className='w-full' href='/categorias'>
+                    <NavButton className="w-full" href="/categorias">
                       Categorias
                     </NavButton>
                   </li>
