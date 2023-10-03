@@ -48,12 +48,12 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                   </li>
                   <li>
                     <NavButton className="w-full" href="/admin/promo">
-                      Promos
+                      Crear Promos
                     </NavButton>
                   </li>
                   <li>
                     <NavButton className="w-full" href="/categorias">
-                      Categorias
+                      Crear Categorias
                     </NavButton>
                   </li>
                 </>

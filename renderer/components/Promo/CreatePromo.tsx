@@ -6,13 +6,13 @@ import useProductsQuery from '@/hooks/services/useProductsQuery';
 import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
 import { IVariant } from '@/interfaces/IVariants';
-import { formatPrice } from '@/libs/utils';
-import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
+import {  PlusIcon } from '@heroicons/react/24/solid';
 import useCreatePromoMutation from '@/hooks/services/useCreatePromoMutation';
 import useFormControl from '@/hooks/useFormControl';
 import { ICategory } from '@/interfaces/ICategory';
-import { set } from 'react-hook-form';
 import { ICategoryAndQuantity, IVariantAndQuantity } from '@/interfaces/IPromo';
+import CardVariantList from '../CardVariantList';
+import CardCategoryList from '../CardCategoryList';
 
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
@@ -65,6 +65,17 @@ export const CreatePromo = () => {
     setSelectedVariantList(newVariantList);
   };
 
+  const incrementCategoryByOne = (categoryId: number) => {
+    setSelectedCategoryList(
+      selectedCategoryList.map(({ category, quantity }) => {
+        if (category.id === categoryId) {
+          return { category, quantity: quantity + 1 };
+        }
+        return { category, quantity };
+      }),
+    );
+  };
+
   const handleClickAddCategory = () => {
     if (!selectedCategory) return;
     if (
@@ -72,14 +83,7 @@ export const CreatePromo = () => {
         ({ category }) => category.id === selectedCategory.id,
       )
     ) {
-      setSelectedCategoryList(
-        selectedCategoryList.map(({ category, quantity }) => {
-          if (category.id === selectedCategory.id) {
-            return { category, quantity: quantity + 1 };
-          }
-          return { category, quantity };
-        }),
-      );
+      incrementCategoryByOne(selectedCategory.id!);
       return;
     }
     setSelectedCategoryList([
@@ -90,6 +94,7 @@ export const CreatePromo = () => {
       },
     ]);
   };
+
   const handleChangeSelectedCategory = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -99,20 +104,7 @@ export const CreatePromo = () => {
     );
   };
 
-  const handleClickRemoveVariant =
-    (indexToRemove: number) => (e: React.MouseEvent) => {
-      e.preventDefault();
-      setSelectedVariantList(
-        selectedVariantList.filter((_, index) => index !== indexToRemove),
-      );
-    };
-  const handleClickRemoveCategory =
-    (indexToRemove: number) => (e: React.MouseEvent) => {
-      e.preventDefault();
-      setSelectedCategoryList(
-        selectedCategoryList.filter((_, index) => index !== indexToRemove),
-      );
-    };
+
 
   const handleCreatePromo = (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,33 +170,13 @@ export const CreatePromo = () => {
               >
                 <PlusIcon className="w-9 h-9" />
               </button>
-              <div className="flex flex-row gap-3 overflow-x-scroll w-96 ">
-                <div className="flex">
-                  {selectedCategoryList.map(({ category, quantity }, index) => (
-                    <div className="flex flex-row  border-2 p-3 gap-4">
-                      <div className="flex flex-col text-center whitespace-nowrap">
-                        <p key={category.id} className="text-2xl font-bold">
-                          {category.name}
-                        </p>
-                        <div className="flex flex-row items-center p-4 gap-4">
-                          <button className="btn btn-success">
-                            <PlusIcon className="w-5 h-5" />
-                          </button>
-                          <p className="text-xl">x{quantity}</p>
-                          <button className="btn btn-error">
-                            <MinusIcon className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </div>
-                      <button
-                        className="btn btn-error"
-                        onClick={handleClickRemoveCategory(index)}
-                      >
-                        <TrashIcon className="w-5 h-5" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex flex-row gap-3 overflow-x-scroll w-[70vw] ">
+               <CardCategoryList
+                selectedCategoryList={selectedCategoryList}
+                setSelectedCategoryList={setSelectedCategoryList}
+                incrementCategoryByOne={incrementCategoryByOne}
+                
+                 />
               </div>
             </div>
           </RenderIf>
@@ -224,32 +196,10 @@ export const CreatePromo = () => {
             </div>
           </div>
           <div className="flex flex-col gap-5">
-            <div className="flex flex-row gap-5 overflow-x-scroll w-[80vw] ">
-              {selectedVariantList.map(({ variant, quantity }, index) => (
-                <div className="flex flex-col gap-3 items-center p-3 border-2 ">
-                  <div className="flex flex-row justify-between gap-3 w-full items-center">
-                    <p className="text-xl">
-                      {variant.name} {formatPrice(variant.price)}
-                    </p>
-                    <button
-                      className="btn btn-error"
-                      onClick={handleClickRemoveVariant(index)}
-                    >
-                      <TrashIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                  <div className="flex flex-row items-center p-4 gap-4">
-                    <button className="btn btn-success">
-                      <PlusIcon className="w-5 h-5" />
-                    </button>
-                    <p className="text-xl">x{quantity}</p>
-                    <button className="btn btn-error">
-                      <MinusIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <CardVariantList
+              selectedVariantList={selectedVariantList}
+              setSelectedVariantList={setSelectedVariantList}
+            />
           </div>
           <button className="btn btn-primary" type="submit">
             Crear Promo
