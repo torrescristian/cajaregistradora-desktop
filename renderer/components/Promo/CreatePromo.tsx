@@ -6,7 +6,7 @@ import useProductsQuery from '@/hooks/services/useProductsQuery';
 import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
 import { IVariant } from '@/interfaces/IVariants';
-import {  PlusIcon } from '@heroicons/react/24/solid';
+import { PlusIcon } from '@heroicons/react/24/solid';
 import useCreatePromoMutation from '@/hooks/services/useCreatePromoMutation';
 import useFormControl from '@/hooks/useFormControl';
 import { ICategory } from '@/interfaces/ICategory';
@@ -104,8 +104,6 @@ export const CreatePromo = () => {
     );
   };
 
-
-
   const handleCreatePromo = (e: React.FormEvent) => {
     e.preventDefault();
     return createPromoMutation.mutate({
@@ -171,12 +169,11 @@ export const CreatePromo = () => {
                 <PlusIcon className="w-9 h-9" />
               </button>
               <div className="flex flex-row gap-3 overflow-x-scroll w-[70vw] ">
-               <CardCategoryList
-                selectedCategoryList={selectedCategoryList}
-                setSelectedCategoryList={setSelectedCategoryList}
-                incrementCategoryByOne={incrementCategoryByOne}
-                
-                 />
+                <CardCategoryList
+                  selectedCategoryList={selectedCategoryList}
+                  setSelectedCategoryList={setSelectedCategoryList}
+                  incrementCategoryByOne={incrementCategoryByOne}
+                />
               </div>
             </div>
           </RenderIf>

@@ -17,8 +17,8 @@ export default function RenderPromos({ promos }: IProps) {
           <p className="text-xl">{formatPrice(promo.price)}</p>
           <div className="flex flex-col justify-between p-4 gap-5">
             <div className="w-full shadow-2xl p-4">
-              {promo.categories.map(({ category,quantity }) => (
-                <div key={category.id} className='flex flex-col gap-4'>
+              {promo.categories.map(({ category, quantity }) => (
+                <div key={category.id} className="flex flex-col gap-4">
                   <p className="text-2xl list-item">{category.name}</p>
                   {category.variants.map((variant) => (
                     <div key={variant.id} className="whitespace-nowrap">
@@ -29,14 +29,13 @@ export default function RenderPromos({ promos }: IProps) {
                       <p>Cantidad: {quantity}</p>
                     </div>
                   ))}
-                  
                 </div>
               ))}
             </div>
             <div className="w-full p-4 shadow-2xl">
-              {promo.variants.map(({ variant,quantity }) => (
+              {promo.variants.map(({ variant, quantity }) => (
                 <div key={variant.id} className="whitespace-nowrap">
-                  <p className='list-item'>
+                  <p className="list-item">
                     {variant.product} - {variant.name} :{' '}
                     {formatPrice(variant.price)}
                   </p>

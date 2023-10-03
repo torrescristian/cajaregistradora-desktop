@@ -4,7 +4,7 @@ import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 interface IProps {
   selectedVariantList: IVariantAndQuantity[];
-  setSelectedVariantList: (s : IVariantAndQuantity[]) => void;
+  setSelectedVariantList: (s: IVariantAndQuantity[]) => void;
 }
 
 export default function CardVariantList({
