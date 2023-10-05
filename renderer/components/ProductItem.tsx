@@ -62,11 +62,8 @@ const ProductItem = ({ product, onClick }: IProps) => {
   };
 
   return (
-    <Card data-test="productItem" tabIndex={0}>
-      <section
-        data-test="productItem.collapse.title.left"
-        className="flex flex-1 items-center w-72 text-primary-content"
-      >
+    <Card data-test="product-item" tabIndex={0}>
+      <section className="flex flex-1 items-center w-72 text-primary-content">
         <div className="flex flex-col w-full gap-5 justify-between">
           <HighlightedText>{product.name}</HighlightedText>
           <div className="flex flex-row h-32 items-center">
@@ -98,6 +95,7 @@ const ProductItem = ({ product, onClick }: IProps) => {
             <button
               className="btn btn-primary w-fit px-10 rounded-lg"
               onClick={handleClick}
+              data-test="add-product"
             >
               Agregar
             </button>

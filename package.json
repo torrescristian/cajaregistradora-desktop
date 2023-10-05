@@ -14,7 +14,8 @@
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "cypress"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.16",
@@ -60,6 +61,7 @@
     "@types/react-dom": "18.0.11",
     "@types/socket.io": "^3.0.2",
     "@types/yup": "^0.32.0",
+    "cypress": "^13.3.0",
     "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
     "eslint": "^8.45.0",

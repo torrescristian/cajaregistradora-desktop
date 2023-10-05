@@ -26,6 +26,7 @@ const NavButton = ({ href, children, className, onClick }: ILinkProps) => {
 
   return (
     <button
+      data-test={href}
       className={mergeClasses(
         'btn-ghost btn w-fit rounded-md px-4 py-2 text-right text-sm',
         className,
