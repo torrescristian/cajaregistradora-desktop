@@ -1,6 +1,7 @@
-import { ICartItem, ICartState } from '@/interfaces/ICart';
+import { ICartItem, ICartState, IPromoItem } from '@/interfaces/ICart';
 import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
 import { IProduct } from '@/interfaces/IProduct';
+import { IPromo } from '@/interfaces/IPromo';
 import { IVariant } from '@/interfaces/IVariants';
 import { calcDiscount } from '@/libs/utils';
 import { create } from 'zustand';
@@ -37,6 +38,9 @@ type ICartStore = ICartState & {
   setAdditionalDetails: (additionalDetails: string) => void;
   setDiscountType: (discountType: DISCOUNT_TYPE) => void;
   setDiscountAmount: (discountAmount: number) => void;
+  promoItems: IPromoItem[];
+  addPromo: (promoItem: IPromoItem) => void;
+  removePromo:(index : number) => void;
 };
 
 export const useCartStore = create<ICartStore>()((set) => ({
@@ -47,6 +51,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
   discountAmount: 0,
   additionalDetails: '',
   clientId: 0,
+  promoItems: [],
   initCart: (cartPayload: ICartState) =>
     set({
       cartItems: cartPayload.cartItems,
@@ -63,6 +68,31 @@ export const useCartStore = create<ICartStore>()((set) => ({
       discountType: cartPayload.discountType,
       discountAmount: cartPayload.discountAmount,
     }),
+  addPromo: ({ promo, selectedVariants }: IPromoItem) => {
+    set((state): Partial<ICartStore> => {
+      const subtotalPrice = fixPrice(state.subtotalPrice + promo.price);
+      return {
+        promoItems: [
+          ...state.promoItems,
+          {
+            promo: promo,
+            selectedVariants: [
+              ...promo.variants.map(({ variant }) => variant),
+              ...selectedVariants,
+            ],
+          },
+        ],
+        subtotalPrice,
+        totalPrice: state.discountAmount
+          ? calcDiscount({
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: subtotalPrice,
+            })
+          : subtotalPrice,
+      };
+    });
+  },
   addProduct: ({ product, selectedVariant }: IAddProductProps) => {
     set((state): Partial<ICartStore> => {
       const itemIndex = state.cartItems.findIndex(
@@ -84,7 +114,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
             ? calcDiscount({
                 discountAmount: state.discountAmount!,
                 discountType: state.discountType!,
-                price: state.subtotalPrice,
+                price: subtotalPrice,
               })
             : subtotalPrice,
         };
@@ -103,9 +133,27 @@ export const useCartStore = create<ICartStore>()((set) => ({
           ? calcDiscount({
               discountAmount: state.discountAmount!,
               discountType: state.discountType!,
-              price: state.subtotalPrice,
+              price: subtotalPrice,
             })
           : subtotalPrice,
+      };
+    });
+  },
+  removePromo: (index: number) => {
+    set((state): Partial<ICartStore> => {
+      const subtotalPrice = fixPrice(state.subtotalPrice - state.promoItems[index].promo.price);
+      return {
+        promoItems: state.promoItems.filter(
+          (promo, idx) => idx !== index,
+          ),        
+        subtotalPrice,
+        totalPrice: state.discountAmount
+          ? calcDiscount({
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: subtotalPrice,
+            })
+          : subtotalPrice,          
       };
     });
   },
@@ -192,6 +240,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
       cartItems: [],
       totalPrice: 0,
       subtotalPrice: 0,
+      promoItems: [],
       reset: true,
     }),
   addClientId: (clientId: number | null) => set({ clientId }),
@@ -246,3 +295,6 @@ export const getSetDiscountAmount = (state: ICartStore) =>
 
 export const getDiscountType = (state: ICartStore) => state.discountType;
 export const getDiscountAmount = (state: ICartStore) => state.discountAmount;
+export const getPromoItems = (state: ICartStore) => state.promoItems;
+export const getAddPromo = (state: ICartStore) => state.addPromo;
+export const getRemovePromo = (state: ICartStore) => state.removePromo;

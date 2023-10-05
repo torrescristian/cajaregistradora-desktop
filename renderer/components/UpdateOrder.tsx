@@ -2,7 +2,7 @@ import { getSetCart, useCartStore } from '@/contexts/CartStore';
 import { ICartItem } from '@/interfaces/ICart';
 import { IOrder, IOrderItem } from '@/interfaces/IOrder';
 import { useEffect } from 'react';
-import Cart from './Cart';
+import Cart from './Cart/Cart';
 import Products from './Products';
 
 interface IProps {

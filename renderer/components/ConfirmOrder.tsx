@@ -13,7 +13,7 @@ import {
   getTotalPrice,
   useCartStore,
 } from '@/contexts/CartStore';
-import { ICartItem } from '@/interfaces/ICart';
+import { ICartItem, IPromoItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';
 import useUpdateOrderMutation from '@/hooks/services/useUpdateOrderMutation';
@@ -40,10 +40,10 @@ interface IProps {
   updateMode?: boolean;
   order?: IOrder;
   onSubmit?: () => void;
+  promoItems?: IPromoItem[];  
 }
 
-export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
-  const {} = useForm();
+export const ConfirmOrder = ({ updateMode, order, onSubmit,promoItems }: IProps) => {
 
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
@@ -97,6 +97,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
       subtotalPrice,
       discount: { amount: discountAmount!, type: discountType! },
       coupon,
+      promoItems: promoItems!,
     });
   };
 
@@ -112,6 +113,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
         items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
         coupon,
+        promoItems: promoItems!,
       },
     });
   };
@@ -181,6 +183,7 @@ export const ConfirmOrder = ({ updateMode, order, onSubmit }: IProps) => {
       clientId,
       subtotalPrice,
       discount: { amount: discountAmount!, type: discountType! },
+      promoItems: promoItems!,
     });
     createTicketMutation.mutate({
       ticket: {

@@ -1,5 +1,6 @@
 import { DISCOUNT_TYPE } from './IOrder';
 import { IProduct } from './IProduct';
+import { IPromo, IVariantWithProductName } from './IPromo';
 import { IVariant } from './IVariants';
 
 export interface ICartItem {
@@ -7,7 +8,10 @@ export interface ICartItem {
   quantity: number;
   selectedVariant: IVariant;
 }
-
+export interface IPromoItem{
+  promo: IPromo;
+  selectedVariants: IVariantWithProductName[]; 
+}
 export interface ICartState {
   cartItems: ICartItem[];
   reset?: boolean;
@@ -16,6 +20,7 @@ export interface ICartState {
   totalPrice: number;
   additionalDetails: string;
   subtotalPrice: number;
+  promoItems: IPromoItem[];   
 }
 
 export interface ICartAction {

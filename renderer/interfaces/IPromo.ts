@@ -3,8 +3,8 @@ import { IVariant, IVariantPromo } from './IVariants';
 import { IStrapiResponse, IStrapiSingleResponse } from './utils';
 
 export interface IPromo<
-  VARIANT = IVariant<null, string>,
-  CATEGORY = ICategory<IVariant<null, string>[]>,
+  VARIANT = IVariantWithProductName,
+  CATEGORY = ICategory<IVariantWithProductName[]>,
 > {
   id?: number;
   variants: IVariantAndQuantity<VARIANT>[];
@@ -34,3 +34,5 @@ export type IPromoResponse = IStrapiResponse<
 >;
 
 export type IPromoPayload = IPromo<number, number>;
+
+export type IVariantWithProductName = IVariant<null,string>;

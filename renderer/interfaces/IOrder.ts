@@ -1,3 +1,4 @@
+import { IPromoItem } from './ICart';
 import IClient from './IClient';
 import { ICoupon } from './ICoupon';
 import { IProduct } from './IProduct';
@@ -31,6 +32,7 @@ export interface IOrder<
   subtotalPrice: number;
   totalPrice: number;
   updatedAt?: string;
+  promoItems: IPromoItem[];
 }
 
 export interface IDiscount {

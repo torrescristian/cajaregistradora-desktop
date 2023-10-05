@@ -24,6 +24,7 @@ import ValidateCoupon from './Coupons/ValidateCoupon';
 import { ICoupon } from '@/interfaces/ICoupon';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { IPromoItem } from '@/interfaces/ICart';
 
 interface IProps {
   order: IOrder;
@@ -35,6 +36,7 @@ interface IFormControl {
   totalPrice: number;
   discountAmount: number;
   discountType: DISCOUNT_TYPE;
+  promoItems: IPromoItem[];
 }
 
 export const CreateTicketForm = ({
@@ -69,6 +71,7 @@ export const CreateTicketForm = ({
       discountAmount: order.discount?.amount || 0,
       discountType: order.discount?.type || DISCOUNT_TYPE.FIXED,
       totalPrice: order.totalPrice,
+      promoItems: order.promoItems,
     },
   });
 
@@ -185,6 +188,22 @@ export const CreateTicketForm = ({
               item={item}
             />
           ))}
+          {order.promoItems.map((promoItem) => (
+          <RenderIf condition={promoItem.promo}>
+            <div key={promoItem.promo?.id} className="p-5">
+              <p className="list-item text-xl">{promoItem.promo?.name}</p>
+              {promoItem.selectedVariants?.map((v) => (
+                <div key={v.id} className="flex flex-row p-4 gap-4">
+                  <p>
+                    {/* @ts-ignore */}
+                    {v.product.name} - {v.name}
+                  </p>
+                  <p>{formatPrice(v.price)}</p>
+                </div>
+              ))}
+            </div>
+          </RenderIf>
+          ))}
         </div>
 
         <div className="divider">Pagos</div>
@@ -220,6 +239,7 @@ export const CreateTicketForm = ({
               defaultValue={formatPrice(0)}
             />
           </RenderIf>
+
           <DataItem
             label="Total:"
             value={formatPrice(finalTotalPrice)}

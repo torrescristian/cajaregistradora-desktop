@@ -1,9 +1,11 @@
 import { convertToEmoji, formatPrice } from '@/libs/utils';
-import { AddProductButton, RemoveProductButton } from './ProductItem.styles';
+
 import useProductItem from '@/hooks/useProductItem';
 import { IProduct } from '@/interfaces/IProduct';
-import { Card } from './Card';
+
 import { IVariant } from '@/interfaces/IVariants';
+import { Card } from '../Card';
+import { AddProductButton, RemoveProductButton } from '../ProductItem.styles';
 
 interface IProps {
   product: IProduct;

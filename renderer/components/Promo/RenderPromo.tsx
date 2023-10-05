@@ -1,51 +1,75 @@
 import { IPromo } from '@/interfaces/IPromo';
 import { formatPrice } from '@/libs/utils';
+import { RenderIf } from '../RenderIf';
+import { getAddPromo, useCartStore } from '@/contexts/CartStore';
 
 interface IProps {
   promos: IPromo[];
+  salesMode: boolean;
 }
 
-export default function RenderPromos({ promos }: IProps) {
+export default function RenderPromos({ promos, salesMode: createMode }: IProps) {
+
+  const addPromo = useCartStore(getAddPromo);
+
+  const handleClickAddPromo = (promo: IPromo) =>() =>{
+    if (promo.categories?.length ){
+      throw new Error('Categories not supported yet');
+    }
+    addPromo({promo,selectedVariants: []});
+  }
+
+
   return (
-    <div className="flex flex-row gap-3 overflow-x-scroll p-5">
-      {promos.map((promo) => (
-        <div
-          className="flex flex-col p-4 items-center border-2"
-          key={promo.id!}
-        >
-          <p className="text-xl font-bold">{promo.name}</p>
-          <p className="text-xl">{formatPrice(promo.price)}</p>
-          <div className="flex flex-col justify-between p-4 gap-5">
-            <div className="w-full shadow-2xl p-4">
-              {promo.categories.map(({ category, quantity }) => (
-                <div key={category.id} className="flex flex-col gap-4">
-                  <p className="text-2xl list-item">{category.name}</p>
-                  {category.variants.map((variant) => (
-                    <div key={variant.id} className="whitespace-nowrap">
-                      <p>
-                        {variant.product} - {variant.name}:{' '}
-                        {formatPrice(variant.price)}
-                      </p>
-                      <p>Cantidad: {quantity}</p>
-                    </div>
-                  ))}
-                </div>
-              ))}
+    <section className="flex flex-col w-full">
+      <div className='divider'>Promociones</div>
+      <div className='flex flex-row gap-3 overflow-x-scroll p-5'>
+        {promos?.map((promo) => (
+          <div
+            className="flex flex-col p-4 items-center border-2"
+            key={promo.id!}
+          >
+            <p className="text-xl font-bold">{promo.name}</p>
+            <p className="text-xl">{formatPrice(promo.price)}</p>
+            <div className="flex flex-col justify-between p-4 gap-5">
+              <div className="w-full shadow-2xl p-4">
+                {promo.categories!.map(({ category, quantity }) => (
+                  <div key={category.id} className="flex flex-col gap-4">
+                    <p className="text-2xl list-item">{category.name}</p>
+                    {category.variants.map((variant) => (
+                      <div key={variant.id} className="whitespace-nowrap">
+                        <p>
+                          {variant.product} - {variant.name}:{' '}
+                          {formatPrice(variant.price)}
+                        </p>
+                        <p>Cantidad: {quantity}</p>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <div className="w-full p-4 shadow-2xl">
+                {promo.variants.map(({ variant, quantity }) => (
+                  <div key={variant.id} className="whitespace-nowrap">
+                    <p className="list-item">
+                      {variant.product} - {variant.name} :{' '}
+                      {formatPrice(variant.price)}
+                    </p>
+                    <p>Cantidad: {quantity}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="w-full p-4 shadow-2xl">
-              {promo.variants.map(({ variant, quantity }) => (
-                <div key={variant.id} className="whitespace-nowrap">
-                  <p className="list-item">
-                    {variant.product} - {variant.name} :{' '}
-                    {formatPrice(variant.price)}
-                  </p>
-                  <p>Cantidad: {quantity}</p>
-                </div>
-              ))}
-            </div>
+            <RenderIf condition={createMode} >
+              <button className='btn btn-success' onClick={handleClickAddPromo(promo)}>
+                Agregar
+              </button>
+            </RenderIf>
           </div>
-        </div>
-      ))}
-    </div>
+
+        ))}
+      </div>
+
+    </section>
   );
 }

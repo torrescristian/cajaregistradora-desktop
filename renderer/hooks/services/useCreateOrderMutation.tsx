@@ -1,4 +1,4 @@
-import { ICartItem } from '@/interfaces/ICart';
+import { ICartItem, IPromoItem } from '@/interfaces/ICart';
 import {
   IDiscount,
   IOrder,
@@ -19,6 +19,7 @@ interface IProps {
   subtotalPrice: number;
   discount?: IDiscount;
   coupon?: ICoupon;
+  promoItems?: IPromoItem[];
 }
 
 export default function useCreateOrderMutation() {
@@ -52,6 +53,7 @@ function parseOrderToPayLoad({
   subtotalPrice,
   discount,
   coupon,
+  promoItems,
 }: IProps): IOrder<number | undefined, IOrderItem<number, number>, number> {
   return {
     items: items.map((item): IOrderItem<number, number> => {
@@ -69,6 +71,7 @@ function parseOrderToPayLoad({
     subtotalPrice: subtotalPrice,
     discount: discount,
     coupon: coupon?.id!,
+    promoItems: promoItems!,
   };
 }
 
