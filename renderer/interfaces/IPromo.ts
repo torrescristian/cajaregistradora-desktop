@@ -35,4 +35,4 @@ export type IPromoResponse = IStrapiResponse<
 
 export type IPromoPayload = IPromo<number, number>;
 
-export type IVariantWithProductName = IVariant<null,string>;
+export type IVariantWithProductName = IVariant<null, string>;

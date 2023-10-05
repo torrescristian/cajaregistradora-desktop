@@ -40,11 +40,15 @@ interface IProps {
   updateMode?: boolean;
   order?: IOrder;
   onSubmit?: () => void;
-  promoItems?: IPromoItem[];  
+  promoItems?: IPromoItem[];
 }
 
-export const ConfirmOrder = ({ updateMode, order, onSubmit,promoItems }: IProps) => {
-
+export const ConfirmOrder = ({
+  updateMode,
+  order,
+  onSubmit,
+  promoItems,
+}: IProps) => {
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
   const subtotalPrice = useCartStore(getSubtotalPrice);

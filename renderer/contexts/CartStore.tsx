@@ -40,7 +40,7 @@ type ICartStore = ICartState & {
   setDiscountAmount: (discountAmount: number) => void;
   promoItems: IPromoItem[];
   addPromo: (promoItem: IPromoItem) => void;
-  removePromo:(index : number) => void;
+  removePromo: (index: number) => void;
 };
 
 export const useCartStore = create<ICartStore>()((set) => ({
@@ -141,11 +141,11 @@ export const useCartStore = create<ICartStore>()((set) => ({
   },
   removePromo: (index: number) => {
     set((state): Partial<ICartStore> => {
-      const subtotalPrice = fixPrice(state.subtotalPrice - state.promoItems[index].promo.price);
+      const subtotalPrice = fixPrice(
+        state.subtotalPrice - state.promoItems[index].promo.price,
+      );
       return {
-        promoItems: state.promoItems.filter(
-          (promo, idx) => idx !== index,
-          ),        
+        promoItems: state.promoItems.filter((promo, idx) => idx !== index),
         subtotalPrice,
         totalPrice: state.discountAmount
           ? calcDiscount({
@@ -153,7 +153,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
               discountType: state.discountType!,
               price: subtotalPrice,
             })
-          : subtotalPrice,          
+          : subtotalPrice,
       };
     });
   },

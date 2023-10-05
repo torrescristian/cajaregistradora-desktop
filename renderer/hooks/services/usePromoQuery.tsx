@@ -1,6 +1,6 @@
 import { IPromo, IPromoResponse } from '@/interfaces/IPromo';
 import strapi from '@/libs/strapi';
-import { useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { IVariant } from '@/interfaces/IVariants';
 
 export const getPromoQueryKey = () => 'promos';

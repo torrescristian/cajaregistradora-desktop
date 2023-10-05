@@ -8,9 +8,9 @@ export interface ICartItem {
   quantity: number;
   selectedVariant: IVariant;
 }
-export interface IPromoItem{
+export interface IPromoItem {
   promo: IPromo;
-  selectedVariants: IVariantWithProductName[]; 
+  selectedVariants: IVariantWithProductName[];
 }
 export interface ICartState {
   cartItems: ICartItem[];
@@ -20,7 +20,7 @@ export interface ICartState {
   totalPrice: number;
   additionalDetails: string;
   subtotalPrice: number;
-  promoItems: IPromoItem[];   
+  promoItems: IPromoItem[];
 }
 
 export interface ICartAction {

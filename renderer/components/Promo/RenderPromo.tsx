@@ -8,22 +8,23 @@ interface IProps {
   salesMode: boolean;
 }
 
-export default function RenderPromos({ promos, salesMode: createMode }: IProps) {
-
+export default function RenderPromos({
+  promos,
+  salesMode: createMode,
+}: IProps) {
   const addPromo = useCartStore(getAddPromo);
 
-  const handleClickAddPromo = (promo: IPromo) =>() =>{
-    if (promo.categories?.length ){
+  const handleClickAddPromo = (promo: IPromo) => () => {
+    if (promo.categories?.length) {
       throw new Error('Categories not supported yet');
     }
-    addPromo({promo,selectedVariants: []});
-  }
-
+    addPromo({ promo, selectedVariants: [] });
+  };
 
   return (
     <section className="flex flex-col w-full">
-      <div className='divider'>Promociones</div>
-      <div className='flex flex-row gap-3 overflow-x-scroll p-5'>
+      <div className="divider">Promociones</div>
+      <div className="flex flex-row gap-3 overflow-x-scroll p-5">
         {promos?.map((promo) => (
           <div
             className="flex flex-col p-4 items-center border-2"
@@ -60,16 +61,17 @@ export default function RenderPromos({ promos, salesMode: createMode }: IProps) 
                 ))}
               </div>
             </div>
-            <RenderIf condition={createMode} >
-              <button className='btn btn-success' onClick={handleClickAddPromo(promo)}>
+            <RenderIf condition={createMode}>
+              <button
+                className="btn btn-success"
+                onClick={handleClickAddPromo(promo)}
+              >
                 Agregar
               </button>
             </RenderIf>
           </div>
-
         ))}
       </div>
-
     </section>
   );
 }

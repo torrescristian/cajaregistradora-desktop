@@ -1,4 +1,3 @@
-
 import { ICategory } from '@/interfaces/ICategory';
 import { TrashIcon } from '@heroicons/react/24/solid';
 
