@@ -13,10 +13,12 @@ const Promo = () => {
     <section className="flex flex-col w-full gap-5">
       <CreatePromo />
       <p className="text-xl text-center">Promos creadas</p>
-      <RenderPromos promosItems={promos.map((promo) => ({
-        promo,
-        selectedVariants: [],
-      }))} />
+      <RenderPromos
+        promosItems={promos.map((promo) => ({
+          promo,
+          selectedVariants: [],
+        }))}
+      />
     </section>
   );
 };

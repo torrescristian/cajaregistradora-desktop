@@ -51,10 +51,12 @@ export default function RenderPromos({
 
   const handleClickConfirmVariants = () => {
     const selectorsId = Object.values(selectors).map(Number);
-    const allVariants = selectedPromo?.categories.map(
-      ({ category, quantity }) => category.variants).flat() || [];
-    const selectedVariants = selectorsId.map((selectorId) =>
-      allVariants.find((variant) => variant.id === selectorId)!
+    const allVariants =
+      selectedPromo?.categories
+        .map(({ category, quantity }) => category.variants)
+        .flat() || [];
+    const selectedVariants = selectorsId.map(
+      (selectorId) => allVariants.find((variant) => variant.id === selectorId)!,
     );
     addPromo({
       promo: selectedPromo!,
@@ -67,7 +69,7 @@ export default function RenderPromos({
     <section className="flex flex-col w-full">
       <div className="divider">Promociones</div>
       <div className="flex flex-row gap-3 overflow-x-scroll p-5">
-        {promosItems?.map(({promo}) => (
+        {promosItems?.map(({ promo }) => (
           <div
             className="flex flex-col p-4 items-center border-2"
             key={promo.id!}

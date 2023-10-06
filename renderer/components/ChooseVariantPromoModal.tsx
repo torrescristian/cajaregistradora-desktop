@@ -1,14 +1,7 @@
-
-
-interface IProps {
-    
-}
+interface IProps {}
 
 export const ChooseVariantPromoModal = () => {
-    return(
-        <section>
-        </section> 
-    )
-}
+  return <section></section>;
+};
 
 export default ChooseVariantPromoModal;
