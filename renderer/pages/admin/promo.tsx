@@ -13,7 +13,7 @@ const Promo = () => {
     <section className="flex flex-col w-full gap-5">
       <CreatePromo />
       <p className="text-xl text-center">Promos creadas</p>
-      <RenderPromos promos={promos}  />
+      <RenderPromos promos={promos} />
     </section>
   );
 };

@@ -66,7 +66,7 @@ export const CreatePromo = () => {
     setSelectedVariantList(newVariantList);
   };
 
-  const incrementCategoryByOne =(categoryId: number) => {
+  const incrementCategoryByOne = (categoryId: number) => {
     setSelectedCategoryList(
       selectedCategoryList.map(({ category, quantity }) => {
         if (category.id === categoryId) {
@@ -100,7 +100,6 @@ export const CreatePromo = () => {
   const handleChangeSelectedCategory = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    
     const selectedCategoryId = Number(e.target.value);
     setSelectedCategory(
       categories?.find((category) => category.id === selectedCategoryId),

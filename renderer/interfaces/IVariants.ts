@@ -16,6 +16,6 @@ export interface IVariant<
   categories?: CATEGORIES;
 }
 // export type IProductPromo = IProduct;
-export type IVariantPromo = IVariant<null,IProduct>
+export type IVariantPromo = IVariant<null, IProduct>;
 export type IVariantPayload = IVariant<number>;
 export type IVariantResponse = IStrapiResponse<IVariant>;

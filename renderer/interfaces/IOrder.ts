@@ -3,7 +3,7 @@ import IClient from './IClient';
 import { ICoupon } from './ICoupon';
 import { IProduct } from './IProduct';
 import { IVariant } from './IVariants';
-import { IResponsePage} from './utils';
+import { IResponsePage } from './utils';
 
 export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
   quantity: number;

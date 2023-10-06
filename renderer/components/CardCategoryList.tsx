@@ -21,11 +21,11 @@ export default function CardCategoryList({
       );
     };
 
-  const handleClickAddCategory =(category: ICategory)=>(e : React.MouseEvent)=>{
-    e.preventDefault();
-    incrementCategoryByOne(category.id!)
-  }
-
+  const handleClickAddCategory =
+    (category: ICategory) => (e: React.MouseEvent) => {
+      e.preventDefault();
+      incrementCategoryByOne(category.id!);
+    };
 
   const handleClickRemoveQuantity =
     (indexToRemove: number) => (e: React.MouseEvent) => {

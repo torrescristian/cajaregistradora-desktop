@@ -1,4 +1,4 @@
-import { IResponsePage} from './utils';
+import { IResponsePage } from './utils';
 
 export type IStockPerVariantPages = IResponsePage<IStockPerVariant>;
 

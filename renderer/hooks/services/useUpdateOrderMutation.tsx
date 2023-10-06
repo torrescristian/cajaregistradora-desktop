@@ -60,9 +60,7 @@ async function updateStock(items: ICartItem[]) {
   console.log(stockPerVariant);
   const updatedStockPerVariant = stockPerVariant.results.map(
     (spv): Pick<IStockPerVariant, 'id' | 'stock'> => {
-      const item = items.find(
-        (i) => spv.variant === i.selectedVariant.id,
-      );
+      const item = items.find((i) => spv.variant === i.selectedVariant.id);
 
       if (!item)
         return {

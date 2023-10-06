@@ -1,6 +1,6 @@
 import { DISCOUNT_TYPE } from './IOrder';
 import { IProduct } from './IProduct';
-import { IPromo} from './IPromo';
+import { IPromo } from './IPromo';
 import { IVariant, IVariantPromo } from './IVariants';
 
 export interface ICartItem {

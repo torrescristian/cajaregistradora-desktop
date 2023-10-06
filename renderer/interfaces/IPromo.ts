@@ -28,4 +28,3 @@ export type IPromoResponse = IResponsePage<
 >;
 
 export type IPromoPayload = IPromo<number, number>;
-

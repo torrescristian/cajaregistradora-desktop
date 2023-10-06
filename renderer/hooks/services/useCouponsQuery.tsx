@@ -20,13 +20,10 @@ export const parseCouponFacade = (
           id: coupon.variant.data.id,
           product: {
             id: coupon.variant.data.attributes.product.data.id,
-            name: coupon.variant.data.attributes.product.data
-              .attributes.name,
-            type: coupon.variant.data.attributes.product.data
-              .attributes.type,
+            name: coupon.variant.data.attributes.product.data.attributes.name,
+            type: coupon.variant.data.attributes.product.data.attributes.type,
             image: getUrlFromImage(
-              coupon.variant.data.attributes.product.data.attributes
-                .image,
+              coupon.variant.data.attributes.product.data.attributes.image,
             ),
           },
         }
