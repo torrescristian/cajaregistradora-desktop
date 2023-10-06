@@ -1,4 +1,4 @@
-import { IOrderSingleResponse, ORDER_STATUS } from '@/interfaces/IOrder';
+import { IOrderResponse, ORDER_STATUS } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import OrderSchema from '@/schemas/OrderSchema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -15,7 +15,7 @@ export default function useCancelOrderMutation() {
 
     const updateOrderResult = (await strapi.update('orders', orderId, {
       status: ORDER_STATUS.CANCELLED,
-    })) as unknown as IOrderSingleResponse;
+    })) as unknown as IOrderResponse;
 
     await OrderSchema().validate(updateOrderResult.results);
 

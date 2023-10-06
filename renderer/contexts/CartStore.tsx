@@ -20,6 +20,7 @@ type ISetCart = Pick<
   | 'subtotalPrice'
   | 'discountAmount'
   | 'discountType'
+  | 'promoItems'
 >;
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;

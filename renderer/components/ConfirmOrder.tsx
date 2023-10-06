@@ -154,7 +154,6 @@ export const ConfirmOrder = ({
   }) => {
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
-    console.log(couponDiscount);
   };
 
   const handleChangePayments = (newPayments: IPayment[]) => {

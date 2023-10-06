@@ -27,7 +27,10 @@ const Pedidos = () => {
       </RenderIf>
       <RenderIf condition={!isLoading}>
         <RenderIf condition={cashIsActive}>
-          <RenderPromos promos={promos!} salesMode />
+          <RenderPromos promosItems={promos!.map((promo)=>({
+            promo,
+            selectedVariants: [],
+          }))} salesMode />
           <Products />
           <Cart />
         </RenderIf>

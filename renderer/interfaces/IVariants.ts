@@ -1,6 +1,6 @@
 import { IProduct } from './IProduct';
 import IStockPerVariant from './IStockPerVariant';
-import { IStrapiResponse, IStrapiSingleResponse } from './utils';
+import { IStrapiResponse } from './utils';
 
 export interface IVariant<
   STOCK_PER_VARIANT = IStockPerVariant,

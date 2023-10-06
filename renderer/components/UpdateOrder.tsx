@@ -4,6 +4,7 @@ import { IOrder, IOrderItem } from '@/interfaces/IOrder';
 import { useEffect } from 'react';
 import Cart from './Cart/Cart';
 import Products from './Products';
+import RenderPromos from './Promo/RenderPromo';
 
 interface IProps {
   order: IOrder;
@@ -30,11 +31,13 @@ export const UpdateOrder = ({ order, onSubmit }: IProps) => {
       cartItems: order.items.map(adaptOrderItemToCartItem),
       discountAmount: order.discount!.amount,
       discountType: order.discount!.type,
+      promoItems: order.promoItems,
     });
   }, []);
 
   return (
     <section className="flex flex-col w-screen">
+      <RenderPromos promosItems={order.promoItems} salesMode />
       <Products />
       <Cart updateMode order={order} onSubmit={onSubmit} />
     </section>

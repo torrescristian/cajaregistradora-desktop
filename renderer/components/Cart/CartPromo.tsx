@@ -26,19 +26,10 @@ const CartPromo = ({ promosItems }: IProps) => {
               <TrashIcon className="w-5 h-5" />
             </button>
           </div>
-          {promo.categories.map(({ category, quantity }) => (
-            <div className="flex flex-col p-2" key={category.id!}>
-              <p className="list-item">
-                {category.name}{' '}
-                <span className="badge-primary badge-outline">x{quantity}</span>
-              </p>
-            </div>
-          ))}
           <div className="p-2">
-            {promo.variants.map(({ variant, quantity }, index) => (
-              <p className="list-item" key={index}>
+            {selectedVariants.map((variant) => (
+              <p className="list-item" key={variant.id}>
                 {variant.product.name} - {variant.name}{' '}
-                <span className="badge-primary badge-outline">x{quantity}</span>
               </p>
             ))}
           </div>

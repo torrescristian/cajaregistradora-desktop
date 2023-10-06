@@ -1,31 +1,73 @@
 import { IPromo } from '@/interfaces/IPromo';
-import { formatPrice } from '@/libs/utils';
-import { RenderIf } from '../RenderIf';
 import { getAddPromo, useCartStore } from '@/contexts/CartStore';
+import { useRef, useState } from 'react';
+import { formatPrice, range } from '@/libs/utils';
+import { RenderIf } from '../RenderIf';
+import { Card } from '../Card';
+import { IPromoItem } from '@/interfaces/ICart';
 
 interface IProps {
-  promos: IPromo[];
+  promosItems: IPromoItem[];
   salesMode?: boolean;
 }
 
 export default function RenderPromos({
-  promos,
+  promosItems,
   salesMode: createMode,
 }: IProps) {
   const addPromo = useCartStore(getAddPromo);
+  const ref = useRef<HTMLDialogElement>(null);
+  const [selectedPromo, setSelectedPromo] = useState<IPromo>();
+  const [selectors, setSelectors] = useState<any>({});
 
+  const createIndex = ({
+    categoryIndex,
+    quantityIndex,
+  }: {
+    categoryIndex: number;
+    quantityIndex: number;
+  }) => {
+    return `${categoryIndex}-${quantityIndex}`;
+  };
   const handleClickAddPromo = (promo: IPromo) => () => {
     if (promo.categories?.length) {
-      throw new Error('Categories not supported yet');
+      setSelectedPromo(promo);
+      ref.current?.showModal();
+      return;
     }
-    addPromo({ promo, selectedVariants: [] });
+    addPromo({ promo, selectedVariants: promo.variants.map((v) => v.variant) });
+  };
+
+  const handleSelectorChange =
+    (selectorProps: { categoryIndex: number; quantityIndex: number }) =>
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      // Actualiza el estado cuando cambie un selector
+      const newValue = e.target.value;
+      setSelectors((prevSelectors: any) => ({
+        ...prevSelectors,
+        [createIndex(selectorProps)]: newValue,
+      }));
+    };
+
+  const handleClickConfirmVariants = () => {
+    const selectorsId = Object.values(selectors).map(Number);
+    const allVariants = selectedPromo?.categories.map(
+      ({ category, quantity }) => category.variants).flat() || [];
+    const selectedVariants = selectorsId.map((selectorId) =>
+      allVariants.find((variant) => variant.id === selectorId)!
+    );
+    addPromo({
+      promo: selectedPromo!,
+      selectedVariants,
+    });
+    ref.current?.close();
   };
 
   return (
     <section className="flex flex-col w-full">
       <div className="divider">Promociones</div>
       <div className="flex flex-row gap-3 overflow-x-scroll p-5">
-        {promos?.map((promo) => (
+        {promosItems?.map(({promo}) => (
           <div
             className="flex flex-col p-4 items-center border-2"
             key={promo.id!}
@@ -71,6 +113,52 @@ export default function RenderPromos({
             </RenderIf>
           </div>
         ))}
+        <Card>
+          <dialog ref={ref} className="bg-transparent p-5">
+            <div className="modal-box w-fit">
+              <p>Elegir productos</p>
+              <div className="flex flex-col gap-5">
+                {selectedPromo?.categories!.map(
+                  ({ category, quantity }, categoryIndex) =>
+                    range(quantity).map((_, quantityIndex) => (
+                      <select
+                        className="select select-bordered w-96"
+                        key={createIndex({ categoryIndex, quantityIndex })}
+                        value={
+                          selectors[
+                            createIndex({ categoryIndex, quantityIndex })
+                          ] || ''
+                        }
+                        onChange={handleSelectorChange({
+                          categoryIndex,
+                          quantityIndex,
+                        })}
+                      >
+                        {category.variants!.map((variant, index) => (
+                          <option key={index} value={variant.id!}>
+                            {variant.product.name}-{variant.name}
+                          </option>
+                        ))}
+                      </select>
+                    )),
+                )}
+              </div>
+
+              <div className="modal-action">
+                <form method="dialog">
+                  <button
+                    className="btn btn-success"
+                    onClick={handleClickConfirmVariants}
+                  >
+                    Confirmar
+                  </button>
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+        </Card>
       </div>
     </section>
   );

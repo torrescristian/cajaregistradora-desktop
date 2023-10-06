@@ -9,7 +9,6 @@ export default function usePromoQuery() {
     const resp = (await strapi.find(getPromoQueryKey(), {
       populate: [
         'categories',
-        'categories.variants.product',
         'categories.category.variants.product',
         'variants',
         'variants.variant.product',
