@@ -1,3 +1,4 @@
+import { ICategory } from '@/interfaces/ICategory';
 import { ICategoryAndQuantity } from '@/interfaces/IPromo';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 
@@ -20,6 +21,12 @@ export default function CardCategoryList({
       );
     };
 
+  const handleClickAddCategory =(category: ICategory)=>(e : React.MouseEvent)=>{
+    e.preventDefault();
+    incrementCategoryByOne(category.id!)
+  }
+
+
   const handleClickRemoveQuantity =
     (indexToRemove: number) => (e: React.MouseEvent) => {
       e.preventDefault();
@@ -38,7 +45,7 @@ export default function CardCategoryList({
   return (
     <section className="flex">
       {selectedCategoryList.map(({ category, quantity }, index) => (
-        <div className="flex flex-row  border-2 p-3 gap-4">
+        <div className="flex flex-row  border-2 p-3 gap-4" key={index}>
           <div className="flex flex-col text-center whitespace-nowrap">
             <p key={category.id} className="text-2xl font-bold">
               {category.name}
@@ -46,7 +53,7 @@ export default function CardCategoryList({
             <div className="flex flex-row items-center p-4 gap-4">
               <button
                 className="btn btn-success"
-                onClick={() => incrementCategoryByOne(category.id!)}
+                onClick={handleClickAddCategory(category)}
               >
                 <PlusIcon className="w-5 h-5" />
               </button>

@@ -1,6 +1,6 @@
 import { ITicket } from './ITicket';
 import IUser from './IUser';
-import { IStrapiResponse } from './utils';
+import { IResponsePage } from './utils';
 export interface ICashBalance<
   TICKET = ITicket<number, number>,
   USER = IUser,
@@ -17,4 +17,4 @@ export interface ICashBalance<
 
 export type ICashBalanceExpanded = ICashBalance<ITicket>;
 
-export type ICashBalancePage = IStrapiResponse<ICashBalanceExpanded>;
+export type ICashBalancePage = IResponsePage<ICashBalanceExpanded>;

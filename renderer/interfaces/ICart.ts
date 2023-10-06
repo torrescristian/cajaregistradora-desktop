@@ -1,7 +1,7 @@
 import { DISCOUNT_TYPE } from './IOrder';
 import { IProduct } from './IProduct';
-import { IPromo, IVariantWithProductName } from './IPromo';
-import { IVariant } from './IVariants';
+import { IPromo} from './IPromo';
+import { IVariant, IVariantPromo } from './IVariants';
 
 export interface ICartItem {
   product: IProduct;
@@ -10,7 +10,7 @@ export interface ICartItem {
 }
 export interface IPromoItem {
   promo: IPromo;
-  selectedVariants: IVariantWithProductName[];
+  selectedVariants: IVariantPromo[];
 }
 export interface ICartState {
   cartItems: ICartItem[];

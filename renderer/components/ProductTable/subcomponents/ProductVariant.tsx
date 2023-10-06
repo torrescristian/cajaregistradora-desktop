@@ -1,10 +1,11 @@
 import FormControl from '@/components/FormControl';
 import useFormControl from '@/hooks/useFormControl';
-import { IProduct, IVariant } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 import Loader from '@/components/Loader';
 import UpdateProductButton from '@/components/UpdateProductButton';
 import { RenderIf } from '@/components/RenderIf';
+import { IVariant } from '@/interfaces/IVariants';
 
 interface IProps {
   variant: IVariant;
@@ -12,7 +13,7 @@ interface IProps {
 }
 
 export default function ProductVariant({ variant, product }: IProps) {
-  const initialStock = variant.stock_per_variant.stock;
+  const initialStock = variant.stock_per_variant?.stock;
   const nameVariants = variant.name;
   const priceVariants = variant.price;
 
@@ -32,7 +33,7 @@ export default function ProductVariant({ variant, product }: IProps) {
       newStock: Number(stock),
       name: name,
       price: price,
-      stockPerVariantId: variant.stock_per_variant.id!,
+      stockPerVariantId: variant.stock_per_variant?.id!,
       variantId: variant.id!,
     });
   };
@@ -81,7 +82,7 @@ export default function ProductVariant({ variant, product }: IProps) {
           <RenderIf condition={!isLoading}>
             <UpdateProductButton
               disabled={
-                variant.stock_per_variant.stock === stock &&
+                variant.stock_per_variant?.stock === stock &&
                 variant.name === name &&
                 variant.price === price
               }

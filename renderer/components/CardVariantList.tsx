@@ -49,7 +49,7 @@ export default function CardVariantList({
   return (
     <div className="flex flex-row gap-5 overflow-x-scroll w-[80vw] ">
       {selectedVariantList.map(({ variant, quantity }, index) => (
-        <div className="flex flex-col gap-3 items-center p-3 border-2 ">
+        <div className="flex flex-col gap-3 items-center p-3 border-2 " key={index}>
           <div className="flex flex-row justify-between gap-3 w-full items-center">
             <p className="text-xl">
               {variant.name} {formatPrice(variant.price)}

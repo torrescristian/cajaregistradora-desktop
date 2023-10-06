@@ -87,7 +87,7 @@ export default function CreateVariantsTable({
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
-            <RenderIf condition={isService}></RenderIf>
+            <RenderIf condition={isService}>{''}</RenderIf>
             <RenderIf condition={!isService}>
               <th>Alerta de stock faltante</th>
             </RenderIf>

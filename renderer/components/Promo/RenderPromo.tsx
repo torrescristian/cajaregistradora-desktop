@@ -5,7 +5,7 @@ import { getAddPromo, useCartStore } from '@/contexts/CartStore';
 
 interface IProps {
   promos: IPromo[];
-  salesMode: boolean;
+  salesMode?: boolean;
 }
 
 export default function RenderPromos({
@@ -40,7 +40,7 @@ export default function RenderPromos({
                     {category.variants.map((variant) => (
                       <div key={variant.id} className="whitespace-nowrap">
                         <p>
-                          {variant.product} - {variant.name}:{' '}
+                          {variant.product.name} - {variant.name}:{' '}
                           {formatPrice(variant.price)}
                         </p>
                         <p>Cantidad: {quantity}</p>
@@ -53,7 +53,7 @@ export default function RenderPromos({
                 {promo.variants.map(({ variant, quantity }) => (
                   <div key={variant.id} className="whitespace-nowrap">
                     <p className="list-item">
-                      {variant.product} - {variant.name} :{' '}
+                      {variant.product.name} - {variant.name} :{' '}
                       {formatPrice(variant.price)}
                     </p>
                     <p>Cantidad: {quantity}</p>

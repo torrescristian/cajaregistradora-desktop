@@ -1,4 +1,4 @@
-import { IStrapiResponse } from './utils';
+import { IResponsePage } from './utils';
 
 export default interface IClient {
   name: string;
@@ -7,4 +7,4 @@ export default interface IClient {
   id?: number;
 }
 
-export type IClientResponse = IStrapiResponse<IClient>;
+export type IClientResponse = IResponsePage<IClient>;

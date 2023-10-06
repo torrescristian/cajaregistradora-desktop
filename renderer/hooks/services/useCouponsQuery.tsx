@@ -8,30 +8,30 @@ export const getCouponQueryKey = () => 'coupons';
 export const parseCouponFacade = (
   couponResponse: ICouponResponse,
 ): ICoupon[] => {
-  return couponResponse.data.map((coupon) => ({
+  return couponResponse.results.map((coupon) => ({
     id: coupon.id,
-    code: coupon.attributes.code,
-    discount: coupon.attributes.discount,
-    dueDate: coupon.attributes.dueDate,
-    maxAmount: coupon.attributes.maxAmount,
-    variant: coupon.attributes.variant?.data
+    code: coupon.code,
+    discount: coupon.discount,
+    dueDate: coupon.dueDate,
+    maxAmount: coupon.maxAmount,
+    variant: coupon.variant?.data
       ? {
-          name: coupon.attributes.variant.data.attributes.name,
-          id: coupon.attributes.variant.data.id,
+          name: coupon.variant.data.attributes.name,
+          id: coupon.variant.data.id,
           product: {
-            id: coupon.attributes.variant.data.attributes.product.data.id,
-            name: coupon.attributes.variant.data.attributes.product.data
+            id: coupon.variant.data.attributes.product.data.id,
+            name: coupon.variant.data.attributes.product.data
               .attributes.name,
-            type: coupon.attributes.variant.data.attributes.product.data
+            type: coupon.variant.data.attributes.product.data
               .attributes.type,
             image: getUrlFromImage(
-              coupon.attributes.variant.data.attributes.product.data.attributes
+              coupon.variant.data.attributes.product.data.attributes
                 .image,
             ),
           },
         }
       : null,
-    availableUses: coupon.attributes.availableUses,
+    availableUses: coupon.availableUses,
   }));
 };
 

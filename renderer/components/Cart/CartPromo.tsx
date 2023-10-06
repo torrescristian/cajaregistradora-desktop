@@ -35,9 +35,9 @@ const CartPromo = ({ promosItems }: IProps) => {
             </div>
           ))}
           <div className="p-2">
-            {promo.variants.map(({ variant, quantity }) => (
-              <p className="list-item">
-                {variant.product} - {variant.name}{' '}
+            {promo.variants.map(({ variant, quantity },index) => (
+              <p className="list-item" key={index}>
+                {variant.product.name} - {variant.name}{' '}
                 <span className="badge-primary badge-outline">x{quantity}</span>
               </p>
             ))}

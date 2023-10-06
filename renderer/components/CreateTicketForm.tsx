@@ -1,4 +1,8 @@
-import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
+import {
+  calcDiscount,
+  formatPrice,
+  parseDateToArgentinianFormat,
+} from '@/libs/utils';
 import {
   CalendarDaysIcon,
   DevicePhoneMobileIcon,
@@ -83,11 +87,17 @@ export const CreateTicketForm = ({
           totalPrice: finalTotalPrice,
           cashBalance: activeCashBalanceQuery.cashBalance?.id!,
           payments,
-          couponDiscount,
+          couponDiscount: order.discount
+            ? calcDiscount({
+                discountAmount: order.discount?.amount!,
+                discountType: order.discount?.type!,
+                price: finalTotalPrice,
+              })
+            : couponDiscount,
         },
         coupon: {
-          id: coupon?.id,
-          availableUses: coupon?.availableUses!,
+          id: order.coupon?.id || coupon?.id,
+          availableUses: order.coupon?.availableUses || coupon?.availableUses!,
         },
       });
       toast.success('Pagado con exito');
@@ -189,13 +199,12 @@ export const CreateTicketForm = ({
             />
           ))}
           {order.promoItems.map((promoItem) => (
-            <RenderIf condition={promoItem.promo}>
-              <div key={promoItem.promo?.id} className="p-5">
+            <RenderIf condition={promoItem.promo} key={promoItem.promo?.id}>
+              <div className="p-5">
                 <p className="list-item text-xl">{promoItem.promo?.name}</p>
                 {promoItem.selectedVariants?.map((v) => (
                   <div key={v.id} className="flex flex-row p-4 gap-4">
                     <p>
-                      {/* @ts-ignore */}
                       {v.product.name} - {v.name}
                     </p>
                     <p>{formatPrice(v.price)}</p>

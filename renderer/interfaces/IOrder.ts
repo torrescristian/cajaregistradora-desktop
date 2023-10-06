@@ -3,7 +3,7 @@ import IClient from './IClient';
 import { ICoupon } from './ICoupon';
 import { IProduct } from './IProduct';
 import { IVariant } from './IVariants';
-import { IResponsePage, ISingleResultResponsePage } from './utils';
+import { IResponsePage} from './utils';
 
 export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
   quantity: number;
@@ -45,7 +45,6 @@ export enum DISCOUNT_TYPE {
   FIXED = 'fixed',
 }
 export type IOrderResponse = IResponsePage<IOrder>;
-export type IOrderSingleResponse = ISingleResultResponsePage<IOrder>;
 export type IOrderPayload = IOrder<number, number>;
 
 export enum ORDER_STATUS {

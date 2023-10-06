@@ -21,12 +21,13 @@ export default function useCancelOrderMutation() {
 
     const promises = updateOrderResult.results.items.map(async (item) => {
       const { quantity, selectedVariant } = item;
-      const stockPerVariant = selectedVariant.stock_per_variant;
-      const { stock } = stockPerVariant;
+      const stock = selectedVariant.stock_per_variant?.stock!;
+      const id = selectedVariant.stock_per_variant?.id!;
+
       const newStock = stock + quantity;
       await updateVariantMutation.mutateAsync({
         newStock: newStock,
-        stockPerVariantId: stockPerVariant.id!,
+        stockPerVariantId: id,
         variantId: selectedVariant.id!,
         price: selectedVariant.price,
         name: selectedVariant.name,

@@ -1,6 +1,6 @@
 import { IProduct } from './IProduct';
 import { IVariant } from './IVariants';
-import { IStrapiResponse, IResponsePage, IStrapiSingleResponse } from './utils';
+import { IResponsePage } from './utils';
 
 export interface ICategory<VARIANT = IVariant<null, IProduct>[]> {
   id?: number;
@@ -13,6 +13,4 @@ export type ICategoryPayload = ICategory<number[]>;
 
 export type ICategoryPage = IResponsePage<ICategory>;
 
-export type ICategoryResponse = IStrapiResponse<
-  ICategory<IStrapiResponse<IVariant<null, IProduct>>>
->;
+export type ICategoryResponse = IResponsePage<ICategory>;

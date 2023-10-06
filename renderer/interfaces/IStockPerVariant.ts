@@ -1,6 +1,6 @@
-import { IStrapiResponse } from './utils';
+import { IResponsePage} from './utils';
 
-export type IStockPerVariantPages = IStrapiResponse<IStockPerVariant>;
+export type IStockPerVariantPages = IResponsePage<IStockPerVariant>;
 
 export default interface IStockPerVariant {
   id?: number;

@@ -13,6 +13,7 @@ import { ICategory } from '@/interfaces/ICategory';
 import { ICategoryAndQuantity, IVariantAndQuantity } from '@/interfaces/IPromo';
 import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
+import e from 'express';
 
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
@@ -65,7 +66,7 @@ export const CreatePromo = () => {
     setSelectedVariantList(newVariantList);
   };
 
-  const incrementCategoryByOne = (categoryId: number) => {
+  const incrementCategoryByOne =(categoryId: number) => {
     setSelectedCategoryList(
       selectedCategoryList.map(({ category, quantity }) => {
         if (category.id === categoryId) {
@@ -76,7 +77,8 @@ export const CreatePromo = () => {
     );
   };
 
-  const handleClickAddCategory = () => {
+  const handleClickAddCategory = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (!selectedCategory) return;
     if (
       selectedCategoryList.find(
@@ -98,6 +100,7 @@ export const CreatePromo = () => {
   const handleChangeSelectedCategory = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
+    
     const selectedCategoryId = Number(e.target.value);
     setSelectedCategory(
       categories?.find((category) => category.id === selectedCategoryId),
