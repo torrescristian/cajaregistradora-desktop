@@ -33,10 +33,6 @@ const Caja = () => {
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
       <section>
-        <h2 className="text-lg">
-          Registra las ventas desde la última vez que hiciste caja y mira el
-          registro de las últimas cajas realizadas
-        </h2>
         <ul className="flex flex-col">
           <section className="flex w-full justify-center m-5">
             <RenderIf condition={isLoading}>
@@ -51,7 +47,7 @@ const Caja = () => {
               </RenderIf>
             </RenderIf>
           </section>
-          <section className="grid gap-5 grid-cols-3 justify-center justify-items-center content-center items-center w-full">
+          <section className="grid gap-5 justify-center items-center w-full">
             {isError && <p>Error</p>}
             <RenderIf condition={isLoading}>
               <Loader className="mt-5" />

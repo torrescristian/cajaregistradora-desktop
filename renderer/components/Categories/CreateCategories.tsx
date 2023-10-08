@@ -4,7 +4,7 @@ import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
 import ProductItem from '../ProductItem';
-import { IVariant } from '@/interfaces/IVariants';
+import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
 import { formatPrice } from '@/libs/utils';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '../RenderIf';
@@ -21,20 +21,23 @@ export const CreateCategories = () => {
   });
   const products = productsQuery.products as IProduct[];
 
-  const [newVariantSelected, setNewVariantSelected] = useState<IVariant[]>([]);
+  const [newVariantSelected, setNewVariantSelected] = useState<IVariantPromo[]>(
+    [],
+  );
   const { value: name, handleChange: handleChangeName } = useFormControl('');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
-    variant: IVariant;
+    variant: IVariantPromo;
   }) => {
     setNewVariantSelected([
       ...newVariantSelected,
       {
         id: props.variant.id!,
         name: props.variant.name,
-        product: props.variant.product,
+        product: props.product,
         price: props.variant.price,
+        stock_per_variant: null,
       },
     ]);
   };

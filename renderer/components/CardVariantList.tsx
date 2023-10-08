@@ -55,7 +55,8 @@ export default function CardVariantList({
         >
           <div className="flex flex-row justify-between gap-3 w-full items-center">
             <p className="text-xl">
-              {variant.name} {formatPrice(variant.price)}
+              {variant.product.name} - {variant.name}{' '}
+              {formatPrice(variant.price)}
             </p>
             <button
               className="btn btn-error"

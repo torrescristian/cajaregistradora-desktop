@@ -18,7 +18,7 @@ export interface ICategoryAndQuantity<CATEGORY = ICategory> {
   quantity: number;
 }
 
-export interface IVariantAndQuantity<VARIANT = IVariant> {
+export interface IVariantAndQuantity<VARIANT = IVariantPromo> {
   variant: VARIANT;
   quantity: number;
 }

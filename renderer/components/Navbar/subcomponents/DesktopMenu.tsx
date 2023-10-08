@@ -59,7 +59,10 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                 </>
               ) : null}
               <li>
-                <NavButton className="w-full" onClick={onLogout}>
+                <NavButton
+                  className="w-full bg-red-800 hover:bg-red-500"
+                  onClick={onLogout}
+                >
                   Cerrar Sesión
                 </NavButton>
               </li>

@@ -25,6 +25,28 @@ export const DiscountTypeControl = (props: IProps) => {
 
   return (
     <section>
+      <RenderIf condition={discountType === DISCOUNT_TYPE.PERC}>
+        <FormControl
+          text={'Descuento:'}
+          name="discountAmount"
+          type="text"
+          value={discountAmount}
+          onChange={handleChangeDiscountAmount}
+          fullWidth
+          posfix="%"
+        />
+      </RenderIf>
+      <RenderIf condition={discountType === DISCOUNT_TYPE.FIXED}>
+        <FormControl
+          text={'Descuento:'}
+          name="discountAmount"
+          type="text"
+          value={discountAmount}
+          onChange={handleChangeDiscountAmount}
+          fullWidth
+          suffix="$"
+        />
+      </RenderIf>
       <section className="grid grid-cols-2 w-full">
         <label className="label border-2 hover:link p-3 border-stone-500">
           <input
@@ -49,26 +71,6 @@ export const DiscountTypeControl = (props: IProps) => {
           Porcentaje %
         </label>
       </section>
-      <RenderIf condition={discountType === DISCOUNT_TYPE.PERC}>
-        <FormControl
-          text={'Descuento:'}
-          name="discountAmount"
-          type="text"
-          value={discountAmount}
-          onChange={handleChangeDiscountAmount}
-          fullWidth
-        />
-      </RenderIf>
-      <RenderIf condition={discountType === DISCOUNT_TYPE.FIXED}>
-        <FormControl
-          text={'Descuento:'}
-          name="discountAmount"
-          type="text"
-          value={discountAmount}
-          onChange={handleChangeDiscountAmount}
-          fullWidth
-        />
-      </RenderIf>
     </section>
   );
 };

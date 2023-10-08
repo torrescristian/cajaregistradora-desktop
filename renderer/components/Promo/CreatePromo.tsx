@@ -5,7 +5,7 @@ import SearchInput, { useSearchProps } from '../SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
-import { IVariant } from '@/interfaces/IVariants';
+import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import useCreatePromoMutation from '@/hooks/services/useCreatePromoMutation';
 import useFormControl from '@/hooks/useFormControl';
@@ -42,7 +42,7 @@ export const CreatePromo = () => {
 
   const handleClickAddProduct = (props: {
     product: IProduct;
-    variant: IVariant;
+    variant: IVariantPromo;
   }) => {
     let newVariantList = [];
     if (
@@ -126,13 +126,13 @@ export const CreatePromo = () => {
     <section className="flex flex-col w-full">
       <div className="flex flex-col gap-3 items-center p-3">
         <form
-          className="flex flex-col border-2 p-5 gap-7 items-center"
+          className="flex flex-col p-5 gap-7 items-start"
           onSubmit={handleCreatePromo}
         >
-          <p>Crea tu promo!</p>
-          <div className="flex flex-row gap-5 w-full justify-around p-5 ">
-            <label className="text-xl">
-              Nombre : {''}
+          <h1 className="text-2xl w-full text-center">Crea tu promo!</h1>
+          <div className="flex flex-row gap-5 w-full justify-start items-end p-5">
+            <label className="flex flex-col">
+              <span className="text-neutral-content">Nombre</span>
               <input
                 type="text"
                 className="input input-bordered w-36"
@@ -140,8 +140,8 @@ export const CreatePromo = () => {
                 onChange={handleChangeName}
               />
             </label>
-            <label className="text-xl">
-              Precio : {''}
+            <label className="flex flex-col">
+              <span className="text-neutral-content">Precio</span>
               <input
                 type="number"
                 className="input input-bordered w-36"
@@ -149,27 +149,33 @@ export const CreatePromo = () => {
                 onChange={handleChangePrice}
               />
             </label>
+            <RenderIf condition={categories?.length}>
+              <div className="flex flex-row items-end">
+                <label className="flex flex-col">
+                  <span className="text-neutral-content">Categorias</span>
+                  <select
+                    className="select select-bordered w-52"
+                    onChange={handleChangeSelectedCategory}
+                    value={selectedCategory?.id}
+                  >
+                    {categories?.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  className="btn btn-success text-primary-content"
+                  onClick={handleClickAddCategory}
+                >
+                  <PlusIcon className="w-9 h-9" /> Agregar
+                </button>
+              </div>
+            </RenderIf>
           </div>
           <RenderIf condition={categories?.length}>
             <div className="flex flex-row items-center gap-3">
-              <select
-                className="select select-bordered w-52"
-                onChange={handleChangeSelectedCategory}
-                value={selectedCategory?.id}
-              >
-                <option value="">Selecciona una categoria</option>
-                {categories?.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-              <button
-                className="btn btn-success text-primary-content btn-square"
-                onClick={handleClickAddCategory}
-              >
-                <PlusIcon className="w-9 h-9" />
-              </button>
               <div className="flex flex-row gap-3 overflow-x-scroll w-[70vw] ">
                 <CardCategoryList
                   selectedCategoryList={selectedCategoryList}
@@ -200,7 +206,7 @@ export const CreatePromo = () => {
               setSelectedVariantList={setSelectedVariantList}
             />
           </div>
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary w-64 self-end" type="submit">
             Crear Promo
           </button>
         </form>
