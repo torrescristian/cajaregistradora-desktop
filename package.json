@@ -73,9 +73,7 @@
     "nextron": "^8.5.0",
     "prettier": "3.0.0",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "typescript": "5.0.2",
-    "escpos": "^3.0.0-alpha.6",
-    "escpos-usb": "^3.0.0-alpha.4"
+    "typescript": "5.0.2"
   },
   "resolutions": {
     "usb": "1.8.8"
