@@ -174,17 +174,10 @@ export const CreateTicketForm = ({
               {order.address}
             </p>
           ) : null}
-<<<<<<< Updated upstream
-          {order.phoneNumber ? (
-            <p className="flex flex-row items-center gap-3">
-              <DevicePhoneMobileIcon className="w-5 inline  text-stone-500" />{' '}
-              {order.phoneNumber}
-=======
           {order.client?.phone_number ? (
             <p className="flex flex-row items-center gap-3">
               <DevicePhoneMobileIcon className="w-5 inline  text-stone-500" />{' '}
               {order.client?.phone_number}
->>>>>>> Stashed changes
             </p>
           ) : null}
           {order.additionalDetails && (

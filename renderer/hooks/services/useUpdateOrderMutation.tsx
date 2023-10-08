@@ -24,17 +24,6 @@ export default function useUpdateOrderMutation({ onSuccess }: IProps) {
       const resp = [null, null] as [any, any];
       resp[0] = await strapi.update(getOrderQueryKey(), order.id!, order);
       if (order.client) {
-<<<<<<< Updated upstream
-        resp[1] = await strapi.update(getClientsQueryKey(), order.client, {
-          address: order.address,
-          phone_number: order.phoneNumber,
-        } as IClient);
-      }
-      const excludeServiceItem = (item: IOrderItem): boolean =>
-        !item.product!.isService;
-
-      const itemsToUpdate = order.items.filter(excludeServiceItem);
-=======
         resp[1] = await strapi.update(getClientsQueryKey(), order.client!, {
           address: order.address,
         } as IClient);
@@ -44,7 +33,6 @@ export default function useUpdateOrderMutation({ onSuccess }: IProps) {
       //   !item.product!.isService;
 
       // const itemsToUpdate = order.items.filter(excludeServiceItem);
->>>>>>> Stashed changes
       /* 
         if (itemsToUpdate.length) {
           resp[1] = await updateStock(itemsToUpdate);

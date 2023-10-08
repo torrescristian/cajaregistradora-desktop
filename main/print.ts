@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-import { ICartItem } from '@/renderer/interfaces/ICart';
-=======
 import { ICartItem } from '../renderer/interfaces/ICart';
->>>>>>> Stashed changes
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
 import { formatPrice, parseDateToArgentinianFormat } from './helpers/utils';
