@@ -15,7 +15,7 @@
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux",
     "prepare": "husky install",
-    "test": "cypress"
+    "test": "cypress open"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.16",

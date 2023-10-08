@@ -1,7 +1,7 @@
 import * as yup from 'yup';
-import ProductSchema from './ProductSchema';
+import ProductPayloadSchema from './ProductPayloadSchema';
 
-const VariantSchema = (productSchema = ProductSchema) =>
+const VariantSchema = (productSchema = ProductPayloadSchema) =>
   yup.object().shape({
     id: yup.number().required(),
     product: productSchema().required(),

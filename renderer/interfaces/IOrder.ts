@@ -18,19 +18,18 @@ export interface IOrder<
   ORDER_ITEM = IOrderItem,
   COUPON = ICoupon,
 > {
-  items: ORDER_ITEM[];
-  id?: number;
-  totalPrice: number;
   additionalDetails: string;
-  client?: CLIENT;
-  createdAt?: string;
-  updatedAt?: string;
-  status: ORDER_STATUS;
   address?: string;
-  phoneNumber?: string;
-  discount?: IDiscount;
-  subtotalPrice: number;
+  client?: CLIENT;
   coupon?: COUPON;
+  createdAt?: string;
+  discount?: IDiscount;
+  id?: number;
+  items: ORDER_ITEM[];
+  status: ORDER_STATUS;
+  subtotalPrice: number;
+  totalPrice: number;
+  updatedAt?: string;
 }
 
 export interface IDiscount {

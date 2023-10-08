@@ -1,18 +1,25 @@
+import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
 import * as yup from 'yup';
 import ClientSchema from './ClientSchema';
 import OrderItemsSchema from './OrderItemsSchema';
-import ProductSchema from './ProductSchema';
+import ProductPayloadSchema from './ProductPayloadSchema';
 
-const OrderSchema = (orderItemsSchema = ProductSchema().required()) =>
+const OrderSchema = (orderItemsSchema = ProductPayloadSchema().required()) =>
   yup.object().shape({
-    id: yup.number().required(),
-    totalPrice: yup.number().required(),
-    items: yup.array().of(OrderItemsSchema(orderItemsSchema)).required(),
+    additionalDetails: yup.string(),
     client: ClientSchema().required(),
     createAt: yup.string(),
-    updatedAt: yup.string(),
-    additionalDetails: yup.string(),
+    coupon: yup.number(),
+    discount: yup.object().shape({
+      amount: yup.number(),
+      type: yup.string().oneOf([DISCOUNT_TYPE.FIXED, DISCOUNT_TYPE.PERC]),
+    }),
+    id: yup.number().required(),
+    items: yup.array().of(OrderItemsSchema(orderItemsSchema)).required(),
     status: yup.string(),
+    subtotalPrice: yup.number().required(),
+    totalPrice: yup.number().required(),
+    updatedAt: yup.string(),
   });
 
 export default OrderSchema;

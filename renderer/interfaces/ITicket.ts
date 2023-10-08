@@ -22,13 +22,13 @@ export enum TICKET_STATUS {
 }
 
 export interface ITicket<ORDER = IOrder, CASH_BALANCE = ICashBalance> {
-  id?: number;
-  totalPrice: number;
-  order: ORDER;
-  status: TICKET_STATUS;
   cashBalance: CASH_BALANCE;
-  payments: IPayment[];
   couponDiscount: number;
+  id?: number;
+  order: ORDER;
+  payments: IPayment[];
+  status: TICKET_STATUS;
+  totalPrice: number;
 }
 
 export type ITicketPayload = ITicket<number, number>;
