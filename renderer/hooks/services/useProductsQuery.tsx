@@ -1,26 +1,16 @@
 import strapi from '@/libs/strapi';
-import { getError } from '@/libs/utils';
-import IProductUI, { IProduct, IProductPage } from '@/interfaces/IProduct';
+import { getErrorMessage, getUrlFromImage } from '@/libs/utils';
+import { IProduct, IProductPage, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { IVariantUI } from '@/interfaces/IProduct';
+import { IVariant } from '@/interfaces/IVariants';
 
 export const getProductsQueryKey = () => 'products';
 
-const parseProductFacade = (product: IProduct): IProductUI => {
-  const {
-    name,
-    id,
-    isService,
-    variants,
-    public_price,
-    catalog_price,
-    special_price,
-    wholesale_price,
-    image,
-    stock_per_product,
-  } = product;
+const parseProductFacade = (product: IProduct): IProduct => {
+  const { name, id, isService, variants, image, default_variant, store, type } =
+    product;
 
   const res = {
     id,
@@ -29,37 +19,36 @@ const parseProductFacade = (product: IProduct): IProductUI => {
     variants: variants.map(
       (variant) =>
         ({
-          id: variant.id || 0,
-          categories: variant.categories,
-          stock:
-            variant.stock_per_variant.stock_amount_per_variant -
-            variant.stock_per_variant.sales_amount_per_variant,
+          id: variant.id,
+          name: variant.name,
+          price: variant.price,
+          product: id,
           stock_per_variant: variant.stock_per_variant,
-        } as IVariantUI)
+        }) as IVariant,
     ),
-    public_price,
-    catalog_price,
-    special_price,
-    wholesale_price,
-    image: (image as unknown as any)?.formats?.thumbnail?.url || '/default.png',
-    stock:
-      stock_per_product.stock_amount_per_product -
-      stock_per_product.sales_amount_per_product,
-    price: public_price,
-    stock_per_product,
+    image: getUrlFromImage(image),
+    default_variant: {
+      id: default_variant?.id,
+      name: default_variant?.name,
+      price: default_variant?.price,
+      product: id,
+      stock_per_variant: default_variant?.stock_per_variant,
+    } as IVariant,
+    store: store,
+    type: type,
   };
   return res;
 };
 
 interface IProductsQueryProps {
   query: string;
-  selectedCategories: number[];
+  selectedProductType?: PRODUCT_TYPE;
   page?: number;
 }
 
 export default function useProductsQuery({
   query,
-  selectedCategories,
+  selectedProductType = '',
   page,
 }: IProductsQueryProps) {
   const router = useRouter();
@@ -70,50 +59,40 @@ export default function useProductsQuery({
     total: 1,
   });
 
-  const { data, isLoading, isError, isSuccess } = useQuery<IProductUI[]>(
-    [getProductsQueryKey(), query, selectedCategories, page],
+  const { data, isLoading, isError, isSuccess, error } = useQuery<IProduct[]>(
+    [getProductsQueryKey(), query, selectedProductType, page],
     async () => {
       try {
         let options: any = {
           populate: [
-            'categories',
-            'stock_per_product',
             'variants',
             'variants.categories',
-            'variants.categories.parent',
             'variants.stock_per_variant',
             'image',
+            'default_variant',
+            'default_variant.stock_per_variant',
           ],
           page: page || 1,
-          pageSize: 20,
+          pageSize: 9,
         };
 
-        options.filters =
-          selectedCategories?.length === 0
-            ? {
-                name: {
-                  $containsi: query || '',
-                },
-              }
-            : {
-                name: {
-                  $containsi: query || '',
-                },
-                $or: [
-                  {
-                    variants: {
-                      categories: selectedCategories,
-                    },
-                  },
-                  {
-                    categories: selectedCategories,
-                  },
-                ],
-              };
+        if (selectedProductType) {
+          options.filters = {
+            type: selectedProductType,
+          };
+        }
+        if (query) {
+          options.filters = {
+            ...options.filters,
+            name: {
+              $containsi: query,
+            },
+          };
+        }
 
         const res = (await strapi.find(
           getProductsQueryKey(),
-          options
+          options,
         )) as unknown as IProductPage;
 
         if (!res) return [];
@@ -125,18 +104,18 @@ export default function useProductsQuery({
         return parsedRes;
       } catch (error: any) {
         console.error('🚀 ~ file: useProductsQuery.tsx:71 ~ error:', error);
-        if ([401, 403].includes(getError(error).status)) {
-          router.push('/login');
+        if ([401, 403].includes(getErrorMessage(error).status)) {
+          router.push('/');
 
           return [];
         }
 
         return [];
       }
-    }
+    },
   );
 
   const products = data || [];
 
-  return { products, isLoading, isError, isSuccess, pagination };
+  return { products, isLoading, isError, isSuccess, pagination, error };
 }

@@ -4,7 +4,6 @@ import ActiveLink from '@/components/ActiveLink';
 import {
   ClipboardDocumentCheckIcon,
   ClipboardDocumentListIcon,
-  ShoppingCartIcon,
 } from '@heroicons/react/24/solid';
 import { IComponent } from '@/interfaces/ProductItem.interfaces';
 

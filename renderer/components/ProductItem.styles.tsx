@@ -12,7 +12,7 @@ export const CollapseTitle = ({
     className={mergeClasses(
       'collapse-title flex items-center p-5 text-primary-content',
       className,
-      disabled ? 'bg-gray-400' : ''
+      disabled ? 'bg-gray-400' : '',
     )}
   >
     {children}
@@ -29,7 +29,7 @@ export const CollapseContent = ({
     className={mergeClasses(
       'collapse-content flex justify-end gap-x-2.5 pt-5 text-primary-content',
       className,
-      disabled ? 'bg-gray-400' : 'bg-secondary'
+      disabled ? 'bg-gray-400' : 'bg-secondary',
     )}
   >
     {children}
@@ -46,7 +46,7 @@ export const ActionButton = ({
     className={mergeClasses(
       'btn-md btn z-10 flex flex-row shadow-lg text-white btn-success w-min',
       className,
-      disabled ? 'btn-disabled' : 'btn-success'
+      disabled ? 'btn-disabled' : 'btn-success',
     )}
     onClick={onClick}
   >
@@ -58,9 +58,9 @@ export const Badge = ({ children, className }: IComponent) =>
   children?.toString() === '0' ? null : (
     <span
       className={mergeClasses(
-        'text-2xs bg-red-500 font-bold text-white',
+        'text-2xs bg-secondary font-bold text-white',
         'flex h-8 w-12 items-center justify-center rounded-full rounded-l-full',
-        className
+        className,
       )}
     >
       {children}
@@ -76,22 +76,16 @@ export const AddProductButtonWithText = ({
   <ActionButton
     onClick={onClick}
     disabled={disabled}
-    className="btn-square w-full bg-green-400 text-2xl uppercase text-stone-50 hover:bg-green-600 focus:bg-green-400"
+    className="btn-square w-min bg-green-400 text-2xl uppercase text-stone-50 hover:bg-green-600 focus:bg-green-400"
   >
     Agregar
   </ActionButton>
 );
 
-export const AddProductButton = ({
-  onClick,
-  disabled,
-}: IActionButton & {
-  disabled: boolean;
-}) => (
+export const AddProductButton = ({ onClick }: IActionButton & {}) => (
   <ActionButton
     onClick={onClick}
-    disabled={disabled}
-    className="btn-square bg-green-400 text-stone-50 hover:bg-green-600 focus:bg-green-400"
+    className="btn-square px-2  bg-green-400 text-stone-50 hover:bg-green-600 focus:bg-green-400"
   >
     <PlusIcon className="h-8 w-8" />
   </ActionButton>
@@ -104,16 +98,15 @@ export const UpdateProductButton = ({
   onClick: any;
   pendingChanges: boolean;
 }) => (
-  // TODO:  <ActionButton onClick={onClick} disabled={!pendingChanges}>
-  <ActionButton onClick={onClick}>
-  Guardar
+  <ActionButton onClick={onClick} disabled={!pendingChanges}>
+    Guardar
   </ActionButton>
 );
 
 export const RemoveProductButton = ({ onClick }: IActionButton) => (
   <ActionButton
     onClick={onClick}
-    className="btn-error btn-square bg-red-500 text-stone-50 hover:bg-red-700 focus:bg-red-500"
+    className="btn-error btn-square px-2  bg-red-500 text-stone-50 hover:bg-red-700 focus:bg-red-500"
   >
     <MinusIcon className="h-8 w-8" />
   </ActionButton>
@@ -122,7 +115,7 @@ export const RemoveProductButton = ({ onClick }: IActionButton) => (
 export const ClearButton = ({ onClick }: IActionButton) => (
   <ActionButton
     onClick={onClick}
-    className="btn-error btn-square bg-red-500 text-stone-50 hover:bg-red-700 focus:bg-red-500"
+    className="btn-error btn-square px-2  bg-red-500 text-stone-50 hover:bg-red-700 focus:bg-red-500"
   >
     <TrashIcon className="h-8 w-8" />
   </ActionButton>

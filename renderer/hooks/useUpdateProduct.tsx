@@ -1,21 +1,21 @@
 import useFormControl from './useFormControl';
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import { useMemo } from 'react';
 
 interface IUseUpdateProductFormProps {
-  product: IProductUI;
+  product: IProduct;
 }
 
 const useUpdateProductForm = ({ product }: IUseUpdateProductFormProps) => {
   // STATE
   const updateProductMutation = useUpdateProductMutation();
 
-  const { value: name,handleChange: handleChangeName } = useFormControl(
+  const { value: name, handleChange: handleChangeName } = useFormControl(
     product.name,
   );
   const { value: stock, handleChange: handleChangeStock } = useFormControl(
-    product.name
+    product.name,
   );
 
   const pendingChanges = useMemo(() => {

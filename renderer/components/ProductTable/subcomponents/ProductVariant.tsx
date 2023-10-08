@@ -1,66 +1,95 @@
 import FormControl from '@/components/FormControl';
 import useFormControl from '@/hooks/useFormControl';
-import { IVariantUI } from '@/interfaces/IProduct';
-import { toLC } from '@/libs/utils';
+import { IProduct } from '@/interfaces/IProduct';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 import Loader from '@/components/Loader';
-import StockButton from '@/components/StockButton';
+import UpdateProductButton from '@/components/UpdateProductButton';
+import { RenderIf } from '@/components/RenderIf';
+import { IVariant } from '@/interfaces/IVariants';
 
 interface IProps {
-  variant: IVariantUI;
+  variant: IVariant;
+  product: IProduct;
 }
 
-export default function ProductVariant({ variant }: IProps) {
-  const { categories, stock } = variant;
-  const { handleChange, value } = useFormControl(stock);
+export default function ProductVariant({ variant, product }: IProps) {
+  const initialStock = variant.stock_per_variant?.stock;
+  const nameVariants = variant.name;
+  const priceVariants = variant.price;
+
+  const { handleChange: handleChangeStock, value: stock } =
+    useFormControl(initialStock);
+  const { handleChange: handleChangeName, value: name } =
+    useFormControl(nameVariants);
+  const { handleChange: handleChangePrice, value: price } =
+    useFormControl(priceVariants);
+
   const updateVariantMutation = useUpdateVariantMutation();
+
   const isLoading = updateVariantMutation.isLoading;
 
   const handleSubmit = () => {
     updateVariantMutation.mutate({
-      stock: Number(value),
-      stockPerVariant: structuredClone(variant.stock_per_variant),
+      newStock: Number(stock),
+      name: name,
+      price: price,
+      stockPerVariantId: variant.stock_per_variant?.id!,
+      variantId: variant.id!,
     });
   };
 
   return (
     <section className="flex w-full flex-row justify-between self-center whitespace-nowrap">
-      <section className="flex">
-        {categories
-          .filter(
-            (c) => !['articulos', 'modelos'].includes(toLC(c.parent.name))
-          )
-          .map((c) => (
-            <p key={c.id} className="text-bold self-center">
-              {c.name}
-            </p>
-          ))}
-      </section>
-      <section className="flex flex-col items-end justify-end gap-1">
-        <section className="flex items-center gap-5">
-          <label className="input-group ">
-            <span>Stock</span>
+      <section className="flex flex-col items-end justify-end gap-2">
+        <section className="flex w-full">
+          <FormControl
+            fullWidth
+            name="name"
+            onChange={handleChangeName}
+            text="Nombre"
+            type="text"
+            value={name}
+            textAlign="text-center"
+          />
+          <RenderIf condition={!product.isService}>
             <FormControl
-              className="w-28"
-              hideLabel
               name="stock"
-              onChange={handleChange}
+              onChange={handleChangeStock}
               text="Stock"
               type="number"
-              value={value}
+              value={stock}
+              textAlign="text-center"
+              className="w-24"
+            />
+          </RenderIf>
+        </section>
+        <section className="flex">
+          <label className="input-group">
+            <span>$</span>
+            <FormControl
+              hideLabel
+              name="price"
+              onChange={handleChangePrice}
+              text="Precio"
+              type="number"
+              value={price}
               textAlign="text-center"
             />
           </label>
+          <RenderIf condition={isLoading}>
+            <Loader className="w-24" />
+          </RenderIf>
+          <RenderIf condition={!isLoading}>
+            <UpdateProductButton
+              disabled={
+                variant.stock_per_variant?.stock === stock &&
+                variant.name === name &&
+                variant.price === price
+              }
+              handleSubmit={handleSubmit}
+            />
+          </RenderIf>
         </section>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <StockButton
-            initialStock={stock}
-            handleSubmit={handleSubmit}
-            currentStock={value}
-          />
-        )}
       </section>
     </section>
   );

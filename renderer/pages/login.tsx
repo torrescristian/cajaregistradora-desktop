@@ -19,31 +19,6 @@ const LoginPage: React.FC = () => {
     });
   };
 
-  const handleQuickLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await loginMutation.mutate({
-      email: 'vendedor@gmail.com',
-      password: 'vendedor123',
-    });
-  };
-
-  const Suggestion = () => (
-    <button
-      className="btn-info btn h-fit w-full py-5"
-      onClick={handleQuickLogin}
-    >
-      <p>
-        Explora CajaRegistradora.app
-        <br />
-        <br />
-        con un usuario de prueba
-        <br />
-        <br />
-        ¡haciendo click acá!
-      </p>
-    </button>
-  );
-
   return (
     <PageLayout>
       {loginMutation.isLoading ? (
@@ -54,19 +29,13 @@ const LoginPage: React.FC = () => {
             onSubmit={handleSubmit}
             className="flex h-full w-full flex-col gap-y-5 rounded-md bg-white p-6 shadow-md md:mt-16 md:h-fit md:w-full"
           >
-            <h2 data-test="form.title" className="text-2xl font-semibold">
-              Iniciar Sesión
-            </h2>
-            <div data-test="form.actions" className="mb-4">
-              <label
-                data-test="form.email"
-                htmlFor="email"
-                className="mb-1 block"
-              >
+            <h2 className="text-2xl font-semibold">Iniciar Sesión</h2>
+            <div className="mb-4">
+              <label htmlFor="email" className="mb-1 block">
                 Correo Electrónico (e-mail)
               </label>
               <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
-                <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+                <EnvelopeIcon className="h-5 w-5" />
                 <input
                   id="email"
                   type="email"
@@ -85,7 +54,7 @@ const LoginPage: React.FC = () => {
                 Contraseña
               </label>
               <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
-                <LockClosedIcon className="h-5 w-5 text-gray-400" />
+                <LockClosedIcon className="h-5 w-5" />
                 <input
                   id="password"
                   type="password"
@@ -106,7 +75,6 @@ const LoginPage: React.FC = () => {
               Iniciar Sesión
             </button>
           </form>
-          <Suggestion />
           <WhatsappButton />
         </div>
       )}

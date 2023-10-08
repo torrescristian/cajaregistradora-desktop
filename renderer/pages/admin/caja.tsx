@@ -1,107 +1,70 @@
 import PageLayout from '@/components/PageLayout';
-import { getServerSideOwnerProps } from '@/libs/auth';
-import { parseDateToArgentinianFormat } from '@/libs/utils';
-import useCashBalanceMutation from '@/hooks/services/useCashBalanceMutation';
-import useCashBalanceQuery from '@/hooks/services/useCashBalanceQuery';
-import { ICashBalance } from '@/interfaces/ICashBalance';
-import { IProduct } from '@/interfaces/IProduct';
+import useInitCashMutation from '@/hooks/services/useInitCashMutation';
 import Loader from '@/components/Loader';
-
-interface ICashBalanceProps {
-  cashBalance: ICashBalance;
-}
-
-const Small = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-sm font-normal">{children}</span>
-);
-
-const Bold = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-lg font-bold">{children}</span>
-);
-
-const CashBalance = ({ cashBalance }: ICashBalanceProps) => {
-  return (
-    <li
-      key={cashBalance.id}
-      className="w-max rounded-lg bg-stone-50 p-5 text-center shadow-xl"
-    >
-      <Small>{parseDateToArgentinianFormat(cashBalance.createdAt)}</Small>
-      <p>
-        <Small>Total: $</Small> <span className='badge badge-secondary text-white'>{cashBalance.total_amount}</span>
-      </p>
-      <ul className="mt-5">
-        {cashBalance.products_sold.map((productSold) => {
-          const { id, name } = productSold.product as IProduct;
-          const quantity = productSold.quantity;
-          return (
-            <li key={id} className="">
-              <p className="text-left">
-                 <span className='badge text-white badge-secondary '>{quantity}</span> - {name}.
-              </p>
-            </li>
-          );
-        })}
-      </ul>
-    </li>
-  );
-};
-
-interface ICreateCashBalanceProps {
-  onClick: () => void;
-  disabled: boolean;
-}
-const CreateCashBalance = ({ onClick, disabled }: ICreateCashBalanceProps) => (
-  <button
-    className="btn flex w-fit bg-green-500 text-stone-50 hover:bg-green-600"
-    onClick={onClick}
-    disabled={disabled}
-  >
-    Hacer Caja
-  </button>
-);
+import { CashBalance, CreateCashBalance } from '@/components/CashBalance';
+import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
+import { CashBalanceActivate } from '@/components/CashBalanceActive';
+import { RenderIf } from '@/components/RenderIf';
+import useFormControl from '@/hooks/useFormControl';
+import { CloseCashBalance } from '@/components/CloseCashBalance';
 
 const Caja = () => {
   const {
-    cashBalances,
-    isLoading: queryLoading,
+    cashBalance,
+    isLoading: activeCashLoading,
     isError,
-  } = useCashBalanceQuery();
-  const cashBalanceMutation = useCashBalanceMutation();
+    isSuccess,
+    cashIsActive,
+  } = useActiveCashBalanceQuery();
 
-  const isLoading = queryLoading || cashBalanceMutation.isLoading;
+  const { handleChange, value } = useFormControl(0);
+
+  const isLoading = activeCashLoading;
+
+  const initCashMutation = useInitCashMutation();
 
   const handleClick = () => {
-    cashBalanceMutation.mutate();
+    initCashMutation.mutate({
+      initialCashAmount: Number(value),
+    });
   };
 
   return (
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
       <section>
-        <h2 className="text-lg">
-          Registra las ventas desde la última vez que hiciste caja y mira el
-          registro de las últimas cajas realizadas
-        </h2>
         <ul className="flex flex-col">
-          <section className='flex w-full justify-center m-5'>
-            {isLoading ? (
+          <section className="flex w-full justify-center m-5">
+            <RenderIf condition={isLoading}>
               <Loader className="mt-5" />
-            ) : (
-              <CreateCashBalance onClick={handleClick} disabled={isLoading} />
-            )}
+            </RenderIf>
+            <RenderIf condition={!isLoading && isSuccess}>
+              <RenderIf condition={cashIsActive}>
+                <CloseCashBalance cashBalanceId={cashBalance?.id!} />
+              </RenderIf>
+              <RenderIf condition={!cashIsActive}>
+                <CreateCashBalance onClick={handleClick} />
+              </RenderIf>
+            </RenderIf>
           </section>
-          <section className="grid gap-5 grid-cols-3 justify-center justify-items-center content-center items-center w-max">
+          <section className="grid gap-5 justify-center items-center w-full">
             {isError && <p>Error</p>}
-            {cashBalances.map((cashBalance) => (
-              <CashBalance key={cashBalance.id} cashBalance={cashBalance} />
-            ))}
+            <RenderIf condition={isLoading}>
+              <Loader className="mt-5" />
+            </RenderIf>
+            <RenderIf condition={!isLoading && isSuccess}>
+              <RenderIf condition={cashIsActive}>
+                <CashBalanceActivate cashBalance={cashBalance} />
+              </RenderIf>
+              <RenderIf condition={!cashIsActive}>
+                <CashBalance value={value} onChange={handleChange} />
+              </RenderIf>
+            </RenderIf>
           </section>
         </ul>
       </section>
     </PageLayout>
   );
 };
-
-export const getServerSideProps = getServerSideOwnerProps;
 
 export default Caja;

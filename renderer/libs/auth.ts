@@ -3,7 +3,7 @@ import { parse } from 'cookie';
 import IUser from '@/interfaces/IUser';
 
 export const isAuthenticated = async (
-  ctx: NextPageContext
+  ctx: NextPageContext,
 ): Promise<boolean> => {
   const cookie = ctx.req?.headers.cookie;
   const parsedCookie = cookie ? parse(cookie) : {};
@@ -32,7 +32,7 @@ export const getServerSideOwnerProps = async (ctx: NextPageContext) => {
       // If there is no token, the user is not logged in
       return {
         redirect: {
-          destination: '/login',
+          destination: '/',
           permanent: false,
         },
       };
@@ -44,12 +44,12 @@ export const getServerSideOwnerProps = async (ctx: NextPageContext) => {
   } catch (error) {
     console.log(
       '🚀 ~ file: auth.ts:50 ~ getServerSideOwnerProps ~ error:',
-      error
+      error,
     );
 
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     };
@@ -63,7 +63,7 @@ export const getServerSideAuthProps = async (ctx: NextPageContext) => {
       // If there is no token, the user is not logged in
       return {
         redirect: {
-          destination: '/login',
+          destination: '/',
           permanent: false,
         },
       };
@@ -75,12 +75,12 @@ export const getServerSideAuthProps = async (ctx: NextPageContext) => {
   } catch (error) {
     console.log(
       '🚀 ~ file: auth.ts:81 ~ getServerSideAuthProps ~ error:',
-      error
+      error,
     );
 
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     };

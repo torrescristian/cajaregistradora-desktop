@@ -1,5 +1,6 @@
 import { mergeClasses } from '@/libs/utils';
 import { FormControl } from '@/interfaces/ProductItem.interfaces';
+import { RenderIf } from './RenderIf';
 
 const FormControl = ({
   text,
@@ -9,23 +10,22 @@ const FormControl = ({
   onChange,
   fullWidth,
   suffix,
+  posfix,
   className,
   disabled,
   hideLabel,
   textAlign,
 }: FormControl) => {
   return (
-    <section
-      className={mergeClasses(
-        'form-control flex w-full',
-        className
-      )}
-    >
-      {hideLabel ? null : (
-        <label htmlFor={name} className="whitespace-nowrap">
+    <section className={mergeClasses('form-control flex w-full', className)}>
+      <RenderIf condition={!hideLabel}>
+        <label
+          htmlFor={name}
+          className="whitespace-nowrap text-stone-500 text-center"
+        >
           {text}
         </label>
-      )}
+      </RenderIf>
       <section
         className={mergeClasses('flex items-center', fullWidth ? 'w-full' : '')}
       >
@@ -35,20 +35,21 @@ const FormControl = ({
             'input-bordered input text-left',
             fullWidth ? 'w-full' : 'w-40',
             disabled ? 'bg-gray-400' : '',
-            textAlign || 'text-center'
-            )}
-            disabled={disabled}
-            id={name}
-            name={name}
-            onChange={onChange}
-            type={type}
-            value={value}
-            style={{
-              textOverflow: 'ellipsis',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-            }}
-            />
+            textAlign || 'text-center',
+          )}
+          disabled={disabled}
+          id={name}
+          name={name}
+          onChange={onChange}
+          type={type}
+          value={value}
+          style={{
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+          }}
+        />
+        {posfix ? <span className="ml-3">{posfix}</span> : null}
       </section>
     </section>
   );

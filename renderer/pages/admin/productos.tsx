@@ -2,7 +2,6 @@ import PageLayout from '@/components/PageLayout';
 import ProductTable from '@/components/ProductTable';
 import SearchInput, { useSearchProps } from '@/components/SearchInput';
 import useIsMobile from '@/hooks/useIsMobile';
-import { getServerSideOwnerProps } from '@/libs/auth';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
@@ -15,17 +14,17 @@ const Productos = () => {
 
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedCategories: [],
     page: activePage,
   });
 
   const isMobile = useIsMobile();
 
   return (
-    <PageLayout className="max-w-full">
-      <h1 className="text-2xl">Reabastecer & Actualizar</h1>
-      {/* FIXME: filter */}
-      <SearchInput {...searchProps} disableFilter />
+    <PageLayout className="w-full">
+      <div className="flex flex-row justify-between w-full">
+        <h1 className="text-2xl whitespace-nowrap">Reabastecer & Actualizar</h1>
+        <SearchInput {...searchProps} />
+      </div>
       <section className="flex w-full">
         {isMobile ? (
           <>
@@ -37,19 +36,16 @@ const Productos = () => {
           </>
         ) : (
           <ProductTable
-          isLoading={productsQuery.isLoading}
-          isError={productsQuery.isError}
+            isLoading={productsQuery.isLoading}
+            isError={productsQuery.isError}
             products={productsQuery.products}
             setActivePage={setActivePage}
             pagination={productsQuery.pagination}
-            />
-            )}
-            </section>
-            
+          />
+        )}
+      </section>
     </PageLayout>
   );
 };
-
-export const getServerSideProps = getServerSideOwnerProps;
 
 export default Productos;

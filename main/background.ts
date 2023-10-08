@@ -1,35 +1,37 @@
-import { app } from "electron";
-import serve from "electron-serve";
-import { createWindow } from "./helpers";
+import { app } from 'electron';
+import serve from 'electron-serve';
+import { createWindow } from './helpers';
+import createSocketServer from './createSocketServer';
 
-const isProd: boolean = process.env.NODE_ENV === "production";
+const isProd: boolean = process.env.NODE_ENV === 'production';
 
 if (isProd) {
-  serve({ directory: "app" });
+  serve({ directory: 'app' });
 } else {
-  app.setPath("userData", `${app.getPath("userData")} (development)`);
+  app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
+
+createSocketServer(app);
 
 (async () => {
   await app.whenReady();
-
-  const mainWindow = createWindow("main", {
+  // create electron app
+  const mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
     webPreferences: {
-      webSecurity: false
-    }
+      webSecurity: false,
+    },
   });
-
   if (isProd) {
-    await mainWindow.loadURL("app://./index.html");
+    await mainWindow.loadURL('app://./index.html');
   } else {
     const port = process.argv[2];
-    await mainWindow.loadURL(`http://localhost:${port}/`);
+    await mainWindow.loadURL(`http://localhost:${port}`);
     mainWindow.webContents.openDevTools();
   }
 })();
 
-app.on("window-all-closed", () => {
+app.on('window-all-closed', () => {
   app.quit();
 });

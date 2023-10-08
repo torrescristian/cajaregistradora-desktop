@@ -1,17 +1,20 @@
-import { IProduct } from './IProduct';
+import { ITicket } from './ITicket';
+import IUser from './IUser';
 import { IResponsePage } from './utils';
-
-export interface IProductsSold {
-  quantity: number;
-  product: IProduct | number;
-}
-
-export interface ICashBalance {
+export interface ICashBalance<
+  TICKET = ITicket<number, number>,
+  USER = IUser,
+  COMPLETED_AT = Date,
+> {
   id?: number;
-  total_amount: number;
-  products_sold: IProductsSold[];
-  createdAt?: string;
-  updatedAt?: string;
+  completedAt: COMPLETED_AT;
+  initialCashAmount: number;
+  newCashAmount: number;
+  seller: USER;
+  ticket: TICKET;
+  totalAmount: number;
 }
 
-export type ICashBalancePage = IResponsePage<ICashBalance>;
+export type ICashBalanceExpanded = ICashBalance<ITicket>;
+
+export type ICashBalancePage = IResponsePage<ICashBalanceExpanded>;

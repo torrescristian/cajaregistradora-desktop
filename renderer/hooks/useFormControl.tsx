@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const useFormControl = (initialValue: any) => {
-  const [value, setValue] = useState<any>(0);
+  const [value, setValue] = useState<any>(initialValue);
 
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { value } = e.target;
 
     setValue(value);

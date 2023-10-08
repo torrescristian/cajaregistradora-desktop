@@ -2,11 +2,14 @@ import ProductItem from '@/components/ProductItem';
 import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import SearchInput, { useSearchProps } from '@/components/SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import Loader from '@/components/Loader';
+import ProductTypes from './ProductTypes';
+import { useState } from 'react';
+import { Divider } from './Sale/Sale.styles';
 
 const Fixed = ({ children }: IComponent) => (
-  <section className="sticky top-0 z-20 mt-2.5 flex w-full flex-col gap-y-5 bg-white">
+  <section className="sticky top-0 z-20 flex w-full justify-center flex-row gap-5">
     {children}
   </section>
 );
@@ -14,19 +17,27 @@ const Fixed = ({ children }: IComponent) => (
 const Products = () => {
   const searchProps = useSearchProps();
 
+  const [selectedProductType, setSelectedProductType] =
+    useState<PRODUCT_TYPE>('');
+
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedCategories: searchProps.selectedCategories,
+    selectedProductType,
   });
 
-  const products = productsQuery.products as IProductUI[];
+  const products = productsQuery.products as IProduct[];
 
   return (
-    <section className="w-1/2">
+    <section className="w-full">
+      <Divider>Productos</Divider>
       <Fixed>
         <SearchInput {...searchProps} />
+        <ProductTypes
+          onSelect={setSelectedProductType}
+          selectedProductType={selectedProductType}
+        />
       </Fixed>
-      <section className="mt-5 flex w-full flex-row flex-wrap justify-between gap-y-5">
+      <section className="flex flex-row gap-5 m-5 p-2 overflow-x-scroll w-full">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
         {products.map((product) => (

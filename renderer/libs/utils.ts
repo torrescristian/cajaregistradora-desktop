@@ -1,3 +1,5 @@
+import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
+import { PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { twMerge } from 'tailwind-merge';
 
 export const mergeClasses = (...classes: Array<string | null | undefined>) => {
@@ -13,8 +15,8 @@ export const formatPrice = (price: number) => {
   });
 };
 
-export const getError = (error: any) => {
-  return error.error || error;
+export const getErrorMessage = (error: any) => {
+  return error?.error?.message || error?.error || error;
 };
 
 export const toPositiveNumber = (value: string | number) => {
@@ -27,11 +29,11 @@ export const parseDateToArgentinianFormat = (date?: Date | string) => {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   return (
     dateObj.toLocaleDateString('es-AR', {
-      year : 'numeric',
-      month : '2-digit',
-      day : '2-digit',
-      hour : '2-digit',
-      minute : '2-digit',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
     }) + ' hs'
   );
 };
@@ -45,3 +47,41 @@ export const toLC = (str: string) => str.toLowerCase();
 export function range(end: number) {
   return Array.from({ length: end }, (_, i) => i);
 }
+
+interface ICalcDiscount {
+  price: number;
+  discountAmount: number;
+  discountType: DISCOUNT_TYPE;
+}
+
+export function calcDiscount({
+  price,
+  discountAmount,
+  discountType,
+}: ICalcDiscount) {
+  if (discountType === DISCOUNT_TYPE.FIXED) {
+    return price - discountAmount;
+  }
+  return price * (1 - discountAmount / 100);
+}
+
+export const convertToEmoji = (productType?: PRODUCT_TYPE) => {
+  switch (productType) {
+    case 'PIZZA': {
+      return '🍕';
+    }
+    case 'HAMBURGER': {
+      return '🍔';
+    }
+    case 'SODA': {
+      return '🥤';
+    }
+    default: {
+      return '';
+    }
+  }
+};
+
+export const getUrlFromImage = (image: any) => {
+  return (image as unknown as any)?.formats?.thumbnail?.url || '/default.png';
+};

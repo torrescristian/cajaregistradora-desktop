@@ -1,5 +1,4 @@
-import { ICategory } from './ICategory';
-import IStockPerProduct from './IStockPerProduct';
+import { IVariant } from './IVariants';
 import { IResponsePage } from './utils';
 
 export interface IAditionalPrice {
@@ -7,67 +6,27 @@ export interface IAditionalPrice {
   name: string;
   amount: number;
 }
-export interface IStockPerVariant {
-  id: number;
-  variant: number;
-  stock_amount_per_variant: number;
-  sales_amount_per_variant: number;
-}
-export interface IVariant {
-  id: number;
-  categories: ICategory[] | number[];
-  product: number;
-  stock_per_variant: IStockPerVariant;
-}
 
-export interface IVariantPayload {
-  categories: number[];
-  product: number;
-  stock_per_variant: number;
-}
-
-export interface IVariantUI {
-  id: number;
-  categories: ICategory[];
-  stock: number;
-  stock_per_variant: IStockPerVariant;
-}
-
-export interface IProduct {
-  id: number;
-  isService: boolean;
+export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant[]> {
+  id?: number;
   name: string;
-  createdAt: string;
-  updatedAt: string;
-  stock_per_product: IStockPerProduct;
-  categories: ICategory[];
+  variants: VARIANTS;
   store: number;
-  variants: IVariant[];
-  public_price: number;
-  wholesale_price: number;
-  catalog_price: number;
-  special_price: number;
+  isService: boolean;
+  default_variant: DEFAULT_VARIANT;
   image: string;
+  type: PRODUCT_TYPE;
+  updatedAt?: string;
+  createdAt?: string;
 }
 
-export type IProductPage = IResponsePage<IProduct>;
-
+export type IProductPage = IResponsePage<IProduct<IVariant>>;
 export interface IProductUpdate {
   data: Partial<IProduct>;
 }
 
-export default interface IProductUI {
-  id: number;
-  name: string;
-  disabled?: boolean;
-  isService: boolean;
-  variants: IVariantUI[];
-  public_price: number;
-  wholesale_price: number;
-  catalog_price: number;
-  special_price: number;
-  image: string;
-  stock: number;
-  price: number;
-  stock_per_product: IStockPerProduct;
-}
+export type PRODUCT_TYPE = 'SODA' | 'PIZZA' | 'HAMBURGER' | '';
+
+export const productTypes: PRODUCT_TYPE[] = ['HAMBURGER', 'PIZZA', 'SODA', ''];
+
+export type IProductPayload = IProduct<number, number>;

@@ -1,10 +1,10 @@
 import BottomNav from './BottomNav';
 import Navbar from './Navbar';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IProps {
   children: React.ReactNode;
 }
-
 export default function GlobalLayout({ children }: IProps) {
   return (
     <section

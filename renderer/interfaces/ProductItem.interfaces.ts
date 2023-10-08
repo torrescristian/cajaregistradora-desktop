@@ -1,4 +1,4 @@
-import IProductUI from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 
 export interface IActionButton {
   onClick: () => void;
@@ -11,7 +11,8 @@ export interface IComponent {
 }
 
 export interface ICollapseTitle {
-  product: IProductUI;
+  product: IProduct;
+  updateMode?: boolean;
 }
 
 export interface FormControl {
@@ -22,6 +23,7 @@ export interface FormControl {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   fullWidth?: boolean;
   suffix?: string;
+  posfix?: string;
   className?: string;
   disabled?: boolean;
   hideLabel?: boolean;

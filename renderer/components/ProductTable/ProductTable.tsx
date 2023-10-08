@@ -1,11 +1,11 @@
-import IProductUI, { IProductPage } from '@/interfaces/IProduct';
+import { IProduct, IProductPage } from '@/interfaces/IProduct';
 import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
 import Pagination from './subcomponents/Pagination';
 import ProductRow from './subcomponents/ProductRow';
 
 interface IProps {
-  products: IProductUI[];
+  products: IProduct[];
   isLoading: boolean;
   isError: boolean;
   setActivePage: (page: number) => void;
@@ -19,22 +19,22 @@ export default function ProductTable({
   pagination,
   setActivePage,
 }: IProps) {
-   const handleClickPage = (page: number) => () => setActivePage(page);
+  const handleClickPage = (page: number) => () => setActivePage(page);
 
   return (
-    <section className='flex flex-col gap-5'>
-      <section className="flex flex-wrap justify-around gap-5">
+    <section className="flex flex-col gap-5">
+      <section className="flex gap-5 overflow-x-scroll w-[90vw]">
         {isLoading && <Loader className="w-full text-center" />}
         {isError && <ErrorMessage>Error</ErrorMessage>}
         {!isLoading &&
           products.map((p) => <ProductRow product={p} key={p.id} />)}
       </section>
 
-        <Pagination
+      <Pagination
         pagination={pagination}
         onClick={handleClickPage}
         isLoading={isLoading}
-        /> 
+      />
     </section>
   );
 }

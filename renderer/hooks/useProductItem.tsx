@@ -1,48 +1,45 @@
 import {
-  addProduct,
-  updatePrice,
-  getCartItemQuantityByProductId,
-  removeCartItem,
-  removeProduct,
-  useCartDispatch,
-  useCartSelect,
-} from '@/contexts/CartContext';
-import IProductUI from '@/interfaces/IProduct';
+  getCartItemQuantityByVariantId as getCartItemQuantityByVariantId,
+  useCartStore,
+} from '@/contexts/CartStore';
+import { IProduct } from '@/interfaces/IProduct';
+import { IVariant } from '@/interfaces/IVariants';
 
-const useProductItem = (product: IProductUI) => {
-  const isNotService = !product.isService;
-  const isDisabledOrWithoutStock = product?.disabled;
-  const disabled = isNotService && isDisabledOrWithoutStock;
+interface IProps {
+  product: IProduct;
+  selectedVariant: IVariant;
+}
+
+const useProductItem = ({ product, selectedVariant }: IProps) => {
   const isService = !!product.isService;
-  const cartItemQuantity = useCartSelect(
-    getCartItemQuantityByProductId(product.id)
-  );
-  const dispatch = useCartDispatch();
+  const { cartItemQuantity, addProduct, removeCartItem, removeProduct } =
+    useCartStore((state) => ({
+      addProduct: state.addProduct,
+      removeCartItem: state.removeCartItem,
+      removeProduct: state.removeProduct,
+      cartItemQuantity: getCartItemQuantityByVariantId(selectedVariant.id!)(
+        state,
+      ),
+    }));
 
   const handleClickAdd = () => {
-    dispatch(addProduct(product));
+    addProduct({ product, selectedVariant });
   };
 
   const handleClickRemove = () => {
-    dispatch(removeProduct(product));
+    removeProduct({ product, selectedVariant });
   };
 
   const handleClickClear = () => {
-    dispatch(removeCartItem(product));
-  };
-
-  const handleClickSelectUpdatePrice = async (newPrice: number) => {
-    dispatch(updatePrice({ product, newPrice }));
+    removeCartItem({ product, selectedVariant });
   };
 
   return {
-    disabled,
     cartItemQuantity,
     handleClickAdd,
     handleClickRemove,
     handleClickClear,
     isService,
-    handleClickSelectUpdatePrice,
   };
 };
 

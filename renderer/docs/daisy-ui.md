@@ -20,10 +20,10 @@ npx tailwindcss init -p
 @tailwind utilities;
 ```
 
-## 4. Be sure that _app.js includes global.css
+## 4. Be sure that \_app.js includes global.css
 
 ```js
-import '../styles/global.css'
+import '../styles/global.css';
 ```
 
 ## 5. Configure tailwind.config.js with daisyui plugin
@@ -32,17 +32,15 @@ import '../styles/global.css'
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    './app/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
     // Or if using `src` directory:
     // "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
-}
+  plugins: [require('daisyui')],
+};
 ```
-
-
