@@ -15,8 +15,35 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./renderer/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
+<<<<<<< Updated upstream
   "exclude": ["node_modules", "renderer/next.config.js", "app", "dist"]
+=======
+  "exclude": [
+    "node_modules",
+    "renderer/next.config.js",
+    "app",
+<<<<<<< Updated upstream
+    "dist"
+=======
+    "dist",
+    "cypress",
+  ],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+>>>>>>> Stashed changes
+  ]
+>>>>>>> Stashed changes
 }

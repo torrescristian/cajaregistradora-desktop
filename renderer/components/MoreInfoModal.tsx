@@ -43,7 +43,11 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             />
             <DataItem
               label="Teléfono:"
+<<<<<<< Updated upstream
               value={ticket.order.phoneNumber}
+=======
+              value={ticket.order.client?.phone_number}
+>>>>>>> Stashed changes
               defaultValue="Sin teléfono"
             />
             <RenderIf condition={ticket.order.additionalDetails}>
