@@ -6,9 +6,11 @@
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
   "main": "app/background.js",
   "scripts": {
-    "start": "next renderer",
+    "start": "next renderer start",
     "dev": "nextron",
-    "build": "nextron build",
+    "build:web": "next renderer",
+    "build": "next build",
+    "build:nextron": "nextron build",
     "postinstall": "electron-builder install-app-deps",
     "build:all": "nextron build --all",
     "build:win32": "nextron build --win --ia32",
