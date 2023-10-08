@@ -25,16 +25,10 @@
       }
     ]
   },
-<<<<<<< Updated upstream
-  "exclude": ["node_modules", "renderer/next.config.js", "app", "dist"]
-=======
   "exclude": [
     "node_modules",
     "renderer/next.config.js",
     "app",
-<<<<<<< Updated upstream
-    "dist"
-=======
     "dist",
     "cypress",
   ],
@@ -43,7 +37,5 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
->>>>>>> Stashed changes
   ]
->>>>>>> Stashed changes
 }
