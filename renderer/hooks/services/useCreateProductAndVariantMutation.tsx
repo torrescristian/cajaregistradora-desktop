@@ -1,26 +1,27 @@
-import { IProductPayload, IVariantPayload } from '@/interfaces/IProduct';
-import { ISingleFixedNativeResponse } from '@/interfaces/utils';
+import { IProductPayload } from '@/interfaces/IProduct';
+import { IStrapiSingleResponse } from '@/interfaces/utils';
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
 import useCreateVariantMutation from './useCreateVariantMutation';
-import { use } from 'react';
+import { IVariantPayload } from '@/interfaces/IVariants';
 
 interface IProps {
   data: IProductPayload;
   variants: IVariantPayload[];
   defaultVariantIndex: number;
+  minimum_stock?: number;
 }
 
 export default function useCreateProductAndVariantMutation() {
   const queryClient = useQueryClient();
   const createVariantMutation = useCreateVariantMutation();
   return useMutation(
-    async ({ data, variants, defaultVariantIndex }: IProps) => {
+    async ({ data, variants, defaultVariantIndex, minimum_stock }: IProps) => {
       const res = (await strapi.create(
         getProductsQueryKey(),
         data,
-      )) as ISingleFixedNativeResponse<IProductPayload>;
+      )) as IStrapiSingleResponse<IProductPayload>;
 
       const validVariants = variants.filter((v) => v.name.trim());
 
@@ -32,8 +33,9 @@ export default function useCreateProductAndVariantMutation() {
           product: res.data.id!,
           name: variant.name,
           price: variant.price,
-          stock: variant.stock_per_variant,
+          stock: variant.stock_per_variant!,
           isDefaultVariant: Number(index) === defaultVariantIndex,
+          minimum_stock: variant.minimum_stock!,
         });
       }
       queryClient.invalidateQueries([getProductsQueryKey()]);

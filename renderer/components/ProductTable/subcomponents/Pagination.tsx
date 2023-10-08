@@ -1,6 +1,5 @@
 import { mergeClasses, range } from '@/libs/utils';
 import { IProductPage } from '@/interfaces/IProduct';
-import Loader from '@/components/Loader';
 import { MouseEventHandler } from 'react';
 
 interface IPagination {

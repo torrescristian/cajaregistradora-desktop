@@ -1,5 +1,5 @@
 import { IProduct } from './IProduct';
-import { IFixedNativeResponse, IResponsePage } from './utils';
+import { IStrapiResponse, IResponsePage } from './utils';
 
 export interface ISaleItem {
   id?: number;
@@ -31,4 +31,4 @@ export default interface ISaleUI {
   saleItems: ISaleItem[];
 }
 
-export type ISaleNativeResponse = IFixedNativeResponse<ISale>;
+export type ISaleNativeResponse = IStrapiResponse<ISale>;

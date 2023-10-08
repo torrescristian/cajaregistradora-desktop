@@ -23,6 +23,7 @@ export interface FormControl {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   fullWidth?: boolean;
   suffix?: string;
+  posfix?: string;
   className?: string;
   disabled?: boolean;
   hideLabel?: boolean;

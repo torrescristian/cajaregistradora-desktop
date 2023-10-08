@@ -3,7 +3,7 @@ import FormFieldText from '../FormFieldText';
 import useCreateCouponMutation from '@/hooks/services/useCreateCouponMutation';
 import { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
-import { IProduct, IVariant, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ProductItem from '../ProductItem';
 import { convertToEmoji } from '@/libs/utils';
@@ -13,6 +13,7 @@ import { ICouponPayload } from '@/interfaces/ICoupon';
 import { DiscountTypeControl } from '../DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { Card } from '../Card';
+import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
 
 export const CreateCoupon = () => {
   const {
@@ -24,7 +25,7 @@ export const CreateCoupon = () => {
       code: '',
       dueDate: '',
       maxAmount: 0,
-      availableUses: 0,
+      availableUses: 1,
     },
   });
 
@@ -43,9 +44,11 @@ export const CreateCoupon = () => {
   const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>();
   const [discountAmount, setDiscountAmount] = useState<number>();
 
-  const [selectedVariant, setSelectedVariant] = useState<IVariant | null>(
-    products[0]?.default_variant,
-  );
+  const [selectedVariant, setSelectedVariant] = useState<IVariantPromo | null>({
+    ...products[0]?.default_variant,
+    product: products[0],
+    stock_per_variant: null,
+  });
 
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(
     products[0],
@@ -55,10 +58,14 @@ export const CreateCoupon = () => {
 
   const handleClickAddProduct = (props: {
     product: IProduct;
-    variant: IVariant;
+    variant: IVariantPromo;
   }) => {
     setSelectedProduct(props.product);
-    setSelectedVariant(props.variant);
+    setSelectedVariant({
+      ...props.variant,
+      product: props.product,
+      stock_per_variant: null,
+    });
   };
 
   const handleSubmitCreateCoupon = (data: any) => {
@@ -89,7 +96,7 @@ export const CreateCoupon = () => {
         onSubmit={handleSubmit(handleSubmitCreateCoupon)}
         className="flex flex-col p-4 gap-10"
       >
-        <div className="flex flex-row gap-4 w-full justify-between">
+        <div className="flex flex-row gap-10 w-full justify-between">
           <div className="flex flex-col gap-3">
             <FormFieldText
               register={register}
@@ -104,19 +111,22 @@ export const CreateCoupon = () => {
               className="w-full input-secondary"
             />
           </div>
-          <DiscountTypeControl
-            onChange={handleChangeDiscountType}
-            discountAmount={discountAmount}
-            discountType={discountType}
-          />
-
           <div className="flex flex-col">
-            <FormFieldText
-              register={register}
-              errors={errors}
-              formKey="maxAmount"
-              label="Monto máximo:"
+            <DiscountTypeControl
+              onChange={handleChangeDiscountType}
+              discountAmount={discountAmount}
+              discountType={discountType}
             />
+            <RenderIf condition={discountType === DISCOUNT_TYPE.PERC}>
+              <FormFieldText
+                register={register}
+                errors={errors}
+                formKey="maxAmount"
+                label="Monto máximo:"
+              />
+            </RenderIf>
+          </div>
+          <div className="flex flex-col">
             <FormFieldText
               errors={errors}
               register={register}

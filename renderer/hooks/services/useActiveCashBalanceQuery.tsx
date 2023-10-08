@@ -13,15 +13,15 @@ export const getCashBalanceKey = () => 'cash-balances';
 const parseCashBalanceFacade = (
   cashBalanceResponse: ICashBalancePage,
 ): ICashBalanceExpanded => {
-  const cashBalance = cashBalanceResponse.data[0];
+  const cashBalance = cashBalanceResponse.results[0];
   return {
     id: cashBalance.id,
-    completedAt: cashBalance.attributes.completedAt,
-    initialCashAmount: cashBalance.attributes.initialCashAmount,
-    newCashAmount: cashBalance.attributes.newCashAmount,
-    seller: cashBalance.attributes.seller,
-    ticket: cashBalance.attributes.ticket,
-    totalAmount: cashBalance.attributes.totalAmount,
+    completedAt: cashBalance.completedAt,
+    initialCashAmount: cashBalance.initialCashAmount,
+    newCashAmount: cashBalance.newCashAmount,
+    seller: cashBalance.seller,
+    ticket: cashBalance.ticket,
+    totalAmount: cashBalance.totalAmount,
   };
 };
 

@@ -1,8 +1,8 @@
-import { ICategoryUI } from '@/hooks/useCategories';
+import { ICategory } from '@/interfaces/ICategory';
 import { TrashIcon } from '@heroicons/react/24/solid';
 
 interface IDisplayCategoriesProps {
-  categories: ICategoryUI[];
+  categories: ICategory[];
   handleChangeRemoveCategory: (id: number) => () => void;
 }
 
@@ -16,7 +16,7 @@ const DisplayCategories = ({
         <button
           key={c.id}
           className="btn-outline btn m-3"
-          onClick={handleChangeRemoveCategory(c.id)}
+          onClick={handleChangeRemoveCategory(c.id!)}
         >
           <TrashIcon className="btn-outline h-6 w-6 text-red-500" /> {c.name}
         </button>

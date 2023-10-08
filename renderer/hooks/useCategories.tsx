@@ -1,49 +1,39 @@
-import { ICategoryFieldPopulate } from '@/interfaces/ICategory';
+import { IVariant } from '@/interfaces/IVariants';
 import { useEffect, useReducer } from 'react';
 
-export interface ICategoryUI {
+interface ICategory {
   id: number;
   name: string;
-  parent: ICategoryUI | null;
-  subcategories: ICategoryUI[];
+  variants: IVariant[];
 }
 
-const initialize = (data: ICategoryFieldPopulate[]) => ({
+const initialize = (data: ICategory[]) => ({
   type: 'INITIALIZE',
   payload: data,
 });
 
 export interface IUseCategoriesResponse {
-  categories: ICategoryUI[];
-  initialize: (data: ICategoryFieldPopulate[]) => void;
+  categories: ICategory[];
+  initialize: (data: ICategory[]) => void;
 }
 
-const useCategories = (
-  data: ICategoryFieldPopulate[],
-): IUseCategoriesResponse => {
+const useCategories = (data: ICategory[]): IUseCategoriesResponse => {
   const [categories, dispatch] = useReducer(
-    (state: ICategoryUI[], action: any) => {
+    (state: ICategory[], action: any) => {
       switch (action.type) {
         case 'INITIALIZE': {
           const newState = data.map((category) => {
             return {
               id: category.id,
-              name: category.attributes.name,
-              parent: null,
-              subcategories: category.attributes.children.data.map(
-                (subcategory) => {
-                  return {
-                    id: subcategory.id,
-                    name: subcategory.attributes.name,
-                    subcategories: [],
-                    parent: {
-                      id: category.id,
-                      name: category.attributes.name,
-                      subcategories: [],
-                      parent: null,
-                    },
-                  };
-                },
+              name: category.name,
+              variants: category.variants.map(
+                (variant) =>
+                  ({
+                    id: variant.id!,
+                    name: variant.name,
+                    price: variant.price!,
+                    product: variant.product,
+                  }) as IVariant,
               ),
             };
           });
@@ -66,7 +56,7 @@ const useCategories = (
 
   return {
     categories,
-    initialize: (data: ICategoryFieldPopulate[]) => dispatch(initialize(data)),
+    initialize: (data: ICategory[]) => dispatch(initialize(data)),
   };
 };
 

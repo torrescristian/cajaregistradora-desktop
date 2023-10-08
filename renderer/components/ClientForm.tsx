@@ -32,6 +32,8 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
 
   const createClientMutation = useCreateClientMutation();
 
+  const handleClose = () => dialogRef.current?.close();
+
   const handleClick = (client: IClient) => () => {
     onSelect(client);
     setClient(client);
@@ -52,13 +54,15 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
     formState: { errors },
   } = useForm<IClientForm>();
 
+  const handleClickSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault(), handleClose();
+    handleSubmit(handleSubmitCreateClient)(e);
+  };
+
   return (
     <section className="bg-red w-96">
       <dialog ref={dialogRef} className="p-10">
-        <form
-          onSubmit={handleSubmit(handleSubmitCreateClient)}
-          className="flex flex-col gap-3"
-        >
+        <form onSubmit={handleClickSubmit} className="flex flex-col gap-3">
           <FormField
             errors={errors}
             formKey="name"
@@ -82,10 +86,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
               <button className="btn">Crear cliente</button>
             </div>
             <div className="modal-action">
-              <button
-                className="btn btn-link"
-                onClick={() => dialogRef.current?.close()}
-              >
+              <button className="btn btn-link" onClick={handleClose}>
                 Cerrar
               </button>
             </div>

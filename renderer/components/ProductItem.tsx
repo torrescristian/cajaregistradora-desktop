@@ -4,8 +4,10 @@ import { formatPrice } from '@/libs/utils';
 import { useState } from 'react';
 import { Card } from './Card';
 import { Selector } from './Selector';
-import { IProduct, IVariant } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import { RenderIf } from './RenderIf';
+import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import HighlightedText from './HighlightedText';
 
 const Text = ({ children }: IComponent) => {
   return (
@@ -15,21 +17,9 @@ const Text = ({ children }: IComponent) => {
   );
 };
 
-const HighlightedText = ({ children }: IComponent) => {
-  return (
-    <p
-      className="font-bold text-xl text-base-content rounded-lg p-2 whitespace-nowrap text-center gap-2 "
-      style={{
-        background: 'rgba(0,0,0,0.3)',
-      }}
-    >
-      {children}
-    </p>
-  );
-};
 interface IProps {
   product: IProduct;
-  onClick?: (props: { product: IProduct; variant: IVariant }) => void;
+  onClick?: (props: { product: IProduct; variant: IVariantPromo }) => void;
 }
 const ProductItem = ({ product, onClick }: IProps) => {
   const [selectedVariant, setSelectedVariant] = useState(
@@ -53,7 +43,14 @@ const ProductItem = ({ product, onClick }: IProps) => {
     e.preventDefault();
 
     if (onClick) {
-      onClick({ product, variant: selectedVariant });
+      onClick({
+        product,
+        variant: {
+          ...selectedVariant,
+          stock_per_variant: null,
+          product: product,
+        },
+      });
       console.table({ product, selectedVariant });
       return;
     }
@@ -89,7 +86,7 @@ const ProductItem = ({ product, onClick }: IProps) => {
               {product.isService ? (
                 <span className="text-5xl">∞</span>
               ) : (
-                selectedVariant.stock_per_variant.stock + ' unid'
+                selectedVariant.stock_per_variant?.stock + ' unid'
               )}
             </Text>
             <button

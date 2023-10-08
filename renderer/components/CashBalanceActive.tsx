@@ -9,29 +9,35 @@ interface IProps {
 export const CashBalanceActivate = ({ cashBalance }: IProps) => {
   return (
     <section className="flex flex-col items-center">
-      <div className="flex flex-col gap-3 w-full shadow-2xl p-10 border-stone-500 border-2">
-        <h2 className="font-bold text-2xl text-center">Caja activa</h2>
+      <div className="flex flex-col items-end gap-3 w-full shadow-2xl p-10 border-stone-500 border-2">
+        <h2 className="font-bold text-2xl text-stone-500">
+          Caja activa #{cashBalance?.id}
+        </h2>
         <DataItem
-          label="Caja #"
-          value={cashBalance?.id!}
+          label="Vendedor: "
+          value={cashBalance?.seller.username}
           defaultValue="Caja sin identificar"
+          className="text-2xl"
         />
         <DataItem
-          label="Efectivo al iniciar:"
+          label="Efectivo que había en la caja cuando comencé mi turno:"
           value={formatPrice(cashBalance?.initialCashAmount!)}
           defaultValue="Monto inicial: $0.00"
+          className="text-2xl"
         />
         <DataItem
-          label="Efectivo actual:"
+          label="Efectivo que debería haber actualmente en la caja:"
           value={formatPrice(
             cashBalance?.newCashAmount! + cashBalance?.initialCashAmount!,
           )}
-          defaultValue="Total de caja efectivo: $0.00"
+          defaultValue="$0.00"
+          className="text-2xl"
         />
         <DataItem
-          label="Ingresos netos:"
+          label="Total de ventas en todas las formas de pago:"
           value={formatPrice(cashBalance?.totalAmount!)}
           defaultValue="$0.00"
+          className="text-2xl"
         />
       </div>
     </section>

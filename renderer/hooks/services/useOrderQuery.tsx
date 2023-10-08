@@ -18,6 +18,10 @@ export default function useOrderQuery() {
         'payments',
         'items.selectedVariant',
         'coupon',
+        'promoItems',
+        'promoItems.promo',
+        'promoItems.selectedVariants',
+        'promoItems.selectedVariants.product',
       ],
     })) as unknown as IOrderResponse;
     return orderResponse.results;

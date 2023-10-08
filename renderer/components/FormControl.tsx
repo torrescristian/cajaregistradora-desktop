@@ -10,6 +10,7 @@ const FormControl = ({
   onChange,
   fullWidth,
   suffix,
+  posfix,
   className,
   disabled,
   hideLabel,
@@ -48,6 +49,7 @@ const FormControl = ({
             whiteSpace: 'nowrap',
           }}
         />
+        {posfix ? <span className="ml-3">{posfix}</span> : null}
       </section>
     </section>
   );

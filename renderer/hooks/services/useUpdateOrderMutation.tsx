@@ -58,20 +58,18 @@ async function updateStock(items: ICartItem[]) {
   })) as unknown as IStockPerVariantPages;
 
   console.log(stockPerVariant);
-  const updatedStockPerVariant = stockPerVariant.data.map(
+  const updatedStockPerVariant = stockPerVariant.results.map(
     (spv): Pick<IStockPerVariant, 'id' | 'stock'> => {
-      const item = items.find(
-        (i) => spv.attributes.variant === i.selectedVariant.id,
-      );
+      const item = items.find((i) => spv.variant === i.selectedVariant.id);
 
       if (!item)
         return {
           id: spv.id,
-          stock: spv.attributes.stock,
+          stock: spv.stock,
         };
       return {
         id: spv.id,
-        stock: spv.attributes.stock - item.quantity,
+        stock: spv.stock - item.quantity,
       };
     },
   );

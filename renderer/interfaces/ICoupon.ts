@@ -1,6 +1,7 @@
 import { IDiscount } from './IOrder';
-import { IProduct, IVariant, PRODUCT_TYPE } from './IProduct';
-import { IFixedNativeResponse, ISingleFixedNativeResponse } from './utils';
+import { IProduct, PRODUCT_TYPE } from './IProduct';
+import { IVariant } from './IVariants';
+import { IResponsePage, IStrapiResponse, IStrapiSingleResponse } from './utils';
 
 export interface IPartialVariant {
   id: number;
@@ -22,11 +23,9 @@ export interface ICoupon<VARIANT = IPartialVariant> {
   availableUses: number;
 }
 
-export type ICouponResponse = IFixedNativeResponse<
+export type ICouponResponse = IResponsePage<
   ICoupon<
-    ISingleFixedNativeResponse<
-      IVariant<number, ISingleFixedNativeResponse<IProduct>>
-    >
+    IStrapiSingleResponse<IVariant<number, IStrapiSingleResponse<IProduct>>>
   >
 >;
 

@@ -5,11 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 export const getClientsQueryKey = () => 'clients';
 
 const parseClientFacade = (clientsResponse: IClientResponse): IClient[] => {
-  return clientsResponse.data.map((client) => ({
+  return clientsResponse.results.map((client) => ({
     id: client.id,
-    name: client.attributes.name,
-    phone_number: client.attributes.phone_number,
-    address: client.attributes.address,
+    name: client.name,
+    phone_number: client.phone_number,
+    address: client.address,
   }));
 };
 

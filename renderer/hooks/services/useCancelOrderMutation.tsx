@@ -1,4 +1,4 @@
-import { IOrderSingleResponse, ORDER_STATUS } from '@/interfaces/IOrder';
+import { IOrderResponse, ORDER_STATUS } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import OrderSchema from '@/schemas/OrderSchema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -15,23 +15,26 @@ export default function useCancelOrderMutation() {
 
     const updateOrderResult = (await strapi.update('orders', orderId, {
       status: ORDER_STATUS.CANCELLED,
-    })) as unknown as IOrderSingleResponse;
+    })) as unknown as IOrderResponse;
 
     await OrderSchema().validate(updateOrderResult.results);
 
-    const promises = updateOrderResult.results.items.map(async (item) => {
-      const { quantity, selectedVariant } = item;
-      const stockPerVariant = selectedVariant.stock_per_variant;
-      const { stock } = stockPerVariant;
-      const newStock = stock + quantity;
-      await updateVariantMutation.mutateAsync({
-        newStock: newStock,
-        stockPerVariantId: stockPerVariant.id!,
-        variantId: selectedVariant.id!,
-        price: selectedVariant.price,
-        name: selectedVariant.name,
-      });
-    });
+    const promises = updateOrderResult.results.map((order) =>
+      order.items.map(async (item) => {
+        const { quantity, selectedVariant } = item;
+        const stock = selectedVariant.stock_per_variant?.stock!;
+        const id = selectedVariant.stock_per_variant?.id!;
+
+        const newStock = stock + quantity;
+        await updateVariantMutation.mutateAsync({
+          newStock: newStock,
+          stockPerVariantId: id,
+          variantId: selectedVariant.id!,
+          price: selectedVariant.price,
+          name: selectedVariant.name,
+        });
+      }),
+    );
 
     const stockRestored = await Promise.allSettled(promises);
 
