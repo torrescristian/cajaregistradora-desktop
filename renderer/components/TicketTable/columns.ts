@@ -15,6 +15,9 @@ function statusTranslate(ticketStatus: TICKET_STATUS) {
   }
 }
 
+const customPriceFormat = (value: any) =>
+  Number(value) === 0 ? '-' : `${formatPrice(value)}`;
+
 export const columnsDef = [
   {
     accessorKey: 'id',
@@ -25,7 +28,7 @@ export const columnsDef = [
     header: 'Fecha',
   },
   {
-    accessorFn: (col: IColumn) => `${formatPrice(col.totalPrice)}`,
+    accessorFn: (col: IColumn) => customPriceFormat(col.totalPrice),
     header: 'Total',
   },
   {
@@ -45,19 +48,19 @@ export const columnsDef = [
     header: 'Número de teléfono',
   },
   {
-    accessorFn: (col: IColumn) => `${formatPrice(col.subtotalPrice)}`,
+    accessorFn: (col: IColumn) => `${customPriceFormat(col.subtotalPrice)}`,
     header: 'Subtotal',
   },
   {
-    accessorFn: (col: IColumn) => `${formatPrice(col.paidInCash)}`,
+    accessorFn: (col: IColumn) => `${customPriceFormat(col.paidInCash)}`,
     header: 'Págado en Efectivo',
   },
   {
-    accessorFn: (col: IColumn) => `${formatPrice(col.paidInDebit)}`,
+    accessorFn: (col: IColumn) => `${customPriceFormat(col.paidInDebit)}`,
     header: 'Págado en Débito',
   },
   {
-    accessorFn: (col: IColumn) => `${formatPrice(col.paidInCredit)}`,
+    accessorFn: (col: IColumn) => `${customPriceFormat(col.paidInCredit)}`,
     header: 'Pagado en Crédito',
   },
 ];
