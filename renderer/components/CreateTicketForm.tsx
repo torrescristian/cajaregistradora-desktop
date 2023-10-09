@@ -1,5 +1,6 @@
 import {
   calcDiscount,
+  convertToEmoji,
   formatPrice,
   parseDateToArgentinianFormat,
 } from '@/libs/utils';
@@ -29,6 +30,7 @@ import { ICoupon } from '@/interfaces/ICoupon';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IPromoItem } from '@/interfaces/ICart';
+import HighlightedText from './HighlightedText';
 
 interface IProps {
   order: IOrder;
@@ -119,7 +121,7 @@ export const CreateTicketForm = ({
 
   return (
     <form
-      className="flex w-full h-full flex-col gap-5"
+      className="flex w-full h-full justify-between flex-col gap-5"
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
       <ToastContainer
@@ -190,7 +192,7 @@ export const CreateTicketForm = ({
 
           <div className="divider" />
         </datalist>
-        <div className="flex flex-col p-5 overflow-y-scroll h-44">
+        <div className="flex flex-col p-5 gap-3 overflow-y-scroll h-44">
           {order.items.map((item) => (
             <OrderItem
               updateMode={updateMode}
@@ -200,16 +202,18 @@ export const CreateTicketForm = ({
           ))}
           {order.promoItems.map((promoItem) => (
             <RenderIf condition={promoItem.promo} key={promoItem.promo?.id}>
-              <div className="p-5">
-                <p className="list-item text-xl">{promoItem.promo?.name}</p>
+              <div className='flex flex-col gap-2'>
+                <div className='divider'>Promo</div>
+                <p className="text-xl text-center">✨ {promoItem.promo?.name}</p>
+                <HighlightedText>{formatPrice(promoItem.promo.price)}</HighlightedText>
                 {promoItem.selectedVariants?.map((v) => (
-                  <div key={v.id} className="flex flex-row p-4 gap-4">
+                  <div key={v.id} className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm">
                     <p>
-                      {v.product.name} - {v.name}
+                      {convertToEmoji(v.product.type)} {v.product.name} - <span>{v.name}</span> 
                     </p>
-                    <p>{formatPrice(v.price)}</p>
                   </div>
                 ))}
+
               </div>
             </RenderIf>
           ))}

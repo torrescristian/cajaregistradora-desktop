@@ -23,7 +23,7 @@ export default function ProductTypes({
 
   return (
     <section className="flex flex-row gap-5">
-      <TabButton isActive={showPromo} onClick={handleClickPromo}>
+      <TabButton className='btn-secondary' isActive={showPromo} onClick={handleClickPromo}>
         <span>Promociones</span>
       </TabButton>
 
@@ -31,6 +31,7 @@ export default function ProductTypes({
         .filter((t) => t)
         .map((type: PRODUCT_TYPE) => (
           <TabButton
+          className='btn-accent'
             isActive={selectedProductType === type}
             key={type}
             onClick={handleSelect(type)}

@@ -8,9 +8,8 @@ const TabButton = ({ className, children, isActive, ...props }: IProps) => {
     <div
       {...props}
       className={twMerge(
-        'flex flex-row items-center gap-2 btn btn-outline btn-accent',
+        'flex flex-row items-center gap-2 btn btn-outline',
         isActive && 'btn-active',
-
         className,
       )}
     >
