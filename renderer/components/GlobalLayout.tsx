@@ -7,7 +7,6 @@ interface IProps {
   children: React.ReactNode;
 }
 export default function GlobalLayout({ children }: IProps) {
-
   const navBar = useNavBar();
 
   return (
@@ -30,10 +29,16 @@ export default function GlobalLayout({ children }: IProps) {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          <NavButton className='w-full' href="/pedidos">Crear orden</NavButton>
-          <NavButton className='w-full' href="/ordenes">Ordenes pendientes</NavButton>
-          <NavButton className='w-full' href="/recibos">Recibos</NavButton>
+        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
+          <NavButton className="w-full" href="/pedidos">
+            Crear orden
+          </NavButton>
+          <NavButton className="w-full" href="/ordenes">
+            Ordenes pendientes
+          </NavButton>
+          <NavButton className="w-full" href="/recibos">
+            Recibos
+          </NavButton>
           {navBar.isOwner ? (
             <>
               <NavButton className="w-full" href="/admin/caja">
