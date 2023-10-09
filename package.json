@@ -9,7 +9,7 @@
     "start": "next renderer start",
     "dev": "nextron",
     "build:web": "next renderer",
-    "build": "next build",
+    "build": "next build ./renderer",
     "build:nextron": "nextron build",
     "postinstall": "electron-builder install-app-deps",
     "build:all": "nextron build --all",
