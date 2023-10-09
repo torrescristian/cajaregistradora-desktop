@@ -1,13 +1,10 @@
-import { DeleteTicketModal } from '@/components/DeleteTicketModal';
 import Loader from '@/components/Loader';
-import { MoreInfoModal } from '@/components/MoreInfoModal';
 import PageLayout from '@/components/PageLayout';
 import { IColumn } from '@/components/TicketTable/interface';
 import TicketTable from '@/components/TicketTable/TicketTable';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
 import { PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
-import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
-import { twMerge } from 'tailwind-merge';
+import { parseDateToArgentinianFormat } from '@/libs/utils';
 
 const Recibos = () => {
   function statusColor(ticketStatus: TICKET_STATUS) {

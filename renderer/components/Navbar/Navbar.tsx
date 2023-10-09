@@ -19,7 +19,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar bg-base-100 md:w-max">
-      <section className="flex w-min flex-1 select-none flex-col flex-wrap text-xl uppercase">
+      {/*       <section className="flex w-min flex-1 select-none flex-col flex-wrap text-xl uppercase">
         <h2 className="whitespace-nowrap text-xl font-bold">
           Caja Registradora
         </h2>
@@ -29,7 +29,7 @@ export default function Navbar() {
         <MobileMenu onLogout={handleLogout} isLoggedIn={isLoggedIn} />
       ) : (
         <DesktopMenu onLogout={handleLogout} isLoggedIn={isLoggedIn} />
-      )}
+      )} */}
     </nav>
   );
 }

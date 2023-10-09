@@ -15,9 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@/*": [
-        "./renderer/*"
-      ]
+      "@/*": ["./renderer/*"]
     },
     "plugins": [
       {
@@ -30,12 +28,7 @@
     "renderer/next.config.js",
     "app",
     "dist",
-    "cypress",
+    "cypress"
   ],
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"]
 }
