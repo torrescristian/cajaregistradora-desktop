@@ -6,7 +6,7 @@
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
   "main": "app/background.js",
   "scripts": {
-    "start": "next ./renderer",
+    "start": "next start ./renderer",
     "dev": "nextron",
     "build:web": "next renderer",
     "build": "next build ./renderer",
