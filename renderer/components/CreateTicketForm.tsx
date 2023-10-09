@@ -202,18 +202,25 @@ export const CreateTicketForm = ({
           ))}
           {order.promoItems.map((promoItem) => (
             <RenderIf condition={promoItem.promo} key={promoItem.promo?.id}>
-              <div className='flex flex-col gap-2'>
-                <div className='divider'>Promo</div>
-                <p className="text-xl text-center">✨ {promoItem.promo?.name}</p>
-                <HighlightedText>{formatPrice(promoItem.promo.price)}</HighlightedText>
+              <div className="flex flex-col gap-2">
+                <div className="divider">Promo</div>
+                <p className="text-xl text-center">
+                  ✨ {promoItem.promo?.name}
+                </p>
+                <HighlightedText>
+                  {formatPrice(promoItem.promo.price)}
+                </HighlightedText>
                 {promoItem.selectedVariants?.map((v) => (
-                  <div key={v.id} className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm">
+                  <div
+                    key={v.id}
+                    className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm"
+                  >
                     <p>
-                      {convertToEmoji(v.product.type)} {v.product.name} - <span>{v.name}</span> 
+                      {convertToEmoji(v.product.type)} {v.product.name} -{' '}
+                      <span>{v.name}</span>
                     </p>
                   </div>
                 ))}
-
               </div>
             </RenderIf>
           ))}
