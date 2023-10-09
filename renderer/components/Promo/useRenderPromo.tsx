@@ -1,7 +1,7 @@
-import { getAddPromo, useCartStore } from "@/contexts/CartStore";
-import { IPromo } from "@/interfaces/IPromo";
-import { range } from "@/libs/utils";
-import { useRef, useState } from "react";
+import { getAddPromo, useCartStore } from '@/contexts/CartStore';
+import { IPromo } from '@/interfaces/IPromo';
+import { range } from '@/libs/utils';
+import { useRef, useState } from 'react';
 
 export default function useRenderPromo() {
   const addPromo = useCartStore(getAddPromo);
@@ -39,16 +39,22 @@ export default function useRenderPromo() {
     };
 
   const handleClickConfirmVariants = () => {
-    const validatedSelections = selectedPromo?.categories.flatMap(
-      ({ category, quantity }, categoryIndex) =>
+    const validatedSelections = selectedPromo?.categories
+      .flatMap(({ category, quantity }, categoryIndex) =>
         range(quantity).map((_, quantityIndex) =>
-          createIndex({ categoryIndex, quantityIndex })
-        )
-    ).reduce((acc, curr) => ({
-      ...acc,
-      [curr]: selectors[curr] || selectedPromo.categories[Number(curr.split('-')[0])].category.variants[0].id
-    }), {})!;
-
+          createIndex({ categoryIndex, quantityIndex }),
+        ),
+      )
+      .reduce(
+        (acc, curr) => ({
+          ...acc,
+          [curr]:
+            selectors[curr] ||
+            selectedPromo.categories[Number(curr.split('-')[0])].category
+              .variants[0].id,
+        }),
+        {},
+      )!;
 
     const selectorsId = Object.values(validatedSelections).map(Number);
     const allVariants =
@@ -56,7 +62,7 @@ export default function useRenderPromo() {
         .map(({ category }) => category.variants)
         .flat() || [];
     const selectedVariants = selectorsId.map(
-      (selectorId) => allVariants.find((variant) => variant.id === selectorId)!
+      (selectorId) => allVariants.find((variant) => variant.id === selectorId)!,
     );
     addPromo({
       promo: selectedPromo!,

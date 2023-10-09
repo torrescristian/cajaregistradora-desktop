@@ -40,7 +40,7 @@ export default function RenderPromos({
                   {quantity} - {category.name}
                 </p>
               ))}
-              {promo.variants.map(({ variant, quantity },index) => (
+              {promo.variants.map(({ variant, quantity }, index) => (
                 <p key={index} className="text-xl list-item whitespace-nowrap">
                   {quantity} - {variant.product.name} - {variant.name}
                 </p>
@@ -77,10 +77,9 @@ export default function RenderPromos({
                           onChange={handleSelectorChange({
                             categoryIndex,
                             quantityIndex,
-                            
                           })}
                         >
-                          {category.variants!.map((variant,index) => (
+                          {category.variants!.map((variant, index) => (
                             <option key={index} value={variant.id!}>
                               {variant.product.name}-{variant.name}
                             </option>

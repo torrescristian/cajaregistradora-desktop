@@ -26,8 +26,6 @@ const Products = () => {
   const promos = promoQuery.data;
   const [salesMode, setSalesMode] = useState<IPromo[] | null>(null);
 
-
-
   const [selectedProductType, setSelectedProductType] =
     useState<PRODUCT_TYPE>('');
 
@@ -38,12 +36,9 @@ const Products = () => {
 
   const products = productsQuery.products as IProduct[];
 
-
-
   if (promoQuery.isLoading) {
     return <Loader />;
   }
-
 
   return (
     <section className="w-full">
@@ -60,7 +55,7 @@ const Products = () => {
       <section className="flex flex-row gap-5 m-5 p-2 overflow-x-scroll w-full">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
-        <RenderIf condition={!showPromo} >
+        <RenderIf condition={!showPromo}>
           {products.map((product) => (
             <ProductItem key={product.id} product={product} />
           ))}
@@ -71,7 +66,8 @@ const Products = () => {
               promo,
               selectedVariants: [],
             }))}
-            salesMode />
+            salesMode
+          />
         </RenderIf>
       </section>
     </section>

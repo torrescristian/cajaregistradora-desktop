@@ -27,7 +27,7 @@ const CartPromo = ({ promosItems }: IProps) => {
             </button>
           </div>
           <div className="p-2">
-            {selectedVariants.map((variant,index) => (
+            {selectedVariants.map((variant, index) => (
               <p className="list-item" key={index}>
                 {variant.product.name} - {variant.name}{' '}
               </p>

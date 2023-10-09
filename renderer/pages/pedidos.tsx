@@ -4,7 +4,6 @@ import { RenderIf } from '@/components/RenderIf';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
 import Loader from '@/components/Loader';
 
-
 const Pedidos = () => {
   const { isLoading, isError, isSuccess, cashIsActive } =
     useActiveCashBalanceQuery();

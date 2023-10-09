@@ -31,8 +31,7 @@ const TicketSchema = (order: any = OrderSchema()) =>
           TICKET_STATUS.PAID,
           TICKET_STATUS.REFUNDED,
           TICKET_STATUS.WAITING_FOR_REFUND,
-        ])
-        ,
+        ]),
       totalPrice: yup.number().required(),
     })
     .defined()

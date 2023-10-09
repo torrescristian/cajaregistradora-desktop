@@ -4,8 +4,7 @@ import { IColumn } from '@/components/TicketTable/interface';
 import TicketTable from '@/components/TicketTable/TicketTable';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
 import { PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
-import {  parseDateToArgentinianFormat } from '@/libs/utils';
-
+import { parseDateToArgentinianFormat } from '@/libs/utils';
 
 const Recibos = () => {
   function statusColor(ticketStatus: TICKET_STATUS) {
