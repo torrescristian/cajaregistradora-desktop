@@ -37,14 +37,14 @@ const Recibos = () => {
   const data = ticketQuery.data.map(
     (ticket) =>
       ({
-        client: ticket.order.client?.name,
-        date: parseDateToArgentinianFormat(ticket.order.createdAt),
-        direction: ticket.order.client?.address,
+        client: ticket.order?.client?.name,
+        date: parseDateToArgentinianFormat(ticket.order?.createdAt),
+        direction: ticket.order?.client?.address,
         state: ticket.status,
         id: ticket.id,
-        subtotalPrice: ticket.order.subtotalPrice,
+        subtotalPrice: ticket.order?.subtotalPrice,
         totalPrice: ticket.totalPrice,
-        phone_number: ticket.order.client?.phone_number,
+        phone_number: ticket.order?.client?.phone_number,
         paidInCash: ticket.payments
           .filter((p) => p.type === PAYMENT_TYPE.CASH)
           .reduce((acc, curr) => acc + Number(curr.amount), 0),

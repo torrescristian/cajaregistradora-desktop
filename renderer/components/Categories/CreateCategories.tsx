@@ -37,7 +37,7 @@ export const CreateCategories = () => {
         name: props.variant.name,
         product: props.product,
         price: props.variant.price,
-        stock_per_variant: null,
+        stock_per_variant: props.variant.stock_per_variant,
       },
     ]);
   };

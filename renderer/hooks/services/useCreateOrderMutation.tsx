@@ -6,9 +6,9 @@ import {
   ORDER_STATUS,
 } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
-import { useCartStore } from '@/contexts/CartStore';
+import { getPromoItems, useCartStore } from '@/contexts/CartStore';
 import { ICoupon } from '@/interfaces/ICoupon';
 import * as yup from 'yup';
 
@@ -24,7 +24,10 @@ interface IProps {
 }
 
 export default function useCreateOrderMutation() {
+  const queryClient = useQueryClient();
   const clearCart = useCartStore((state) => state.clearCart);
+  const promoItems = useCartStore(getPromoItems);
+
   return useMutation(async (props: IProps) => {
     const resp = [null, null] as [any, any];
     resp[0] = await strapi.create(
@@ -36,12 +39,27 @@ export default function useCreateOrderMutation() {
       !item.product.isService;
 
     const itemsToUpdate = props.items.filter(excludeServiceItem);
-
     if (itemsToUpdate.length) {
-      resp[1] = await updateStock(itemsToUpdate);
+      resp[1] = await updateStock(itemsToUpdate)
+    }
+    if (promoItems.length) {
+      const promosAsCartItems = promoItems.flatMap(({ selectedVariants }) => selectedVariants.map((variant) => ({
+        product: variant.product,
+        selectedVariant: {
+          ...variant,
+          id: variant.id!,
+          name: variant.name,
+          price: variant.price,
+          product: variant.product.id,
+          stock_per_variant: variant.stock_per_variant!,
+
+        },
+        quantity: 1,
+      } as ICartItem)))
+      resp[1] = await updateStock(promosAsCartItems);
     }
     clearCart();
-
+    queryClient.invalidateQueries([getOrderQueryKey()]);
     return resp;
   });
 }

@@ -12,8 +12,8 @@ import RenderPromos from './Promo/RenderPromo';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
 import { IPromo } from '@/interfaces/IPromo';
 
-const Fixed = ({ children }: IComponent) => (
-  <section className="sticky top-0 z-20 flex w-full justify-center flex-row gap-5">
+const Navigation = ({ children }: IComponent) => (
+  <section className="flex w-full justify-center flex-row gap-5">
     {children}
   </section>
 );
@@ -43,7 +43,7 @@ const Products = () => {
   return (
     <section className="w-full">
       <Divider>Productos</Divider>
-      <Fixed>
+      <Navigation>
         <SearchInput {...searchProps} />
         <ProductTypes
           setShowPromo={setShowPromo}
@@ -51,7 +51,7 @@ const Products = () => {
           onSelect={setSelectedProductType}
           selectedProductType={selectedProductType}
         />
-      </Fixed>
+      </Navigation>
       <section className="flex flex-row gap-5 m-5 p-2 overflow-x-scroll w-full">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <p>Error</p>}
