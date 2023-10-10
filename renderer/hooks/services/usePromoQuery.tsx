@@ -1,4 +1,4 @@
-import {IPromoExpanded, IPromoResponse } from '@/interfaces/IPromo';
+import { IPromoExpanded, IPromoResponse } from '@/interfaces/IPromo';
 import strapi from '@/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 
@@ -19,4 +19,3 @@ export default function usePromoQuery() {
     return resp.results;
   });
 }
-

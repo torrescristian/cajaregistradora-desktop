@@ -40,22 +40,26 @@ export default function useCreateOrderMutation() {
 
     const itemsToUpdate = props.items.filter(excludeServiceItem);
     if (itemsToUpdate.length) {
-      resp[1] = await updateStock(itemsToUpdate)
+      resp[1] = await updateStock(itemsToUpdate);
     }
     if (promoItems.length) {
-      const promosAsCartItems = promoItems.flatMap(({ selectedVariants }) => selectedVariants.map((variant) => ({
-        product: variant.product,
-        selectedVariant: {
-          ...variant,
-          id: variant.id!,
-          name: variant.name,
-          price: variant.price,
-          product: variant.product.id,
-          stock_per_variant: variant.stock_per_variant!,
-
-        },
-        quantity: 1,
-      } as ICartItem)))
+      const promosAsCartItems = promoItems.flatMap(({ selectedVariants }) =>
+        selectedVariants.map(
+          (variant) =>
+            ({
+              product: variant.product,
+              selectedVariant: {
+                ...variant,
+                id: variant.id!,
+                name: variant.name,
+                price: variant.price,
+                product: variant.product.id,
+                stock_per_variant: variant.stock_per_variant!,
+              },
+              quantity: 1,
+            }) as ICartItem,
+        ),
+      );
       resp[1] = await updateStock(promosAsCartItems);
     }
     clearCart();

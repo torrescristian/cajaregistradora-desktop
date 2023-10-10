@@ -63,7 +63,6 @@ export const CreateCoupon = () => {
     setSelectedVariant({
       ...props.variant,
       product: props.product,
-      
     });
   };
 

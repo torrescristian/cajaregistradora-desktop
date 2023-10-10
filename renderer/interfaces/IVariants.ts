@@ -19,4 +19,4 @@ export interface IVariant<
 export type IVariantPromo = IVariant<IStockPerVariant, IProduct>;
 export type IVariantPayload = IVariant<number>;
 export type IVariantResponse = IStrapiResponse<IVariant>;
-export type IVariantExpanded = IVariant<IStockPerVariant,IProduct>
+export type IVariantExpanded = IVariant<IStockPerVariant, IProduct>;

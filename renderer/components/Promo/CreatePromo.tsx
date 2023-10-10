@@ -14,7 +14,6 @@ import { ICategoryAndQuantity, IVariantAndQuantity } from '@/interfaces/IPromo';
 import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
 
-
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
   const createPromoMutation = useCreatePromoMutation();
