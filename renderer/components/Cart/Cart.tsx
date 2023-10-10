@@ -76,7 +76,7 @@ const Cart = ({ updateMode, order, onSubmit }: IProps) => {
             </p>
           </section>
           <section className="w-max">
-            <RenderIf condition={items && promosItems}>
+            <RenderIf condition={items.length || promosItems.length}>
               <ConfirmOrder
                 updateMode={updateMode}
                 order={order}
@@ -84,7 +84,7 @@ const Cart = ({ updateMode, order, onSubmit }: IProps) => {
                 promoItems={promosItems}
               />
             </RenderIf>
-            <RenderIf condition={!items && !promosItems}>
+            <RenderIf condition={!items.length && !promosItems.length}>
               <section className="bg-info text-primary-content p-4 w-full">
                 No hay productos en el carrito
               </section>

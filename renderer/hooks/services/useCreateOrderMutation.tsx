@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
 import { useCartStore } from '@/contexts/CartStore';
 import { ICoupon } from '@/interfaces/ICoupon';
+import * as yup from 'yup';
 
 interface IProps {
   items: ICartItem[];
@@ -77,10 +78,19 @@ function parseOrderToPayLoad({
 
 async function updateStock(items: ICartItem[]) {
   const promises = items.map((item) => {
-    if (!item.selectedVariant.id) throw new Error('No se encontro el id');
+    if (!item.selectedVariant.id) {
+      throw new Error('No se encontro el id');
+    }
+
+    if (item.product.isService) {
+      return;
+    }
+    
     const { stock, id } = item.selectedVariant.stock_per_variant!;
+    yup.number().integer().required().validate(stock);
+    yup.number().required().validate(id);
     return strapi.update('stock-per-variants', id!, {
-      stock: stock,
+      stock: stock - item.quantity,
     });
   });
 
