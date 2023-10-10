@@ -85,7 +85,7 @@ async function updateStock(items: ICartItem[]) {
     if (item.product.isService) {
       return;
     }
-    
+
     const { stock, id } = item.selectedVariant.stock_per_variant!;
     yup.number().integer().required().validate(stock);
     yup.number().required().validate(id);

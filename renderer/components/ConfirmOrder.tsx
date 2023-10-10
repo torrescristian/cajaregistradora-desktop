@@ -220,7 +220,11 @@ export const ConfirmOrder = ({
     <section>
       <ToastContainer></ToastContainer>
       <div className="flex flex-row gap-3 w-full">
-        <button className="btn btn-primary" onClick={handleClickConfirmOrder} disabled={!items.length && !promoItems!.length}>
+        <button
+          className="btn btn-primary"
+          onClick={handleClickConfirmOrder}
+          disabled={!items.length && !promoItems!.length}
+        >
           Pasar Orden
         </button>
         {updateMode ? (
