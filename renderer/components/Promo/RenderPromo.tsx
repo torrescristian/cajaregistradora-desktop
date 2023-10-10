@@ -4,6 +4,7 @@ import { Card } from '../Card';
 import { IPromoItem } from '@/interfaces/ICart';
 import useRenderPromo from './useRenderPromo';
 import HighlightedText from '../HighlightedText';
+import FieldWrapper from '../FieldWrapper';
 
 interface IProps {
   promosItems: IPromoItem[];
@@ -26,7 +27,6 @@ export default function RenderPromos({
 
   return (
     <section className="flex flex-col w-full">
-      <div className="divider">Promociones</div>
       <div className="flex flex-row gap-3 p-5">
         {promosItems?.map(({ promo }) => (
           <Card key={promo.id!}>
@@ -56,55 +56,52 @@ export default function RenderPromos({
             </RenderIf>
           </Card>
         ))}
-        <Card>
-          <dialog ref={ref} className="bg-transparent p-5">
-            <div className="modal-box w-fit">
-              <p className="text-xl mb-5">Elegir productos</p>
-              <div className="flex flex-col gap-5">
-                {selectedPromo?.categories!.map(
-                  ({ category, quantity }, categoryIndex) =>
-                    range(quantity).map((_, quantityIndex) => (
-                      <label>
-                        <span>{category.name}: </span>
-                        <select
-                          className="select select-bordered w-96"
-                          key={createIndex({ categoryIndex, quantityIndex })}
-                          value={
-                            selectors[
-                              createIndex({ categoryIndex, quantityIndex })
-                            ] || category.variants[0].id!
-                          }
-                          onChange={handleSelectorChange({
-                            categoryIndex,
-                            quantityIndex,
-                          })}
-                        >
-                          {category.variants!.map((variant, index) => (
-                            <option key={index} value={variant.id!}>
-                              {variant.product.name}-{variant.name}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    )),
-                )}
-              </div>
-
-              <div className="modal-action">
-                <form method="dialog">
-                  <button
-                    className="btn btn-success"
-                    onClick={handleClickConfirmVariants}
-                  >
-                    Confirmar
-                  </button>
-                  {/* if there is a button in form, it will close the modal */}
-                  <button className="btn">Close</button>
-                </form>
-              </div>
+        <dialog ref={ref} className="bg-transparent p-5">
+          <div className="modal-box w-fit">
+            <p className="text-xl mb-5">Elegir productos</p>
+            <div className="flex flex-col gap-5">
+              {selectedPromo?.categories!.map(
+                ({ category, quantity }, categoryIndex) =>
+                  range(quantity).map((_, quantityIndex) => (
+                    <FieldWrapper title={`${category.name}: `}>
+                      <select
+                        className="select select-bordered w-96"
+                        key={createIndex({ categoryIndex, quantityIndex })}
+                        value={
+                          selectors[
+                            createIndex({ categoryIndex, quantityIndex })
+                          ] || category.variants[0].id!
+                        }
+                        onChange={handleSelectorChange({
+                          categoryIndex,
+                          quantityIndex,
+                        })}
+                      >
+                        {category.variants!.map((variant, index) => (
+                          <option key={index} value={variant.id!}>
+                            {variant.product.name}-{variant.name}
+                          </option>
+                        ))}
+                      </select>
+                    </FieldWrapper>
+                  )),
+              )}
             </div>
-          </dialog>
-        </Card>
+
+            <div className="modal-action">
+              <form method="dialog">
+                <button
+                  className="btn btn-success"
+                  onClick={handleClickConfirmVariants}
+                >
+                  Confirmar
+                </button>
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </div>
     </section>
   );

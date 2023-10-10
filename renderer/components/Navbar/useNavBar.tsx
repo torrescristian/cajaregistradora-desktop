@@ -1,6 +1,5 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import useLogoutMutation from '@/hooks/services/useLogoutMutation';
-import useIsMobile from '@/hooks/useIsMobile';
 import { useRouter } from 'next/router';
 
 export default function useNavBar() {
@@ -8,8 +7,6 @@ export default function useNavBar() {
   const { isLoggedIn } = useAuthState();
   const logoutMutation = useLogoutMutation();
   const router = useRouter();
-  const isMobile = useIsMobile();
-  const { userData } = useAuthState();
 
   const handleLogout = () => {
     logoutMutation.mutate();
@@ -18,9 +15,7 @@ export default function useNavBar() {
 
   return {
     isOwner,
-    logoutMutation,
     isLoggedIn,
-    userData,
     handleLogout,
   };
 }

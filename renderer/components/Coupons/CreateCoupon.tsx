@@ -14,6 +14,9 @@ import { DiscountTypeControl } from '../DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { Card } from '../Card';
 import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import Loader from '../Loader';
+import CustomToastContainer from '../CustomToastContainer';
+import { toast } from 'react-toastify';
 
 export const CreateCoupon = () => {
   const {
@@ -66,15 +69,22 @@ export const CreateCoupon = () => {
     });
   };
 
-  const handleSubmitCreateCoupon = (data: any) => {
-    createCouponMutation.mutate({
-      ...data,
-      variant: showProductList ? selectedVariant?.id! : undefined,
-      discount: {
-        amount: discountAmount,
-        type: discountType,
-      },
-    });
+  const handleSubmitCreateCoupon = async (data: ICouponPayload) => {
+    try {
+      await createCouponMutation.mutateAsync({
+        ...data,
+        variant: showProductList ? selectedVariant?.id! : null,
+        discount: {
+          amount: discountAmount!,
+          type: discountType!,
+        },
+        dueDate: data.dueDate || undefined,
+      });
+      toast.success('Cupón creado');
+    } catch (error) {
+      console.log({ error });
+      toast.error('Error al crear el cupón');
+    }
   };
   const handleClickRemoveProduct = () => {
     setSelectedProduct(null);
@@ -90,6 +100,7 @@ export const CreateCoupon = () => {
 
   return (
     <Card>
+      <CustomToastContainer />
       <form
         onSubmit={handleSubmit(handleSubmitCreateCoupon)}
         className="flex flex-col p-4 gap-10"
@@ -175,8 +186,12 @@ export const CreateCoupon = () => {
               </div>
             </RenderIf>
           </RenderIf>
-          <button className="btn btn-square w-64 btn-primary" type="submit">
-            Crear cupon
+          <button
+            className="btn btn-square w-64 btn-primary"
+            type="submit"
+            disabled={createCouponMutation.isLoading}
+          >
+            {createCouponMutation.isLoading ? <Loader /> : 'Crear cupon'}
           </button>
         </div>
       </form>

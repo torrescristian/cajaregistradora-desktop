@@ -128,7 +128,6 @@ export const CreatePromo = () => {
           className="flex flex-col p-5 gap-7 items-start"
           onSubmit={handleCreatePromo}
         >
-          <h1 className="text-2xl w-full text-center">Crea tu promo!</h1>
           <div className="flex flex-row gap-5 w-full justify-start items-end p-5">
             <label className="flex flex-col">
               <span className="text-neutral-content">Nombre</span>

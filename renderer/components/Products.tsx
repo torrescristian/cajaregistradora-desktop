@@ -24,7 +24,6 @@ const Products = () => {
   const [showPromo, setShowPromo] = useState(false);
   const promoQuery = usePromoQuery();
   const promos = promoQuery.data;
-  const [salesMode, setSalesMode] = useState<IPromo[] | null>(null);
 
   const [selectedProductType, setSelectedProductType] =
     useState<PRODUCT_TYPE>('');
@@ -42,7 +41,6 @@ const Products = () => {
 
   return (
     <section className="w-full">
-      <Divider>Productos</Divider>
       <Navigation>
         <SearchInput {...searchProps} />
         <ProductTypes
