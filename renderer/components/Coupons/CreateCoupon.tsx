@@ -47,7 +47,6 @@ export const CreateCoupon = () => {
   const [selectedVariant, setSelectedVariant] = useState<IVariantPromo | null>({
     ...products[0]?.default_variant,
     product: products[0],
-    stock_per_variant: null,
   });
 
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(
@@ -64,7 +63,6 @@ export const CreateCoupon = () => {
     setSelectedVariant({
       ...props.variant,
       product: props.product,
-      stock_per_variant: null,
     });
   };
 

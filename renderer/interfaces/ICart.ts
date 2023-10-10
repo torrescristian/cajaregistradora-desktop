@@ -12,6 +12,7 @@ export interface IPromoItem {
   promo: IPromo;
   selectedVariants: IVariantPromo[];
 }
+
 export interface ICartState {
   cartItems: ICartItem[];
   reset?: boolean;

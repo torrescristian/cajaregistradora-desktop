@@ -1,6 +1,6 @@
 import { ICategory } from './ICategory';
-import { IVariant, IVariantPromo } from './IVariants';
-import { IResponsePage, IStrapiResponse, IStrapiSingleResponse } from './utils';
+import { IVariantExpanded, IVariantPromo } from './IVariants';
+import { IResponsePage } from './utils';
 
 export interface IPromo<
   VARIANT = IVariantPromo,
@@ -23,8 +23,10 @@ export interface IVariantAndQuantity<VARIANT = IVariantPromo> {
   quantity: number;
 }
 
-export type IPromoResponse = IResponsePage<
-  IPromo<IVariantPromo, ICategory<IVariantPromo[]>>
+export type IPromoExpanded = IPromo<
+  IVariantExpanded,
+  ICategory<IVariantExpanded[]>
 >;
+export type IPromoResponse = IResponsePage<IPromoExpanded>;
 
 export type IPromoPayload = IPromo<number, number>;

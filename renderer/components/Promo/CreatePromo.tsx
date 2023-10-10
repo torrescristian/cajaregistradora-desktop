@@ -5,7 +5,7 @@ import SearchInput, { useSearchProps } from '../SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import { IVariantPromo } from '@/interfaces/IVariants';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import useCreatePromoMutation from '@/hooks/services/useCreatePromoMutation';
 import useFormControl from '@/hooks/useFormControl';
@@ -13,7 +13,6 @@ import { ICategory } from '@/interfaces/ICategory';
 import { ICategoryAndQuantity, IVariantAndQuantity } from '@/interfaces/IPromo';
 import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
-import e from 'express';
 
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();

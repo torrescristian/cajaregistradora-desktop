@@ -47,7 +47,6 @@ const ProductItem = ({ product, onClick }: IProps) => {
         product,
         variant: {
           ...selectedVariant,
-          stock_per_variant: null,
           product: product,
         },
       });

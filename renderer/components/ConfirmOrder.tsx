@@ -217,11 +217,14 @@ export const ConfirmOrder = ({
     );
   }
   return (
-    /* FIXME: Quitar el stock del producto */
     <section>
       <ToastContainer></ToastContainer>
       <div className="flex flex-row gap-3 w-full">
-        <button className="btn btn-primary" onClick={handleClickConfirmOrder}>
+        <button
+          className="btn btn-primary"
+          onClick={handleClickConfirmOrder}
+          disabled={!items.length && !promoItems!.length}
+        >
           Pasar Orden
         </button>
         {updateMode ? (

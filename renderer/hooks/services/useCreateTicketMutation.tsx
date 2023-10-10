@@ -45,7 +45,6 @@ export default function useCreateTicketMutation() {
 
   return useMutation(async ({ ticket, coupon }: IProps) => {
     await TicketPayloadSchema().validate(ticket);
-    console.log(ticket.payments);
     const sum = ticket.payments.reduce(
       (acc, curr) => acc + Number(curr.amount),
       0,
