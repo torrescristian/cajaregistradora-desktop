@@ -6,7 +6,7 @@ import { Card } from './Card';
 import { Selector } from './Selector';
 import { IProduct } from '@/interfaces/IProduct';
 import { RenderIf } from './RenderIf';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import { IVariantPromo } from '@/interfaces/IVariants';
 import HighlightedText from './HighlightedText';
 
 const Text = ({ children }: IComponent) => {

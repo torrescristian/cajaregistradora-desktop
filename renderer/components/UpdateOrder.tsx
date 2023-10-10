@@ -37,7 +37,6 @@ export const UpdateOrder = ({ order, onSubmit }: IProps) => {
 
   return (
     <section className="flex flex-col w-screen">
-      <RenderPromos promosItems={order.promoItems} salesMode />
       <Products />
       <Cart updateMode order={order} onSubmit={onSubmit} />
     </section>

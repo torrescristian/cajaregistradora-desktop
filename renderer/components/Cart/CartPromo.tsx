@@ -16,7 +16,7 @@ const CartPromo = ({ promosItems }: IProps) => {
   return (
     <section className="flex flex-row gap-5">
       {promosItems.map(({ promo, selectedVariants }, index) => (
-        <div key={promo.id!} className="flex flex-col border-2 p-5 gap-3">
+        <div key={index} className="flex flex-col border-2 p-5 gap-3">
           <div className="flex flex-row items-center gap-4">
             <p className="text-xl">{promo.name}</p>
             <button
@@ -27,8 +27,8 @@ const CartPromo = ({ promosItems }: IProps) => {
             </button>
           </div>
           <div className="p-2">
-            {selectedVariants.map((variant) => (
-              <p className="list-item" key={variant.id}>
+            {selectedVariants.map((variant, index) => (
+              <p className="list-item" key={index}>
                 {variant.product.name} - {variant.name}{' '}
               </p>
             ))}

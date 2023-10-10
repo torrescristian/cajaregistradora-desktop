@@ -8,7 +8,7 @@ const TicketSchema = (order: any = OrderSchema()) =>
     .shape({
       cashBalance: yup.number(),
       couponDiscount: yup.number(),
-      order: order.number().required(),
+      order: yup.number().required(),
       payments: yup
         .array()
         .of(
@@ -31,8 +31,7 @@ const TicketSchema = (order: any = OrderSchema()) =>
           TICKET_STATUS.PAID,
           TICKET_STATUS.REFUNDED,
           TICKET_STATUS.WAITING_FOR_REFUND,
-        ])
-        .required(),
+        ]),
       totalPrice: yup.number().required(),
     })
     .defined()

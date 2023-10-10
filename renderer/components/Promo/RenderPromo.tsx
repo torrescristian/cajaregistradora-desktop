@@ -27,7 +27,7 @@ export default function RenderPromos({
   return (
     <section className="flex flex-col w-full">
       <div className="divider">Promociones</div>
-      <div className="flex flex-row gap-3 overflow-x-scroll p-5">
+      <div className="flex flex-row gap-3 p-5">
         {promosItems?.map(({ promo }) => (
           <Card key={promo.id!}>
             <HighlightedText className="text-xl">{promo.name}</HighlightedText>
@@ -35,13 +35,13 @@ export default function RenderPromos({
               {formatPrice(promo.price)}
             </HighlightedText>
             <div className="flex flex-col justify-between p-4 gap-5">
-              {promo.categories!.map(({ category, quantity }) => (
-                <p className="text-xl list-item whitespace-nowrap">
+              {promo.categories!.map(({ category, quantity }, index) => (
+                <p key={index} className="text-xl list-item whitespace-nowrap">
                   {quantity} - {category.name}
                 </p>
               ))}
-              {promo.variants.map(({ variant, quantity }) => (
-                <p className="text-xl list-item whitespace-nowrap">
+              {promo.variants.map(({ variant, quantity }, index) => (
+                <p key={index} className="text-xl list-item whitespace-nowrap">
                   {quantity} - {variant.product.name} - {variant.name}
                 </p>
               ))}
@@ -72,7 +72,7 @@ export default function RenderPromos({
                           value={
                             selectors[
                               createIndex({ categoryIndex, quantityIndex })
-                            ] || ''
+                            ] || category.variants[0].id!
                           }
                           onChange={handleSelectorChange({
                             categoryIndex,
