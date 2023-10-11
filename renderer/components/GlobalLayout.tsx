@@ -12,23 +12,25 @@ export default function GlobalLayout({ children }: IProps) {
   const { isOwner, handleLogout, isLoggedIn } = useNavBar();
   const { userData } = useAuthState();
 
-
   return (
     <div className="drawer drawer-end">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center relative">
         <RenderIf condition={isLoggedIn}>
-          <div className='flex flex-row w-full justify-between container mt-3'>
+          <div className="flex flex-row w-full justify-between container mt-3">
             <section className="flex select-none w-min flex-col items-start flex-wrap text-xl uppercase">
               <h2 className="whitespace-nowrap text-xl font-bold">
                 Caja Registradora
               </h2>
               <h3 className="text-xs font-bold">{userData?.username}</h3>
             </section>
-            <div className='flex flex-row gap-5'>
+            <div className="flex flex-row gap-5">
               <div className="indicator">
                 <span className="indicator-item badge badge-error">1</span>
-                <button className="btn btn-secondary"> <BellAlertIcon className="w-6 h-6" /></button>
+                <button className="btn btn-secondary">
+                  {' '}
+                  <BellAlertIcon className="w-6 h-6" />
+                </button>
               </div>
               <label
                 htmlFor="my-drawer"
@@ -39,9 +41,7 @@ export default function GlobalLayout({ children }: IProps) {
             </div>
           </div>
         </RenderIf>
-        <section className="flex flex-col pt-10 container">
-          {children}
-        </section>
+        <section className="flex flex-col pt-10 container">{children}</section>
       </div>
       <div className="drawer-side">
         <label
