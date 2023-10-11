@@ -5,6 +5,8 @@ import Loader from '@/components/Loader';
 import PageLayout from '@/components/PageLayout';
 import Footer from '@/components/Footer';
 import WhatsappButton from '@/components/WhatsappButton';
+import { toast } from 'react-toastify';
+import CustomToastContainer from '@/components/CustomToastContainer';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = React.useState<string>('');
@@ -13,14 +15,24 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await loginMutation.mutate({
-      email,
-      password,
-    });
+    try {
+      await loginMutation.mutateAsync({
+        email,
+        password,
+      });
+    } catch (error: any) {
+      switch (error?.error?.status) {
+        case 500:
+        case 401: {
+          toast.error('No existe un usuario con ese correo y/o contraseña');
+        }
+      }
+    }
   };
 
   return (
     <PageLayout>
+      <CustomToastContainer />
       {loginMutation.isLoading ? (
         <Loader />
       ) : (

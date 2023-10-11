@@ -14,15 +14,14 @@ import { Divider } from '../Sale/Sale.styles';
 
 export const CreateCategories = () => {
   const createCategoryMutation = useCreateCategoryMutation();
-  const [selectedProductType, setSelectedProductType] =
-    useState<PRODUCT_TYPE>('');
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType,
+    selectedProductType: '',
   });
   const products = productsQuery.products as IProduct[];
 
+  // FIXME: replace for useArray
   const [newVariantSelected, setNewVariantSelected] = useState<IVariantPromo[]>(
     [],
   );

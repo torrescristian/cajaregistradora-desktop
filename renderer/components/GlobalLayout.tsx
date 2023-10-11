@@ -9,22 +9,26 @@ interface IProps {
 }
 export default function GlobalLayout({ children }: IProps) {
   const { isOwner, handleLogout, isLoggedIn } = useNavBar();
+  // const { isOwner, handleLogout, isLoggedIn } = {
+  //   isOwner: false,
+  //   handleLogout: () => {},
+  //   isLoggedIn: true,
+  // };
 
   return (
     <div className="drawer drawer-end">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <RenderIf condition={isLoggedIn}>
-        <div className="drawer-content flex flex-col items-center gap-y-5 relative">
-          {/* Page content here */}
+      <div className="drawer-content flex flex-col items-center gap-y-5 relative">
+        <RenderIf condition={isLoggedIn}>
           <label
             htmlFor="my-drawer"
             className="btn btn-secondary gap-3 drawer-button absolute right-4 top-4 z-20"
           >
             <Bars3Icon className="w-6 h-6" /> Menu
           </label>
-          <section className="pt-10 container">{children}</section>
-        </div>
-      </RenderIf>
+        </RenderIf>
+        <section className="pt-10 container">{children}</section>
+      </div>
       <div className="drawer-side">
         <label
           htmlFor="my-drawer"

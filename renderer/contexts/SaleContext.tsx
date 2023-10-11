@@ -2,6 +2,7 @@
 import ISaleUI from '@/interfaces/ISale';
 import React from 'react';
 
+// TODO: replace context with zustand
 export const SaleContext = React.createContext<ISaleUI | null>(null);
 
 export const useSale = () => {

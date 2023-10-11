@@ -109,6 +109,8 @@ export const AuthProvider = ({ children }: IComponent) => {
   const jwt = strapi.getToken();
 
   const fetchLoggedInUser = async (token: string) => {
+    if (!token) return;
+
     dispatch(setIsLoading(true));
     try {
       const user = await getUserByJWT(token);
