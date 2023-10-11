@@ -6,6 +6,7 @@ import { getLabelByPaymentType } from './Payments/utils';
 import { Divider } from './Sale/Sale.styles';
 import { formatPrice } from '@/libs/utils';
 import { RenderIf } from './RenderIf';
+import { InformationCircleIcon } from '@heroicons/react/24/solid';
 
 interface IMoreInfoModal {
   ticket: ITicket;
@@ -19,7 +20,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
   return (
     <>
       <button className="btn" onClick={() => handleClickMoreInfo()}>
-        Más info
+        <InformationCircleIcon className="h-5" />
       </button>
       <dialog ref={ref} className="bg-transparent p-15 w-[40vw]">
         <form method="dialog" className="modal-box gap-10">
