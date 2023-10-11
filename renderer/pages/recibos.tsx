@@ -3,7 +3,7 @@ import PageLayout from '@/components/PageLayout';
 import { IColumn } from '@/components/TicketTable/interface';
 import TicketTable from '@/components/TicketTable/TicketTable';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
-import { PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
+import { ITicket, PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
 import { parseDateToArgentinianFormat } from '@/libs/utils';
 
 const Recibos = () => {
@@ -41,7 +41,7 @@ const Recibos = () => {
         date: parseDateToArgentinianFormat(ticket.order?.createdAt),
         direction: ticket.order?.client?.address,
         state: ticket.status,
-        id: ticket.id,
+        ticket,
         subtotalPrice: ticket.order?.subtotalPrice,
         totalPrice: ticket.totalPrice,
         phone_number: ticket.order?.client?.phone_number,

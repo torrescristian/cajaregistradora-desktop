@@ -1,6 +1,8 @@
 import { TICKET_STATUS } from '@/interfaces/ITicket';
 import { formatPrice } from '@/libs/utils';
 import { IColumn } from './interface';
+import { createColumnHelper } from '@tanstack/react-table';
+import { DeleteTicketModal } from '../DeleteTicketModal';
 
 function statusTranslate(ticketStatus: TICKET_STATUS) {
   switch (ticketStatus) {
@@ -18,9 +20,11 @@ function statusTranslate(ticketStatus: TICKET_STATUS) {
 const customPriceFormat = (value: any) =>
   Number(value) === 0 ? '-' : `${formatPrice(value)}`;
 
+const columnHelper = createColumnHelper();
+
 export const columnsDef = [
   {
-    accessorKey: 'id',
+    accessorFn: (col: IColumn) => col.ticket.id,
     header: 'Código ID',
   },
   {
@@ -63,4 +67,11 @@ export const columnsDef = [
     accessorFn: (col: IColumn) => `${customPriceFormat(col.paidInCredit)}`,
     header: 'Pagado en Crédito',
   },
+  columnHelper.display({
+    header: 'Reembolsar',
+    cell: (props) => (
+      // @ts-ignore
+      <DeleteTicketModal ticket={props.row.original.ticket} />
+    ),
+  }),
 ];
