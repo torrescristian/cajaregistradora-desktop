@@ -18,17 +18,16 @@ export default function useLoginMutation() {
   const router = useRouter();
   const dispatch = useAuthDispatch();
 
+
+
   return useMutation(async (props: IProps): Promise<void> => {
     const payload = {
       identifier: props.email,
       password: props.password,
     } as ILoginPayload;
     const { jwt } = await strapi.login(payload);
-
     const user = await getUserByJWT(jwt);
-
     dispatch(login(user));
-
     router.push('/pedidos');
   });
 }

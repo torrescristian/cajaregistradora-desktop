@@ -30,7 +30,7 @@ export default function useActiveCashBalanceQuery() {
   const { userData } = useAuthState();
 
   const { data, isLoading, isError, isSuccess } =
-    useQuery<ICashBalanceExpanded | null>([getCashBalanceKey()], async () => {
+    useQuery<ICashBalanceExpanded | null>([getCashBalanceKey(),userData?.id], async () => {
       try {
         const res = (await strapi.find(getCashBalanceKey(), {
           filters: {
