@@ -30,31 +30,34 @@ export default function useActiveCashBalanceQuery() {
   const { userData } = useAuthState();
 
   const { data, isLoading, isError, isSuccess } =
-    useQuery<ICashBalanceExpanded | null>([getCashBalanceKey(),userData?.id], async () => {
-      try {
-        const res = (await strapi.find(getCashBalanceKey(), {
-          filters: {
-            seller: userData!.id,
-            completedAt: {
-              $null: true,
+    useQuery<ICashBalanceExpanded | null>(
+      [getCashBalanceKey(), userData?.id],
+      async () => {
+        try {
+          const res = (await strapi.find(getCashBalanceKey(), {
+            filters: {
+              seller: userData!.id,
+              completedAt: {
+                $null: true,
+              },
             },
-          },
-          populate: ['seller'],
-        })) as unknown as ICashBalancePage;
+            populate: ['seller'],
+          })) as unknown as ICashBalancePage;
 
-        if (!res) return null;
-        return parseCashBalanceFacade(res);
-      } catch (error: any) {
-        // console.log('🚀 ~ file: useCashBalance.tsx:47 ~ error:', error);
-        if ([401, 403].includes(getErrorMessage(error).status)) {
-          router.push('/');
+          if (!res) return null;
+          return parseCashBalanceFacade(res);
+        } catch (error: any) {
+          // console.log('🚀 ~ file: useCashBalance.tsx:47 ~ error:', error);
+          if ([401, 403].includes(getErrorMessage(error).status)) {
+            router.push('/');
+
+            return null;
+          }
 
           return null;
         }
-
-        return null;
-      }
-    });
+      },
+    );
 
   const cashBalance = data || null;
 

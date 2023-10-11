@@ -33,13 +33,12 @@ const LoginPage: React.FC = () => {
       }
     }
   };
-  
-  useEffect(() => {
-    if(isLoggedIn){
-      router.push('/pedidos')
-    }
-  },[isLoggedIn])
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/pedidos');
+    }
+  }, [isLoggedIn]);
 
   return (
     <PageLayout>
