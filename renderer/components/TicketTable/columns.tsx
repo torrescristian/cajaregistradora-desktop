@@ -20,7 +20,7 @@ function statusTranslate(ticketStatus: TICKET_STATUS) {
 const customPriceFormat = (value: any) =>
   Number(value) === 0 ? '-' : `${formatPrice(value)}`;
 
-const columnHelper = createColumnHelper();
+const columnHelper = createColumnHelper<IColumn>();
 
 export const columnsDef = [
   {
@@ -69,9 +69,6 @@ export const columnsDef = [
   },
   columnHelper.display({
     header: 'Reembolsar',
-    cell: (props) => (
-      // @ts-ignore
-      <DeleteTicketModal ticket={props.row.original.ticket} />
-    ),
+    cell: (props) => <DeleteTicketModal ticket={props.row.original.ticket} />,
   }),
 ];
