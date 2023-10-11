@@ -1,10 +1,11 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import { ISubMenuProps } from '@/interfaces/INavbar';
 import NavButton from './NavButton';
-import { Bars3Icon } from '@heroicons/react/24/solid';
+import { Bars3Icon, BellAlertIcon } from '@heroicons/react/24/solid';
 
 const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
+  
 
   return (
     <section className="relative flex-none">
@@ -13,13 +14,14 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
           <NavButton href="/pedidos">Crear orden</NavButton>
           <NavButton href="/ordenes">Ordenes pendientes</NavButton>
           <NavButton href="/recibos">Recibos</NavButton>
+         
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost">
               <Bars3Icon className="w-6 h-6" />
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu right-3 menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               {isOwner ? (
                 <>

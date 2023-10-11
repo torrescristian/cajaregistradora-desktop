@@ -1,33 +1,47 @@
 import 'react-toastify/dist/ReactToastify.css';
 import NavButton from './Navbar/subcomponents/NavButton';
-import { Bars3Icon } from '@heroicons/react/24/solid';
+import { Bars3Icon, BellAlertIcon } from '@heroicons/react/24/solid';
 import useNavBar from './Navbar/useNavBar';
 import { RenderIf } from './RenderIf';
+import { useAuthState } from '@/contexts/AuthContext';
 
 interface IProps {
   children: React.ReactNode;
 }
 export default function GlobalLayout({ children }: IProps) {
   const { isOwner, handleLogout, isLoggedIn } = useNavBar();
-  // const { isOwner, handleLogout, isLoggedIn } = {
-  //   isOwner: false,
-  //   handleLogout: () => {},
-  //   isLoggedIn: true,
-  // };
+  const { userData } = useAuthState();
+
 
   return (
     <div className="drawer drawer-end">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center gap-y-5 relative">
+      <div className="drawer-content flex flex-col items-center relative">
         <RenderIf condition={isLoggedIn}>
-          <label
-            htmlFor="my-drawer"
-            className="btn btn-secondary gap-3 drawer-button absolute right-4 top-4 z-20"
-          >
-            <Bars3Icon className="w-6 h-6" /> Menu
-          </label>
+          <div className='flex flex-row w-full justify-between container mt-3'>
+            <section className="flex select-none w-min flex-col items-start flex-wrap text-xl uppercase">
+              <h2 className="whitespace-nowrap text-xl font-bold">
+                Caja Registradora
+              </h2>
+              <h3 className="text-xs font-bold">{userData?.username}</h3>
+            </section>
+            <div className='flex flex-row gap-5'>
+              <div className="indicator">
+                <span className="indicator-item badge badge-error">1</span>
+                <button className="btn btn-secondary"> <BellAlertIcon className="w-6 h-6" /></button>
+              </div>
+              <label
+                htmlFor="my-drawer"
+                className="btn btn-secondary gap-3 drawer-button"
+              >
+                <Bars3Icon className="w-6 h-6" /> Menu
+              </label>
+            </div>
+          </div>
         </RenderIf>
-        <section className="pt-10 container">{children}</section>
+        <section className="flex flex-col pt-10 container">
+          {children}
+        </section>
       </div>
       <div className="drawer-side">
         <label

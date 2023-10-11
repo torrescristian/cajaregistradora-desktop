@@ -18,18 +18,18 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar bg-base-100 md:w-max">
-      {/*       <section className="flex w-min flex-1 select-none flex-col flex-wrap text-xl uppercase">
+    <nav className="navbar bg-base-100 w-full ">
+      <section className="flex flex-1 select-none w-min flex-col items-start  flex-wrap text-xl uppercase">
         <h2 className="whitespace-nowrap text-xl font-bold">
           Caja Registradora
         </h2>
-        <h3 className="text-xs font-bold">{userData?.username}</h3>
+        <h3 className="text-xs  font-bold">{userData?.username}</h3>
       </section>
       {isMobile ? (
         <MobileMenu onLogout={handleLogout} isLoggedIn={isLoggedIn} />
       ) : (
         <DesktopMenu onLogout={handleLogout} isLoggedIn={isLoggedIn} />
-      )} */}
+      )}
     </nav>
   );
 }

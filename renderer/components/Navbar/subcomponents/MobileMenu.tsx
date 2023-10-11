@@ -18,16 +18,16 @@ const MobileMenu = ({ isLoggedIn, onLogout }: ISubMenuProps) => {
   };
 
   return (
-    <section className="flex-none">
+    <section className="flex-none w-max">
       <OutsideAlerter callback={() => setMenuOpen(false)}>
         <button
           className="btn-ghost btn-square btn"
           onClick={() => setMenuOpen((prev) => !prev)}
         >
-          <Bars3Icon className="h-8 w-8" />
+          <Bars3Icon className="h-10 w-10" />
         </button>
         {menuOpen && (
-          <div className="absolute right-2.5 top-14 z-30 rounded-md bg-white shadow-lg">
+          <div className="absolute left-2.5 top-14 z-30 rounded-md bg-white shadow-lg">
             {isLoggedIn && (
               <ul className="flex flex-col">
                 {isOwner && (
