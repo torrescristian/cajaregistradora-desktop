@@ -15,9 +15,8 @@ export default function createSocketServer(app) {
       console.log({ reason });
     });
 
-    socket.on('print', (props) => {
-      console.log(JSON.stringify(props, null, 2));
-      printOrder(props);
+    socket.on('print:order', (props) => {
+      printOrder(JSON.parse(props));
     });
   });
 

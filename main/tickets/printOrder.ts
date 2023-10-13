@@ -1,18 +1,18 @@
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
-import { discountToString, formatPrice, parseDateToArgentinianFormat } from '../helpers/utils';
+import {
+  discountToString,
+  formatPrice,
+  parseDateToArgentinianFormat,
+} from '../helpers/utils';
 import { DEFAULT_FONT_SIZE } from '../helpers/const';
-import { IOrder } from '../interfaces/IOrder';
+import { IOrder, ORDER_STATUS } from '../interfaces/IOrder';
 
-interface IProps {
-  order: IOrder
-}
-
-export default function printOrder({ order }: IProps) {
+export default function printOrder(order: IOrder) {
   try {
     if (!order?.id || !order?.client?.name) {
-      console.log('Missing Order', order)
-      return
+      console.log('Missing Order', order);
+      return;
     }
     if (!escposUSB) return;
 
@@ -43,40 +43,51 @@ export default function printOrder({ order }: IProps) {
         .text(`Hora: ${parseDateToArgentinianFormat(order.createdAt)}`)
         .drawLine();
 
+      // aditional details
+      if (order.additionalDetails) {
+        printer.println(`# ${order.additionalDetails}`);
+      }
+
       // order items
       for (const item of order.items) {
         printer
           .align('LT')
-          .println(item.product.name)
+          .println(`${item.product.name} - ${item.selectedVariant.name}`)
           .align('RT')
           .println(
-            `${formatPrice(item.selectedVariant.price)} x ${item.quantity
+            `${formatPrice(item.selectedVariant.price)} x ${
+              item.quantity
             } = ${formatPrice(item.selectedVariant.price * item.quantity)}`,
           );
       }
 
-      // order items
+      // promo items
       for (const { promo, selectedVariants } of order.promoItems) {
-        printer
-          .align('LT')
-          .println(`${promo.name}: ${formatPrice(promo.price)}`)
+        printer.align('LT').println(`PROMO: ${promo.name}`);
 
         for (const variant of selectedVariants) {
           printer
-            .align('RT')
-            .println(`${variant.product.name} - ${variant.name}`);
+            .align('LT')
+            .println(`- ${variant.product.name} - ${variant.name}`);
         }
+
+        printer.align('RT').println(formatPrice(promo.price));
       }
 
       // total amount & status
       printer
+        .align('RT')
         .newLine()
         .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
         .text(`Descuento: ${discountToString(order.discount)}`)
         .text(`Total: ${formatPrice(order.totalPrice)}`)
         .drawLine()
         .align('LT')
-        .text(`Pago: PENDIENTE`);
+        .text(
+          `Pago: ${
+            order.status === ORDER_STATUS.PENDING ? 'PENDIENTE' : 'COBRADO'
+          }`,
+        );
 
       // close printer
       printer.cut().close();

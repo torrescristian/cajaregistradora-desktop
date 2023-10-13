@@ -34,6 +34,7 @@ import { calcDiscount, formatPrice } from '@/libs/utils';
 import { DataItem } from './DataItem';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import usePrintService from '@/hooks/services/usePrintService';
 
 interface IProps {
   updateMode?: boolean;
@@ -63,6 +64,7 @@ export const ConfirmOrder = ({
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon>();
   const [payments, setPayments] = useState<IPayment[]>([]);
+  const { printOrder } = usePrintService();
 
   const finalTotalPrice = calcDiscount({
     discountAmount,
@@ -91,8 +93,8 @@ export const ConfirmOrder = ({
     };
   };
 
-  const createOrder = () => {
-    orderMutation.mutate({
+  const createOrder = async () => {
+    const { orderResponse } = await orderMutation.mutateAsync({
       items,
       totalPrice,
       additionalDetails,
@@ -102,6 +104,8 @@ export const ConfirmOrder = ({
       coupon,
       promoItems: promoItems!,
     });
+
+    printOrder(orderResponse.data.id);
   };
 
   const updateOrder = () => {
@@ -178,7 +182,7 @@ export const ConfirmOrder = ({
       return;
     }
 
-    const [orderResp] = await orderMutation.mutateAsync({
+    const { orderResponse } = await orderMutation.mutateAsync({
       items,
       totalPrice: finalTotalPrice,
       additionalDetails,
@@ -187,19 +191,23 @@ export const ConfirmOrder = ({
       discount: { amount: discountAmount!, type: discountType! },
       promoItems: promoItems!,
     });
-    createTicketMutation.mutate({
-      ticket: {
-        order: orderResp.data.id,
-        totalPrice: finalTotalPrice,
-        cashBalance: activeCashBalanceQuery.cashBalance?.id!,
-        payments,
-        couponDiscount,
-      },
-      coupon: {
-        id: coupon?.id,
-        availableUses: coupon?.availableUses!,
-      },
-    });
+
+    const { orderResponse: updatedOrderResponse } =
+      await createTicketMutation.mutateAsync({
+        ticket: {
+          order: orderResponse.data.id,
+          totalPrice: finalTotalPrice,
+          cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+          payments,
+          couponDiscount,
+        },
+        coupon: {
+          id: coupon?.id,
+          availableUses: coupon?.availableUses!,
+        },
+      });
+
+    printOrder(updatedOrderResponse.data.id);
   };
 
   if (orderMutation.isLoading) {
