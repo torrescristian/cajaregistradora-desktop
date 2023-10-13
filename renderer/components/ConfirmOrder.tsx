@@ -23,7 +23,6 @@ import {
   IOrder,
   IOrderItem,
 } from '@/interfaces/IOrder';
-import { useForm } from 'react-hook-form';
 import { DiscountTypeControl } from './DiscountTypeControl';
 import ValidateCoupon from './Coupons/ValidateCoupon';
 import { ICoupon } from '@/interfaces/ICoupon';

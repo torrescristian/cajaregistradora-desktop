@@ -1,4 +1,5 @@
-export const LOCALHOST = 'http://localhost:8888';
+export const UI_LOCALHOST = 'http://localhost:8888';
+export const SOCKET_LOCALHOST = 'http://localhost:4000';
 export const ORDENES_URL = '/ordenes';
 export const RECIBOS_URL = '/recibos';
 export const CAJA_URL = '/admin/caja';

@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
-import print from './print';
+import printOrder from './tickets/printOrder';
 
 export default function createSocketServer(app) {
   const expressApp = express();
@@ -17,7 +17,7 @@ export default function createSocketServer(app) {
 
     socket.on('print', (props) => {
       console.log(JSON.stringify(props, null, 2));
-      print(props);
+      printOrder(props);
     });
   });
 

@@ -1,3 +1,5 @@
+import { DISCOUNT_TYPE, IDiscount } from "../interfaces/IOrder";
+
 export const formatPrice = (price: number) => {
   if (price !== 0 && !price) return null;
 
@@ -21,3 +23,7 @@ export const parseDateToArgentinianFormat = (date?: Date | string) => {
     }) + ' hs'
   );
 };
+
+export const discountToString = (discount: IDiscount) => {
+  return discount.type === DISCOUNT_TYPE.FIXED ? formatPrice(discount.amount) : `${discount.amount}%`
+}

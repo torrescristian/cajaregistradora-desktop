@@ -5,8 +5,7 @@ import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuer
 import Loader from '@/components/Loader';
 
 const Pedidos = () => {
-  const { isLoading, isError, isSuccess, cashIsActive } =
-    useActiveCashBalanceQuery();
+  const { isLoading, cashIsActive } = useActiveCashBalanceQuery();
 
   if (isLoading) {
     return <Loader />;
