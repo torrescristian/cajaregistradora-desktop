@@ -3,7 +3,7 @@ import FormFieldText from '../FormFieldText';
 import useCreateCouponMutation from '@/hooks/services/useCreateCouponMutation';
 import { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
-import { IProduct, IProductType} from '@/interfaces/IProduct';
+import { IProduct, IProductType } from '@/interfaces/IProduct';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ProductItem from '../ProductItem';
 import { convertToEmoji } from '@/libs/utils';

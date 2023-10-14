@@ -10,7 +10,6 @@ import { RenderIf } from './RenderIf';
 import RenderPromos from './Promo/RenderPromo';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
 
-
 const Navigation = ({ children }: IComponent) => (
   <section className="flex w-full justify-center flex-row gap-5">
     {children}
@@ -23,7 +22,6 @@ const Products = () => {
   const [showPromo, setShowPromo] = useState(false);
   const promoQuery = usePromoQuery();
   const promos = promoQuery.data;
- 
 
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType | null>();

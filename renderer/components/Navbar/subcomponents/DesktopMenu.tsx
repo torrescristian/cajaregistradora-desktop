@@ -1,7 +1,11 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import { ISubMenuProps } from '@/interfaces/INavbar';
 import NavButton from './NavButton';
-import { Bars3Icon, BellAlertIcon, SignalSlashIcon } from '@heroicons/react/24/solid';
+import {
+  Bars3Icon,
+  BellAlertIcon,
+  SignalSlashIcon,
+} from '@heroicons/react/24/solid';
 
 const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();

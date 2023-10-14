@@ -7,7 +7,11 @@ export interface IAditionalPrice {
   amount: number;
 }
 
-export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant[],PRODUCT_TYPE = IProductTypePayload> {
+export interface IProduct<
+  DEFAULT_VARIANT = IVariant,
+  VARIANTS = IVariant[],
+  PRODUCT_TYPE = IProductTypePayload,
+> {
   id?: number;
   name: string;
   variants: VARIANTS;
@@ -24,12 +28,12 @@ export type IProductPage = IResponsePage<IProduct<IVariant>>;
 export interface IProductUpdate {
   data: Partial<IProduct>;
 }
-export interface IProductType<PRODUCTS = IProduct[]>{
+export interface IProductType<PRODUCTS = IProduct[]> {
   id?: number;
   name: string;
   product: PRODUCTS;
   emoji: string;
 }
 export type IProductPayload = IProduct<number, number>;
-export type IProductTypePayload = IProductType<number[]>; 
+export type IProductTypePayload = IProductType<number[]>;
 export type IProductTypeResponse = IResponsePage<IProductType>;

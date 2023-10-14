@@ -35,7 +35,9 @@ export default function ProductTypes({
         <span>Promociones</span>
       </TabButton>
 
-      {productTypes!.filter((t)=> t).map((type: IProductType) => (
+      {productTypes!
+        .filter((t) => t)
+        .map((type: IProductType) => (
           <TabButton
             className="btn-accent"
             isActive={selectedProductType === type.id}

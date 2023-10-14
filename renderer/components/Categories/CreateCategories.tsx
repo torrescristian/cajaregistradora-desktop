@@ -17,7 +17,7 @@ export const CreateCategories = () => {
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType: 0 ,
+    selectedProductType: 0,
   });
   const products = productsQuery.products as IProduct[];
 
