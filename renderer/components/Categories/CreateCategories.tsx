@@ -1,10 +1,10 @@
 import useCreateCategoryMutation from '@/hooks/services/useCreateCategoryMutation';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
 import ProductItem from '../ProductItem';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import { IVariantPromo } from '@/interfaces/IVariants';
 import { convertToEmoji, formatPrice } from '@/libs/utils';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '../RenderIf';
@@ -17,7 +17,7 @@ export const CreateCategories = () => {
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType: '',
+    selectedProductType: 0 ,
   });
   const products = productsQuery.products as IProduct[];
 

@@ -1,8 +1,9 @@
-import { productTypes, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProductType } from '@/interfaces/IProduct';
 import TabButton from './TabButton';
+import useProductTypeQuery from '@/hooks/services/useProductTypesQuery';
 interface IProps {
-  onSelect: (type: PRODUCT_TYPE) => void;
-  selectedProductType: PRODUCT_TYPE;
+  onSelect: (type: IProductType | null) => void;
+  selectedProductType: number;
   showPromo?: boolean;
   setShowPromo: (showPromo: boolean) => void;
 }
@@ -12,12 +13,15 @@ export default function ProductTypes({
   showPromo,
   setShowPromo,
 }: IProps) {
-  const handleSelect = (type: PRODUCT_TYPE) => () => {
-    onSelect(type === selectedProductType ? '' : type);
+  const productsTypes = useProductTypeQuery();
+  const productTypes = productsTypes.data;
+  const handleSelect = (type: IProductType) => () => {
+    onSelect(type.id === selectedProductType ? null : type);
     setShowPromo(false);
   };
+
   const handleClickPromo = () => {
-    onSelect('');
+    onSelect(null);
     setShowPromo(!showPromo);
   };
 
@@ -31,16 +35,14 @@ export default function ProductTypes({
         <span>Promociones</span>
       </TabButton>
 
-      {productTypes
-        .filter((t) => t)
-        .map((type: PRODUCT_TYPE) => (
+      {productTypes!.filter((t)=> t).map((type: IProductType) => (
           <TabButton
             className="btn-accent"
-            isActive={selectedProductType === type}
-            key={type}
+            isActive={selectedProductType === type.id}
+            key={type.id}
             onClick={handleSelect(type)}
           >
-            <span>{type}</span>
+            <span>{type.name}</span>
           </TabButton>
         ))}
     </section>

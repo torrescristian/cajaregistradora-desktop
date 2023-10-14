@@ -7,45 +7,47 @@ import {
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthState } from '@/contexts/AuthContext';
+import { ca } from 'date-fns/locale';
 
 export const getCashBalanceKey = () => 'cash-balances';
 
-const parseCashBalanceFacade = (
-  cashBalanceResponse: ICashBalancePage,
-): ICashBalanceExpanded => {
-  const cashBalance = cashBalanceResponse.results[0];
-  return {
-    id: cashBalance.id,
-    completedAt: cashBalance.completedAt,
-    initialCashAmount: cashBalance.initialCashAmount,
-    newCashAmount: cashBalance.newCashAmount,
-    seller: cashBalance.seller,
-    ticket: cashBalance.ticket,
-    totalAmount: cashBalance.totalAmount,
-  };
-};
+interface IProps{
+  cashBalance: ICashBalanceExpanded;
+  todayCashBalances: ICashBalanceExpanded[];
+}
 
 export default function useActiveCashBalanceQuery() {
   const router = useRouter();
   const { userData } = useAuthState();
-
+  const today = new Date();
   const { data, isLoading, isError, isSuccess } =
-    useQuery<ICashBalanceExpanded | null>(
+    useQuery<IProps | null>(
       [getCashBalanceKey(), userData?.id],
       async () => {
         try {
           const res = (await strapi.find(getCashBalanceKey(), {
             filters: {
               seller: userData!.id,
-              completedAt: {
-                $null: true,
-              },
+              $or: [
+                {
+                  completedAt: { $null: true },
+                },
+                {
+                  completedAt: {
+                    $gt: today.setHours(0, 0, 0, 0),
+                  },
+                },
+              ],
             },
-            populate: ['seller'],
+            populate: ['cash-balances', 'seller', 'ticket', 'order'],
           })) as unknown as ICashBalancePage;
 
           if (!res) return null;
-          return parseCashBalanceFacade(res);
+          const todayCashBalances = res.results;
+          const cashBalance = todayCashBalances.filter(
+            (cashBalance) => cashBalance.completedAt === null,
+          )[0];
+          return { cashBalance,todayCashBalances };
         } catch (error: any) {
           // console.log('🚀 ~ file: useCashBalance.tsx:47 ~ error:', error);
           if ([401, 403].includes(getErrorMessage(error).status)) {
@@ -59,10 +61,13 @@ export default function useActiveCashBalanceQuery() {
       },
     );
 
-  const cashBalance = data || null;
+  const cashBalance = data?.cashBalance || null;
+  const todayCashBalances = data?.todayCashBalances.filter((cashBalance) =>
+  cashBalance.completedAt) || [];
 
   return {
     cashBalance,
+    todayCashBalances,
     isLoading,
     isError,
     isSuccess,

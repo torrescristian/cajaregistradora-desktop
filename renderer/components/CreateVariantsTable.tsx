@@ -1,10 +1,10 @@
-import { PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { IVariantPayload } from '@/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from './RenderIf';
+import { IProductType } from '@/interfaces/IProduct';
 
 interface IProps {
-  selectedType: PRODUCT_TYPE;
+  selectedType: IProductType;
   isService: boolean;
   setVariants: (variants: IVariantPayload[]) => void;
   variants: IVariantPayload[];

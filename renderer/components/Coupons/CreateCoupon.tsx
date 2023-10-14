@@ -3,7 +3,7 @@ import FormFieldText from '../FormFieldText';
 import useCreateCouponMutation from '@/hooks/services/useCreateCouponMutation';
 import { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
-import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct, IProductType} from '@/interfaces/IProduct';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ProductItem from '../ProductItem';
 import { convertToEmoji } from '@/libs/utils';
@@ -13,7 +13,7 @@ import { ICouponPayload } from '@/interfaces/ICoupon';
 import { DiscountTypeControl } from '../DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { Card } from '../Card';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import { IVariantPromo } from '@/interfaces/IVariants';
 import Loader from '../Loader';
 import CustomToastContainer from '../CustomToastContainer';
 import { toast } from 'react-toastify';
@@ -33,11 +33,11 @@ export const CreateCoupon = () => {
   });
 
   const [selectedProductType, setSelectedProductType] =
-    useState<PRODUCT_TYPE>('');
+    useState<IProductType>();
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType,
+    selectedProductType: selectedProductType?.id,
   });
 
   const products = productsQuery.products as IProduct[];

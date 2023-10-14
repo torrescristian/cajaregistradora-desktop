@@ -1,9 +1,10 @@
 import 'react-toastify/dist/ReactToastify.css';
 import NavButton from './Navbar/subcomponents/NavButton';
-import { Bars3Icon, BellAlertIcon } from '@heroicons/react/24/solid';
+import { Bars3Icon, BellAlertIcon, EyeIcon, SignalIcon, SignalSlashIcon } from '@heroicons/react/24/solid';
 import useNavBar from './Navbar/useNavBar';
 import { RenderIf } from './RenderIf';
 import { useAuthState } from '@/contexts/AuthContext';
+import useOnlineStatus from '@/hooks/useOnlineStatus';
 
 interface IProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ interface IProps {
 export default function GlobalLayout({ children }: IProps) {
   const { isOwner, handleLogout, isLoggedIn } = useNavBar();
   const { userData } = useAuthState();
+  const isOnline = useOnlineStatus();
 
   return (
     <div className="drawer drawer-end">
@@ -25,12 +27,27 @@ export default function GlobalLayout({ children }: IProps) {
               <h3 className="text-xs font-bold">{userData?.username}</h3>
             </section>
             <div className="flex flex-row gap-5">
-              <div className="indicator">
-                <span className="indicator-item badge badge-error">1</span>
-                <button className="btn btn-secondary">
-                  {' '}
-                  <BellAlertIcon className="w-6 h-6" />
+              {isOnline ?
+                <button className='btn btn-success' >
+                  <SignalIcon className='w-6 h-6' />
+                </button> :
+                <button className='btn btn-error' >
+                  <SignalSlashIcon className='w-6 h-6' />
                 </button>
+              }
+              <div className="indicator">
+                <details className="dropdown mb-32">
+                  <summary className="btn btn-secondary">
+                    <BellAlertIcon className="w-6 h-6" />
+                    <span className="indicator-item badge badge-error">1</span>
+                    {' '}
+                  </summary>
+                  <ul className="p-3 m-2 shadow menu dropdown-content z-[1] border-2 bg-primary-content  rounded-box right-1">
+                    <li><p className='w-full justify-between whitespace-nowrap text-secondary-content '>Se te esta acabando la Pizza Muzarella<span><button className='btn btn-accent'><EyeIcon className='w-3 h-3' /></button></span></p></li>
+                    <li><p className='w-full justify-between whitespace-nowrap text-secondary-content'>Se te esta acabando la Coca en lata<span><button className='btn btn-accent'><EyeIcon className='w-3 h-3' /></button></span></p></li>
+
+                  </ul>
+                </details>
               </div>
               <label
                 htmlFor="my-drawer"
