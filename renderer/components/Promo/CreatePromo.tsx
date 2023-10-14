@@ -39,8 +39,16 @@ export const CreatePromo = () => {
 
   const categories = categoryQuery.data;
 
-  const { value: name, handleChange: handleChangeName, setValue: setName } = useFormControl('');
-  const { value: price, handleChange: handleChangePrice, setValue: setPrice } = useFormControl('');
+  const {
+    value: name,
+    handleChange: handleChangeName,
+    setValue: setName,
+  } = useFormControl('');
+  const {
+    value: price,
+    handleChange: handleChangePrice,
+    setValue: setPrice,
+  } = useFormControl('');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
@@ -109,35 +117,37 @@ export const CreatePromo = () => {
   };
 
   const clearForm = () => {
-    setSelectedVariantList([])
-    setSelectedCategoryList([])
-    setName('')
-    setPrice('')
-  }
+    setSelectedVariantList([]);
+    setSelectedCategoryList([]);
+    setName('');
+    setPrice('');
+  };
 
   const handleCreatePromo = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-    const newPromo = await createPromoMutation.mutateAsync({
-      name,
-      price,
-      variants: selectedVariantList.map(({ variant, quantity }) => ({
-        variant: variant.id!,
-        quantity,
-      })),
-      categories: selectedCategoryList.map(({ category, quantity }) => ({
-        category: category.id!,
-        quantity,
-      })),
-    });
+      const newPromo = await createPromoMutation.mutateAsync({
+        name,
+        price,
+        variants: selectedVariantList.map(({ variant, quantity }) => ({
+          variant: variant.id!,
+          quantity,
+        })),
+        categories: selectedCategoryList.map(({ category, quantity }) => ({
+          category: category.id!,
+          quantity,
+        })),
+      });
 
-    clearForm()
-    toast.success(`Promoción "${newPromo.data.attributes.name}" creada con éxito!`)
-  } catch (error) {
-    console.log({ error })
-      toast.error(`Error al crear la promoción`)
-  }
+      clearForm();
+      toast.success(
+        `Promoción "${newPromo.data.attributes.name}" creada con éxito!`,
+      );
+    } catch (error) {
+      console.log({ error });
+      toast.error(`Error al crear la promoción`);
+    }
   };
 
   return (
@@ -224,7 +234,10 @@ export const CreatePromo = () => {
               setSelectedVariantList={setSelectedVariantList}
             />
           </div>
-          <SubmitButton mutation={createPromoMutation} className="btn btn-primary w-64 self-end">
+          <SubmitButton
+            mutation={createPromoMutation}
+            className="btn btn-primary w-64 self-end"
+          >
             Crear Promo
           </SubmitButton>
         </form>
