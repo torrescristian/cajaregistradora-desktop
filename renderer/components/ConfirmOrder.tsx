@@ -49,6 +49,7 @@ export const ConfirmOrder = ({
   onSubmit,
   promoItems,
 }: IProps) => {
+  // TODO: Create clear cart
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
   const subtotalPrice = useCartStore(getSubtotalPrice);

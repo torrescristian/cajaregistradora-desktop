@@ -11,6 +11,10 @@ import { RenderIf } from '../RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 import FieldWrapper from '../FieldWrapper';
 import { Divider } from '../Sale/Sale.styles';
+import Loader from '../Loader';
+import { toast } from 'react-toastify';
+import CustomToastContainer from '../CustomToastContainer';
+import SubmitButton from '../SubmitButton';
 
 export const CreateCategories = () => {
   const createCategoryMutation = useCreateCategoryMutation();
@@ -25,7 +29,11 @@ export const CreateCategories = () => {
   const [newVariantSelected, setNewVariantSelected] = useState<IVariantPromo[]>(
     [],
   );
-  const { value: name, handleChange: handleChangeName } = useFormControl('');
+  const {
+    value: name,
+    handleChange: handleChangeName,
+    setValue: setName,
+  } = useFormControl('');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
@@ -51,15 +59,32 @@ export const CreateCategories = () => {
       );
     };
 
-  const handleSubmitCategory = (e: React.FormEvent) => {
+  const clearForm = () => {
+    setName('');
+    setNewVariantSelected([]);
+  };
+
+  const handleSubmitCategory = async (e: React.FormEvent) => {
     e.preventDefault();
-    return createCategoryMutation.mutate({
-      name,
-      variants: newVariantSelected.map((variant) => variant.id!),
-    });
+
+    try {
+      const newCategory = await createCategoryMutation.mutateAsync({
+        name,
+        variants: newVariantSelected.map((variant) => variant.id!),
+      });
+
+      clearForm();
+      toast.success(
+        `Categoría "${newCategory.data.attributes.name}" creada con éxito!`,
+      );
+    } catch (error) {
+      console.log({ error });
+      toast.error(`Error al crear la categoría`);
+    }
   };
   return (
     <section className="w-full">
+      <CustomToastContainer />
       <div className="flex flex-col items-center">
         <h1 className="text-2xl mb-5">Crea tu categoria</h1>
         <form
@@ -115,12 +140,12 @@ export const CreateCategories = () => {
               </div>
             </RenderIf>
           </div>
-          <button
+          <SubmitButton
             className="btn btn-success text-neutral-content w-80 self-end"
-            type="submit"
+            mutation={createCategoryMutation}
           >
             Crear Categoria
-          </button>
+          </SubmitButton>
         </form>
       </div>
     </section>
