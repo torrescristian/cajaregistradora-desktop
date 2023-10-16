@@ -11,6 +11,7 @@ import { getOrderQueryKey } from './useOrderQuery';
 import { getPromoItems, useCartStore } from '@/contexts/CartStore';
 import { ICoupon } from '@/interfaces/ICoupon';
 import * as yup from 'yup';
+import { IStrapiSingleResponse } from '@/interfaces/utils';
 
 interface IProps {
   items: ICartItem[];
@@ -29,7 +30,7 @@ export default function useCreateOrderMutation() {
   const promoItems = useCartStore(getPromoItems);
 
   return useMutation(async (props: IProps) => {
-    const resp = [null, null] as [any, any];
+    const resp = [null, null, null] as [any, any, any];
     resp[0] = await strapi.create(
       getOrderQueryKey(),
       parseOrderToPayLoad(props),
@@ -60,11 +61,16 @@ export default function useCreateOrderMutation() {
             }) as ICartItem,
         ),
       );
-      resp[1] = await updateStock(promosAsCartItems);
+      resp[2] = await updateStock(promosAsCartItems);
     }
     clearCart();
     queryClient.invalidateQueries([getOrderQueryKey()]);
-    return resp;
+
+    return {
+      orderResponse: resp[0] as IStrapiSingleResponse<IOrder>,
+      productsStockUpdateResponse: resp[1],
+      promosStockUpdateResponse: resp[2],
+    };
   });
 }
 

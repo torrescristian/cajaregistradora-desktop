@@ -102,6 +102,7 @@ export const CreateTicketForm = ({
           availableUses: order.coupon?.availableUses || coupon?.availableUses!,
         },
       });
+
       toast.success('Pagado con exito');
     } catch (error) {
       toast.error(`No se está cobrando correctamente`);

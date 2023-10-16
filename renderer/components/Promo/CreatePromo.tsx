@@ -13,6 +13,9 @@ import { ICategory } from '@/interfaces/ICategory';
 import { ICategoryAndQuantity, IVariantAndQuantity } from '@/interfaces/IPromo';
 import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
+import SubmitButton from '../SubmitButton';
+import { toast } from 'react-toastify';
+import CustomToastContainer from '../CustomToastContainer';
 
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
@@ -36,8 +39,16 @@ export const CreatePromo = () => {
 
   const categories = categoryQuery.data;
 
-  const { value: name, handleChange: handleChangeName } = useFormControl('');
-  const { value: price, handleChange: handleChangePrice } = useFormControl('');
+  const {
+    value: name,
+    handleChange: handleChangeName,
+    setValue: setName,
+  } = useFormControl('');
+  const {
+    value: price,
+    handleChange: handleChangePrice,
+    setValue: setPrice,
+  } = useFormControl('');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
@@ -105,24 +116,43 @@ export const CreatePromo = () => {
     );
   };
 
-  const handleCreatePromo = (e: React.FormEvent) => {
+  const clearForm = () => {
+    setSelectedVariantList([]);
+    setSelectedCategoryList([]);
+    setName('');
+    setPrice('');
+  };
+
+  const handleCreatePromo = async (e: React.FormEvent) => {
     e.preventDefault();
-    return createPromoMutation.mutate({
-      name,
-      price,
-      variants: selectedVariantList.map(({ variant, quantity }) => ({
-        variant: variant.id!,
-        quantity,
-      })),
-      categories: selectedCategoryList.map(({ category, quantity }) => ({
-        category: category.id!,
-        quantity,
-      })),
-    });
+
+    try {
+      const newPromo = await createPromoMutation.mutateAsync({
+        name,
+        price,
+        variants: selectedVariantList.map(({ variant, quantity }) => ({
+          variant: variant.id!,
+          quantity,
+        })),
+        categories: selectedCategoryList.map(({ category, quantity }) => ({
+          category: category.id!,
+          quantity,
+        })),
+      });
+
+      clearForm();
+      toast.success(
+        `Promoción "${newPromo.data.attributes.name}" creada con éxito!`,
+      );
+    } catch (error) {
+      console.log({ error });
+      toast.error(`Error al crear la promoción`);
+    }
   };
 
   return (
     <section className="flex flex-col w-full">
+      <CustomToastContainer />
       <div className="flex flex-col gap-3 items-center p-3">
         <form
           className="flex flex-col p-5 gap-7 items-start"
@@ -204,9 +234,12 @@ export const CreatePromo = () => {
               setSelectedVariantList={setSelectedVariantList}
             />
           </div>
-          <button className="btn btn-primary w-64 self-end" type="submit">
+          <SubmitButton
+            mutation={createPromoMutation}
+            className="btn btn-primary w-64 self-end"
+          >
             Crear Promo
-          </button>
+          </SubmitButton>
         </form>
       </div>
     </section>
