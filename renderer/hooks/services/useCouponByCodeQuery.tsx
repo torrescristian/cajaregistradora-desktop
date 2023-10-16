@@ -1,6 +1,6 @@
 import { ICoupon, ICouponResponse } from '@/interfaces/ICoupon';
 import { useQuery } from '@tanstack/react-query';
-import { getCouponQueryKey, } from './useCouponsQuery';
+import { getCouponQueryKey } from './useCouponsQuery';
 import strapi from '@/libs/strapi';
 
 export default function useCouponByCodeQuery(code: string) {

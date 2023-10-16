@@ -23,7 +23,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
-      type: product?.type.id! ,
+      type: product?.type.id!,
       image: product?.image || '',
       isService: product?.isService || false,
     },
@@ -41,7 +41,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
     const productType = productTypes?.find((type) => type.id === value)!;
-    console.log({productType})
+    console.log({ productType });
     setProductType(productType);
     setValue('type', productType?.id!);
   };

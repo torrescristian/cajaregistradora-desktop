@@ -64,7 +64,6 @@ export function calcDiscount({
   return price * (1 - discountAmount / 100);
 }
 
-
 export const getUrlFromImage = (image: any) => {
   return (image as unknown as any)?.formats?.thumbnail?.url || '/default.png';
 };

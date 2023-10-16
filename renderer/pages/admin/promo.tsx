@@ -3,7 +3,6 @@ import { CreatePromo } from '@/components/Promo/CreatePromo';
 import RenderPromos from '@/components/Promo/RenderPromo';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
 
-
 const Promo = () => {
   const promoQuery = usePromoQuery();
   const promos = promoQuery.data;

@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 
 export const getCouponQueryKey = () => 'coupons';
 
-
 export default function useCouponsQuery() {
   return useQuery<ICoupon[]>([getCouponQueryKey()], async () => {
     const resp = (await strapi.find(getCouponQueryKey(), {

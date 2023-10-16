@@ -34,7 +34,8 @@ export default function ProductTypes({
       >
         <span>Promociones</span>
       </TabButton>
-       {productTypes?.filter((t) => t)
+      {productTypes
+        ?.filter((t) => t)
         .map((type: IProductType) => (
           <TabButton
             className="btn-accent"
@@ -44,7 +45,7 @@ export default function ProductTypes({
           >
             <span>{type.name}</span>
           </TabButton>
-        ))} 
+        ))}
     </section>
   );
 }

@@ -4,7 +4,6 @@ import { RenderIf } from './RenderIf';
 import { IProductType } from '@/interfaces/IProduct';
 
 interface IProps {
-
   isService: boolean;
   setVariants: (variants: IVariantPayload[]) => void;
   variants: IVariantPayload[];

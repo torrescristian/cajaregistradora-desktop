@@ -1,8 +1,5 @@
 import { ICoupon } from '@/interfaces/ICoupon';
-import {
-  formatPrice,
-  parseDateToArgentinianFormat,
-} from '@/libs/utils';
+import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
 import { DataItem } from '../DataItem';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { TrashIcon } from '@heroicons/react/24/solid';
@@ -60,9 +57,7 @@ export default function Coupon({ coupon }: IProps) {
         label="Producto Asociado:"
         value={
           coupon.variant
-            ? `${coupon.variant.product.type.emoji} ${
-                coupon.variant.product.name
-              } ${coupon.variant.name}`
+            ? `${coupon.variant.product.type.emoji} ${coupon.variant.product.name} ${coupon.variant.name}`
             : '-'
         }
       />

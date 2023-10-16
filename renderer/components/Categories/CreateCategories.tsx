@@ -124,8 +124,8 @@ export const CreateCategories = () => {
                   {newVariantSelected.map((variant, index) => (
                     <div className="flex flex-row items-center gap-3 p-3 border-2 ">
                       <p>
-                        {variant.product.type.emoji}{' '}
-                        {variant.product.name} - {variant.name}
+                        {variant.product.type.emoji} {variant.product.name} -{' '}
+                        {variant.name}
                       </p>
                       <button
                         className="btn btn-error"
