@@ -76,7 +76,7 @@ export default function useProductsQuery({
             'image',
             'default_variant',
             'default_variant.stock_per_variant',
-            'product-types',
+            'type',
           ],
           page: page || 1,
           pageSize: 9,

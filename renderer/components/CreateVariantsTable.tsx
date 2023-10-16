@@ -4,7 +4,7 @@ import { RenderIf } from './RenderIf';
 import { IProductType } from '@/interfaces/IProduct';
 
 interface IProps {
-  selectedType: IProductType;
+
   isService: boolean;
   setVariants: (variants: IVariantPayload[]) => void;
   variants: IVariantPayload[];
@@ -13,7 +13,6 @@ interface IProps {
 }
 
 export default function CreateVariantsTable({
-  selectedType,
   isService,
   variants,
   setVariants,

@@ -6,7 +6,6 @@ import SearchInput, { useSearchProps } from '../SearchInput';
 import { IProduct, IProductType } from '@/interfaces/IProduct';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ProductItem from '../ProductItem';
-import { convertToEmoji } from '@/libs/utils';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '../RenderIf';
 import { ICouponPayload } from '@/interfaces/ICoupon';
@@ -171,9 +170,7 @@ export const CreateCoupon = () => {
               <div className="flex flex-col p-3 border-2 gap-5 items-center">
                 <div className="flex flex-row gap-5 justify-between items-center">
                   <p className="font-bold">
-                    {`${convertToEmoji(
-                      selectedProduct?.type,
-                    )} ${selectedProduct?.name} ${selectedVariant?.name}`}
+                    {`${selectedProduct?.type.emoji} ${selectedProduct?.name} ${selectedVariant?.name}`}
                   </p>
                   <button
                     className="btn btn-error"

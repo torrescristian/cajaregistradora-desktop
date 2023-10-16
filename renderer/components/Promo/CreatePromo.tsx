@@ -3,7 +3,7 @@ import { RenderIf } from '../RenderIf';
 import ProductItem from '../ProductItem';
 import SearchInput, { useSearchProps } from '../SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct, IProductType } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
 import { IVariantPromo } from '@/interfaces/IVariants';
 import { PlusIcon } from '@heroicons/react/24/solid';
@@ -21,11 +21,11 @@ export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
   const createPromoMutation = useCreatePromoMutation();
   const [selectedProductType, setSelectedProductType] =
-    useState<PRODUCT_TYPE>('');
+    useState<IProductType>();
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType,
+    selectedProductType: selectedProductType?.id!,
   });
   const products = productsQuery.products as IProduct[];
 
@@ -151,19 +151,19 @@ export const CreatePromo = () => {
   };
 
   return (
-    <section className="flex flex-col w-full">
+    <section className="flex flex-col">
       <CustomToastContainer />
       <div className="flex flex-col gap-3 items-center p-3">
         <form
           className="flex flex-col p-5 gap-7 items-start"
           onSubmit={handleCreatePromo}
         >
-          <div className="flex flex-row gap-5 w-full justify-start items-end p-5">
+          <div className="flex flex-row gap-5  justify-start items-end p-5">
             <label className="flex flex-col">
               <span className="text-neutral-content">Nombre</span>
               <input
                 type="text"
-                className="input input-bordered w-36"
+                className="input input-bordered "
                 value={name}
                 onChange={handleChangeName}
               />
@@ -182,7 +182,7 @@ export const CreatePromo = () => {
                 <label className="flex flex-col">
                   <span className="text-neutral-content">Categorias</span>
                   <select
-                    className="select select-bordered w-52"
+                    className="select select-bordered "
                     onChange={handleChangeSelectedCategory}
                     value={selectedCategory?.id}
                   >
@@ -204,7 +204,7 @@ export const CreatePromo = () => {
           </div>
           <RenderIf condition={categories?.length}>
             <div className="flex flex-row items-center gap-3">
-              <div className="flex flex-row gap-3 overflow-x-scroll w-[70vw] ">
+              <div className="flex flex-row gap-3 overflow-x-scroll ">
                 <CardCategoryList
                   selectedCategoryList={selectedCategoryList}
                   setSelectedCategoryList={setSelectedCategoryList}
@@ -218,7 +218,7 @@ export const CreatePromo = () => {
           </RenderIf>
           <div className="flex flex-col">
             <SearchInput {...searchProps} />
-            <div className="flex flex-row overflow-x-scroll gap-5 p-5">
+            <div className="flex flex-row overflow-x-scroll w-[80vw] gap-5 p-5">
               {products.map((product) => (
                 <ProductItem
                   key={product.id}

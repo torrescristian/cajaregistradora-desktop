@@ -1,6 +1,5 @@
 import { ICoupon } from '@/interfaces/ICoupon';
 import {
-  convertToEmoji,
   formatPrice,
   parseDateToArgentinianFormat,
 } from '@/libs/utils';
@@ -61,7 +60,7 @@ export default function Coupon({ coupon }: IProps) {
         label="Producto Asociado:"
         value={
           coupon.variant
-            ? `${convertToEmoji(coupon.variant.product.type)} ${
+            ? `${coupon.variant.product.type.emoji} ${
                 coupon.variant.product.name
               } ${coupon.variant.name}`
             : '-'

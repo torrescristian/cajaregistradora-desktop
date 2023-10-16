@@ -7,7 +7,11 @@ export const getProductTypeQueryKey = () => 'product-types';
 export default function useProductTypeQuery() {
   return useQuery<IProductType[]>([getProductTypeQueryKey()], async () => {
     const res = (await strapi.find(
-      getProductTypeQueryKey(),
+      getProductTypeQueryKey(),{
+        populate: [
+          'products'
+        ]
+      }
     )) as unknown as IProductTypeResponse;
     return res.results;
   });

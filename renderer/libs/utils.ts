@@ -1,5 +1,4 @@
 import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
-import { PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { twMerge } from 'tailwind-merge';
 
 export const mergeClasses = (...classes: Array<string | null | undefined>) => {
@@ -65,22 +64,6 @@ export function calcDiscount({
   return price * (1 - discountAmount / 100);
 }
 
-export const convertToEmoji = (productType?: PRODUCT_TYPE) => {
-  switch (productType) {
-    case 'PIZZA': {
-      return '🍕';
-    }
-    case 'HAMBURGER': {
-      return '🍔';
-    }
-    case 'SODA': {
-      return '🥤';
-    }
-    default: {
-      return '';
-    }
-  }
-};
 
 export const getUrlFromImage = (image: any) => {
   return (image as unknown as any)?.formats?.thumbnail?.url || '/default.png';

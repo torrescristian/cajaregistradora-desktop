@@ -10,7 +10,8 @@ export interface IAditionalPrice {
 export interface IProduct<
   DEFAULT_VARIANT = IVariant,
   VARIANTS = IVariant[],
-  PRODUCT_TYPE = IProductTypePayload,
+  PRODUCT_TYPE = IProductTypePayload
+  ,
 > {
   id?: number;
   name: string;
@@ -34,6 +35,6 @@ export interface IProductType<PRODUCTS = IProduct[]> {
   product: PRODUCTS;
   emoji: string;
 }
-export type IProductPayload = IProduct<number, number>;
+export type IProductPayload = IProduct<number, number,number>;
 export type IProductTypePayload = IProductType<number[]>;
 export type IProductTypeResponse = IResponsePage<IProductType>;

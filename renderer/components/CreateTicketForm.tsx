@@ -1,6 +1,5 @@
 import {
   calcDiscount,
-  convertToEmoji,
   formatPrice,
   parseDateToArgentinianFormat,
 } from '@/libs/utils';
@@ -217,7 +216,7 @@ export const CreateTicketForm = ({
                     className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm"
                   >
                     <p>
-                      {convertToEmoji(v.product.type)} {v.product.name} -{' '}
+                      {v.product.type.emoji} {v.product.name} -{' '}
                       <span>{v.name}</span>
                     </p>
                   </div>

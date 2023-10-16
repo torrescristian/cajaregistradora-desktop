@@ -1,11 +1,9 @@
-import { convertToEmoji, formatPrice } from '@/libs/utils';
-
 import useProductItem from '@/hooks/useProductItem';
 import { IProduct } from '@/interfaces/IProduct';
-
 import { IVariant } from '@/interfaces/IVariants';
 import { Card } from '../Card';
 import { AddProductButton, RemoveProductButton } from '../ProductItem.styles';
+import { formatPrice } from '@/libs/utils';
 
 interface IProps {
   product: IProduct;
@@ -19,7 +17,7 @@ const CartItem = ({ product, variant }: IProps) => {
   return (
     <Card data-test="productItem" tabIndex={0}>
       <p className="font-bold whitespace-nowrap text-2xl">
-        {convertToEmoji(product.type)} {product.name}
+        {product.type.emoji} {product.name}
       </p>
       <p>{variant.name}</p>
       <section className="flex flex-col gap-3 items-center justify-end whitespace-nowrap">

@@ -18,7 +18,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar bg-base-100 w-full ">
+    <nav className="navbar bg-base-100">
       <section className="flex flex-1 select-none w-min flex-col items-start  flex-wrap text-xl uppercase">
         <h2 className="whitespace-nowrap text-xl font-bold">
           Caja Registradora

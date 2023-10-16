@@ -43,7 +43,7 @@ export default function GlobalLayout({ children }: IProps) {
                 </button>
               )}
               <div className="indicator">
-                <details className="dropdown mb-32">
+                <details className="dropdown mb-5">
                   <summary className="btn btn-secondary">
                     <BellAlertIcon className="w-6 h-6" />
                     <span className="indicator-item badge badge-error">
@@ -83,7 +83,7 @@ export default function GlobalLayout({ children }: IProps) {
             </div>
           </div>
         </RenderIf>
-        <section className="flex flex-col pt-10 container">{children}</section>
+        <section className="flex flex-col container">{children}</section>
       </div>
       <div className="drawer-side">
         <label
