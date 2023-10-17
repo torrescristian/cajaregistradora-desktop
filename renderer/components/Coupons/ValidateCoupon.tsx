@@ -55,7 +55,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
       setError('Este cupón ya se encuentra usado');
       return;
     }
-    if (Number(new Date(couponByCodeQuery.data.dueDate)) < Date.now()) {
+    if (Number(new Date(couponByCodeQuery.data.dueDate!)) < Date.now()) {
       setError('Este cupón ya expiro');
       return;
     }

@@ -1,4 +1,3 @@
-import { productTypes } from '@/interfaces/IProduct';
 import * as yup from 'yup';
 
 const ProductPayloadSchema = () =>
@@ -9,7 +8,7 @@ const ProductPayloadSchema = () =>
     isService: yup.boolean().required(),
     default_variants: yup.number(),
     image: yup.object().required(),
-    type: yup.string().oneOf(productTypes),
+    type: yup.number().required(),
   });
 
 export default ProductPayloadSchema;

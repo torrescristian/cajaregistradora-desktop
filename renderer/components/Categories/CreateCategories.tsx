@@ -1,11 +1,10 @@
 import useCreateCategoryMutation from '@/hooks/services/useCreateCategoryMutation';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
 import ProductItem from '../ProductItem';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
-import { convertToEmoji, formatPrice } from '@/libs/utils';
+import { IVariantPromo } from '@/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '../RenderIf';
 import useFormControl from '@/hooks/useFormControl';
@@ -21,7 +20,7 @@ export const CreateCategories = () => {
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType: '',
+    selectedProductType: 0,
   });
   const products = productsQuery.products as IProduct[];
 
@@ -125,8 +124,8 @@ export const CreateCategories = () => {
                   {newVariantSelected.map((variant, index) => (
                     <div className="flex flex-row items-center gap-3 p-3 border-2 ">
                       <p>
-                        {convertToEmoji(variant.product.type)}{' '}
-                        {variant.product.name} - {variant.name}
+                        {variant.product.type.emoji} {variant.product.name} -{' '}
+                        {variant.name}
                       </p>
                       <button
                         className="btn btn-error"

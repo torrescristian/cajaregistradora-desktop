@@ -1,6 +1,11 @@
 import strapi from '@/libs/strapi';
 import { getErrorMessage, getUrlFromImage } from '@/libs/utils';
-import { IProduct, IProductPage, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import {
+  IProduct,
+  IProductPage,
+  IProductType,
+  IProductTypePayload,
+} from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -42,13 +47,13 @@ const parseProductFacade = (product: IProduct): IProduct => {
 
 interface IProductsQueryProps {
   query: string;
-  selectedProductType?: PRODUCT_TYPE;
+  selectedProductType?: number;
   page?: number;
 }
 
 export default function useProductsQuery({
   query,
-  selectedProductType = '',
+  selectedProductType,
   page,
 }: IProductsQueryProps) {
   const router = useRouter();
@@ -71,6 +76,7 @@ export default function useProductsQuery({
             'image',
             'default_variant',
             'default_variant.stock_per_variant',
+            'type',
           ],
           page: page || 1,
           pageSize: 9,
