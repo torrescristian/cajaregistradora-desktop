@@ -8,7 +8,7 @@ import { IVariantPromo } from '@/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '../RenderIf';
 import useFormControl from '@/hooks/useFormControl';
-import FieldWrapper from '../FieldWrapper';
+import FieldLabel from '../FieldLabel';
 import { Divider } from '../Sale/Sale.styles';
 import Loader from '../Loader';
 import { toast } from 'react-toastify';
@@ -91,9 +91,9 @@ export const CreateCategories = () => {
           onSubmit={handleSubmitCategory}
         >
           <div className="flex flex-col items-center gap-3">
-            <FieldWrapper
+            <FieldLabel
+            columnMode
               title="Nombre:"
-              className="flex-row gap-5 items-center"
             >
               <input
                 type="text"
@@ -101,7 +101,7 @@ export const CreateCategories = () => {
                 value={name}
                 onChange={handleChangeName}
               />
-            </FieldWrapper>
+            </FieldLabel>
           </div>
           <Divider>Agrega productos a la categoría</Divider>
           <div className="flex flex-col">

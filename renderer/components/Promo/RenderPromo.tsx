@@ -4,7 +4,7 @@ import { Card } from '../Card';
 import { IPromoItem } from '@/interfaces/ICart';
 import useRenderPromo from './useRenderPromo';
 import HighlightedText from '../HighlightedText';
-import FieldWrapper from '../FieldWrapper';
+import FieldLabel from '../FieldLabel';
 
 interface IProps {
   promosItems: IPromoItem[];
@@ -63,13 +63,15 @@ export default function RenderPromos({
               {selectedPromo?.categories!.map(
                 ({ category, quantity }, categoryIndex) =>
                   range(quantity).map((_, quantityIndex) => (
-                    <FieldWrapper title={`${category.name}: `}>
+                    <FieldLabel
+                    columnMode
+                    title={`${category.name}: `}>
                       <select
                         className="select select-bordered w-96"
                         key={createIndex({ categoryIndex, quantityIndex })}
                         value={
                           selectors[
-                            createIndex({ categoryIndex, quantityIndex })
+                          createIndex({ categoryIndex, quantityIndex })
                           ] || category.variants[0].id!
                         }
                         onChange={handleSelectorChange({
@@ -83,7 +85,7 @@ export default function RenderPromos({
                           </option>
                         ))}
                       </select>
-                    </FieldWrapper>
+                    </FieldLabel>
                   )),
               )}
             </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import FieldWrapper from './FieldWrapper';
+import FieldLabel from './FieldLabel';
 
 export const useSearchProps = () => {
   const [search, setQuery] = useState('');

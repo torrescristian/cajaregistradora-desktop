@@ -16,6 +16,7 @@ import { IVariantPromo } from '@/interfaces/IVariants';
 import Loader from '../Loader';
 import CustomToastContainer from '../CustomToastContainer';
 import { toast } from 'react-toastify';
+import FieldLabel from '../FieldLabel';
 
 export const CreateCoupon = () => {
   const {
@@ -112,12 +113,15 @@ export const CreateCoupon = () => {
               formKey="code"
               label="Nombre del cupon:"
             />
-            <label className="label">Fecha de expiracion:</label>
-            <input
-              type="date"
-              {...register('dueDate')}
-              className="w-full input-secondary"
-            />
+            <FieldLabel
+            columnMode
+            title='Fecha de expiracion:'>
+              <input
+                type="date"
+                {...register('dueDate')}
+                className="w-full input-secondary"
+              />
+            </FieldLabel>
           </div>
           <div className="flex flex-col">
             <DiscountTypeControl
@@ -143,15 +147,17 @@ export const CreateCoupon = () => {
             />
           </div>
         </div>
-        <label className="label w-fit gap-2">
+        <FieldLabel
+        title='Agregar un producto'
+        className='gap-2'
+        >
           <input
             type="checkbox"
-            className="checkbox checkbox-primary"
+            className="checkbox checkbox-primary order-first"
             checked={showProductList}
             onChange={handleCheckProduct}
-          />{' '}
-          Agregar un producto
-        </label>
+          />
+        </FieldLabel>
         <div className="flex flex-col items-end gap-4">
           <RenderIf condition={showProductList}>
             <RenderIf condition={!selectedVariant}>
