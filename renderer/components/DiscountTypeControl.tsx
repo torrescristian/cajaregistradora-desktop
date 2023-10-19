@@ -50,8 +50,9 @@ export const DiscountTypeControl = (props: IProps) => {
       </RenderIf>
       <section className="grid grid-cols-2 w-full">
         <FieldLabel
-        title='Fijo $'
-        className="label border-2 hover:link p-3 border-stone-500">
+          title="Fijo $"
+          className="label border-2 hover:link p-3 border-stone-500"
+        >
           <input
             type="radio"
             name="radio-1"
@@ -62,8 +63,9 @@ export const DiscountTypeControl = (props: IProps) => {
           />
         </FieldLabel>
         <FieldLabel
-        title='Porcentaje %'
-        className="label border-2  hover:link p-3  border-stone-500">
+          title="Porcentaje %"
+          className="label border-2  hover:link p-3  border-stone-500"
+        >
           <input
             type="radio"
             name="radio-1"

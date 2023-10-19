@@ -91,10 +91,7 @@ export const CreateCategories = () => {
           onSubmit={handleSubmitCategory}
         >
           <div className="flex flex-col items-center gap-3">
-            <FieldLabel
-            columnMode
-              title="Nombre:"
-            >
+            <FieldLabel columnMode title="Nombre:">
               <input
                 type="text"
                 className="input input-bordered"

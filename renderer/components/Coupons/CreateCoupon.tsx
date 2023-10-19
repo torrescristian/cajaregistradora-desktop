@@ -113,9 +113,7 @@ export const CreateCoupon = () => {
               formKey="code"
               label="Nombre del cupon:"
             />
-            <FieldLabel
-            columnMode
-            title='Fecha de expiracion:'>
+            <FieldLabel columnMode title="Fecha de expiracion:">
               <input
                 type="date"
                 {...register('dueDate')}
@@ -147,10 +145,7 @@ export const CreateCoupon = () => {
             />
           </div>
         </div>
-        <FieldLabel
-        title='Agregar un producto'
-        className='gap-2'
-        >
+        <FieldLabel title="Agregar un producto" className="gap-2">
           <input
             type="checkbox"
             className="checkbox checkbox-primary order-first"

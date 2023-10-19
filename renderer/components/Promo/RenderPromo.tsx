@@ -63,15 +63,13 @@ export default function RenderPromos({
               {selectedPromo?.categories!.map(
                 ({ category, quantity }, categoryIndex) =>
                   range(quantity).map((_, quantityIndex) => (
-                    <FieldLabel
-                    columnMode
-                    title={`${category.name}: `}>
+                    <FieldLabel columnMode title={`${category.name}: `}>
                       <select
                         className="select select-bordered w-96"
                         key={createIndex({ categoryIndex, quantityIndex })}
                         value={
                           selectors[
-                          createIndex({ categoryIndex, quantityIndex })
+                            createIndex({ categoryIndex, quantityIndex })
                           ] || category.variants[0].id!
                         }
                         onChange={handleSelectorChange({

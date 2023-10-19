@@ -13,8 +13,13 @@ export default function FieldLabel({
   columnMode,
 }: IProps) {
   return (
-
-    <label className={twMerge(columnMode ? 'flex-col' : 'flex-row', 'flex', className)}>
+    <label
+      className={twMerge(
+        columnMode ? 'flex-col' : 'flex-row',
+        'flex',
+        className,
+      )}
+    >
       <span className="text-neutral-content">{title}</span>
       {children}
     </label>
