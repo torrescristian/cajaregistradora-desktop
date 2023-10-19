@@ -9,9 +9,15 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
     <section className="w-full flex flex-col items-center space-x-4 ">
       {isLoggedIn && (
         <ul>
-          <NavButton className='w-full' href="/pedidos">Crear orden</NavButton>
-          <NavButton className='w-full' href="/ordenes">Ordenes pendientes</NavButton>
-          <NavButton className='w-full' href="/recibos">Recibos</NavButton>
+          <NavButton className="w-full" href="/pedidos">
+            Crear orden
+          </NavButton>
+          <NavButton className="w-full" href="/ordenes">
+            Ordenes pendientes
+          </NavButton>
+          <NavButton className="w-full" href="/recibos">
+            Recibos
+          </NavButton>
           {isOwner ? (
             <>
               <NavButton className="w-full" href="/admin/caja">

@@ -32,7 +32,9 @@ export default function GlobalLayout({ children }: IProps) {
   const updateSeenNotification = useUpadteSeenNotification();
   const notifications = notificationQuery.data;
 
-  const newNotifications = notifications?.filter((notification) => (!notification.seen));
+  const newNotifications = notifications?.filter(
+    (notification) => !notification.seen,
+  );
   const handleSeenNotification = (id: number) => (e: React.MouseEvent) => {
     e.preventDefault();
     updateSeenNotification.mutateAsync(id);
@@ -59,10 +61,11 @@ export default function GlobalLayout({ children }: IProps) {
                 <div className="dropdown dropdown-end">
                   <label tabIndex={0} className="btn btn-ghost m-1">
                     <BellAlertIcon className="w-6 h-6" />
-                    { newNotifications?.length ? 
-                     <span className="indicator-item badge badge-error">
-                      {newNotifications?.length}                    
-                    </span>: null}
+                    {newNotifications?.length ? (
+                      <span className="indicator-item badge badge-error">
+                        {newNotifications?.length}
+                      </span>
+                    ) : null}
                   </label>
                   <ul
                     tabIndex={0}

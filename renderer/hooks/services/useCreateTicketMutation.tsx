@@ -17,7 +17,7 @@ import { ICoupon } from '@/interfaces/ICoupon';
 import { IStrapiSingleResponse } from '@/interfaces/utils';
 import { getNotificationQueryKey } from './useNotificationQuery';
 
-type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status' >;
+type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 
 interface IProps {
   ticket: ICreateTicketMutation;
@@ -88,7 +88,7 @@ export default function useCreateTicketMutation() {
       newCashBalancePromise,
       couponRestPromise,
     ]);
-    
+
     queryClient.invalidateQueries([getOrderQueryKey()]);
     queryClient.invalidateQueries([getTicketsQueryKey()]);
     queryClient.invalidateQueries([getCashBalanceKey()]);
@@ -99,6 +99,5 @@ export default function useCreateTicketMutation() {
       cashBalanceResponse: res[2],
       couponResponse: res[3],
     };
-
   });
 }

@@ -12,7 +12,6 @@ export default function ProductTypes({
   selectedProductType,
   showPromo,
   setShowPromo,
-
 }: IProps) {
   const productsTypes = useProductTypeQuery();
   const productTypes = productsTypes.data;
@@ -36,8 +35,13 @@ export default function ProductTypes({
         <span>Promociones</span>
       </TabButton>
       <div className="dropdown">
-        <label tabIndex={0} className="btn btn-secondary  m-1">🔎 Categorias</label>
-        <div tabIndex={0} className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64">
+        <label tabIndex={0} className="btn btn-secondary  m-1">
+          🔎 Categorias
+        </label>
+        <div
+          tabIndex={0}
+          className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64"
+        >
           {productTypes
             ?.filter((t) => t)
             .map((type: IProductType) => (

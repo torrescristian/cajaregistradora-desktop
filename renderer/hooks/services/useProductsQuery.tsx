@@ -49,7 +49,7 @@ interface IProductsQueryProps {
   query: string;
   selectedProductType?: number;
   page?: number;
-  promo?: string
+  promo?: string;
 }
 
 export default function useProductsQuery({
@@ -96,7 +96,6 @@ export default function useProductsQuery({
             },
           };
         }
-
 
         const res = (await strapi.find(
           getProductsQueryKey(),
