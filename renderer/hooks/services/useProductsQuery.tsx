@@ -49,6 +49,7 @@ interface IProductsQueryProps {
   query: string;
   selectedProductType?: number;
   page?: number;
+  promo?: string;
 }
 
 export default function useProductsQuery({

@@ -4,13 +4,22 @@ import {
   Bars3Icon,
   BellAlertIcon,
   EyeIcon,
+  EyeSlashIcon,
   SignalIcon,
   SignalSlashIcon,
+  WifiIcon,
 } from '@heroicons/react/24/solid';
 import useNavBar from './Navbar/useNavBar';
 import { RenderIf } from './RenderIf';
 import { useAuthState } from '@/contexts/AuthContext';
 import useOnlineStatus from '@/hooks/useOnlineStatus';
+import useNotificationQuery from '@/hooks/services/useNotificationQuery';
+import { twMerge } from 'tailwind-merge';
+import { useState } from 'react';
+import useUpadteSeenNotification from '@/hooks/services/useUpdateSeenNotification';
+import DesktopMenu from './Navbar/subcomponents/DesktopMenu';
+import Navbar from './Navbar/Navbar';
+import OutsideAlerter from './OutsideAlerter';
 
 interface IProps {
   children: React.ReactNode;
@@ -19,6 +28,17 @@ export default function GlobalLayout({ children }: IProps) {
   const { isOwner, handleLogout, isLoggedIn } = useNavBar();
   const { userData } = useAuthState();
   const isOnline = useOnlineStatus();
+  const notificationQuery = useNotificationQuery();
+  const updateSeenNotification = useUpadteSeenNotification();
+  const notifications = notificationQuery.data;
+
+  const newNotifications = notifications?.filter(
+    (notification) => !notification.seen,
+  );
+  const handleSeenNotification = (id: number) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    updateSeenNotification.mutateAsync(id);
+  };
 
   return (
     <div className="drawer drawer-end">
@@ -26,53 +46,48 @@ export default function GlobalLayout({ children }: IProps) {
       <div className="drawer-content flex flex-col items-center relative">
         <RenderIf condition={isLoggedIn}>
           <div className="flex flex-row w-full justify-between container mt-3">
-            <section className="flex select-none w-min flex-col items-start flex-wrap text-xl uppercase">
-              <h2 className="whitespace-nowrap text-xl font-bold">
-                Caja Registradora
-              </h2>
-              <h3 className="text-xs font-bold">{userData?.username}</h3>
-            </section>
+            <Navbar />
             <div className="flex flex-row gap-5">
               {isOnline ? (
-                <button className="btn btn-success">
-                  <SignalIcon className="w-6 h-6" />
-                </button>
+                <div className="btn btn-link text-success">
+                  <WifiIcon className="w-6 h-6 " />
+                </div>
               ) : (
-                <button className="btn btn-error">
-                  <SignalSlashIcon className="w-6 h-6" />
-                </button>
+                <div className="btn btn-link text-gray-700">
+                  <WifiIcon className="w-6 h-6" />
+                </div>
               )}
               <div className="indicator">
-                <details className="dropdown mb-5">
-                  <summary className="btn btn-secondary">
+                <div className="dropdown dropdown-end">
+                  <label tabIndex={0} className="btn btn-ghost m-1">
                     <BellAlertIcon className="w-6 h-6" />
-                    <span className="indicator-item badge badge-error">
-                      1
-                    </span>{' '}
-                  </summary>
-                  <ul className="p-3 m-2 shadow menu dropdown-content z-[1] border-2 bg-primary-content  rounded-box right-1">
-                    <li>
-                      <p className="w-full justify-between whitespace-nowrap text-secondary-content ">
-                        Se te esta acabando la Pizza Muzarella
-                        <span>
-                          <button className="btn btn-accent">
-                            <EyeIcon className="w-3 h-3" />
-                          </button>
-                        </span>
-                      </p>
-                    </li>
-                    <li>
-                      <p className="w-full justify-between whitespace-nowrap text-secondary-content">
-                        Se te esta acabando la Coca en lata
-                        <span>
-                          <button className="btn btn-accent">
-                            <EyeIcon className="w-3 h-3" />
-                          </button>
-                        </span>
-                      </p>
-                    </li>
+                    {newNotifications?.length ? (
+                      <span className="indicator-item badge badge-error">
+                        {newNotifications?.length}
+                      </span>
+                    ) : null}
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    {notifications?.map((notification) => (
+                      <li className="border-2" key={notification.id}>
+                        <div
+                          className={twMerge(
+                            notification.seen
+                              ? 'bg-neutral text-neutral-content'
+                              : 'bg-blue-400',
+                            'w-full justify-between whitespace-nowrap',
+                          )}
+                          onClick={handleSeenNotification(notification.id!)}
+                        >
+                          <p>{notification.description}</p>
+                        </div>
+                      </li>
+                    ))}
                   </ul>
-                </details>
+                </div>
               </div>
               <label
                 htmlFor="my-drawer"
@@ -92,51 +107,7 @@ export default function GlobalLayout({ children }: IProps) {
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
-          <NavButton className="w-full" href="/pedidos">
-            Crear orden
-          </NavButton>
-          <NavButton className="w-full" href="/ordenes">
-            Ordenes pendientes
-          </NavButton>
-          <NavButton className="w-full" href="/recibos">
-            Recibos
-          </NavButton>
-          {isOwner ? (
-            <>
-              <NavButton className="w-full" href="/admin/caja">
-                Caja
-              </NavButton>
-
-              <NavButton className="w-full" href="/admin/productos">
-                Reabastecer
-              </NavButton>
-
-              <NavButton
-                className="w-full"
-                href="/admin/generador-de-productos-y-variantes"
-              >
-                Crear Producto
-              </NavButton>
-
-              <NavButton className="w-full" href="/admin/cupones">
-                Crear cupones
-              </NavButton>
-
-              <NavButton className="w-full" href="/admin/promo">
-                Crear Promos
-              </NavButton>
-
-              <NavButton className="w-full" href="/categorias">
-                Crear Categorias
-              </NavButton>
-            </>
-          ) : null}
-          <NavButton
-            className="w-full bg-red-800 hover:bg-red-500"
-            onClick={handleLogout}
-          >
-            Cerrar Sesión
-          </NavButton>
+          <DesktopMenu isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         </ul>
       </div>
     </div>
