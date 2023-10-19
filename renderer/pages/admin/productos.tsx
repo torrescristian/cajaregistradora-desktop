@@ -36,7 +36,6 @@ const Productos = () => {
             ))}
           </>
         ) : (
-
           <VariantUpdateTable
             isLoading={productsQuery.isLoading}
             isError={productsQuery.isError}
