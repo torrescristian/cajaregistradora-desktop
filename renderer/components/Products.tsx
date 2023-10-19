@@ -9,9 +9,10 @@ import { useState } from 'react';
 import { RenderIf } from './RenderIf';
 import RenderPromos from './Promo/RenderPromo';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
+import Pagination from './ProductTable/subcomponents/Pagination';
 
 const Navigation = ({ children }: IComponent) => (
-  <section className="flex w-full justify-center flex-row gap-5">
+  <section className="flex w-full justify-center items-center flex-row gap-5">
     {children}
   </section>
 );
@@ -22,14 +23,22 @@ const Products = () => {
   const [showPromo, setShowPromo] = useState(false);
   const promoQuery = usePromoQuery();
   const promos = promoQuery.data;
+  const [activePage, setActivePage] = useState(1);
 
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType | null>();
 
+  const handleClickPage = (page: number) => () => setActivePage(page);
   const productsQuery = useProductsQuery({
     query: searchProps.query,
     selectedProductType: selectedProductType?.id,
+    page: activePage,
   });
+
+  const handleSelectPage = (type: IProductType | null) => {
+    setSelectedProductType(type);
+    setActivePage(1);
+  };
 
   const products = productsQuery.products as IProduct[];
 
@@ -44,7 +53,7 @@ const Products = () => {
         <ProductTypes
           setShowPromo={setShowPromo}
           showPromo={showPromo}
-          onSelect={setSelectedProductType}
+          onSelect={handleSelectPage}
           selectedProductType={selectedProductType?.id!}
         />
       </Navigation>
@@ -66,6 +75,11 @@ const Products = () => {
           />
         </RenderIf>
       </section>
+      <Pagination
+        pagination={productsQuery.pagination}
+        onClick={handleClickPage}
+        isLoading={productsQuery.isLoading}
+      />
     </section>
   );
 };

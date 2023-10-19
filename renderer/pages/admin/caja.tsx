@@ -35,7 +35,7 @@ const Caja = () => {
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
       <section>
-        <ul className="flex flex-row">
+        <ul className="flex flex-col items-center gap-5">
           <section className="flex w-full">
             {isError && <p>Error</p>}
             <RenderIf condition={isLoading}>
@@ -50,7 +50,7 @@ const Caja = () => {
               </RenderIf>
             </RenderIf>
           </section>
-          <section className="flex items-end w-full ">
+          <section className="flex">
             <RenderIf condition={isLoading}>
               <Loader className="mt-5" />
             </RenderIf>

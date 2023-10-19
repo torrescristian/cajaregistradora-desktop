@@ -87,7 +87,7 @@ export const CreateCategories = () => {
       <div className="flex flex-col items-center">
         <h1 className="text-2xl mb-5">Crea tu categoria</h1>
         <form
-          className="flex flex-col gap-3 w-[80vw]"
+          className="flex flex-col gap-5 p-4 w-[90vw]"
           onSubmit={handleSubmitCategory}
         >
           <div className="flex flex-col items-center gap-3">
@@ -142,6 +142,7 @@ export const CreateCategories = () => {
           <SubmitButton
             className="btn btn-success text-neutral-content w-80 self-end"
             mutation={createCategoryMutation}
+            disabled={!name || !newVariantSelected.length}
           >
             Crear Categoria
           </SubmitButton>

@@ -101,7 +101,7 @@ const ProductItem = ({ product, onClick }: IProps) => {
       <section
         data-test="productItem.collapse.title.right"
         className="form-control flex flex-row items-center justify-end gap-x-1"
-      ></section>
+        ></section>
     </Card>
   );
 };

@@ -204,7 +204,7 @@ export const CreatePromo = () => {
           </div>
           <RenderIf condition={categories?.length}>
             <div className="flex flex-row items-center gap-3">
-              <div className="flex flex-row gap-3 overflow-x-scroll ">
+              <div className="flex flex-row gap-3 overflow-x-scroll w-[70vw] ">
                 <CardCategoryList
                   selectedCategoryList={selectedCategoryList}
                   setSelectedCategoryList={setSelectedCategoryList}
@@ -237,6 +237,7 @@ export const CreatePromo = () => {
           <SubmitButton
             mutation={createPromoMutation}
             className="btn btn-primary w-64 self-end"
+            disabled={selectedVariantList.length === 0 || !name || !price}
           >
             Crear Promo
           </SubmitButton>
