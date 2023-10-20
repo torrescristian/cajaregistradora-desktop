@@ -32,7 +32,7 @@ import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
 import { calcDiscount, formatPrice } from '@/libs/utils';
 import { DataItem } from './DataItem';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import usePrintService from '@/hooks/services/usePrintService';
 
@@ -226,7 +226,6 @@ export const ConfirmOrder = ({
   }
   return (
     <section>
-      <ToastContainer></ToastContainer>
       <div className="flex flex-row gap-3 w-full">
         <button
           className="btn btn-primary"

@@ -10,9 +10,7 @@ import { RenderIf } from '../RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 import FieldLabel from '../FieldLabel';
 import { Divider } from '../Sale/Sale.styles';
-import Loader from '../Loader';
 import { toast } from 'react-toastify';
-import CustomToastContainer from '../CustomToastContainer';
 import SubmitButton from '../SubmitButton';
 
 export const CreateCategories = () => {
@@ -83,7 +81,6 @@ export const CreateCategories = () => {
   };
   return (
     <section className="w-full">
-      <CustomToastContainer />
       <div className="flex flex-col items-center">
         <h1 className="text-2xl mb-5">Crea tu categoria</h1>
         <form

@@ -15,7 +15,7 @@ import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
 import SubmitButton from '../SubmitButton';
 import { toast } from 'react-toastify';
-import CustomToastContainer from '../CustomToastContainer';
+
 
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
@@ -152,7 +152,7 @@ export const CreatePromo = () => {
 
   return (
     <section className="flex flex-col">
-      <CustomToastContainer />
+
       <div className="flex flex-col gap-3 items-center p-3">
         <form
           className="flex flex-col p-5 gap-7 items-start"

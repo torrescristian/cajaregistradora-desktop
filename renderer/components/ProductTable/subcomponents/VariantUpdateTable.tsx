@@ -6,30 +6,43 @@ import {
 } from '@tanstack/react-table';
 import { columnDefProduct } from './columnsProducts';
 import { IVariantExpanded } from '@/interfaces/IVariants';
+import { useMemo, useState } from 'react';
 
 interface IProps {
   products: IProduct[];
-  isLoading: boolean;
-  isError: boolean;
-  setActivePage: (page: number) => void;
-  pagination: IProductPage['pagination'];
 }
 
 function VariantUpdateTable({
   products,
-  isLoading,
-  isError,
-  pagination,
-  setActivePage,
 }: IProps) {
-  const variants = products.flatMap((p) =>
-    p.variants.map((v) => ({ ...v, product: p }) as IVariantExpanded),
-  );
+  if (!products.length) return null;
+
+  const variants = useMemo(()=> products.flatMap((p) =>
+  p.variants.map((v) => ({ ...v, product: p }) as IVariantExpanded),
+), [products])
+  const [data, setData] = useState([...variants])
+
   const tableInstance = useReactTable({
     columns: columnDefProduct,
     data: variants,
     getCoreRowModel: getCoreRowModel(),
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: any) => {
+        setData((old) =>
+          old.map((row, index) => {
+            if (index === rowIndex) {
+              return {
+                ...old[rowIndex],
+                [columnId]: value,
+              };
+            }
+            return row;
+          })
+        );
+      },
+    }
   });
+
 
   return (
     <table className="table table-zebra">

@@ -5,10 +5,10 @@ import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation'
 import Loader from '@/components/Loader';
 import UpdateProductButton from '@/components/UpdateProductButton';
 import { RenderIf } from '@/components/RenderIf';
-import { IVariant } from '@/interfaces/IVariants';
+import { IVariant, IVariantExpanded } from '@/interfaces/IVariants';
 
 interface IProps {
-  variant: IVariant;
+  variant: IVariantExpanded;
   product: IProduct;
 }
 

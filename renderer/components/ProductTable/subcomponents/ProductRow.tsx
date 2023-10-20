@@ -8,9 +8,11 @@ import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation'
 import ImageControl from '@/components/ImageControl';
 import { Card } from '@/components/Card';
 import { RenderIf } from '@/components/RenderIf';
+import { IVariantExpanded } from '@/interfaces/IVariants';
 
 interface IProps {
   product: IProduct;
+  variant: IVariantExpanded;
 }
 interface IFormControl {
   stock: number;
@@ -18,7 +20,7 @@ interface IFormControl {
   price: number;
 }
 
-const ProductRow = ({ product }: IProps) => {
+const ProductRow = ({ product,variant }: IProps) => {
   const { handleChangeName, isLoading, name, pendingChanges } =
     useUpdateProductForm({ product });
 
@@ -65,10 +67,8 @@ const ProductRow = ({ product }: IProps) => {
         </section>
         <RenderIf condition={product.variants.length}>
           <div className="divider">Variantes</div>
-          <section className="h-64 overflow-y-scroll my-5 flex w-full flex-col justify-items-center gap-7 text-xl">
-            {product.variants.map((v) => (
-              <ProductVariant key={v.id} variant={v} product={product} />
-            ))}
+          <section className="my-5 flex w-full flex-col justify-items-center gap-7 text-xl">
+             <ProductVariant key={variant.id} variant={variant} product={product} />
           </section>
         </RenderIf>
         <div className="divider">Imagen</div>

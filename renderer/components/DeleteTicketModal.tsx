@@ -4,7 +4,7 @@ import { formatPrice } from '@/libs/utils';
 import { ReceiptRefundIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import { DataItem } from './DataItem';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
 
 interface IDeleteTicketModalProps {
@@ -38,18 +38,6 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
 
   return (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      ></ToastContainer>
       <button
         className="btn w-min btn-error"
         onClick={() => handleClickDeleteTicket()}

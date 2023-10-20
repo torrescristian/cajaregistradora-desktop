@@ -1,14 +1,15 @@
 import { IVariant, IVariantExpanded } from '@/interfaces/IVariants';
-import { InformationCircleIcon } from '@heroicons/react/24/solid';
+import { EllipsisHorizontalIcon, EllipsisVerticalIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import ProductRow from './ProductRow';
 import { IProduct } from '@/interfaces/IProduct';
 
 interface IProps {
   product: IProduct;
+  variant: IVariantExpanded;
 }
 
-export const ProductModal = ({ product }: IProps) => {
+export const ProductModal = ({ product, variant }: IProps) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   const handleClickMoreInfo = () => {
@@ -16,16 +17,16 @@ export const ProductModal = ({ product }: IProps) => {
   };
 
   return (
-    <section>
+    <section className='w-full flex justify-center'>
       <button
-        className="btn btn-info btn-circle"
+        className="btn btn-secondary btn-square"
         onClick={() => handleClickMoreInfo()}
       >
-        <InformationCircleIcon className="w-8 h-8" />
+        <EllipsisHorizontalIcon className="w-8 h-8" />
       </button>
-      <dialog ref={ref} className="bg-neutral p-15 w-[40vw]">
+      <dialog ref={ref} className="bg-neutral modal-box p-15 w-[40vw]">
         <div>
-          <ProductRow product={product} key={product.id} />
+          <ProductRow product={product} key={product.id} variant={variant} />
         </div>
       </dialog>
     </section>
