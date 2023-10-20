@@ -7,6 +7,7 @@ import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
 import { useState } from 'react';
 import EditableCollapse from '@/components/EditableCollapse';
+import VariantUpdateTable from '@/components/ProductTable/subcomponents/VariantUpdateTable';
 
 const Productos = () => {
   const searchProps = useSearchProps();
@@ -35,13 +36,20 @@ const Productos = () => {
             ))}
           </>
         ) : (
-          <ProductTable
+          <VariantUpdateTable
             isLoading={productsQuery.isLoading}
             isError={productsQuery.isError}
             products={productsQuery.products}
             setActivePage={setActivePage}
             pagination={productsQuery.pagination}
           />
+          /*           <ProductTable
+                      isLoading={productsQuery.isLoading}
+                      isError={productsQuery.isError}
+                      products={productsQuery.products}
+                      setActivePage={setActivePage}
+                      pagination={productsQuery.pagination}
+                    />*/
         )}
       </section>
     </PageLayout>
