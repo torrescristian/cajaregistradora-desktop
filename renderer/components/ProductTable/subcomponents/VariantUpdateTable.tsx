@@ -12,15 +12,17 @@ interface IProps {
   products: IProduct[];
 }
 
-function VariantUpdateTable({
-  products,
-}: IProps) {
+function VariantUpdateTable({ products }: IProps) {
   if (!products.length) return null;
 
-  const variants = useMemo(()=> products.flatMap((p) =>
-  p.variants.map((v) => ({ ...v, product: p }) as IVariantExpanded),
-), [products])
-  const [data, setData] = useState([...variants])
+  const variants = useMemo(
+    () =>
+      products.flatMap((p) =>
+        p.variants.map((v) => ({ ...v, product: p }) as IVariantExpanded),
+      ),
+    [products],
+  );
+  const [data, setData] = useState([...variants]);
 
   const tableInstance = useReactTable({
     columns: columnDefProduct,
@@ -37,12 +39,11 @@ function VariantUpdateTable({
               };
             }
             return row;
-          })
+          }),
         );
       },
-    }
+    },
   });
-
 
   return (
     <table className="table table-zebra">

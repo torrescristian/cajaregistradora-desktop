@@ -11,7 +11,7 @@ export interface IUseCreateVariantMutationProps {
   isDefaultVariant: boolean;
   minimum_stock: number;
 }
-export const getVariantsQueryKey = () => 'variants'
+export const getVariantsQueryKey = () => 'variants';
 export const getStockPerVariantsKey = () => 'stock-per-variants';
 
 export default function useCreateVariantMutation() {

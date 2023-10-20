@@ -13,35 +13,28 @@ export interface IProps {
 export default function useUpdateVariantPriceMutation() {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    async ({ newPrice, variant }: IProps) => {
+  return useMutation(async ({ newPrice, variant }: IProps) => {
+    if (newPrice < 0) {
+      toast.error('El precio no puede ser negativo');
+      return [null];
+    }
 
-        if (newPrice < 0) {
-        toast.error('El precio no puede ser negativo');
-        return [null];
-      }
+    if (variant.price === newPrice) {
+      return [null];
+    }
 
-      if(variant.price === newPrice){
-        return [null];
-      }
+    if (Number.isNaN(newPrice)) {
+      toast.error('El precio debe ser un valor numérico');
+      return [null];
+    }
 
-      if (Number.isNaN(newPrice)){
-        toast.error('El precio debe ser un valor numérico');
-        return [null];
-      }
-      
-      const res = await strapi.update(
-        getVariantsQueryKey(),
-        variant.id!,
-        {
-          price: newPrice,
-        },
-      );
-      console.log(res);
+    const res = await strapi.update(getVariantsQueryKey(), variant.id!, {
+      price: newPrice,
+    });
+    console.log(res);
 
-      await queryClient.invalidateQueries([getProductsQueryKey()]);
-      toast.success('Precio actualizado correctamente');
-      return [res];
-    },
-  );
+    await queryClient.invalidateQueries([getProductsQueryKey()]);
+    toast.success('Precio actualizado correctamente');
+    return [res];
+  });
 }

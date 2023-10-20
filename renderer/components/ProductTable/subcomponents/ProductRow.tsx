@@ -20,7 +20,7 @@ interface IFormControl {
   price: number;
 }
 
-const ProductRow = ({ product,variant }: IProps) => {
+const ProductRow = ({ product, variant }: IProps) => {
   const { handleChangeName, isLoading, name, pendingChanges } =
     useUpdateProductForm({ product });
 
@@ -68,7 +68,11 @@ const ProductRow = ({ product,variant }: IProps) => {
         <RenderIf condition={product.variants.length}>
           <div className="divider">Variantes</div>
           <section className="my-5 flex w-full flex-col justify-items-center gap-7 text-xl">
-             <ProductVariant key={variant.id} variant={variant} product={product} />
+            <ProductVariant
+              key={variant.id}
+              variant={variant}
+              product={product}
+            />
           </section>
         </RenderIf>
         <div className="divider">Imagen</div>

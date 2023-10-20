@@ -16,7 +16,6 @@ import CardCategoryList from '../CardCategoryList';
 import SubmitButton from '../SubmitButton';
 import { toast } from 'react-toastify';
 
-
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
   const createPromoMutation = useCreatePromoMutation();
@@ -152,7 +151,6 @@ export const CreatePromo = () => {
 
   return (
     <section className="flex flex-col">
-
       <div className="flex flex-col gap-3 items-center p-3">
         <form
           className="flex flex-col p-5 gap-7 items-start"

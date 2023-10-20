@@ -2,7 +2,10 @@ import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
 import IStockPerVariant from '@/interfaces/IStockPerVariant';
-import { getStockPerVariantsKey, getVariantsQueryKey } from './useCreateVariantMutation';
+import {
+  getStockPerVariantsKey,
+  getVariantsQueryKey,
+} from './useCreateVariantMutation';
 import { toast } from 'react-toastify';
 
 export interface IUseUpdateVariantMutationProps {
@@ -28,10 +31,14 @@ export default function useUpdateVariantMutation() {
         stock: newStock,
       };
 
-      const priceVariant = await strapi.update(getVariantsQueryKey(), variantId, {
-        price,
-        name,
-      });
+      const priceVariant = await strapi.update(
+        getVariantsQueryKey(),
+        variantId,
+        {
+          price,
+          name,
+        },
+      );
 
       const res = await strapi.update(
         getStockPerVariantsKey(),

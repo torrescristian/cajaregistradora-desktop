@@ -26,7 +26,7 @@ export const PriceColumn = ({ getValue, row, column, table }: IProps) => {
   };
   return (
     <>
-      $ {' '}
+      ${' '}
       <input
         className="input input-bordered w-32"
         value={value}

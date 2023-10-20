@@ -7,8 +7,6 @@ import { PriceColumn } from './PriceColumn';
 
 const columnHelper = createColumnHelper<IVariantExpanded>();
 
-
-
 export const columnDefProduct = [
   {
     accessorFn: (col: IVariantExpanded) => col.product.name,

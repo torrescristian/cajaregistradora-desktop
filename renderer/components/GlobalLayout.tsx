@@ -44,7 +44,7 @@ export default function GlobalLayout({ children }: IProps) {
 
   return (
     <div className="drawer drawer-end">
-      <CustomToastContainer/>
+      <CustomToastContainer />
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center relative">
         <RenderIf condition={isLoggedIn}>

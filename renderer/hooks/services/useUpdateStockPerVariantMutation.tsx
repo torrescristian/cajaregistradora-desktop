@@ -23,15 +23,15 @@ export default function useUpdateStockPerVariantMutation() {
         return [null];
       }
 
-      if(stockPerVariant.stock === newStock){
+      if (stockPerVariant.stock === newStock) {
         return [null];
       }
 
-      if (Number.isNaN(newStock)){
+      if (Number.isNaN(newStock)) {
         toast.error('El stock debe ser un valor numérico');
         return [null];
       }
-      
+
       const res = await strapi.update(
         'stock-per-variants',
         stockPerVariant.id!,

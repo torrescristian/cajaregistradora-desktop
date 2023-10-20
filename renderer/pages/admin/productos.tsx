@@ -35,17 +35,13 @@ const Productos = () => {
             ))}
           </>
         ) : (
-           <>
-           
-          {productsQuery.isLoading && <Loader />}
+          <>
+            {productsQuery.isLoading && <Loader />}
             {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
-            {!productsQuery.isLoading && !productsQuery.isError &&
-            <VariantUpdateTable
-            products={productsQuery.products}
-            />
-          } 
-          
-          </> 
+            {!productsQuery.isLoading && !productsQuery.isError && (
+              <VariantUpdateTable products={productsQuery.products} />
+            )}
+          </>
         )}
       </section>
     </PageLayout>

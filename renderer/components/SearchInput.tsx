@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
-
 export const useSearchProps = () => {
   const [search, setQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);

@@ -1,5 +1,9 @@
 import { IVariant, IVariantExpanded } from '@/interfaces/IVariants';
-import { EllipsisHorizontalIcon, EllipsisVerticalIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
+import {
+  EllipsisHorizontalIcon,
+  EllipsisVerticalIcon,
+  InformationCircleIcon,
+} from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import ProductRow from './ProductRow';
 import { IProduct } from '@/interfaces/IProduct';
@@ -17,7 +21,7 @@ export const ProductModal = ({ product, variant }: IProps) => {
   };
 
   return (
-    <section className='w-full flex justify-center'>
+    <section className="w-full flex justify-center">
       <button
         className="btn btn-secondary btn-square"
         onClick={() => handleClickMoreInfo()}
