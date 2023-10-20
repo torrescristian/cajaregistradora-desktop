@@ -20,6 +20,8 @@ import useUpadteSeenNotification from '@/hooks/services/useUpdateSeenNotificatio
 import DesktopMenu from './Navbar/subcomponents/DesktopMenu';
 import Navbar from './Navbar/Navbar';
 import OutsideAlerter from './OutsideAlerter';
+import { ToastContainer } from 'react-toastify';
+import CustomToastContainer from './CustomToastContainer';
 
 interface IProps {
   children: React.ReactNode;
@@ -42,6 +44,7 @@ export default function GlobalLayout({ children }: IProps) {
 
   return (
     <div className="drawer drawer-end">
+      <CustomToastContainer />
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center relative">
         <RenderIf condition={isLoggedIn}>

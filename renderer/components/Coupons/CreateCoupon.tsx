@@ -14,7 +14,6 @@ import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { Card } from '../Card';
 import { IVariantPromo } from '@/interfaces/IVariants';
 import Loader from '../Loader';
-import CustomToastContainer from '../CustomToastContainer';
 import { toast } from 'react-toastify';
 import FieldLabel from '../FieldLabel';
 
@@ -100,7 +99,6 @@ export const CreateCoupon = () => {
 
   return (
     <Card>
-      <CustomToastContainer />
       <form
         onSubmit={handleSubmit(handleSubmitCreateCoupon)}
         className="flex flex-col p-4 gap-10"

@@ -5,7 +5,7 @@ import { useImageControl } from '@/hooks/useImageControl';
 import CreateVariantsTable from '@/components/CreateVariantsTable';
 import { useState } from 'react';
 import useCreateProductAndVariantMutation from '@/hooks/services/useCreateProductAndVariantMutation';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { IVariantPayload } from '@/interfaces/IVariants';
 import useProductTypeQuery from '@/hooks/services/useProductTypesQuery';
 
@@ -86,18 +86,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
       onSubmit={handleSubmitWrapper}
       className="flex flex-col p-5 gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
     >
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
       <section className="flex flex-row items-end gap-10 px-10 justify-between">
         <FormFieldText
           errors={errors}

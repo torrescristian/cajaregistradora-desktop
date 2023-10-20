@@ -26,7 +26,7 @@ import { useState } from 'react';
 import Payments from './Payments';
 import ValidateCoupon from './Coupons/ValidateCoupon';
 import { ICoupon } from '@/interfaces/ICoupon';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IPromoItem } from '@/interfaces/ICart';
 import HighlightedText from './HighlightedText';
@@ -124,18 +124,6 @@ export const CreateTicketForm = ({
       className="flex w-full h-full justify-between flex-col gap-5"
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      ></ToastContainer>
       <div className="flex flex-row justify-between gap-3">
         <div className="flex flex-col">
           <p className="text-2xl font-bold">

@@ -6,7 +6,6 @@ import PageLayout from '@/components/PageLayout';
 import Footer from '@/components/Footer';
 import WhatsappButton from '@/components/WhatsappButton';
 import { toast } from 'react-toastify';
-import CustomToastContainer from '@/components/CustomToastContainer';
 import { useRouter } from 'next/router';
 import { useAuthState } from '@/contexts/AuthContext';
 
@@ -42,7 +41,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <PageLayout>
-      <CustomToastContainer />
       {loginMutation.isLoading ? (
         <Loader />
       ) : (

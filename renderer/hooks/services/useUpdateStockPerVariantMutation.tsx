@@ -2,54 +2,45 @@ import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
 import IStockPerVariant from '@/interfaces/IStockPerVariant';
-import {
-  getStockPerVariantsKey,
-  getVariantsQueryKey,
-} from './useCreateVariantMutation';
 import { toast } from 'react-toastify';
 
 export interface IUseUpdateVariantMutationProps {
   newStock: number;
-  stockPerVariantId: number;
-  variantId: number;
-  price: number;
-  name: string;
+  stockPerVariant: IStockPerVariant;
 }
 
-export default function useUpdateVariantMutation() {
+export default function useUpdateStockPerVariantMutation() {
   const queryClient = useQueryClient();
 
   return useMutation(
-    async ({
-      newStock,
-      name,
-      stockPerVariantId,
-      variantId,
-      price,
-    }: IUseUpdateVariantMutationProps) => {
+    async ({ newStock, stockPerVariant }: IUseUpdateVariantMutationProps) => {
       const newStockPerVariant: Partial<IStockPerVariant> = {
         stock: newStock,
       };
 
-      const priceVariant = await strapi.update(
-        getVariantsQueryKey(),
-        variantId,
-        {
-          price,
-          name,
-        },
-      );
+      if (newStock < 0) {
+        toast.error('El stock no puede ser negativo');
+        return [null];
+      }
+
+      if (stockPerVariant.stock === newStock) {
+        return [null];
+      }
+
+      if (Number.isNaN(newStock)) {
+        toast.error('El stock debe ser un valor numérico');
+        return [null];
+      }
 
       const res = await strapi.update(
-        getStockPerVariantsKey(),
-        stockPerVariantId,
+        'stock-per-variants',
+        stockPerVariant.id!,
         newStockPerVariant,
       );
-      console.log(res);
 
       await queryClient.invalidateQueries([getProductsQueryKey()]);
-
-      return [priceVariant, res];
+      toast.success('Stock actualizado correctamente');
+      return [res];
     },
   );
 }
