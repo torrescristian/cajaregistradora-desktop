@@ -8,7 +8,7 @@ import { RenderIf } from '@/components/RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 import { CloseCashBalance } from '@/components/CloseCashBalance';
 import { formatPrice } from '@/libs/utils';
-import { format, getHours } from 'date-fns';
+import { format } from 'date-fns';
 
 const Caja = () => {
   const {

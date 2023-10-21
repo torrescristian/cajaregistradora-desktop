@@ -2,7 +2,7 @@
   "private": true,
   "name": "cajaregistradora-desktop",
   "description": "My application description",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
   "main": "app/background.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "autoprefixer": "^10.4.14",
     "cookie": "^0.5.0",
     "daisyui": "^2.51.5",
+    "date-fns": "^2.30.0",
     "deep-equal": "^2.2.0",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
