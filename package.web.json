@@ -2,11 +2,11 @@
   "private": true,
   "name": "cajaregistradora-desktop",
   "description": "My application description",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
   "main": "app/background.js",
   "scripts": {
-    "start": "next ./renderer",
+    "start": "next start ./renderer",
     "dev": "nextron",
     "build:web": "next build ./renderer",
     "build": "npm run build:web",

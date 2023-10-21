@@ -2,11 +2,11 @@
   "private": true,
   "name": "cajaregistradora-desktop",
   "description": "My application description",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
   "main": "app/background.js",
   "scripts": {
-    "start": "next ./renderer",
+    "start": "next start ./renderer",
     "dev": "nextron",
     "build:web": "next build ./renderer",
     "build": "npm run build:web",
@@ -52,7 +52,6 @@
   "devDependencies": {
     "@types/cookie": "^0.5.1",
     "@types/deep-equal": "^1.0.1",
-    "@types/escpos": "^2.5.2",
     "@types/express": "^4.17.17",
     "@types/js-cookie": "^3.0.3",
     "@types/next-auth": "^3.15.0",
@@ -69,9 +68,6 @@
     "prettier": "3.0.0",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "typescript": "5.0.2"
-  },
-  "resolutions": {
-    "usb": "1.8.8"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
