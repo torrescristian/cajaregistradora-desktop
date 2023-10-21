@@ -8,12 +8,14 @@ import { TicketPayloadSchema } from '@/schemas/TicketSchema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
 import { getTicketsQueryKey } from './useTicketQuery';
-import { ORDER_STATUS } from '@/interfaces/IOrder';
+import { IOrder, ORDER_STATUS } from '@/interfaces/IOrder';
 import useActiveCashBalanceQuery, {
   getCashBalanceKey,
 } from './useActiveCashBalanceQuery';
 import { getCouponQueryKey } from './useCouponsQuery';
 import { ICoupon } from '@/interfaces/ICoupon';
+import { IStrapiSingleResponse } from '@/interfaces/utils';
+import { getNotificationQueryKey } from './useNotificationQuery';
 
 type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 
@@ -45,7 +47,6 @@ export default function useCreateTicketMutation() {
 
   return useMutation(async ({ ticket, coupon }: IProps) => {
     await TicketPayloadSchema().validate(ticket);
-    console.log(ticket.payments);
     const sum = ticket.payments.reduce(
       (acc, curr) => acc + Number(curr.amount),
       0,
@@ -87,9 +88,16 @@ export default function useCreateTicketMutation() {
       newCashBalancePromise,
       couponRestPromise,
     ]);
+
     queryClient.invalidateQueries([getOrderQueryKey()]);
     queryClient.invalidateQueries([getTicketsQueryKey()]);
     queryClient.invalidateQueries([getCashBalanceKey()]);
-    return res;
+
+    return {
+      ticketResponse: res[0],
+      orderResponse: res[1] as IStrapiSingleResponse<IOrder>,
+      cashBalanceResponse: res[2],
+      couponResponse: res[3],
+    };
   });
 }

@@ -1,10 +1,9 @@
-import { PRODUCT_TYPE } from '@/interfaces/IProduct';
 import { IVariantPayload } from '@/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from './RenderIf';
+import { IProductType } from '@/interfaces/IProduct';
 
 interface IProps {
-  selectedType: PRODUCT_TYPE;
   isService: boolean;
   setVariants: (variants: IVariantPayload[]) => void;
   variants: IVariantPayload[];
@@ -13,7 +12,6 @@ interface IProps {
 }
 
 export default function CreateVariantsTable({
-  selectedType,
   isService,
   variants,
   setVariants,

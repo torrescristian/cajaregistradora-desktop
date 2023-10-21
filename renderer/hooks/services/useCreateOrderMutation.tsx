@@ -6,10 +6,12 @@ import {
   ORDER_STATUS,
 } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
-import { useCartStore } from '@/contexts/CartStore';
+import { getPromoItems, useCartStore } from '@/contexts/CartStore';
 import { ICoupon } from '@/interfaces/ICoupon';
+import * as yup from 'yup';
+import { IStrapiSingleResponse } from '@/interfaces/utils';
 
 interface IProps {
   items: ICartItem[];
@@ -23,9 +25,12 @@ interface IProps {
 }
 
 export default function useCreateOrderMutation() {
+  const queryClient = useQueryClient();
   const clearCart = useCartStore((state) => state.clearCart);
+  const promoItems = useCartStore(getPromoItems);
+
   return useMutation(async (props: IProps) => {
-    const resp = [null, null] as [any, any];
+    const resp = [null, null, null] as [any, any, any];
     resp[0] = await strapi.create(
       getOrderQueryKey(),
       parseOrderToPayLoad(props),
@@ -35,13 +40,37 @@ export default function useCreateOrderMutation() {
       !item.product.isService;
 
     const itemsToUpdate = props.items.filter(excludeServiceItem);
-
     if (itemsToUpdate.length) {
       resp[1] = await updateStock(itemsToUpdate);
     }
+    if (promoItems.length) {
+      const promosAsCartItems = promoItems.flatMap(({ selectedVariants }) =>
+        selectedVariants.map(
+          (variant) =>
+            ({
+              product: variant.product,
+              selectedVariant: {
+                ...variant,
+                id: variant.id!,
+                name: variant.name,
+                price: variant.price,
+                product: variant.product.id,
+                stock_per_variant: variant.stock_per_variant!,
+              },
+              quantity: 1,
+            }) as ICartItem,
+        ),
+      );
+      resp[2] = await updateStock(promosAsCartItems);
+    }
     clearCart();
+    queryClient.invalidateQueries([getOrderQueryKey()]);
 
-    return resp;
+    return {
+      orderResponse: resp[0] as IStrapiSingleResponse<IOrder>,
+      productsStockUpdateResponse: resp[1],
+      promosStockUpdateResponse: resp[2],
+    };
   });
 }
 
@@ -77,10 +106,19 @@ function parseOrderToPayLoad({
 
 async function updateStock(items: ICartItem[]) {
   const promises = items.map((item) => {
-    if (!item.selectedVariant.id) throw new Error('No se encontro el id');
+    if (!item.selectedVariant.id) {
+      throw new Error('No se encontro el id');
+    }
+
+    if (item.product.isService) {
+      return;
+    }
+
     const { stock, id } = item.selectedVariant.stock_per_variant!;
+    yup.number().integer().required().validate(stock);
+    yup.number().required().validate(id);
     return strapi.update('stock-per-variants', id!, {
-      stock: stock,
+      stock: stock - item.quantity,
     });
   });
 

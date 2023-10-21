@@ -14,6 +14,7 @@ export default function useOrderQuery() {
         'client',
         'items.product',
         'items.product.image',
+        'items.product.type',
         'discount',
         'payments',
         'items.selectedVariant',

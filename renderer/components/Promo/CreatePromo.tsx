@@ -3,9 +3,9 @@ import { RenderIf } from '../RenderIf';
 import ProductItem from '../ProductItem';
 import SearchInput, { useSearchProps } from '../SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct, IProductType } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import { IVariantPromo } from '@/interfaces/IVariants';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import useCreatePromoMutation from '@/hooks/services/useCreatePromoMutation';
 import useFormControl from '@/hooks/useFormControl';
@@ -13,17 +13,18 @@ import { ICategory } from '@/interfaces/ICategory';
 import { ICategoryAndQuantity, IVariantAndQuantity } from '@/interfaces/IPromo';
 import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
-import e from 'express';
+import SubmitButton from '../SubmitButton';
+import { toast } from 'react-toastify';
 
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
   const createPromoMutation = useCreatePromoMutation();
   const [selectedProductType, setSelectedProductType] =
-    useState<PRODUCT_TYPE>('');
+    useState<IProductType>();
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType,
+    selectedProductType: selectedProductType?.id!,
   });
   const products = productsQuery.products as IProduct[];
 
@@ -37,8 +38,16 @@ export const CreatePromo = () => {
 
   const categories = categoryQuery.data;
 
-  const { value: name, handleChange: handleChangeName } = useFormControl('');
-  const { value: price, handleChange: handleChangePrice } = useFormControl('');
+  const {
+    value: name,
+    handleChange: handleChangeName,
+    setValue: setName,
+  } = useFormControl('');
+  const {
+    value: price,
+    handleChange: handleChangePrice,
+    setValue: setPrice,
+  } = useFormControl('');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
@@ -106,36 +115,53 @@ export const CreatePromo = () => {
     );
   };
 
-  const handleCreatePromo = (e: React.FormEvent) => {
+  const clearForm = () => {
+    setSelectedVariantList([]);
+    setSelectedCategoryList([]);
+    setName('');
+    setPrice('');
+  };
+
+  const handleCreatePromo = async (e: React.FormEvent) => {
     e.preventDefault();
-    return createPromoMutation.mutate({
-      name,
-      price,
-      variants: selectedVariantList.map(({ variant, quantity }) => ({
-        variant: variant.id!,
-        quantity,
-      })),
-      categories: selectedCategoryList.map(({ category, quantity }) => ({
-        category: category.id!,
-        quantity,
-      })),
-    });
+
+    try {
+      const newPromo = await createPromoMutation.mutateAsync({
+        name,
+        price,
+        variants: selectedVariantList.map(({ variant, quantity }) => ({
+          variant: variant.id!,
+          quantity,
+        })),
+        categories: selectedCategoryList.map(({ category, quantity }) => ({
+          category: category.id!,
+          quantity,
+        })),
+      });
+
+      clearForm();
+      toast.success(
+        `Promoción "${newPromo.data.attributes.name}" creada con éxito!`,
+      );
+    } catch (error) {
+      console.log({ error });
+      toast.error(`Error al crear la promoción`);
+    }
   };
 
   return (
-    <section className="flex flex-col w-full">
+    <section className="flex flex-col">
       <div className="flex flex-col gap-3 items-center p-3">
         <form
           className="flex flex-col p-5 gap-7 items-start"
           onSubmit={handleCreatePromo}
         >
-          <h1 className="text-2xl w-full text-center">Crea tu promo!</h1>
-          <div className="flex flex-row gap-5 w-full justify-start items-end p-5">
+          <div className="flex flex-row gap-5  justify-start items-end p-5">
             <label className="flex flex-col">
               <span className="text-neutral-content">Nombre</span>
               <input
                 type="text"
-                className="input input-bordered w-36"
+                className="input input-bordered "
                 value={name}
                 onChange={handleChangeName}
               />
@@ -154,7 +180,7 @@ export const CreatePromo = () => {
                 <label className="flex flex-col">
                   <span className="text-neutral-content">Categorias</span>
                   <select
-                    className="select select-bordered w-52"
+                    className="select select-bordered "
                     onChange={handleChangeSelectedCategory}
                     value={selectedCategory?.id}
                   >
@@ -190,7 +216,7 @@ export const CreatePromo = () => {
           </RenderIf>
           <div className="flex flex-col">
             <SearchInput {...searchProps} />
-            <div className="flex flex-row overflow-x-scroll gap-5 p-5">
+            <div className="flex flex-row overflow-x-scroll w-[80vw] gap-5 p-5">
               {products.map((product) => (
                 <ProductItem
                   key={product.id}
@@ -206,9 +232,13 @@ export const CreatePromo = () => {
               setSelectedVariantList={setSelectedVariantList}
             />
           </div>
-          <button className="btn btn-primary w-64 self-end" type="submit">
+          <SubmitButton
+            mutation={createPromoMutation}
+            className="btn btn-primary w-64 self-end"
+            disabled={selectedVariantList.length === 0 || !name || !price}
+          >
             Crear Promo
-          </button>
+          </SubmitButton>
         </form>
       </div>
     </section>

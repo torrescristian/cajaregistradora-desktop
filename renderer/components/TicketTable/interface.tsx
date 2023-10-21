@@ -1,7 +1,7 @@
-import { TICKET_STATUS } from '@/interfaces/ITicket';
+import { ITicket, TICKET_STATUS } from '@/interfaces/ITicket';
 
 export interface IColumn {
-  id: number;
+  ticket: ITicket;
   state: TICKET_STATUS;
   totalPrice: number;
   date: string;

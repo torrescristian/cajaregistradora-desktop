@@ -11,6 +11,7 @@ export default function useOrderQuery() {
         'order',
         'order.client',
         'order.items.product',
+        'order.items.product.type',
         'payments',
         'order.items.selectedVariant',
         'order.coupon',

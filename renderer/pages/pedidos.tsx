@@ -3,20 +3,11 @@ import Cart from '@/components/Cart/Cart';
 import { RenderIf } from '@/components/RenderIf';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
 import Loader from '@/components/Loader';
-import RenderPromos from '@/components/Promo/RenderPromo';
-import usePromoQuery from '@/hooks/services/usePromoQuery';
-import { useState } from 'react';
-import { IPromo } from '@/interfaces/IPromo';
 
 const Pedidos = () => {
-  const { isLoading, isError, isSuccess, cashIsActive } =
-    useActiveCashBalanceQuery();
+  const { isLoading, cashIsActive } = useActiveCashBalanceQuery();
 
-  const promoQuery = usePromoQuery();
-  const promos = promoQuery.data;
-  const [salesMode, setSalesMode] = useState<IPromo[] | null>(null);
-
-  if (promoQuery.isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -27,13 +18,6 @@ const Pedidos = () => {
       </RenderIf>
       <RenderIf condition={!isLoading}>
         <RenderIf condition={cashIsActive}>
-          <RenderPromos
-            promosItems={promos!.map((promo) => ({
-              promo,
-              selectedVariants: [],
-            }))}
-            salesMode
-          />
           <Products />
           <Cart />
         </RenderIf>

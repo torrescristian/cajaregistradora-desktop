@@ -3,6 +3,7 @@ import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { RenderIf } from './RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 import FormControl from './FormControl';
+import FieldLabel from './FieldLabel';
 
 interface IProps {
   onChange: (discount: IDiscount) => void;
@@ -48,7 +49,10 @@ export const DiscountTypeControl = (props: IProps) => {
         />
       </RenderIf>
       <section className="grid grid-cols-2 w-full">
-        <label className="label border-2 hover:link p-3 border-stone-500">
+        <FieldLabel
+          title="Fijo $"
+          className="label border-2 hover:link p-3 border-stone-500"
+        >
           <input
             type="radio"
             name="radio-1"
@@ -57,9 +61,11 @@ export const DiscountTypeControl = (props: IProps) => {
             value={DISCOUNT_TYPE.FIXED}
             checked={discountType === DISCOUNT_TYPE.FIXED}
           />
-          Fijo $
-        </label>
-        <label className="label border-2  hover:link p-3  border-stone-500">
+        </FieldLabel>
+        <FieldLabel
+          title="Porcentaje %"
+          className="label border-2  hover:link p-3  border-stone-500"
+        >
           <input
             type="radio"
             name="radio-1"
@@ -68,8 +74,7 @@ export const DiscountTypeControl = (props: IProps) => {
             onChange={handleDiscountType}
             checked={discountType === DISCOUNT_TYPE.PERC}
           />
-          Porcentaje %
-        </label>
+        </FieldLabel>
       </section>
     </section>
   );

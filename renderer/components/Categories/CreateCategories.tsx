@@ -1,30 +1,36 @@
 import useCreateCategoryMutation from '@/hooks/services/useCreateCategoryMutation';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
 import ProductItem from '../ProductItem';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
-import { formatPrice } from '@/libs/utils';
+import { IVariantPromo } from '@/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '../RenderIf';
 import useFormControl from '@/hooks/useFormControl';
+import FieldLabel from '../FieldLabel';
+import { Divider } from '../Sale/Sale.styles';
+import { toast } from 'react-toastify';
+import SubmitButton from '../SubmitButton';
 
 export const CreateCategories = () => {
   const createCategoryMutation = useCreateCategoryMutation();
-  const [selectedProductType, setSelectedProductType] =
-    useState<PRODUCT_TYPE>('');
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType,
+    selectedProductType: 0,
   });
   const products = productsQuery.products as IProduct[];
 
+  // FIXME: replace for useArray
   const [newVariantSelected, setNewVariantSelected] = useState<IVariantPromo[]>(
     [],
   );
-  const { value: name, handleChange: handleChangeName } = useFormControl('');
+  const {
+    value: name,
+    handleChange: handleChangeName,
+    setValue: setName,
+  } = useFormControl('');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
@@ -37,7 +43,7 @@ export const CreateCategories = () => {
         name: props.variant.name,
         product: props.product,
         price: props.variant.price,
-        stock_per_variant: null,
+        stock_per_variant: props.variant.stock_per_variant,
       },
     ]);
   };
@@ -50,32 +56,48 @@ export const CreateCategories = () => {
       );
     };
 
-  const handleSubmitCategory = (e: React.FormEvent) => {
+  const clearForm = () => {
+    setName('');
+    setNewVariantSelected([]);
+  };
+
+  const handleSubmitCategory = async (e: React.FormEvent) => {
     e.preventDefault();
-    return createCategoryMutation.mutate({
-      name,
-      variants: newVariantSelected.map((variant) => variant.id!),
-    });
+
+    try {
+      const newCategory = await createCategoryMutation.mutateAsync({
+        name,
+        variants: newVariantSelected.map((variant) => variant.id!),
+      });
+
+      clearForm();
+      toast.success(
+        `Categoría "${newCategory.data.attributes.name}" creada con éxito!`,
+      );
+    } catch (error) {
+      console.log({ error });
+      toast.error(`Error al crear la categoría`);
+    }
   };
   return (
     <section className="w-full">
       <div className="flex flex-col items-center">
-        <p>Crea tu categoria</p>
+        <h1 className="text-2xl mb-5">Crea tu categoria</h1>
         <form
-          className="flex flex-col gap-3 w-[80vw]"
+          className="flex flex-col gap-5 p-4 w-[90vw]"
           onSubmit={handleSubmitCategory}
         >
-          <div className="flex flex-col items-start gap-3">
-            <label className="label">
-              Nombre de la categoria:
+          <div className="flex flex-col items-center gap-3">
+            <FieldLabel columnMode title="Nombre:">
               <input
                 type="text"
                 className="input input-bordered"
                 value={name}
                 onChange={handleChangeName}
               />
-            </label>
+            </FieldLabel>
           </div>
+          <Divider>Agrega productos a la categoría</Divider>
           <div className="flex flex-col">
             <SearchInput {...searchProps} />
             <div className="flex flex-row overflow-x-scroll gap-5 p-5">
@@ -95,8 +117,10 @@ export const CreateCategories = () => {
                 <div className="flex flex-row gap-5 items-center overflow-x-scroll w-[80vw] ">
                   {newVariantSelected.map((variant, index) => (
                     <div className="flex flex-row items-center gap-3 p-3 border-2 ">
-                      <p>{variant.name}</p>
-                      <p>{formatPrice(variant.price)}</p>
+                      <p>
+                        {variant.product.type.emoji} {variant.product.name} -{' '}
+                        {variant.name}
+                      </p>
                       <button
                         className="btn btn-error"
                         onClick={handleClickRemoveVariant(index)}
@@ -109,12 +133,13 @@ export const CreateCategories = () => {
               </div>
             </RenderIf>
           </div>
-          <button
-            className="btn btn-success text-neutral-content"
-            type="submit"
+          <SubmitButton
+            className="btn btn-success text-neutral-content w-80 self-end"
+            mutation={createCategoryMutation}
+            disabled={!name || !newVariantSelected.length}
           >
             Crear Categoria
-          </button>
+          </SubmitButton>
         </form>
       </div>
     </section>

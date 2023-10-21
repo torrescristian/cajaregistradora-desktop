@@ -9,7 +9,7 @@ interface IProps {
 export const CashBalanceActivate = ({ cashBalance }: IProps) => {
   return (
     <section className="flex flex-col items-center">
-      <div className="flex flex-col items-end gap-3 w-full shadow-2xl p-10 border-stone-500 border-2">
+      <div className="flex flex-col items-end gap-3 w-full shadow-2xl p-10 border-2">
         <h2 className="font-bold text-2xl text-stone-500">
           Caja activa #{cashBalance?.id}
         </h2>

@@ -2,7 +2,6 @@ import useProductItem from '@/hooks/useProductItem';
 import { IOrderItem } from '@/interfaces/IOrder';
 import { RemoveProductButton } from './ProductItem.styles';
 import { twMerge } from 'tailwind-merge';
-import { convertToEmoji } from '@/libs/utils';
 interface IProps {
   item: IOrderItem;
   updateMode?: boolean;
@@ -21,7 +20,7 @@ function OrderItem({ item, updateMode }: IProps) {
         updateMode ? 'justify-end items-center ' : 'justify-start items-end',
       )}
     >
-      <p className="text-2xl">{convertToEmoji(item.product!.type)}</p>
+      <p className="text-2xl">{item.product!.type.emoji}</p>
       <p>{item.quantity} -</p>
       <p>
         {' '}

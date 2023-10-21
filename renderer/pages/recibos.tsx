@@ -1,13 +1,10 @@
-import { DeleteTicketModal } from '@/components/DeleteTicketModal';
 import Loader from '@/components/Loader';
-import { MoreInfoModal } from '@/components/MoreInfoModal';
 import PageLayout from '@/components/PageLayout';
 import { IColumn } from '@/components/TicketTable/interface';
 import TicketTable from '@/components/TicketTable/TicketTable';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
-import { PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
-import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
-import { twMerge } from 'tailwind-merge';
+import { ITicket, PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
+import { parseDateToArgentinianFormat } from '@/libs/utils';
 
 const Recibos = () => {
   function statusColor(ticketStatus: TICKET_STATUS) {
@@ -40,14 +37,14 @@ const Recibos = () => {
   const data = ticketQuery.data.map(
     (ticket) =>
       ({
-        client: ticket.order.client?.name,
-        date: parseDateToArgentinianFormat(ticket.order.createdAt),
-        direction: ticket.order.client?.address,
+        client: ticket.order?.client?.name,
+        date: parseDateToArgentinianFormat(ticket.order?.createdAt),
+        direction: ticket.order?.client?.address,
         state: ticket.status,
-        id: ticket.id,
-        subtotalPrice: ticket.order.subtotalPrice,
+        ticket,
+        subtotalPrice: ticket.order?.subtotalPrice,
         totalPrice: ticket.totalPrice,
-        phone_number: ticket.order.client?.phone_number,
+        phone_number: ticket.order?.client?.phone_number,
         paidInCash: ticket.payments
           .filter((p) => p.type === PAYMENT_TYPE.CASH)
           .reduce((acc, curr) => acc + Number(curr.amount), 0),

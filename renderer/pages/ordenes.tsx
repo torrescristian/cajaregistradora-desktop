@@ -6,7 +6,7 @@ import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import { useState } from 'react';
 
 const Wrapper = ({ children }: IComponent) => (
-  <section className="flex flex-col items-center w-4/5 gap-5">
+  <section className="flex flex-col items-start gap-5">
     <h1 className="text-2xl font-bold">✍🏻 Lista de ordenes</h1>
 
     {children}

@@ -43,9 +43,9 @@ export default function CardCategoryList({
     };
 
   return (
-    <section className="flex">
+    <section className="flex gap-4 p-3">
       {selectedCategoryList.map(({ category, quantity }, index) => (
-        <div className="flex flex-row  border-2 p-3 gap-4" key={index}>
+        <div className="flex flex-row  border-2 p-3 " key={index}>
           <div className="flex flex-col text-center whitespace-nowrap">
             <p key={category.id} className="text-2xl font-bold">
               {category.name}

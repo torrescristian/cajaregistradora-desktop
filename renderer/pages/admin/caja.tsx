@@ -7,10 +7,13 @@ import { CashBalanceActivate } from '@/components/CashBalanceActive';
 import { RenderIf } from '@/components/RenderIf';
 import useFormControl from '@/hooks/useFormControl';
 import { CloseCashBalance } from '@/components/CloseCashBalance';
+import { formatPrice } from '@/libs/utils';
+import { format, getHours } from 'date-fns';
 
 const Caja = () => {
   const {
     cashBalance,
+    todayCashBalances,
     isLoading: activeCashLoading,
     isError,
     isSuccess,
@@ -22,7 +25,6 @@ const Caja = () => {
   const isLoading = activeCashLoading;
 
   const initCashMutation = useInitCashMutation();
-
   const handleClick = () => {
     initCashMutation.mutate({
       initialCashAmount: Number(value),
@@ -33,21 +35,8 @@ const Caja = () => {
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
       <section>
-        <ul className="flex flex-col">
-          <section className="flex w-full justify-center m-5">
-            <RenderIf condition={isLoading}>
-              <Loader className="mt-5" />
-            </RenderIf>
-            <RenderIf condition={!isLoading && isSuccess}>
-              <RenderIf condition={cashIsActive}>
-                <CloseCashBalance cashBalanceId={cashBalance?.id!} />
-              </RenderIf>
-              <RenderIf condition={!cashIsActive}>
-                <CreateCashBalance onClick={handleClick} />
-              </RenderIf>
-            </RenderIf>
-          </section>
-          <section className="grid gap-5 justify-center items-center w-full">
+        <ul className="flex flex-col items-center gap-5">
+          <section className="flex w-full">
             {isError && <p>Error</p>}
             <RenderIf condition={isLoading}>
               <Loader className="mt-5" />
@@ -61,8 +50,49 @@ const Caja = () => {
               </RenderIf>
             </RenderIf>
           </section>
+          <section className="flex">
+            <RenderIf condition={isLoading}>
+              <Loader className="mt-5" />
+            </RenderIf>
+            <RenderIf condition={!isLoading && isSuccess}>
+              <RenderIf condition={!cashIsActive}>
+                <CreateCashBalance onClick={handleClick} />
+              </RenderIf>
+              <RenderIf condition={cashIsActive}>
+                <CloseCashBalance cashBalanceId={cashBalance?.id!} />
+              </RenderIf>
+            </RenderIf>
+          </section>
         </ul>
       </section>
+
+      <RenderIf condition={todayCashBalances.length}>
+        <section className="w-full flex flex-col gap-5">
+          <p className="text-2xl text-center">Cajas del dia</p>
+          <div className="flex flex-row w-full gap-5 overflow-x-scroll">
+            {todayCashBalances.map((todayCashBalance) => (
+              <div
+                key={todayCashBalance.id!}
+                className="flex flex-col w-max p-5 border-2"
+              >
+                <p>👤Vendedor: {todayCashBalance.seller.username}</p>
+                <p className="whitespace-nowrap">
+                  💰Monto de caja inicial:{' '}
+                  {formatPrice(todayCashBalance.initialCashAmount)}
+                </p>
+                <p className="whitespace-nowrap">
+                  💸Total de la caja:{' '}
+                  {formatPrice(todayCashBalance.totalAmount)}
+                </p>
+                <p className="whitespace-nowrap">
+                  ⏰La Caja cerro a las -{' '}
+                  {format(new Date(todayCashBalance.completedAt), 'HH:mm')}Hs
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </RenderIf>
     </PageLayout>
   );
 };

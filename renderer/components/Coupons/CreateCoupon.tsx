@@ -3,17 +3,19 @@ import FormFieldText from '../FormFieldText';
 import useCreateCouponMutation from '@/hooks/services/useCreateCouponMutation';
 import { useState } from 'react';
 import SearchInput, { useSearchProps } from '../SearchInput';
-import { IProduct, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct, IProductType } from '@/interfaces/IProduct';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ProductItem from '../ProductItem';
-import { convertToEmoji } from '@/libs/utils';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '../RenderIf';
 import { ICouponPayload } from '@/interfaces/ICoupon';
 import { DiscountTypeControl } from '../DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
 import { Card } from '../Card';
-import { IVariant, IVariantPromo } from '@/interfaces/IVariants';
+import { IVariantPromo } from '@/interfaces/IVariants';
+import Loader from '../Loader';
+import { toast } from 'react-toastify';
+import FieldLabel from '../FieldLabel';
 
 export const CreateCoupon = () => {
   const {
@@ -30,11 +32,11 @@ export const CreateCoupon = () => {
   });
 
   const [selectedProductType, setSelectedProductType] =
-    useState<PRODUCT_TYPE>('');
+    useState<IProductType>();
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    selectedProductType,
+    selectedProductType: selectedProductType?.id,
   });
 
   const products = productsQuery.products as IProduct[];
@@ -47,7 +49,6 @@ export const CreateCoupon = () => {
   const [selectedVariant, setSelectedVariant] = useState<IVariantPromo | null>({
     ...products[0]?.default_variant,
     product: products[0],
-    stock_per_variant: null,
   });
 
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(
@@ -64,19 +65,25 @@ export const CreateCoupon = () => {
     setSelectedVariant({
       ...props.variant,
       product: props.product,
-      stock_per_variant: null,
     });
   };
 
-  const handleSubmitCreateCoupon = (data: any) => {
-    createCouponMutation.mutate({
-      ...data,
-      variant: showProductList ? selectedVariant?.id! : undefined,
-      discount: {
-        amount: discountAmount,
-        type: discountType,
-      },
-    });
+  const handleSubmitCreateCoupon = async (data: ICouponPayload) => {
+    try {
+      await createCouponMutation.mutateAsync({
+        ...data,
+        variant: showProductList ? selectedVariant?.id! : null,
+        discount: {
+          amount: discountAmount!,
+          type: discountType!,
+        },
+        dueDate: data.dueDate || undefined,
+      });
+      toast.success('Cupón creado');
+    } catch (error) {
+      console.log({ error });
+      toast.error('Error al crear el cupón');
+    }
   };
   const handleClickRemoveProduct = () => {
     setSelectedProduct(null);
@@ -104,12 +111,13 @@ export const CreateCoupon = () => {
               formKey="code"
               label="Nombre del cupon:"
             />
-            <label className="label">Fecha de expiracion:</label>
-            <input
-              type="date"
-              {...register('dueDate')}
-              className="w-full input-secondary"
-            />
+            <FieldLabel columnMode title="Fecha de expiracion:">
+              <input
+                type="date"
+                {...register('dueDate')}
+                className="w-full input-secondary"
+              />
+            </FieldLabel>
           </div>
           <div className="flex flex-col">
             <DiscountTypeControl
@@ -135,15 +143,14 @@ export const CreateCoupon = () => {
             />
           </div>
         </div>
-        <label className="label w-fit gap-2">
+        <FieldLabel title="Agregar un producto" className="gap-2">
           <input
             type="checkbox"
-            className="checkbox checkbox-primary"
+            className="checkbox checkbox-primary order-first"
             checked={showProductList}
             onChange={handleCheckProduct}
-          />{' '}
-          Agregar un producto
-        </label>
+          />
+        </FieldLabel>
         <div className="flex flex-col items-end gap-4">
           <RenderIf condition={showProductList}>
             <RenderIf condition={!selectedVariant}>
@@ -162,9 +169,7 @@ export const CreateCoupon = () => {
               <div className="flex flex-col p-3 border-2 gap-5 items-center">
                 <div className="flex flex-row gap-5 justify-between items-center">
                   <p className="font-bold">
-                    {`${convertToEmoji(
-                      selectedProduct?.type,
-                    )} ${selectedProduct?.name} ${selectedVariant?.name}`}
+                    {`${selectedProduct?.type.emoji} ${selectedProduct?.name} ${selectedVariant?.name}`}
                   </p>
                   <button
                     className="btn btn-error"
@@ -177,8 +182,12 @@ export const CreateCoupon = () => {
               </div>
             </RenderIf>
           </RenderIf>
-          <button className="btn btn-square w-64 btn-primary" type="submit">
-            Crear cupon
+          <button
+            className="btn btn-square w-64 btn-primary"
+            type="submit"
+            disabled={createCouponMutation.isLoading}
+          >
+            {createCouponMutation.isLoading ? <Loader /> : 'Crear cupon'}
           </button>
         </div>
       </form>

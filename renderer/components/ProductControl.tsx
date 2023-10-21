@@ -1,12 +1,13 @@
 import FormFieldText from '@/components/FormFieldText';
 import { useForm } from 'react-hook-form';
-import { IProduct, IProductPayload, PRODUCT_TYPE } from '@/interfaces/IProduct';
+import { IProduct, IProductPayload, IProductType } from '@/interfaces/IProduct';
 import { useImageControl } from '@/hooks/useImageControl';
 import CreateVariantsTable from '@/components/CreateVariantsTable';
 import { useState } from 'react';
 import useCreateProductAndVariantMutation from '@/hooks/services/useCreateProductAndVariantMutation';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { IVariantPayload } from '@/interfaces/IVariants';
+import useProductTypeQuery from '@/hooks/services/useProductTypesQuery';
 
 interface IProps {
   controlType: 'CREATE' | 'UPDATE';
@@ -22,13 +23,15 @@ const ProductControl = ({ controlType, product }: IProps) => {
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
-      type: product?.type,
+      type: product?.type.id!,
       image: product?.image || '',
       isService: product?.isService || false,
     },
   });
 
-  const [productType, setProductType] = useState<PRODUCT_TYPE>('PIZZA');
+  const productTypesQuery = useProductTypeQuery();
+  const productTypes = productTypesQuery.data;
+  const [productType, setProductType] = useState<IProductType>();
   const [isService, setIsService] = useState(false);
   const [variants, setVariants] = useState<IVariantPayload[]>([]);
   const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
@@ -36,9 +39,11 @@ const ProductControl = ({ controlType, product }: IProps) => {
   const { processSubmit } = useImageControl();
 
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as PRODUCT_TYPE;
-    setProductType(value);
-    setValue('type', value);
+    const value = Number(e.target.value);
+    const productType = productTypes?.find((type) => type.id === value)!;
+    console.log({ productType });
+    setProductType(productType);
+    setValue('type', productType?.id!);
   };
   const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.checked;
@@ -81,18 +86,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
       onSubmit={handleSubmitWrapper}
       className="flex flex-col p-5 gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
     >
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
       <section className="flex flex-row items-end gap-10 px-10 justify-between">
         <FormFieldText
           errors={errors}
@@ -100,19 +93,20 @@ const ProductControl = ({ controlType, product }: IProps) => {
           label="Nombre: "
           register={register}
         />
-        {product?.type!}
+        {product?.type.name!}
         <label>
           <span className="label-text whitespace-nowrap text-stone-500">
             Menu:
           </span>
           <select
-            value={productType}
+            value={productType?.id!}
             onChange={handleChangeProductType}
             className="select select-bordered"
           >
-            {['SODA', 'PIZZA', 'HAMBURGER'].map((type) => (
-              <option key={type} value={type}>
-                {type}
+            <option value="">Seleccione un menu</option>
+            {productTypes?.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.emoji} {type.name}
               </option>
             ))}
           </select>
@@ -139,7 +133,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
       </label>
       <CreateVariantsTable
         isService={isService}
-        selectedType={productType}
         variants={variants}
         setVariants={setVariants}
         onChange={setDefaultVariantIndex}

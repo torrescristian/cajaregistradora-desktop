@@ -1,7 +1,7 @@
 import { IDiscount } from './IOrder';
-import { IProduct, PRODUCT_TYPE } from './IProduct';
+import { IProduct, IProductType } from './IProduct';
 import { IVariant } from './IVariants';
-import { IResponsePage, IStrapiResponse, IStrapiSingleResponse } from './utils';
+import { IResponsePage, IStrapiSingleResponse } from './utils';
 
 export interface IPartialVariant {
   id: number;
@@ -9,7 +9,7 @@ export interface IPartialVariant {
   product: {
     id: number;
     name: string;
-    type: PRODUCT_TYPE;
+    type: IProductType;
   };
 }
 
@@ -17,16 +17,12 @@ export interface ICoupon<VARIANT = IPartialVariant> {
   id?: number;
   code: string;
   variant: VARIANT | null;
-  dueDate: string;
+  dueDate?: string;
   discount: IDiscount;
   maxAmount: number;
   availableUses: number;
 }
 
-export type ICouponResponse = IResponsePage<
-  ICoupon<
-    IStrapiSingleResponse<IVariant<number, IStrapiSingleResponse<IProduct>>>
-  >
->;
+export type ICouponResponse = IResponsePage<ICoupon>;
 
 export type ICouponPayload = ICoupon<number>;
