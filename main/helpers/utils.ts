@@ -29,3 +29,7 @@ export const discountToString = (discount: IDiscount) => {
     ? formatPrice(discount.amount)
     : `${discount.amount}%`;
 };
+
+export const getStrapiUrl = () =>
+  process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+  'https://control.cajaregistradora.app/';
