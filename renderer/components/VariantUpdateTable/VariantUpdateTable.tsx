@@ -4,7 +4,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { columnDefProduct } from './columnsProducts';
+import { columnDefProduct } from './subcomponents/columnsProducts';
 import { IVariantExpanded } from '@/interfaces/IVariants';
 import { useMemo, useState } from 'react';
 

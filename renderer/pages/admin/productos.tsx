@@ -6,7 +6,7 @@ import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
 import { useState } from 'react';
 import EditableCollapse from '@/components/EditableCollapse';
-import VariantUpdateTable from '@/components/ProductTable/subcomponents/VariantUpdateTable';
+import VariantUpdateTable from '@/components/VariantUpdateTable/VariantUpdateTable';
 
 const Productos = () => {
   const searchProps = useSearchProps();
