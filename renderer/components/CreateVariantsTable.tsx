@@ -32,27 +32,27 @@ export default function CreateVariantsTable({
   const handleChangeVariantPrice =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const newVariants = [...variants];
-      const newValue = Number(e.target.value);
-      if (isNaN(newValue) && e.target.value !== '') return;
-      newVariants[index].price = newValue;
+      const newValue = e.target.value === '' ? '' : Number(e.target.value);
+      if (Number.isNaN(newValue) && e.target.value !== '') return;
+      newVariants[index].price = newValue as number;
       setVariants(newVariants);
     };
 
   const handleChangeVariantStock =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const newVariants = [...variants];
-      const newStock = Number(e.target.value);
-      if (isNaN(newStock) && e.target.value !== '') return;
-      newVariants[index].stock_per_variant = newStock;
+      const newStock = e.target.value === '' ? '' : Number(e.target.value);
+      if (Number.isNaN(newStock) && e.target.value !== '') return;
+      newVariants[index].stock_per_variant = newStock as number;
       setVariants(newVariants);
     };
 
   const handleChangeMinimumStock =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const newVariants = [...variants];
-      const newStockMin = Number(e.target.value);
-      if (isNaN(newStockMin) && e.target.value !== '') return;
-      newVariants[index].minimum_stock = newStockMin;
+      const newStockMin = e.target.value === '' ? '' : Number(e.target.value);
+      if (Number.isNaN(newStockMin) && e.target.value !== '') return;
+      newVariants[index].minimum_stock = newStockMin as number;
       setVariants(newVariants);
     };
 

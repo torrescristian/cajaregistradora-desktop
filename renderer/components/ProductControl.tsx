@@ -8,6 +8,7 @@ import useCreateProductAndVariantMutation from '@/hooks/services/useCreateProduc
 import { toast } from 'react-toastify';
 import { IVariantPayload } from '@/interfaces/IVariants';
 import useProductTypeQuery from '@/hooks/services/useProductTypesQuery';
+import SubmitButton from './SubmitButton';
 
 interface IProps {
   controlType: 'CREATE' | 'UPDATE';
@@ -20,6 +21,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
     register,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
@@ -45,6 +47,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
     setProductType(productType);
     setValue('type', productType?.id!);
   };
+
   const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.checked;
     setIsService(newValue);
@@ -68,6 +71,10 @@ const ProductControl = ({ controlType, product }: IProps) => {
     })(e);
   };
 
+  const clearForm = () => {
+    reset();
+  };
+
   const handleSubmitCreateProduct = async (data: IProductPayload) => {
     try {
       await createProductAndVariantMutation.mutateAsync({
@@ -76,6 +83,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
         defaultVariantIndex,
       });
       toast.success('Producto creado correctamente');
+      clearForm();
     } catch (error) {
       toast.error(`No se logro crear el producto`);
     }
@@ -138,9 +146,12 @@ const ProductControl = ({ controlType, product }: IProps) => {
         onChange={setDefaultVariantIndex}
         defaultVariantIndex={defaultVariantIndex}
       />
-      <button type="submit" className="btn btn-success text-slate-50 w-2/12 ">
+      <SubmitButton
+        mutation={createProductAndVariantMutation}
+        className="btn btn-success text-slate-50 whitespace-nowrap"
+      >
         Crear producto
-      </button>
+      </SubmitButton>
     </form>
   );
 };
