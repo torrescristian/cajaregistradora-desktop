@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <GlobalLayout>
+          {/* @ts-ignore */}
           <Component {...pageProps} />
         </GlobalLayout>
       </QueryClientProvider>
