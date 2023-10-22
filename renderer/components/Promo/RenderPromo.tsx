@@ -60,7 +60,7 @@ export default function RenderPromos({
           <div className="modal-box w-fit">
             <p className="text-xl mb-5">Elegir productos</p>
             <div className="flex flex-col gap-5">
-              {selectedPromo?.categories!.map(
+              {selectedPromo?.categories?.map(
                 ({ category, quantity }, categoryIndex) =>
                   range(quantity).map((_, quantityIndex) => (
                     <FieldLabel columnMode title={`${category.name}: `}>
