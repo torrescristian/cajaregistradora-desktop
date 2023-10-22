@@ -23,6 +23,7 @@ export default function useOrderQuery() {
         'promoItems.promo',
         'promoItems.selectedVariants',
         'promoItems.selectedVariants.product',
+        'promoItems.selectedVariants.product.type',
       ],
     })) as unknown as IOrderResponse;
     return orderResponse.results;
