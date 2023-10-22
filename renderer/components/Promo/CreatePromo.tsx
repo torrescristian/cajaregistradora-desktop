@@ -235,7 +235,12 @@ export const CreatePromo = () => {
           <SubmitButton
             mutation={createPromoMutation}
             className="btn btn-primary w-64 self-end"
-            disabled={selectedVariantList.length === 0 || !name || !price}
+            disabled={
+              (selectedVariantList.length === 0 &&
+                selectedCategoryList.length === 0) ||
+              !name ||
+              !price
+            }
           >
             Crear Promo
           </SubmitButton>
