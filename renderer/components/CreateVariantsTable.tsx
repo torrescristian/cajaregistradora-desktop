@@ -1,7 +1,6 @@
 import { IVariantPayload } from '@/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from './RenderIf';
-import { IProductType } from '@/interfaces/IProduct';
 
 interface IProps {
   isService: boolean;
@@ -116,7 +115,6 @@ export default function CreateVariantsTable({
                 <td>
                   <input
                     className="input input-bordered w-32"
-                    type="number"
                     value={price}
                     onChange={handleChangeVariantPrice(index)}
                   />

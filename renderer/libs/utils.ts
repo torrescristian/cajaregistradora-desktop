@@ -67,3 +67,10 @@ export function calcDiscount({
 export const getUrlFromImage = (image: any) => {
   return (image as unknown as any)?.formats?.thumbnail?.url || '/default.png';
 };
+
+export const getStrapiUrl = () => {
+  return (
+    process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+    'https://control.cajaregistradora.app/'
+  );
+};
