@@ -128,11 +128,11 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
       <RenderIf condition={!clientQuery.isLoading}>
         <RenderIf condition={!!clientQuery?.data}>
           <p></p>
-          <ul className="h-72 overflow-y-scroll">
+          <ul className="h-72 overflow-y-scroll flex flex-col justify-start items-end">
             {clientQuery.data?.map((client) => (
               <li
                 key={client.id}
-                className="p-3 border-2 border-stone-500 hover:border-stone-300 hover:cursor-pointer"
+                className="w-full p-3 border-2 border-stone-500 hover:border-stone-300 hover:cursor-pointer"
                 onClick={handleClick(client)}
               >
                 <p>{client.name}</p>
@@ -146,16 +146,15 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
                 </div>
               </li>
             ))}
+            <li>
+              <button
+                className="btn btn-secondary"
+                onClick={() => dialogRef.current?.showModal()}
+              >
+                Nuevo Cliente
+              </button>
+            </li>
           </ul>
-        </RenderIf>
-        <RenderIf condition={!clientQuery.data?.length}>
-          <p>No existe el cliente, desea crear uno?</p>
-          <button
-            className="btn btn-info"
-            onClick={() => dialogRef.current?.showModal()}
-          >
-            Crear Cliente
-          </button>
         </RenderIf>
       </RenderIf>
     </section>

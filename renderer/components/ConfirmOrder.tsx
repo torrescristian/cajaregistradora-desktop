@@ -167,18 +167,10 @@ export const ConfirmOrder = ({
   const handleCreateTicket = async () => {
     const sum = payments.reduce((acc, curr) => acc + Number(curr.amount), 0);
     if (sum !== finalTotalPrice) {
-      toast(
-        `No se está cobrando correctamente (total: ${finalTotalPrice}, cobrando: ${sum})`,
-        {
-          position: 'top-left',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        },
+      toast.error(
+        `Se está cobrando ${formatPrice(sum)} de ${formatPrice(
+          finalTotalPrice,
+        )}`,
       );
       return;
     }
@@ -247,7 +239,7 @@ export const ConfirmOrder = ({
             defaultClient={order?.client}
           />
 
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-5">
             <label className="label">Detalles adicionales:</label>
             <textarea
               className="textarea textarea-bordered h-36"
@@ -280,7 +272,7 @@ export const ConfirmOrder = ({
           >
             Cancelar
           </button>
-          <button className="btn btn-info" onClick={handleCreateTicket}>
+          <button className="btn btn-link" onClick={handleCreateTicket}>
             Finalizar venta
           </button>
           <button

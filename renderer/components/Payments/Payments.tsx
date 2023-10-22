@@ -1,6 +1,7 @@
 import { IPayment, PAYMENT_TYPE } from '@/interfaces/ITicket';
 import { Payment } from './Payment';
 import { useState } from 'react';
+import { Divider } from '../Sale/Sale.styles';
 
 interface IProps {
   onChange: (newPayments: IPayment[]) => void;
@@ -50,6 +51,7 @@ export default function Payments({ onChange }: IProps) {
 
   return (
     <section>
+      <Divider className="text-stone-500">Formas de pago</Divider>
       {payments.map((payment: IPayment, index) => (
         <Payment
           key={index}
