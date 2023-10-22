@@ -34,7 +34,19 @@ export default function ProductTypes({
       >
         <span>Promociones</span>
       </TabButton>
-      <div className="dropdown">
+      {productTypes
+        ?.filter((t) => t)
+        .map((type: IProductType) => (
+          <TabButton
+            className="btn-accent"
+            isActive={selectedProductType === type.id}
+            key={type.id}
+            onClick={handleSelect(type)}
+          >
+            <span>{type.name}</span>
+          </TabButton>
+        ))}
+      {/* <div className="dropdown">
         <label tabIndex={0} className="btn btn-secondary  m-1">
           🔎 Categorias
         </label>
@@ -55,7 +67,7 @@ export default function ProductTypes({
               </TabButton>
             ))}
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
