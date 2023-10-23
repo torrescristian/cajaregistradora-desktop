@@ -84,18 +84,27 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
                 defaultValue={payment.type}
               />
             ))}
-            <div className="divider text-stone-500">Productos</div>
           </dl>
-          <div className="flex flex-col p-5 overflow-y-scroll">
-            {ticket.order.items.map((item) => (
-              <OrderItem
-                updateMode={false}
-                key={item.product!.id}
-                item={item}
-              />
+          <RenderIf condition={ticket.order.items.length > 0}>
+            <div className="divider text-stone-500">Productos</div>
+            <div className="flex flex-col p-5 overflow-y-scroll">
+              {ticket.order.items.map((item) => (
+                <OrderItem
+                  updateMode={false}
+                  key={item.product!.id}
+                  item={item}
+                />
+              ))}
+            </div>
+          </RenderIf>
+          <RenderIf condition={ticket.order.promoItems.length > 0}>
+            <div className="divider text-stone-500">Promos</div>
+            {ticket.order.promoItems.map(({ promo }) => (
+              <div key={promo.id!} className="flex p-4">
+                <p>{promo.name}</p>
+              </div>
             ))}
-          </div>
-
+          </RenderIf>
           <div className="modal-action">
             <button className="btn">Cerrar</button>
           </div>

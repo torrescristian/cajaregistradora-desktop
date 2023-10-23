@@ -51,25 +51,32 @@ export default function GlobalLayout({ children }: IProps) {
           <div className="flex flex-row w-full justify-between container mt-3">
             <Navbar />
             <div className="flex flex-row gap-5">
-              {isOnline ? (
-                <div className="btn btn-link text-success">
-                  <WifiIcon className="w-6 h-6 " />
-                </div>
-              ) : (
-                <div className="btn btn-link text-gray-700">
-                  <WifiIcon className="w-6 h-6" />
-                </div>
-              )}
+              <div className="flex">
+                {isOnline ? (
+                  <div className="btn btn-link text-success">
+                    <WifiIcon className="w-6 h-6 " />
+                  </div>
+                ) : (
+                  <div className="btn btn-link text-error gap-3">
+                    <WifiIcon className="w-6 h-6" />
+                    <p>Sin conexión</p>
+                  </div>
+                )}
+              </div>
               <div className="indicator">
                 <div className="dropdown dropdown-end">
-                  <label tabIndex={0} className="btn btn-ghost m-1">
-                    <BellAlertIcon className="w-6 h-6" />
-                    {newNotifications?.length ? (
+                  {newNotifications?.length ? (
+                    <label tabIndex={0} className="btn btn-ghost m-1">
+                      <BellAlertIcon className="w-6 h-6" />
                       <span className="indicator-item badge badge-error">
                         {newNotifications?.length}
                       </span>
-                    ) : null}
-                  </label>
+                    </label>
+                  ) : (
+                    <label className="bg-transparent btn-disabled btn">
+                      <BellAlertIcon className="w-6 h-6" />
+                    </label>
+                  )}
                   <ul
                     tabIndex={0}
                     className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"

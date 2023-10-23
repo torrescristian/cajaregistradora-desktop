@@ -991,9 +991,9 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-css-selector-tokenizer@^0.8.0:
+css-or-tokenizer@^0.8.0:
   version "0.8.0"
-  resolved "https://registry.yarnpkg.com/css-selector-tokenizer/-/css-selector-tokenizer-0.8.0.tgz#88267ef6238e64f2215ea2764b3e2cf498b845dd"
+  resolved "https://registry.yarnpkg.com/css-or-tokenizer/-/css-or-tokenizer-0.8.0.tgz#88267ef6238e64f2215ea2764b3e2cf498b845dd"
   integrity sha512-Jd6Ig3/pe62/qe5SBPTN8h8LeUg/pT4lLgtavPf7updwwHpvFzxvOQBHYj2LZDMjUnBzgvIUSjRcf6oT5HzHFg==
   dependencies:
     cssesc "^3.0.0"
@@ -1064,7 +1064,7 @@ daisyui@^2.51.5:
   integrity sha512-LQTA5/IVXAJHBMFoeaEMfd7/akAFPPcdQPR3O9fzzcFiczneJFM73CFPnScmW2sOgn/D83cvkP854ep2T9OfTg==
   dependencies:
     color "^4.2"
-    css-selector-tokenizer "^0.8.0"
+    css-or-tokenizer "^0.8.0"
     postcss-js "^4.0.0"
     tailwindcss "^3"
 
@@ -2788,11 +2788,11 @@ postcss-nested@^6.0.1:
   resolved "https://registry.yarnpkg.com/postcss-nested/-/postcss-nested-6.0.1.tgz#f83dc9846ca16d2f4fa864f16e9d9f7d0961662c"
   integrity sha512-mEp4xPMi5bSWiMbsgoPfcP74lsWLHkQbZc3sY+jWYd65CUwXrUaTp0fmNpa01ZcETKlIgUdFN/MpS2xZtqL9dQ==
   dependencies:
-    postcss-selector-parser "^6.0.11"
+    postcss-or-parser "^6.0.11"
 
-postcss-selector-parser@^6.0.11:
+postcss-or-parser@^6.0.11:
   version "6.0.13"
-  resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.13.tgz#d05d8d76b1e8e173257ef9d60b706a8e5e99bf1b"
+  resolved "https://registry.yarnpkg.com/postcss-or-parser/-/postcss-or-parser-6.0.13.tgz#d05d8d76b1e8e173257ef9d60b706a8e5e99bf1b"
   integrity sha512-EaV1Gl4mUEV4ddhDnv/xtj7sxwrwxdetHdWUGnT4VJQf+4d05v6lHYZr8N573k5Z0BViss7BDhfWtKS3+sfAqQ==
   dependencies:
     cssesc "^3.0.0"
@@ -3415,7 +3415,7 @@ tailwindcss@^3, tailwindcss@^3.3.0:
     postcss-js "^4.0.1"
     postcss-load-config "^4.0.1"
     postcss-nested "^6.0.1"
-    postcss-selector-parser "^6.0.11"
+    postcss-or-parser "^6.0.11"
     resolve "^1.22.2"
     sucrase "^3.32.0"
 

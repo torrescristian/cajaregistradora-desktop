@@ -1,6 +1,7 @@
 import { IProductType } from '@/interfaces/IProduct';
 import TabButton from './TabButton';
 import useProductTypeQuery from '@/hooks/services/useProductTypesQuery';
+import { RenderIf } from './RenderIf';
 interface IProps {
   onSelect: (type: IProductType | null) => void;
   selectedProductType: number;
@@ -14,7 +15,7 @@ export default function ProductTypes({
   setShowPromo,
 }: IProps) {
   const productsTypes = useProductTypeQuery();
-  const productTypes = productsTypes.data;
+  const productTypes = productsTypes.data || [];
   const handleSelect = (type: IProductType) => () => {
     onSelect(type.id === selectedProductType ? null : type);
     setShowPromo(false);
@@ -34,40 +35,44 @@ export default function ProductTypes({
       >
         <span>Promociones</span>
       </TabButton>
-      {productTypes
-        ?.filter((t) => t)
-        .map((type: IProductType) => (
-          <TabButton
-            className="btn-accent"
-            isActive={selectedProductType === type.id}
-            key={type.id}
-            onClick={handleSelect(type)}
+      <RenderIf condition={productTypes?.length <= 5}>
+        {productTypes
+          ?.filter((t) => t)
+          .map((type: IProductType) => (
+            <TabButton
+              className="btn-accent"
+              isActive={selectedProductType === type.id}
+              key={type.id}
+              onClick={handleSelect(type)}
+            >
+              <span>{type.name}</span>
+            </TabButton>
+          ))}
+      </RenderIf>
+      <RenderIf condition={productTypes?.length > 5}>
+        <div className="dropdown">
+          <label tabIndex={0} className="btn btn-secondary  m-1">
+            🔎 Categorias
+          </label>
+          <div
+            tabIndex={0}
+            className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64"
           >
-            <span>{type.name}</span>
-          </TabButton>
-        ))}
-      {/* <div className="dropdown">
-        <label tabIndex={0} className="btn btn-secondary  m-1">
-          🔎 Categorias
-        </label>
-        <div
-          tabIndex={0}
-          className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64"
-        >
-          {productTypes
-            ?.filter((t) => t)
-            .map((type: IProductType) => (
-              <TabButton
-                className="btn-accent"
-                isActive={selectedProductType === type.id}
-                key={type.id}
-                onClick={handleSelect(type)}
-              >
-                <span>{type.name}</span>
-              </TabButton>
-            ))}
+            {productTypes
+              ?.filter((t) => t)
+              .map((type: IProductType) => (
+                <TabButton
+                  className="btn-accent"
+                  isActive={selectedProductType === type.id}
+                  key={type.id}
+                  onClick={handleSelect(type)}
+                >
+                  <span>{type.name}</span>
+                </TabButton>
+              ))}
+          </div>
         </div>
-      </div> */}
+      </RenderIf>
     </section>
   );
 }

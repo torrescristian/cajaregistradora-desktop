@@ -183,7 +183,9 @@ export const CreatePromo = () => {
                     className="select select-bordered "
                     onChange={handleChangeSelectedCategory}
                     value={selectedCategory?.id}
+                    defaultValue={0}
                   >
+                    <option value={0}>Seleccione una categoria</option>
                     {categories?.map((category) => (
                       <option key={category.id} value={category.id}>
                         {category.name}
@@ -192,7 +194,7 @@ export const CreatePromo = () => {
                   </select>
                 </label>
                 <button
-                  className="btn btn-success text-primary-content"
+                  className="btn btn-primary"
                   onClick={handleClickAddCategory}
                 >
                   <PlusIcon className="w-9 h-9" /> Agregar
