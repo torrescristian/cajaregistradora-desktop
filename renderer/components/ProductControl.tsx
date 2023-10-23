@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 import { IVariantPayload } from '@/interfaces/IVariants';
 import useProductTypeQuery from '@/hooks/services/useProductTypesQuery';
 import SubmitButton from './SubmitButton';
+import { type } from 'os';
+import { isAny } from 'tailwind-merge/dist/lib/validators';
 
 interface IProps {
   controlType: 'CREATE' | 'UPDATE';
@@ -22,6 +24,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
     formState: { errors },
     setValue,
     reset,
+    getValues,
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
@@ -43,7 +46,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
     const productType = productTypes?.find((type) => type.id === value)!;
-    console.log({ productType });
     setProductType(productType);
     setValue('type', productType?.id!);
   };
@@ -72,8 +74,14 @@ const ProductControl = ({ controlType, product }: IProps) => {
   };
 
   const clearForm = () => {
+    setIsService(false);
+    setVariants([]);
     reset();
   };
+
+  const {name,type} = getValues();
+  const isFormValid = name && type 
+
 
   const handleSubmitCreateProduct = async (data: IProductPayload) => {
     try {
@@ -110,8 +118,9 @@ const ProductControl = ({ controlType, product }: IProps) => {
             value={productType?.id!}
             onChange={handleChangeProductType}
             className="select select-bordered"
+            defaultValue={0}
           >
-            <option value="">Seleccione un menu</option>
+            <option value={0}>Seleccione un menu</option>
             {productTypes?.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.emoji} {type.name}
@@ -147,6 +156,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
         defaultVariantIndex={defaultVariantIndex}
       />
       <SubmitButton
+      disabled={!isFormValid || variants.length === 0} 
         mutation={createProductAndVariantMutation}
         className="btn btn-success text-slate-50 whitespace-nowrap"
       >

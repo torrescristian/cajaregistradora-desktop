@@ -3,7 +3,7 @@ import PageLayout from '@/components/PageLayout';
 import { IColumn } from '@/components/TicketTable/interface';
 import TicketTable from '@/components/TicketTable/TicketTable';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
-import { ITicket, PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
+import { IPayment, PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
 import { parseDateToArgentinianFormat } from '@/libs/utils';
 
 const Recibos = () => {
@@ -19,6 +19,25 @@ const Recibos = () => {
         return '';
     }
   }
+
+  function getLabelByPaymentsType(payments : IPayment[]){
+   if (payments.length > 1) {
+    return 'Mixto';
+   }
+   const payment = payments[0];      
+    switch (payment.type) {
+      case PAYMENT_TYPE.CASH:
+        return 'Efectivo';
+      case PAYMENT_TYPE.CREDIT:
+        return 'Crédito';
+      case PAYMENT_TYPE.DEBIT:
+        return 'Débito';
+      default:
+        return '';
+    }
+  }
+
+  
 
   const ticketQuery = useTicketQuery();
   if (ticketQuery.isLoading)
@@ -45,15 +64,7 @@ const Recibos = () => {
         subtotalPrice: ticket.order?.subtotalPrice,
         totalPrice: ticket.totalPrice,
         phone_number: ticket.order?.client?.phone_number,
-        paidInCash: ticket.payments
-          .filter((p) => p.type === PAYMENT_TYPE.CASH)
-          .reduce((acc, curr) => acc + Number(curr.amount), 0),
-        paidInCredit: ticket.payments
-          .filter((p) => p.type === PAYMENT_TYPE.CREDIT)
-          .reduce((acc, curr) => acc + Number(curr.amount), 0),
-        paidInDebit: ticket.payments
-          .filter((p) => p.type === PAYMENT_TYPE.DEBIT)
-          .reduce((acc, curr) => acc + Number(curr.amount), 0),
+        paymentType: getLabelByPaymentsType(ticket.payments)
       }) as IColumn,
   );
 
