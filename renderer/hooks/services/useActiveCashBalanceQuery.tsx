@@ -7,7 +7,6 @@ import {
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthState } from '@/contexts/AuthContext';
-import { ca } from 'date-fns/locale';
 
 export const getCashBalanceKey = () => 'cash-balances';
 
