@@ -9,5 +9,5 @@ export interface IColumn {
   direction: string;
   phone_number: string;
   subtotalPrice: number;
-  paymentType:string;
+  paymentType: string;
 }

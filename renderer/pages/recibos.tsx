@@ -20,11 +20,11 @@ const Recibos = () => {
     }
   }
 
-  function getLabelByPaymentsType(payments : IPayment[]){
-   if (payments.length > 1) {
-    return 'Mixto';
-   }
-   const payment = payments[0];      
+  function getLabelByPaymentsType(payments: IPayment[]) {
+    if (payments.length > 1) {
+      return 'Mixto';
+    }
+    const payment = payments[0];
     switch (payment.type) {
       case PAYMENT_TYPE.CASH:
         return 'Efectivo';
@@ -36,8 +36,6 @@ const Recibos = () => {
         return '';
     }
   }
-
-  
 
   const ticketQuery = useTicketQuery();
   if (ticketQuery.isLoading)
@@ -64,7 +62,7 @@ const Recibos = () => {
         subtotalPrice: ticket.order?.subtotalPrice,
         totalPrice: ticket.totalPrice,
         phone_number: ticket.order?.client?.phone_number,
-        paymentType: getLabelByPaymentsType(ticket.payments)
+        paymentType: getLabelByPaymentsType(ticket.payments),
       }) as IColumn,
   );
 

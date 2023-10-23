@@ -51,7 +51,7 @@ export default function GlobalLayout({ children }: IProps) {
           <div className="flex flex-row w-full justify-between container mt-3">
             <Navbar />
             <div className="flex flex-row gap-5">
-              <div className='flex'>
+              <div className="flex">
                 {isOnline ? (
                   <div className="btn btn-link text-success">
                     <WifiIcon className="w-6 h-6 " />

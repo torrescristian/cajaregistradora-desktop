@@ -79,9 +79,8 @@ const ProductControl = ({ controlType, product }: IProps) => {
     reset();
   };
 
-  const {name,type} = getValues();
-  const isFormValid = name && type 
-
+  const { name, type } = getValues();
+  const isFormValid = name && type;
 
   const handleSubmitCreateProduct = async (data: IProductPayload) => {
     try {
@@ -156,7 +155,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
         defaultVariantIndex={defaultVariantIndex}
       />
       <SubmitButton
-      disabled={!isFormValid || variants.length === 0} 
+        disabled={!isFormValid || variants.length === 0}
         mutation={createProductAndVariantMutation}
         className="btn btn-success text-slate-50 whitespace-nowrap"
       >
