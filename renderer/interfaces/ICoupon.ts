@@ -1,7 +1,6 @@
 import { IDiscount } from './IOrder';
-import { IProduct, IProductType } from './IProduct';
-import { IVariant } from './IVariants';
-import { IResponsePage, IStrapiSingleResponse } from './utils';
+import { IProductType } from './IProduct';
+import { IResponsePage } from './utils';
 
 export interface IPartialVariant {
   id: number;

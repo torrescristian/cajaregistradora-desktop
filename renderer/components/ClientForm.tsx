@@ -9,6 +9,7 @@ import Loader from './Loader';
 import { RenderIf } from './RenderIf';
 import useCreateClientMutation from '@/hooks/services/useCreateClientMutation';
 import { PhoneIcon, TrashIcon } from '@heroicons/react/24/solid';
+import FieldLabel from './FieldLabel';
 
 interface IProps {
   onSelect: (client: IClient | null) => void;
@@ -93,10 +94,10 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
           </section>
         </form>
       </dialog>
-      <label className="input-group flex flex-col">
-        <span className="text-stone-500">
-          Buscar cliente por Nombre, Direc. o Tel.
-        </span>
+      <FieldLabel
+        title="Buscar cliente por Nombre, Direc. o Tel."
+        className="input-group flex flex-col"
+      >
         <input
           onChange={handleChange}
           value={search}
@@ -121,7 +122,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
             <p className="text-stone-500">Consumidor Final</p>
           </section>
         </RenderIf>
-      </label>
+      </FieldLabel>
       <RenderIf condition={clientQuery.isLoading}>
         <Loader />
       </RenderIf>

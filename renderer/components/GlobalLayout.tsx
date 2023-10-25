@@ -1,26 +1,14 @@
 import 'react-toastify/dist/ReactToastify.css';
-import NavButton from './Navbar/subcomponents/NavButton';
-import {
-  Bars3Icon,
-  BellAlertIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  SignalIcon,
-  SignalSlashIcon,
-  WifiIcon,
-} from '@heroicons/react/24/solid';
+import { Bars3Icon, BellAlertIcon, WifiIcon } from '@heroicons/react/24/solid';
 import useNavBar from './Navbar/useNavBar';
 import { RenderIf } from './RenderIf';
 import { useAuthState } from '@/contexts/AuthContext';
 import useOnlineStatus from '@/hooks/useOnlineStatus';
 import useNotificationQuery from '@/hooks/services/useNotificationQuery';
 import { twMerge } from 'tailwind-merge';
-import { useState } from 'react';
 import useUpadteSeenNotification from '@/hooks/services/useUpdateSeenNotification';
 import DesktopMenu from './Navbar/subcomponents/DesktopMenu';
 import Navbar from './Navbar/Navbar';
-import OutsideAlerter from './OutsideAlerter';
-import { ToastContainer } from 'react-toastify';
 import CustomToastContainer from './CustomToastContainer';
 
 interface IProps {

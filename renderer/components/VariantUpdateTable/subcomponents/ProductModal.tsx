@@ -1,9 +1,5 @@
-import { IVariant, IVariantExpanded } from '@/interfaces/IVariants';
-import {
-  EllipsisHorizontalIcon,
-  EllipsisVerticalIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/solid';
+import { IVariantExpanded } from '@/interfaces/IVariants';
+import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import ProductRow from './ProductRow';
 import { IProduct } from '@/interfaces/IProduct';

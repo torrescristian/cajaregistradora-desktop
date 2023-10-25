@@ -1,5 +1,4 @@
 import { twMerge } from 'tailwind-merge';
-import { IComponent } from '@/interfaces/ProductItem.interfaces';
 interface IProps {
   title: string;
   className?: string;

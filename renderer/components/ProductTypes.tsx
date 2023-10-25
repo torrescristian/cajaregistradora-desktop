@@ -16,6 +16,7 @@ export default function ProductTypes({
 }: IProps) {
   const productsTypes = useProductTypeQuery();
   const productTypes = productsTypes.data || [];
+
   const handleSelect = (type: IProductType) => () => {
     onSelect(type.id === selectedProductType ? null : type);
     setShowPromo(false);

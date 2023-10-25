@@ -1,7 +1,5 @@
-import { IOrder } from '@/interfaces/IOrder';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-import { getOrderQueryKey } from './useOrderQuery';
 import { findOrderById } from './findOrderById';
 
 const SOCKET_LOCALHOST = 'http://localhost:4000';

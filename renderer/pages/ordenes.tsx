@@ -6,7 +6,7 @@ import { IComponent } from '@/interfaces/ProductItem.interfaces';
 import { useState } from 'react';
 
 const Wrapper = ({ children }: IComponent) => (
-  <section className="flex flex-col items-start gap-5">
+  <section className="flex flex-col items-start gap-2">
     <h1 className="text-2xl font-bold">✍🏻 Lista de ordenes</h1>
 
     {children}
@@ -42,7 +42,7 @@ function ordenes() {
 
   return (
     <Wrapper>
-      <section className="w-full flex gap-5 overflow-x-scroll">
+      <section className="w-full flex gap-5">
         {orderQuery.data.map((order) => (
           <Order
             key={order.id}

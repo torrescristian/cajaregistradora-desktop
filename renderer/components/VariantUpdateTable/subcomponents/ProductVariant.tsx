@@ -5,7 +5,8 @@ import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation'
 import Loader from '@/components/Loader';
 import UpdateProductButton from '@/components/UpdateProductButton';
 import { RenderIf } from '@/components/RenderIf';
-import { IVariant, IVariantExpanded } from '@/interfaces/IVariants';
+import { IVariantExpanded } from '@/interfaces/IVariants';
+import FieldLabel from '@/components/FieldLabel';
 
 interface IProps {
   variant: IVariantExpanded;
@@ -64,8 +65,7 @@ export default function ProductVariant({ variant, product }: IProps) {
           </RenderIf>
         </section>
         <section className="flex">
-          <label className="input-group">
-            <span>$</span>
+          <FieldLabel className="input-group" title={'$'}>
             <FormControl
               hideLabel
               name="price"
@@ -75,7 +75,7 @@ export default function ProductVariant({ variant, product }: IProps) {
               value={price}
               textAlign="text-center"
             />
-          </label>
+          </FieldLabel>
           <RenderIf condition={isLoading}>
             <Loader className="w-24" />
           </RenderIf>
