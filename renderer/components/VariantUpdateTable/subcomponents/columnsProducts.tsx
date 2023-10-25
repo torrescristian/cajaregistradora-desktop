@@ -1,5 +1,4 @@
 import { IVariantExpanded } from '@/interfaces/IVariants';
-import { formatPrice } from '@/libs/utils';
 import { createColumnHelper } from '@tanstack/react-table';
 import { ProductModal } from './ProductModal';
 import { StockColumn } from './StockColumn';

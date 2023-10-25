@@ -47,14 +47,14 @@ const LoginPage: React.FC = () => {
         <div className="flex w-full max-w-md flex-col items-center justify-start gap-y-5">
           <form
             onSubmit={handleSubmit}
-            className="flex h-full w-full flex-col gap-y-5 rounded-md bg-white p-6 shadow-md md:mt-16 md:h-fit md:w-full"
+            className="flex h-full w-full flex-col gap-y-5 rounded-md bg-neutral p-6 shadow-md md:mt-16 md:h-fit md:w-full"
           >
             <h2 className="text-2xl font-semibold">Iniciar Sesión</h2>
             <div className="mb-4">
               <label htmlFor="email" className="mb-1 block">
                 Correo Electrónico (e-mail)
               </label>
-              <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
+              <div className="flex items-center rounded-md border bg-neutral-focus px-3 py-2">
                 <EnvelopeIcon className="h-5 w-5" />
                 <input
                   id="email"
@@ -73,7 +73,7 @@ const LoginPage: React.FC = () => {
               <label htmlFor="password" className="mb-1 block">
                 Contraseña
               </label>
-              <div className="flex items-center rounded-md border bg-gray-50 px-3 py-2">
+              <div className="flex items-center rounded-md border bg-neutral-focus px-3 py-2">
                 <LockClosedIcon className="h-5 w-5" />
                 <input
                   id="password"
@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full rounded-md bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
+              className="w-full rounded-md bg-primary px-4 py-2 font-semibold text-primary-content hover:bg-blue-600"
             >
               Iniciar Sesión
             </button>

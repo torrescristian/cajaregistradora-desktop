@@ -1,4 +1,4 @@
-import { IProduct, IProductPage } from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import {
   flexRender,
   getCoreRowModel,

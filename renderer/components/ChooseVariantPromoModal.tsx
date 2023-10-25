@@ -1,5 +1,3 @@
-interface IProps {}
-
 export const ChooseVariantPromoModal = () => {
   return <section></section>;
 };

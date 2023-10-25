@@ -1,4 +1,4 @@
-import { ICoupon, ICouponPayload } from '@/interfaces/ICoupon';
+import { ICouponPayload } from '@/interfaces/ICoupon';
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getCouponQueryKey } from './useCouponsQuery';

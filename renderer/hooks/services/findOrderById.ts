@@ -1,4 +1,4 @@
-import { IOrder, ISingleOrderResponse } from '@/interfaces/IOrder';
+import { IOrder } from '@/interfaces/IOrder';
 import strapi from '@/libs/strapi';
 import { getOrderQueryKey } from './useOrderQuery';
 

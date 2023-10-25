@@ -15,7 +15,6 @@ import useActiveCashBalanceQuery, {
 import { getCouponQueryKey } from './useCouponsQuery';
 import { ICoupon } from '@/interfaces/ICoupon';
 import { IStrapiSingleResponse } from '@/interfaces/utils';
-import { getNotificationQueryKey } from './useNotificationQuery';
 
 type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 
