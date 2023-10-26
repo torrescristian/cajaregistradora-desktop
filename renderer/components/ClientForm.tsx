@@ -19,32 +19,27 @@ interface IProps {
 }
 
 interface IClientForm {
-  id? : number;
+  id?: number;
   name: string;
   phone_number: string;
   address: string;
 }
 
-export default function ClientForm({
-  onSelect,
-  defaultClient
-}: IProps) {
+export default function ClientForm({ onSelect, defaultClient }: IProps) {
   const {
     register,
     handleSubmit,
     setValue,
     reset,
     formState: { errors },
-  } = useForm<IClientForm>(
-    {
-      defaultValues: {
-        id: 0,
-        phone_number: '',
-        address: '',
-        name: '',
-      }
-    }
-  );
+  } = useForm<IClientForm>({
+    defaultValues: {
+      id: 0,
+      phone_number: '',
+      address: '',
+      name: '',
+    },
+  });
 
   const { handleChange, value: search } = useFormControl('');
   const { setValue: setClient, value: client } = useFormControl(defaultClient);
@@ -78,18 +73,18 @@ export default function ClientForm({
     onSelect(null);
   };
 
-  const handleSubmitUpdateClientMutation = (data : IClientForm) => {
+  const handleSubmitUpdateClientMutation = (data: IClientForm) => {
     updateClientMutation.mutate({
       id: data.id!,
       name: data.name,
       address: data.address,
-      number_phone: data.phone_number
-    })
-  }
+      number_phone: data.phone_number,
+    });
+  };
 
   const handleClickSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (updateMode){
+    if (updateMode) {
       handleSubmit(handleSubmitUpdateClientMutation)(e);
     } else {
       handleSubmit(handleSubmitCreateClient)(e);
@@ -97,15 +92,15 @@ export default function ClientForm({
     dialogRef.current?.close();
   };
 
-
-  const handleClickUpdateClient = (client: IClient) => (e: React.MouseEvent) => {
-    setUpdateMode(true);
-    dialogRef.current?.showModal();
-    setValue('id', client.id)
-    setValue('name', client.name)
-    setValue('phone_number', client.phone_number)
-    setValue('address', client.address)    
-  }
+  const handleClickUpdateClient =
+    (client: IClient) => (e: React.MouseEvent) => {
+      setUpdateMode(true);
+      dialogRef.current?.showModal();
+      setValue('id', client.id);
+      setValue('name', client.name);
+      setValue('phone_number', client.phone_number);
+      setValue('address', client.address);
+    };
 
   return (
     <section className="bg-red w-96">

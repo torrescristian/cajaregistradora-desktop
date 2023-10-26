@@ -23,7 +23,6 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
           </NavButton>
           {isOwner ? (
             <>
-
               <NavButton className="w-full" href="/admin/productos">
                 Reabastecer
               </NavButton>
