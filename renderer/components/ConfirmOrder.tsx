@@ -217,7 +217,7 @@ export const ConfirmOrder = ({
     );
   }
   return (
-    <section >
+    <section>
       <div className="flex flex-row gap-3 w-full">
         <button
           className="btn btn-primary"
