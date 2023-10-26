@@ -34,20 +34,20 @@ export default function GlobalLayout({ children }: IProps) {
     <div className="drawer drawer-end">
       <CustomToastContainer />
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center relative">
+      <div className="drawer-content flex flex-col items-center">
         <RenderIf condition={isLoggedIn}>
-          <div className="flex flex-row w-full justify-between container mt-3">
+          <div className="w-full flex flex-col gap-5 justify-between sm:mt-4 sm:flex-row sm:w-[85vw] ">
             <Navbar />
-            <div className="flex flex-row gap-5">
+            <div className="flex flex-row justify-evenly gap-5">
               <div className="flex">
                 {isOnline ? (
                   <div className="btn btn-link text-success">
                     <WifiIcon className="w-6 h-6 " />
                   </div>
                 ) : (
-                  <div className="btn btn-link text-error gap-3">
+                  <div className="flex flex-col items-center text-error gap-3">
                     <WifiIcon className="w-6 h-6" />
-                    <p>Sin conexión</p>
+                    <p className="whitespace-nowrap">Sin conexión</p>
                   </div>
                 )}
               </div>
@@ -67,7 +67,7 @@ export default function GlobalLayout({ children }: IProps) {
                   )}
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box right-10 w-56"
                   >
                     {notifications?.map((notification) => (
                       <li className="border-2" key={notification.id}>
@@ -91,7 +91,8 @@ export default function GlobalLayout({ children }: IProps) {
                 htmlFor="my-drawer"
                 className="btn btn-secondary gap-3 drawer-button"
               >
-                <Bars3Icon className="w-6 h-6" /> Menu
+                <Bars3Icon className="w-6 h-6" />
+                <p>Menu</p>
               </label>
             </div>
           </div>

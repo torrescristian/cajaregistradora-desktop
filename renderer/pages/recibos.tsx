@@ -67,7 +67,7 @@ const Recibos = () => {
   );
 
   return (
-    <PageLayout className="grid grid-cols-3 w-fit gap-5 justify-center ">
+    <PageLayout className="grid grid-cols-3 gap-5 justify-center overflow-x-scroll ">
       <TicketTable data={data} />
       {/* {ticketQuery.data.map((ticket) => (
         <div
