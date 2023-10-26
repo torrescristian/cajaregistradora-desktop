@@ -3,23 +3,10 @@ import PageLayout from '@/components/PageLayout';
 import { IColumn } from '@/components/TicketTable/interface';
 import TicketTable from '@/components/TicketTable/TicketTable';
 import useTicketQuery from '@/hooks/services/useTicketQuery';
-import { IPayment, PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
+import { IPayment, PAYMENT_TYPE } from '@/interfaces/ITicket';
 import { parseDateToArgentinianFormat } from '@/libs/utils';
 
 const Recibos = () => {
-  function statusColor(ticketStatus: TICKET_STATUS) {
-    switch (ticketStatus) {
-      case TICKET_STATUS.PAID:
-        return 'text-success';
-      case TICKET_STATUS.REFUNDED:
-        return 'text-error';
-      case TICKET_STATUS.WAITING_FOR_REFUND:
-        return 'text-warning';
-      default:
-        return '';
-    }
-  }
-
   function getLabelByPaymentsType(payments: IPayment[]) {
     if (payments.length > 1) {
       return 'Mixto';
@@ -69,26 +56,6 @@ const Recibos = () => {
   return (
     <PageLayout className="grid grid-cols-3 gap-5 justify-center overflow-x-scroll ">
       <TicketTable data={data} />
-      {/* {ticketQuery.data.map((ticket) => (
-        <div
-          key={ticket.id}
-          className="flex flex-col w-max gap-5 p-10 shadow-xl "
-        >
-          <div className="flex flex-row justify-between items-center w-full">
-            <p className="font-bold text-xl">Ticket #{ticket.id}</p>
-            <DeleteTicketModal ticket={ticket} />
-          </div>
-          <p>Fecha: {parseDateToArgentinianFormat(ticket.order.createdAt)}</p>
-          <p>
-            Estado:{' '}
-            <span className={twMerge(statusColor(ticket.status))}>
-              {statusTraslate(ticket.status)}
-            </span>
-          </p>
-          <p>Total: {formatPrice(ticket.totalPrice)}</p>
-          <MoreInfoModal ticket={ticket} />
-        </div>
-      ))} */}
     </PageLayout>
   );
 };

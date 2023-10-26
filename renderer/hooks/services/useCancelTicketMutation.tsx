@@ -7,6 +7,7 @@ import { getTicketsQueryKey } from './useTicketQuery';
 import { getOrderQueryKey } from './useOrderQuery';
 import { ICashBalance } from '@/interfaces/ICashBalance';
 import { getCashBalanceKey } from './useActiveCashBalanceQuery';
+import { useAuthState } from '@/contexts/AuthContext';
 interface IProps {
   ticketId: number;
   orderId: number;
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 export default function useCancelTicketMutation() {
+  const { isOwner } = useAuthState();
   const cancelOrderMutation = useCancelOrderMutation();
   const queryClient = useQueryClient();
   return useMutation(
@@ -36,7 +38,9 @@ export default function useCancelTicketMutation() {
         getTicketsQueryKey(),
         ticketId,
         {
-          status: TICKET_STATUS.REFUNDED,
+          status: isOwner
+            ? TICKET_STATUS.REFUNDED
+            : TICKET_STATUS.WAITING_FOR_REFUND,
         },
       );
       const returnMoney = await strapi.update(
@@ -50,7 +54,6 @@ export default function useCancelTicketMutation() {
           totalAmount: Math.max(cashBalance.totalAmount - amountTicket, 0),
         } as Partial<ICashBalance>,
       );
-
       queryClient.invalidateQueries([getTicketsQueryKey()]);
       queryClient.invalidateQueries([getOrderQueryKey()]);
       return [cancelOrderResult, updateTicketResult, returnMoney];
