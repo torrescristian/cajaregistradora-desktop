@@ -16,7 +16,7 @@ import CartPromo from './CartPromo';
 import { RenderIf } from '../RenderIf';
 
 const ProductContainer = ({ children }: IComponent) => (
-  <section className="flex flex-row w-full gap-5 justify-between">
+  <section className="flex flex-col sm:flex-row w-full gap-5 justify-between">
     {children}
   </section>
 );

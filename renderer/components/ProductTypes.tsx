@@ -28,7 +28,7 @@ export default function ProductTypes({
   };
 
   return (
-    <section className="flex flex-row gap-5 items-center">
+    <section className="flex flex-col sm:flex-row gap-5 items-center">
       <TabButton
         className="btn-secondary"
         isActive={showPromo}

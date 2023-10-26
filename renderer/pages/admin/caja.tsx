@@ -36,7 +36,7 @@ const Caja = () => {
       <h1 className="text-2xl">Balance de caja</h1>
       <section>
         <ul className="flex flex-col items-center gap-5">
-          <section className="flex w-full">
+          <section className="flex">
             {isError && <p>Error</p>}
             <RenderIf condition={isLoading}>
               <Loader className="mt-5" />

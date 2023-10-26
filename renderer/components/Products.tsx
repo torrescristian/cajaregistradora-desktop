@@ -13,7 +13,7 @@ import Pagination from './VariantUpdateTable/subcomponents/Pagination';
 import { IPromoExpanded } from '@/interfaces/IPromo';
 
 const Navigation = ({ children }: IComponent) => (
-  <section className="flex w-full justify-center items-center flex-row gap-5">
+  <section className="flex w-full justify-center items-center flex-col sm:flex-row gap-5">
     {children}
   </section>
 );

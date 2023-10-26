@@ -12,8 +12,8 @@ export const DataItem = ({
   className?: string;
 }) => {
   return (
-    <p className={twMerge('flex flex-row gap-2', className)}>
-      <dt className="text-stone-500 whitespace-nowrap">{label}</dt>
+    <p className={twMerge('flex flex-col sm:flex-row gap-2', className)}>
+      <dt className="text-stone-500 sm:whitespace-nowrap">{label}</dt>
       {value ? (
         <dd>{value}</dd>
       ) : (

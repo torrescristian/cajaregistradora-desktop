@@ -217,7 +217,7 @@ export const ConfirmOrder = ({
     );
   }
   return (
-    <section>
+    <section >
       <div className="flex flex-row gap-3 w-full">
         <button
           className="btn btn-primary"
@@ -233,7 +233,7 @@ export const ConfirmOrder = ({
         ) : null}
       </div>
       <dialog ref={ref} className="border-4 rounded-3xl py-5 px-10">
-        <section className="flex flex-row items-center gap-10">
+        <section className="flex flex-col sm:flex-row items-center sm:gap-10">
           <ClientForm
             onSelect={(client) => addClientId(client?.id || null)}
             defaultClient={order?.client}
@@ -265,7 +265,7 @@ export const ConfirmOrder = ({
             />
           </div>
         </section>
-        <div className="flex flex-row  w-full justify-between pt-5">
+        <div className="flex flex-col sm:flex-row justify-between pt-5">
           <button
             className="btn btn-link text-error"
             onClick={() => ref.current?.close()}
@@ -277,7 +277,7 @@ export const ConfirmOrder = ({
           </button>
           <button
             onClick={handleSubmit}
-            className="btn sticky top-0 z-20 w-fit whitespace-nowrap btn-primary text-xl text-primary-content"
+            className="btn sticky top-0 z-20 sm:w-fit whitespace-nowrap btn-primary text-xl text-primary-content"
           >
             {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
           </button>

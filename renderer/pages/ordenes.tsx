@@ -42,7 +42,7 @@ function ordenes() {
 
   return (
     <Wrapper>
-      <section className="w-full flex gap-5">
+      <section className="w-full flex gap-5 overflow-x-scroll">
         {orderQuery.data.map((order) => (
           <Order
             key={order.id}
