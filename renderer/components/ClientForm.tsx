@@ -53,9 +53,11 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
   const createClientMutation = useCreateClientMutation();
   const updateClientMutation = useUpdateClientMutation();
 
+
   const clearForm = () => {
     setClient(null);
     onSelect(null);
+
   };
 
   const handleClose = (e: any) => {
