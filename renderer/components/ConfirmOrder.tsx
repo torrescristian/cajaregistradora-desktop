@@ -94,6 +94,7 @@ export const ConfirmOrder = ({
     };
   };
 
+  const clearForm = () => {};
   const createOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
       items,
@@ -132,6 +133,7 @@ export const ConfirmOrder = ({
     } else {
       createOrder();
     }
+    clearForm();
   };
 
   const handleChangeAdditionalsDetails = (

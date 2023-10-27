@@ -53,11 +53,17 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
   const createClientMutation = useCreateClientMutation();
   const updateClientMutation = useUpdateClientMutation();
 
-  const handleClose = (e: any) => {
-    e.preventDefault();
-    return setClient(null), onSelect(null), dialogRef.current?.close();
+
+  const clearForm = () => {
+    setClient(null);
+    onSelect(null);
+
   };
 
+  const handleClose = (e: any) => {
+    e.preventDefault();
+    return dialogRef.current?.close();
+  };
   const handleClick = (client: IClient) => () => {
     onSelect(client);
     setClient(client);
@@ -89,6 +95,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
     } else {
       handleSubmit(handleSubmitCreateClient)(e);
     }
+    clearForm();
     dialogRef.current?.close();
   };
 

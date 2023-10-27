@@ -12,6 +12,9 @@ import { getPromoItems, useCartStore } from '@/contexts/CartStore';
 import { ICoupon } from '@/interfaces/ICoupon';
 import * as yup from 'yup';
 import { IStrapiSingleResponse } from '@/interfaces/utils';
+import { getProductsQueryKey } from './useProductsQuery';
+import { parsePromoItemsToCartItems } from '@/libs/utils';
+import { getStockPerVariantsKey } from './useCreateVariantMutation';
 
 interface IProps {
   items: ICartItem[];
@@ -44,28 +47,13 @@ export default function useCreateOrderMutation() {
       resp[1] = await updateStock(itemsToUpdate);
     }
     if (promoItems.length) {
-      const promosAsCartItems = promoItems.flatMap(({ selectedVariants }) =>
-        selectedVariants.map(
-          (variant) =>
-            ({
-              product: variant.product,
-              selectedVariant: {
-                ...variant,
-                id: variant.id!,
-                name: variant.name,
-                price: variant.price,
-                product: variant.product.id,
-                stock_per_variant: variant.stock_per_variant!,
-              },
-              quantity: 1,
-            }) as ICartItem,
-        ),
-      );
-      resp[2] = await updateStock(promosAsCartItems);
+      resp[2] = await updateStock(parsePromoItemsToCartItems(promoItems));
     }
-    clearCart();
-    queryClient.invalidateQueries([getOrderQueryKey()]);
 
+    queryClient.invalidateQueries([getOrderQueryKey()]);
+    queryClient.invalidateQueries([getProductsQueryKey()]);
+    queryClient.invalidateQueries([getStockPerVariantsKey()]);
+    clearCart();
     return {
       orderResponse: resp[0] as IStrapiSingleResponse<IOrder>,
       productsStockUpdateResponse: resp[1],
@@ -113,7 +101,6 @@ async function updateStock(items: ICartItem[]) {
     if (item.product.isService) {
       return;
     }
-
     const { stock, id } = item.selectedVariant.stock_per_variant!;
     yup.number().integer().required().validate(stock);
     yup.number().required().validate(id);
