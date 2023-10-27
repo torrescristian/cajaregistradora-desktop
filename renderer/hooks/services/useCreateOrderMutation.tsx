@@ -49,10 +49,10 @@ export default function useCreateOrderMutation() {
     if (promoItems.length) {
       resp[2] = await updateStock(parsePromoItemsToCartItems(promoItems));
     }
-    
+
     queryClient.invalidateQueries([getOrderQueryKey()]);
     queryClient.invalidateQueries([getProductsQueryKey()]);
-    queryClient.invalidateQueries([getStockPerVariantsKey()])
+    queryClient.invalidateQueries([getStockPerVariantsKey()]);
     clearCart();
     return {
       orderResponse: resp[0] as IStrapiSingleResponse<IOrder>,
@@ -91,7 +91,6 @@ function parseOrderToPayLoad({
     promoItems: promoItems!,
   };
 }
-
 
 async function updateStock(items: ICartItem[]) {
   const promises = items.map((item) => {

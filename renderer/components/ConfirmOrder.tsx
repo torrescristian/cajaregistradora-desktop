@@ -94,9 +94,7 @@ export const ConfirmOrder = ({
     };
   };
 
-  const clearForm = ()=>{
-
-  }
+  const clearForm = () => {};
   const createOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
       items,

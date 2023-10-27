@@ -61,12 +61,11 @@ export const CreateTicketForm = ({
   const finalTotalPrice = order.totalPrice - couponDiscount;
 
   const handleCancelOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await cancelOrderMutation.mutateAsync(order);
       toast.success('Orden cancelada con exito');
-    }
-    catch (e) {
+    } catch (e) {
       toast.error('No se pudo cancelar la orden');
     }
   };
@@ -98,10 +97,10 @@ export const CreateTicketForm = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-              discountAmount: order.discount?.amount!,
-              discountType: order.discount?.type!,
-              price: finalTotalPrice,
-            })
+                discountAmount: order.discount?.amount!,
+                discountType: order.discount?.type!,
+                price: finalTotalPrice,
+              })
             : couponDiscount,
         },
         coupon: {
@@ -190,14 +189,10 @@ export const CreateTicketForm = ({
           <div className="divider" />
         </datalist>
         <div className="flex flex-col p-5 gap-3 overflow-y-scroll h-44">
-          {order.items.map((item,itemIndex) => (
-            <OrderItem
-              updateMode={updateMode}
-              key={itemIndex}
-              item={item}
-            />
+          {order.items.map((item, itemIndex) => (
+            <OrderItem updateMode={updateMode} key={itemIndex} item={item} />
           ))}
-          {order.promoItems.map((promoItem,indexPromo) => (
+          {order.promoItems.map((promoItem, indexPromo) => (
             <RenderIf condition={promoItem.promo} key={indexPromo}>
               <div className="flex flex-col gap-2">
                 <div className="divider">Promo</div>
@@ -207,7 +202,7 @@ export const CreateTicketForm = ({
                 <HighlightedText>
                   {formatPrice(promoItem.promo.price)}
                 </HighlightedText>
-                {promoItem.selectedVariants?.map((v,index) => (
+                {promoItem.selectedVariants?.map((v, index) => (
                   <div
                     key={index}
                     className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm"

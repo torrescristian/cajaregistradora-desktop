@@ -76,7 +76,9 @@ export const getStrapiUrl = () => {
   );
 };
 
-export function parsePromoItemsToCartItems(promoItems: IPromoItem[]): ICartItem[] {
+export function parsePromoItemsToCartItems(
+  promoItems: IPromoItem[],
+): ICartItem[] {
   const promosAsCartItems = promoItems.flatMap(({ selectedVariants }) =>
     selectedVariants.map(
       (variant) =>
