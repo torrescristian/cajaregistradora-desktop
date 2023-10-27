@@ -22,7 +22,7 @@ import Loader from './Loader';
 import useCreateTicketMutation from '@/hooks/services/useCreateTicketMutation';
 import useCancelOrderMutation from '@/hooks/services/useCancelOrderMutation';
 import useActiveCashBalanceQuery from '@/hooks/services/useActiveCashBalanceQuery';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import Payments from './Payments';
 import ValidateCoupon from './Coupons/ValidateCoupon';
 import { ICoupon } from '@/interfaces/ICoupon';
@@ -30,6 +30,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IPromoItem } from '@/interfaces/ICart';
 import HighlightedText from './HighlightedText';
+import SubmitButton from './SubmitButton';
 
 interface IProps {
   order: IOrder;
@@ -59,8 +60,15 @@ export const CreateTicketForm = ({
 
   const finalTotalPrice = order.totalPrice - couponDiscount;
 
-  const handleCancelOrder = () => {
-    cancelOrderMutation.mutate(order.id!);
+  const handleCancelOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    try {
+      await cancelOrderMutation.mutateAsync(order);
+      toast.success('Orden cancelada con exito');
+    }
+    catch (e) {
+      toast.error('No se pudo cancelar la orden');
+    }
   };
 
   const handleChangePayments = (newPayments: IPayment[]) => {
@@ -90,10 +98,10 @@ export const CreateTicketForm = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-                discountAmount: order.discount?.amount!,
-                discountType: order.discount?.type!,
-                price: finalTotalPrice,
-              })
+              discountAmount: order.discount?.amount!,
+              discountType: order.discount?.type!,
+              price: finalTotalPrice,
+            })
             : couponDiscount,
         },
         coupon: {
@@ -143,6 +151,7 @@ export const CreateTicketForm = ({
           </button>
 
           <button
+            disabled={cancelOrderMutation.isLoading}
             className="btn btn-error text-stone-50"
             onClick={handleCancelOrder}
           >
@@ -181,15 +190,15 @@ export const CreateTicketForm = ({
           <div className="divider" />
         </datalist>
         <div className="flex flex-col p-5 gap-3 overflow-y-scroll h-44">
-          {order.items.map((item) => (
+          {order.items.map((item,itemIndex) => (
             <OrderItem
               updateMode={updateMode}
-              key={item.selectedVariant!.id}
+              key={itemIndex}
               item={item}
             />
           ))}
-          {order.promoItems.map((promoItem) => (
-            <RenderIf condition={promoItem.promo} key={promoItem.promo?.id}>
+          {order.promoItems.map((promoItem,indexPromo) => (
+            <RenderIf condition={promoItem.promo} key={indexPromo}>
               <div className="flex flex-col gap-2">
                 <div className="divider">Promo</div>
                 <p className="text-xl text-center">
@@ -198,9 +207,9 @@ export const CreateTicketForm = ({
                 <HighlightedText>
                   {formatPrice(promoItem.promo.price)}
                 </HighlightedText>
-                {promoItem.selectedVariants?.map((v) => (
+                {promoItem.selectedVariants?.map((v,index) => (
                   <div
-                    key={v.id}
+                    key={index}
                     className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm"
                   >
                     <p>

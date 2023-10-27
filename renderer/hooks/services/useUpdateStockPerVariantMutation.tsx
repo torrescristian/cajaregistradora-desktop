@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProductsQueryKey } from './useProductsQuery';
 import IStockPerVariant from '@/interfaces/IStockPerVariant';
 import { toast } from 'react-toastify';
+import { getStockPerVariantsKey } from './useCreateVariantMutation';
 
 export interface IUseUpdateVariantMutationProps {
   newStock: number;
@@ -18,11 +19,6 @@ export default function useUpdateStockPerVariantMutation() {
         stock: newStock,
       };
 
-      if (newStock < 0) {
-        toast.error('El stock no puede ser negativo');
-        return [null];
-      }
-
       if (stockPerVariant.stock === newStock) {
         return [null];
       }
@@ -37,9 +33,8 @@ export default function useUpdateStockPerVariantMutation() {
         stockPerVariant.id!,
         newStockPerVariant,
       );
-
       await queryClient.invalidateQueries([getProductsQueryKey()]);
-      toast.success('Stock actualizado correctamente');
+      await queryClient.invalidateQueries([getStockPerVariantsKey()]);
       return [res];
     },
   );
