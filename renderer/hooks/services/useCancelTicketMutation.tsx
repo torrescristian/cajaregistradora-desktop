@@ -8,9 +8,10 @@ import { getOrderQueryKey } from './useOrderQuery';
 import { ICashBalance } from '@/interfaces/ICashBalance';
 import { getCashBalanceKey } from './useActiveCashBalanceQuery';
 import { useAuthState } from '@/contexts/AuthContext';
+import { IOrder } from '@/interfaces/IOrder';
 interface IProps {
   ticketId: number;
-  orderId: number;
+  order: IOrder;
   amountTicket: number;
   cashBalance: ICashBalance;
   returnType: 'cash' | 'other';
@@ -23,17 +24,17 @@ export default function useCancelTicketMutation() {
   return useMutation(
     async ({
       ticketId,
-      orderId,
+      order,
       amountTicket,
       cashBalance,
       returnType,
     }: IProps) => {
       await yup.number().required().validate(ticketId);
-      await yup.number().required().validate(orderId);
+      await yup.number().required().validate(order);
       await yup.number().required().validate(amountTicket);
       await yup.number().required().validate(cashBalance.id!);
       await yup.number().required().validate(cashBalance.newCashAmount);
-      const cancelOrderResult = await cancelOrderMutation.mutate(orderId);
+      const cancelOrderResult = await cancelOrderMutation.mutate(order);
       const updateTicketResult = await strapi.update(
         getTicketsQueryKey(),
         ticketId,

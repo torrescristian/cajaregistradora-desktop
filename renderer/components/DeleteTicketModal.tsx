@@ -28,7 +28,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
       try {
         await cancelTicketMutation.mutateAsync({
           ticketId: ticket.id!,
-          orderId: ticket.order.id!,
+          order: ticket.order!,
           amountTicket: ticket.totalPrice,
           cashBalance: ticket.cashBalance,
           returnType,
