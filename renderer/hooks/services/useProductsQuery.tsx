@@ -1,11 +1,6 @@
 import strapi from '@/libs/strapi';
 import { getErrorMessage, getUrlFromImage } from '@/libs/utils';
-import {
-  IProduct,
-  IProductPage,
-  IProductType,
-  IProductTypePayload,
-} from '@/interfaces/IProduct';
+import { IProduct, IProductPage } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -49,13 +44,14 @@ interface IProductsQueryProps {
   query: string;
   selectedProductType?: number;
   page?: number;
-  promo?: string;
+  promo?: number[];
 }
 
 export default function useProductsQuery({
   query,
   selectedProductType,
   page,
+  promo,
 }: IProductsQueryProps) {
   const router = useRouter();
   const [pagination, setPagination] = useState<IProductPage['pagination']>({
@@ -78,23 +74,33 @@ export default function useProductsQuery({
             'default_variant',
             'default_variant.stock_per_variant',
             'type',
+            'promo',
           ],
           page: page || 1,
           pageSize: 9,
         };
-
-        if (selectedProductType) {
-          options.filters = {
-            type: selectedProductType,
-          };
-        }
-        if (query) {
-          options.filters = {
-            ...options.filters,
-            name: {
-              $containsi: query,
-            },
-          };
+        $and: {
+          if (selectedProductType) {
+            options.filters = {
+              type: selectedProductType,
+            };
+          }
+          if (query) {
+            options.filters = {
+              ...options.filters,
+              name: {
+                $containsi: query,
+              },
+            };
+          }
+          $or: {
+            if (promo) {
+              options.filters = {
+                ...options.filters,
+                promo: promo,
+              };
+            }
+          }
         }
 
         const res = (await strapi.find(

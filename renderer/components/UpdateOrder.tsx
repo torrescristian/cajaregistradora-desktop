@@ -4,7 +4,6 @@ import { IOrder, IOrderItem } from '@/interfaces/IOrder';
 import { useEffect } from 'react';
 import Cart from './Cart/Cart';
 import Products from './Products';
-import RenderPromos from './Promo/RenderPromo';
 
 interface IProps {
   order: IOrder;
@@ -36,7 +35,7 @@ export const UpdateOrder = ({ order, onSubmit }: IProps) => {
   }, []);
 
   return (
-    <section className="flex flex-col w-screen">
+    <section className="flex flex-col w-[85vw]">
       <Products />
       <Cart updateMode order={order} onSubmit={onSubmit} />
     </section>

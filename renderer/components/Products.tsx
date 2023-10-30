@@ -10,9 +10,10 @@ import { RenderIf } from './RenderIf';
 import RenderPromos from './Promo/RenderPromo';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
 import Pagination from './VariantUpdateTable/subcomponents/Pagination';
+import { IPromoExpanded } from '@/interfaces/IPromo';
 
 const Navigation = ({ children }: IComponent) => (
-  <section className="flex w-full justify-center items-center flex-row gap-5">
+  <section className="flex w-full justify-center items-center flex-col sm:flex-row gap-5">
     {children}
   </section>
 );
@@ -25,6 +26,9 @@ const Products = () => {
   const promos = promoQuery.data;
   const [activePage, setActivePage] = useState(1);
 
+  const [promosSelected, setPromosSelected] = useState<IPromoExpanded[] | null>(
+    [],
+  );
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType | null>();
 
@@ -32,6 +36,7 @@ const Products = () => {
   const productsQuery = useProductsQuery({
     query: searchProps.query,
     selectedProductType: selectedProductType?.id,
+    promo: promosSelected?.map((promo) => promo.id!),
     page: activePage,
   });
 

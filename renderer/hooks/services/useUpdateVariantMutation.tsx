@@ -6,7 +6,6 @@ import {
   getStockPerVariantsKey,
   getVariantsQueryKey,
 } from './useCreateVariantMutation';
-import { toast } from 'react-toastify';
 
 export interface IUseUpdateVariantMutationProps {
   newStock: number;

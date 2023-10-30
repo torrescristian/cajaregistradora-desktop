@@ -16,6 +16,8 @@ export default function useOrderQuery() {
         'order.items.selectedVariant',
         'order.coupon',
         'order.discount.amount',
+        'order.promoItems',
+        'order.promoItems.promo',
         'cashBalance',
       ],
     })) as unknown as ITicketResponse;

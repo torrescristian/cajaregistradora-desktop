@@ -1,26 +1,14 @@
 import 'react-toastify/dist/ReactToastify.css';
-import NavButton from './Navbar/subcomponents/NavButton';
-import {
-  Bars3Icon,
-  BellAlertIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  SignalIcon,
-  SignalSlashIcon,
-  WifiIcon,
-} from '@heroicons/react/24/solid';
+import { Bars3Icon, BellAlertIcon, WifiIcon } from '@heroicons/react/24/solid';
 import useNavBar from './Navbar/useNavBar';
 import { RenderIf } from './RenderIf';
 import { useAuthState } from '@/contexts/AuthContext';
 import useOnlineStatus from '@/hooks/useOnlineStatus';
 import useNotificationQuery from '@/hooks/services/useNotificationQuery';
 import { twMerge } from 'tailwind-merge';
-import { useState } from 'react';
 import useUpadteSeenNotification from '@/hooks/services/useUpdateSeenNotification';
 import DesktopMenu from './Navbar/subcomponents/DesktopMenu';
 import Navbar from './Navbar/Navbar';
-import OutsideAlerter from './OutsideAlerter';
-import { ToastContainer } from 'react-toastify';
 import CustomToastContainer from './CustomToastContainer';
 
 interface IProps {
@@ -46,33 +34,40 @@ export default function GlobalLayout({ children }: IProps) {
     <div className="drawer drawer-end">
       <CustomToastContainer />
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center relative">
+      <div className="drawer-content flex flex-col items-center">
         <RenderIf condition={isLoggedIn}>
-          <div className="flex flex-row w-full justify-between container mt-3">
+          <div className="w-full flex flex-col gap-5 justify-between sm:mt-4 sm:flex-row sm:w-[85vw] ">
             <Navbar />
-            <div className="flex flex-row gap-5">
-              {isOnline ? (
-                <div className="btn btn-link text-success">
-                  <WifiIcon className="w-6 h-6 " />
-                </div>
-              ) : (
-                <div className="btn btn-link text-gray-700">
-                  <WifiIcon className="w-6 h-6" />
-                </div>
-              )}
+            <div className="flex flex-row justify-evenly gap-5">
+              <div className="flex">
+                {isOnline ? (
+                  <div className="btn btn-link text-success">
+                    <WifiIcon className="w-6 h-6 " />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center text-error gap-3">
+                    <WifiIcon className="w-6 h-6" />
+                    <p className="whitespace-nowrap">Sin conexión</p>
+                  </div>
+                )}
+              </div>
               <div className="indicator">
                 <div className="dropdown dropdown-end">
-                  <label tabIndex={0} className="btn btn-ghost m-1">
-                    <BellAlertIcon className="w-6 h-6" />
-                    {newNotifications?.length ? (
+                  {newNotifications?.length ? (
+                    <label tabIndex={0} className="btn btn-ghost m-1">
+                      <BellAlertIcon className="w-6 h-6" />
                       <span className="indicator-item badge badge-error">
                         {newNotifications?.length}
                       </span>
-                    ) : null}
-                  </label>
+                    </label>
+                  ) : (
+                    <label className="bg-transparent btn-disabled btn">
+                      <BellAlertIcon className="w-6 h-6" />
+                    </label>
+                  )}
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box right-10 w-56"
                   >
                     {notifications?.map((notification) => (
                       <li className="border-2" key={notification.id}>
@@ -96,7 +91,8 @@ export default function GlobalLayout({ children }: IProps) {
                 htmlFor="my-drawer"
                 className="btn btn-secondary gap-3 drawer-button"
               >
-                <Bars3Icon className="w-6 h-6" /> Menu
+                <Bars3Icon className="w-6 h-6" />
+                <p>Menu</p>
               </label>
             </div>
           </div>

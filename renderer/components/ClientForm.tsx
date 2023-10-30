@@ -1,14 +1,17 @@
 import useClientsQuery from '@/hooks/services/useClientQuery';
 import useFormControl from '@/hooks/useFormControl';
 import IClient from '@/interfaces/IClient';
-import { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDebounce } from 'use-debounce';
 import FormField from './FormFieldText';
 import Loader from './Loader';
 import { RenderIf } from './RenderIf';
 import useCreateClientMutation from '@/hooks/services/useCreateClientMutation';
-import { PhoneIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, PhoneIcon, TrashIcon } from '@heroicons/react/24/solid';
+import FieldLabel from './FieldLabel';
+import useUpdateClientMutation from '@/hooks/services/useUpdateClientMutation';
+import { da } from 'date-fns/locale';
 
 interface IProps {
   onSelect: (client: IClient | null) => void;
@@ -16,24 +19,51 @@ interface IProps {
 }
 
 interface IClientForm {
+  id?: number;
   name: string;
   phone_number: string;
   address: string;
 }
 
 export default function ClientForm({ onSelect, defaultClient }: IProps) {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<IClientForm>({
+    defaultValues: {
+      id: 0,
+      phone_number: '',
+      address: '',
+      name: '',
+    },
+  });
+
   const { handleChange, value: search } = useFormControl('');
   const { setValue: setClient, value: client } = useFormControl(defaultClient);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [query] = useDebounce(search, 500);
 
+  const [updateMode, setUpdateMode] = useState(false);
   const clientQuery = useClientsQuery(query);
 
   const createClientMutation = useCreateClientMutation();
+  const updateClientMutation = useUpdateClientMutation();
 
-  const handleClose = () => dialogRef.current?.close();
 
+  const clearForm = () => {
+    setClient(null);
+    onSelect(null);
+
+  };
+
+  const handleClose = (e: any) => {
+    e.preventDefault();
+    return dialogRef.current?.close();
+  };
   const handleClick = (client: IClient) => () => {
     onSelect(client);
     setClient(client);
@@ -41,6 +71,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
 
   const handleSubmitCreateClient = (data: IClientForm) => {
     createClientMutation.mutate(data);
+    reset();
   };
 
   const handleDeleteClient = () => {
@@ -48,16 +79,35 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
     onSelect(null);
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IClientForm>();
+  const handleSubmitUpdateClientMutation = (data: IClientForm) => {
+    updateClientMutation.mutate({
+      id: data.id!,
+      name: data.name,
+      address: data.address,
+      number_phone: data.phone_number,
+    });
+  };
 
   const handleClickSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault(), handleClose();
-    handleSubmit(handleSubmitCreateClient)(e);
+    e.preventDefault();
+    if (updateMode) {
+      handleSubmit(handleSubmitUpdateClientMutation)(e);
+    } else {
+      handleSubmit(handleSubmitCreateClient)(e);
+    }
+    clearForm();
+    dialogRef.current?.close();
   };
+
+  const handleClickUpdateClient =
+    (client: IClient) => (e: React.MouseEvent) => {
+      setUpdateMode(true);
+      dialogRef.current?.showModal();
+      setValue('id', client.id);
+      setValue('name', client.name);
+      setValue('phone_number', client.phone_number);
+      setValue('address', client.address);
+    };
 
   return (
     <section className="bg-red w-96">
@@ -83,7 +133,11 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
           />
           <section className="flex flex-row w-full justify-between">
             <div className="modal-action">
-              <button className="btn">Crear cliente</button>
+              {updateMode ? (
+                <button className="btn">Actualizar cliente</button>
+              ) : (
+                <button className="btn">Crear cliente</button>
+              )}
             </div>
             <div className="modal-action">
               <button className="btn btn-link" onClick={handleClose}>
@@ -93,10 +147,10 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
           </section>
         </form>
       </dialog>
-      <label className="input-group flex flex-col">
-        <span className="text-stone-500">
-          Buscar cliente por Nombre, Direc. o Tel.
-        </span>
+      <FieldLabel
+        title="Buscar cliente por Nombre, Direc. o Tel."
+        className="input-group flex flex-col"
+      >
         <input
           onChange={handleChange}
           value={search}
@@ -121,7 +175,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
             <p className="text-stone-500">Consumidor Final</p>
           </section>
         </RenderIf>
-      </label>
+      </FieldLabel>
       <RenderIf condition={clientQuery.isLoading}>
         <Loader />
       </RenderIf>
@@ -132,11 +186,19 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
             {clientQuery.data?.map((client) => (
               <li
                 key={client.id}
-                className="w-full p-3 border-2 border-stone-500 hover:border-stone-300 hover:cursor-pointer"
+                className="w-full p-5 border-2 border-stone-500 hover:border-stone-300 hover:cursor-pointer"
                 onClick={handleClick(client)}
               >
-                <p>{client.name}</p>
                 <div className="flex flex-row justify-between">
+                  <p className="text-xl">{client.name}</p>
+                  <button
+                    className="btn-sm btn-primary"
+                    onClick={handleClickUpdateClient(client)}
+                  >
+                    <PencilIcon className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="flex flex-row pt-3 justify-between">
                   <p className="text-sm text-stone-500">{client.address}</p>
                   <RenderIf condition={Boolean(client.phone_number)}>
                     <p className="text-sm text-stone-500 flex flex-row items-center gap-2">

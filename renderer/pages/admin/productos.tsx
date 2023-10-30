@@ -20,7 +20,7 @@ const Productos = () => {
   const isMobile = useIsMobile();
 
   return (
-    <PageLayout className="w-full">
+    <PageLayout>
       <div className="flex flex-row justify-between w-full">
         <h1 className="text-2xl whitespace-nowrap">Reabastecer & Actualizar</h1>
         <SearchInput {...searchProps} />

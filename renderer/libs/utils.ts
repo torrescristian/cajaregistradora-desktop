@@ -1,4 +1,5 @@
-import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
+import { ICartItem, IPromoItem } from '@/interfaces/ICart';
+import { DISCOUNT_TYPE, IOrderItem } from '@/interfaces/IOrder';
 import { twMerge } from 'tailwind-merge';
 
 export const mergeClasses = (...classes: Array<string | null | undefined>) => {
@@ -71,6 +72,38 @@ export const getUrlFromImage = (image: any) => {
 export const getStrapiUrl = () => {
   return (
     process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-    'https://control.cajaregistradora.app/'
+    'https://control.cajaregistradora.app'
   );
 };
+
+export function parsePromoItemsToCartItems(
+  promoItems: IPromoItem[],
+): ICartItem[] {
+  const promosAsCartItems = promoItems.flatMap(({ selectedVariants }) =>
+    selectedVariants.map(
+      (variant) =>
+        ({
+          product: variant.product,
+          selectedVariant: {
+            ...variant,
+            id: variant.id!,
+            name: variant.name,
+            price: variant.price,
+            product: variant.product.id,
+            stock_per_variant: variant.stock_per_variant!,
+          },
+          quantity: 1,
+        }) as ICartItem,
+    ),
+  );
+  return promosAsCartItems.reduce((acc, curr) => {
+    const findItem = acc.find(
+      (item: ICartItem) => item.selectedVariant.id === curr.selectedVariant.id,
+    );
+    if (findItem) {
+      findItem.quantity += 1;
+      return acc;
+    }
+    return [...acc, curr];
+  }, [] as ICartItem[]);
+}

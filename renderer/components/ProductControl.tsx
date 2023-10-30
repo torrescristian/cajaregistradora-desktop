@@ -1,4 +1,3 @@
-import FormFieldText from '@/components/FormFieldText';
 import { useForm } from 'react-hook-form';
 import { IProduct, IProductPayload, IProductType } from '@/interfaces/IProduct';
 import { useImageControl } from '@/hooks/useImageControl';
@@ -9,6 +8,7 @@ import { toast } from 'react-toastify';
 import { IVariantPayload } from '@/interfaces/IVariants';
 import useProductTypeQuery from '@/hooks/services/useProductTypesQuery';
 import SubmitButton from './SubmitButton';
+import FieldLabel from './FieldLabel';
 
 interface IProps {
   controlType: 'CREATE' | 'UPDATE';
@@ -22,6 +22,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
     formState: { errors },
     setValue,
     reset,
+    getValues,
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
@@ -43,7 +44,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
   const handleChangeProductType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
     const productType = productTypes?.find((type) => type.id === value)!;
-    console.log({ productType });
     setProductType(productType);
     setValue('type', productType?.id!);
   };
@@ -72,8 +72,13 @@ const ProductControl = ({ controlType, product }: IProps) => {
   };
 
   const clearForm = () => {
+    setIsService(false);
+    setVariants([]);
     reset();
   };
+
+  const { name, type } = getValues();
+  const isFormValid = name && type;
 
   const handleSubmitCreateProduct = async (data: IProductPayload) => {
     try {
@@ -95,50 +100,51 @@ const ProductControl = ({ controlType, product }: IProps) => {
       className="flex flex-col p-5 gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
     >
       <section className="flex flex-row items-end gap-10 px-10 justify-between">
-        <FormFieldText
+        {/*        <FormFieldText
           errors={errors}
           formKey="name"
           label="Nombre: "
           register={register}
-        />
+        /> */}
+        <FieldLabel title="Nombre:" className="input-group items-center">
+          <input
+            type="text"
+            className="input input-bordered input-secondary"
+            {...register('name', { required: true })}
+          />
+        </FieldLabel>
         {product?.type.name!}
-        <label>
-          <span className="label-text whitespace-nowrap text-stone-500">
-            Menu:
-          </span>
+        <FieldLabel title="Menu:" className="items-center gap-3">
           <select
             value={productType?.id!}
             onChange={handleChangeProductType}
             className="select select-bordered"
+            defaultValue={0}
           >
-            <option value="">Seleccione un menu</option>
+            <option value={0}>Seleccione un menu</option>
             {productTypes?.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.emoji} {type.name}
               </option>
             ))}
           </select>
-        </label>
-        <label className="input-group">
-          <span className="label-text whitespace-nowrap text-stone-500">
-            Imagen:
-          </span>
+        </FieldLabel>
+        <FieldLabel title="Imagen:" className="input-group items-center">
           <input
             type="file"
             name="files"
             className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
           />
-        </label>
+        </FieldLabel>
       </section>
-      <label className="label w-fit gap-3">
+      <FieldLabel title="Es un servicio" className="label w-fit gap-3">
         <input
           type="checkbox"
           className="checkbox checkbox-success"
           checked={isService}
           onChange={handleChangeIsService}
         />
-        Es un servicio
-      </label>
+      </FieldLabel>
       <CreateVariantsTable
         isService={isService}
         variants={variants}
@@ -147,6 +153,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
         defaultVariantIndex={defaultVariantIndex}
       />
       <SubmitButton
+        disabled={!isFormValid || variants.length === 0}
         mutation={createProductAndVariantMutation}
         className="btn btn-success text-slate-50 whitespace-nowrap"
       >

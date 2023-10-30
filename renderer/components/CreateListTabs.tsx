@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import TabButton from './TabButton';
-import { RenderIf } from './RenderIf';
-import { IComponent } from '@/interfaces/ProductItem.interfaces';
-
 interface IProps {
   children: (createMode: boolean) => void;
   name: string;

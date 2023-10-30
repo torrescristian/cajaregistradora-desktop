@@ -9,7 +9,5 @@ export interface IColumn {
   direction: string;
   phone_number: string;
   subtotalPrice: number;
-  paidInCash: number;
-  paidInDebit: number;
-  paidInCredit: number;
+  paymentType: string;
 }

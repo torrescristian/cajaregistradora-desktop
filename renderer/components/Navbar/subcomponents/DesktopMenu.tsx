@@ -18,12 +18,11 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
           <NavButton className="w-full" href="/recibos">
             Recibos
           </NavButton>
+          <NavButton className="w-full" href="/admin/caja">
+            Caja
+          </NavButton>
           {isOwner ? (
             <>
-              <NavButton className="w-full" href="/admin/caja">
-                Caja
-              </NavButton>
-
               <NavButton className="w-full" href="/admin/productos">
                 Reabastecer
               </NavButton>

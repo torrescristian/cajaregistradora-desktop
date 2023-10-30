@@ -1,7 +1,6 @@
 import { ICartItem, ICartState, IPromoItem } from '@/interfaces/ICart';
 import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
 import { IProduct } from '@/interfaces/IProduct';
-import { IPromo } from '@/interfaces/IPromo';
 import { IVariant } from '@/interfaces/IVariants';
 import { calcDiscount } from '@/libs/utils';
 import { create } from 'zustand';
@@ -242,6 +241,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
       totalPrice: 0,
       subtotalPrice: 0,
       promoItems: [],
+      clientId: 0,
+      additionalDetails: '',
+      discountAmount: 0,
+      discountType: DISCOUNT_TYPE.FIXED,
       reset: true,
     }),
   addClientId: (clientId: number | null) => set({ clientId }),

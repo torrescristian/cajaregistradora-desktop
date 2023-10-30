@@ -45,16 +45,8 @@ export const columnsDef = [
     header: 'Total',
   },
   {
-    accessorFn: (col: IColumn) => `${customPriceFormat(col.paidInCash)}`,
-    header: 'Págado en Efectivo',
-  },
-  {
-    accessorFn: (col: IColumn) => `${customPriceFormat(col.paidInDebit)}`,
-    header: 'Págado en Débito',
-  },
-  {
-    accessorFn: (col: IColumn) => `${customPriceFormat(col.paidInCredit)}`,
-    header: 'Pagado en Crédito',
+    accessorFn: (col: IColumn) => col.paymentType,
+    header: 'Método de pago',
   },
   columnHelper.display({
     header: 'Detalles',

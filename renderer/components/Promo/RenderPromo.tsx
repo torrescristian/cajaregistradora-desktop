@@ -9,6 +9,7 @@ import FieldLabel from '../FieldLabel';
 interface IProps {
   promosItems: IPromoItem[];
   salesMode?: boolean;
+  setPromosSelected?: number;
 }
 
 export default function RenderPromos({

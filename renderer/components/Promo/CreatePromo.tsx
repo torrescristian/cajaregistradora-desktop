@@ -15,6 +15,7 @@ import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
 import SubmitButton from '../SubmitButton';
 import { toast } from 'react-toastify';
+import FieldLabel from '../FieldLabel';
 
 export const CreatePromo = () => {
   const categoryQuery = useCategoryQuery();
@@ -157,42 +158,41 @@ export const CreatePromo = () => {
           onSubmit={handleCreatePromo}
         >
           <div className="flex flex-row gap-5  justify-start items-end p-5">
-            <label className="flex flex-col">
-              <span className="text-neutral-content">Nombre</span>
+            <FieldLabel title="Nombre:" className="flex flex-col">
               <input
                 type="text"
                 className="input input-bordered "
                 value={name}
                 onChange={handleChangeName}
               />
-            </label>
-            <label className="flex flex-col">
-              <span className="text-neutral-content">Precio</span>
+            </FieldLabel>
+            <FieldLabel title="Precio:" className="flex flex-col">
               <input
                 type="number"
                 className="input input-bordered w-36"
                 value={price}
                 onChange={handleChangePrice}
               />
-            </label>
+            </FieldLabel>
             <RenderIf condition={categories?.length}>
               <div className="flex flex-row items-end">
-                <label className="flex flex-col">
-                  <span className="text-neutral-content">Categorias</span>
+                <FieldLabel title="Categorias:" className="flex flex-col">
                   <select
                     className="select select-bordered "
                     onChange={handleChangeSelectedCategory}
                     value={selectedCategory?.id}
+                    defaultValue={0}
                   >
+                    <option value={0}>Seleccione una categoria</option>
                     {categories?.map((category) => (
                       <option key={category.id} value={category.id}>
                         {category.name}
                       </option>
                     ))}
                   </select>
-                </label>
+                </FieldLabel>
                 <button
-                  className="btn btn-success text-primary-content"
+                  className="btn btn-primary"
                   onClick={handleClickAddCategory}
                 >
                   <PlusIcon className="w-9 h-9" /> Agregar
