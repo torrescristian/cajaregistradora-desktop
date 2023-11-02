@@ -36,7 +36,10 @@ const useUpdateProductForm = ({
 
   // HANDLERS
   const handleSubmit = () => () => {
-    updateProductMutation.mutate(product);
+    updateProductMutation.mutate({
+      id: product.id!,
+      name: productName,
+    });
   };
 
   return {
