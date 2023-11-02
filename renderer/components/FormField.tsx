@@ -5,7 +5,7 @@ interface IFormControl {
   label: string;
   formKey: string;
   errors: FieldErrors;
-  symbol: string;
+  symbol?: string;
   labelRight?: boolean;
 }
 

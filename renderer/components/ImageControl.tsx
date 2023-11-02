@@ -32,7 +32,7 @@ const ImageControl = ({ product }: IProps) => {
 
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-col items-center">
-      <img src={product?.image || 'default.png'} alt="" className="w-max" />
+      <img src={product?.image || 'default.png'} alt="" className="w-min" />
       {updateProductMutation.isLoading ? (
         <Loader />
       ) : (

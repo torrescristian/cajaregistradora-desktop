@@ -2,13 +2,12 @@ import FormControl from '@/components/FormControl';
 import useUpdateProductForm from '@/hooks/useUpdateProduct';
 import { UpdateProductButton } from '@/components/ProductItem.styles';
 import { IProduct } from '@/interfaces/IProduct';
-import ProductVariant from './ProductVariant';
 import { useForm } from 'react-hook-form';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import ImageControl from '@/components/ImageControl';
 import { Card } from '@/components/Card';
-import { RenderIf } from '@/components/RenderIf';
 import { IVariantExpanded } from '@/interfaces/IVariants';
+import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
 
 interface IProps {
   product: IProduct;
@@ -21,11 +20,16 @@ interface IFormControl {
 }
 
 const ProductRow = ({ product, variant }: IProps) => {
-  const { handleChangeName, isLoading, name, pendingChanges } =
-    useUpdateProductForm({ product });
+  const {
+    handleChangeName,
+    isLoading,
+    productName,
+    handleChangeVariantName,
+    variantName,
+    pendingChanges,
+  } = useUpdateProductForm({ product, variant });
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormControl>({
@@ -36,45 +40,52 @@ const ProductRow = ({ product, variant }: IProps) => {
   });
 
   const updateProductMutation = useUpdateProductMutation();
+  const updateVariantMutation = useUpdateVariantMutation();
 
   const onSubmit = (data: IFormControl) => {
+    console.log(data);
     updateProductMutation.mutate({
       ...data,
       id: product.id,
-      name: name,
+      name: productName,
+    });
+    updateVariantMutation.mutate({
+      id: variant.id!,
+      name: variantName,
     });
   };
 
   return (
     <Card>
-      <div className="divider">Producto</div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <section className="flex gap-3">
+        <section className="flex items-end gap-3">
           <FormControl
             disabled={isLoading}
             fullWidth
-            hideLabel
-            name="name"
+            name="productName"
             onChange={handleChangeName}
-            text="Nombre"
+            text="Producto"
             type="text"
-            value={name}
+            value={productName}
+          />
+          <FormControl
+            fullWidth
+            name="variantName"
+            onChange={handleChangeVariantName}
+            text="Variante"
+            type="text"
+            value={variantName}
+            textAlign="text-center"
           />
           <UpdateProductButton
             onClick={handleSubmit(onSubmit)}
             pendingChanges={pendingChanges}
+            isLoading={
+              updateProductMutation.isLoading || updateVariantMutation.isLoading
+            }
           />
         </section>
-        <RenderIf condition={product.variants.length}>
-          <div className="divider">Variantes</div>
-          <section className="my-5 flex w-full flex-col justify-items-center gap-7 text-xl">
-            <ProductVariant
-              key={variant.id}
-              variant={variant}
-              product={product}
-            />
-          </section>
-        </RenderIf>
+        <div className="divider">Tipo</div>
         <div className="divider">Imagen</div>
       </form>
       <section className="flex flex-col items-center gap-2">

@@ -3,6 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { ProductModal } from './ProductModal';
 import { StockColumn } from './StockColumn';
 import { PriceColumn } from './PriceColumn';
+import { ProductTypeMenu } from './ProductTypeMenu';
 
 const columnHelper = createColumnHelper<IVariantExpanded>();
 
@@ -26,6 +27,11 @@ export const columnDefProduct = [
     header: 'Stock',
     cell: StockColumn,
   },
+
+  columnHelper.display({
+    header: 'Tipo',
+    cell: (props) => <ProductTypeMenu product={props.row.original.product} />,
+  }),
   columnHelper.display({
     header: 'Ver detalles',
     cell: (props) => (

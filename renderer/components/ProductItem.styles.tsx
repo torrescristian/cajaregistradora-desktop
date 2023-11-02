@@ -1,6 +1,7 @@
 import { mergeClasses } from '@/libs/utils';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { IActionButton, IComponent } from '@/interfaces/ProductItem.interfaces';
+import Loader from './Loader';
 
 export const CollapseTitle = ({
   children,
@@ -94,14 +95,20 @@ export const AddProductButton = ({ onClick }: IActionButton & {}) => (
 export const UpdateProductButton = ({
   pendingChanges,
   onClick,
+  isLoading,
 }: {
   onClick: any;
   pendingChanges: boolean;
-}) => (
-  <ActionButton onClick={onClick} disabled={!pendingChanges}>
-    Guardar
-  </ActionButton>
-);
+  isLoading?: boolean;
+}) => {
+  if (isLoading) return <Loader />;
+
+  return (
+    <ActionButton onClick={onClick} disabled={!pendingChanges}>
+      Actualizar
+    </ActionButton>
+  );
+};
 
 export const RemoveProductButton = ({ onClick }: IActionButton) => (
   <ActionButton
