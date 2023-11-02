@@ -65,7 +65,7 @@ export const ConfirmOrder = ({
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon>();
   const [payments, setPayments] = useState<IPayment[]>([]);
-  const { printOrder } = usePrintService();
+  const { printOrder, printCommand, printInvoice } = usePrintService();
 
   const finalTotalPrice = calcDiscount({
     discountAmount,
@@ -107,7 +107,8 @@ export const ConfirmOrder = ({
       promoItems: promoItems!,
     });
 
-    printOrder(orderResponse.data.id);
+    await printOrder(orderResponse.data.id);
+    await printCommand(orderResponse.data.id);
   };
 
   const updateOrder = () => {
@@ -187,7 +188,7 @@ export const ConfirmOrder = ({
       promoItems: promoItems!,
     });
 
-    const { orderResponse: updatedOrderResponse } =
+    const { orderResponse: updatedOrderResponse, ticketResponse } =
       await createTicketMutation.mutateAsync({
         ticket: {
           order: orderResponse.data.id,
@@ -202,7 +203,9 @@ export const ConfirmOrder = ({
         },
       });
 
-    printOrder(updatedOrderResponse.data.id);
+    await printOrder(updatedOrderResponse.data.id);
+    await printCommand(orderResponse.data.id);
+    await printInvoice(ticketResponse.data.id);
   };
 
   if (orderMutation.isLoading) {

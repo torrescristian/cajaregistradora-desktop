@@ -5,12 +5,12 @@ import {
   formatPrice,
   parseDateToArgentinianFormat,
 } from '../helpers/utils';
-import { DEFAULT_FONT_SIZE } from '../helpers/const';
+import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL, FONT_SIZE_BIG } from '../helpers/const';
 import { IOrder, ORDER_STATUS } from '../interfaces/IOrder';
 
 export default function printOrder(order: IOrder) {
   try {
-    if (!order?.id || !order?.client?.name) {
+    if (!order?.id) {
       console.log('Missing Order', order);
       return;
     }
@@ -33,14 +33,18 @@ export default function printOrder(order: IOrder) {
       }
 
       // open & set printer
-      printer.size(1, 1).text(`Pedido # ${order.id!}`).text(DEFAULT_FONT_SIZE);
+      printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.app');
+      printer.text(FONT_SIZE_BIG).text(`Pedido # ${order.id!}`).text(FONT_SIZE_NORMAL);
 
       // store, client and order data
+      printer.text(FONT_SIZE_NORMAL).align(ALIGN.LT).text(order.store.name);
+
+      if (order.client?.name) {
+        printer.text(`Cliente: ${order.client.name}`);
+      }
+
       printer
-        .align('LT')
-        .text(`Danko's`)
-        .text(`Cliente: ${order.client.name}`)
-        .text(`Hora: ${parseDateToArgentinianFormat(order.createdAt)}`)
+        .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`)
         .drawLine();
 
       // aditional details
@@ -48,13 +52,14 @@ export default function printOrder(order: IOrder) {
         printer.println(`# ${order.additionalDetails}`);
       }
 
+      printer.text(FONT_SIZE_NORMAL);
       // order items
       for (const item of order.items) {
         printer
-          .align('LT')
-          .println(`${item.product.name} - ${item.selectedVariant.name}`)
-          .align('RT')
-          .println(
+          .align(ALIGN.LT)
+          .text(`${item.product.name} - ${item.selectedVariant.name}`)
+          .align(ALIGN.RT)
+          .text(
             `${formatPrice(item.selectedVariant.price)} x ${
               item.quantity
             } = ${formatPrice(item.selectedVariant.price * item.quantity)}`,
@@ -62,32 +67,34 @@ export default function printOrder(order: IOrder) {
       }
 
       // promo items
+
       for (const { promo, selectedVariants } of order.promoItems) {
-        printer.align('LT').println(`PROMO: ${promo.name}`);
+        printer.newLine().align('LT').println(`PROMO: ${promo.name}`);
 
         for (const variant of selectedVariants) {
           printer
-            .align('LT')
             .println(`- ${variant.product.name} - ${variant.name}`);
         }
 
         printer.align('RT').println(formatPrice(promo.price));
       }
 
+      printer.text(FONT_SIZE_NORMAL);
       // total amount & status
       printer
         .align('RT')
         .newLine()
-        .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
-        .text(`Descuento: ${discountToString(order.discount)}`)
-        .text(`Total: ${formatPrice(order.totalPrice)}`)
+        .text(`Total: ${formatPrice(order.subtotalPrice)}`)
         .drawLine()
         .align('LT')
         .text(
           `Pago: ${
-            order.status === ORDER_STATUS.PENDING ? 'PENDIENTE' : 'COBRADO'
+            order.status === ORDER_STATUS.PENDING ? 'PENDIENTE' : 'ABONADO'
           }`,
-        );
+        )
+        .align(ALIGN.CT)
+        .text(FONT_SIZE_SMALL)
+        .text('Sin validez fiscal');
 
       // close printer
       printer.cut().close();

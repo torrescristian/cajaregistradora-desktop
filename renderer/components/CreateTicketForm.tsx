@@ -30,7 +30,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IPromoItem } from '@/interfaces/ICart';
 import HighlightedText from './HighlightedText';
-import SubmitButton from './SubmitButton';
+import usePrintService from '@/hooks/services/usePrintService';
 
 interface IProps {
   order: IOrder;
@@ -57,6 +57,8 @@ export const CreateTicketForm = ({
   const [payments, setPayments] = useState<IPayment[]>([]);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
+
+  const { printInvoice } = usePrintService()
 
   const finalTotalPrice = order.totalPrice - couponDiscount;
 
@@ -89,7 +91,7 @@ export const CreateTicketForm = ({
 
   const handleSubmitCreateTicket = async () => {
     try {
-      await createTicketMutation.mutateAsync({
+      const { ticketResponse } = await createTicketMutation.mutateAsync({
         ticket: {
           order: order.id!,
           totalPrice: finalTotalPrice,
@@ -108,6 +110,8 @@ export const CreateTicketForm = ({
           availableUses: order.coupon?.availableUses || coupon?.availableUses!,
         },
       });
+
+      await printInvoice(ticketResponse.data.id)
 
       toast.success('Pagado con exito');
     } catch (error) {

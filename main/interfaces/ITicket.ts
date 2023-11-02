@@ -1,5 +1,6 @@
 import { ICashBalance } from './ICashBalance';
 import { IOrder } from './IOrder';
+import IStore from './IStore';
 import { IResponsePage } from './utils';
 
 export interface IPayment {
@@ -29,6 +30,7 @@ export interface ITicket<ORDER = IOrder, CASH_BALANCE = ICashBalance> {
   payments: IPayment[];
   status: TICKET_STATUS;
   totalPrice: number;
+  store: IStore
 }
 
 export type ITicketPayload = ITicket<number, number>;
