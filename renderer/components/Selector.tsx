@@ -8,7 +8,7 @@ export const Selector = ({ defaultValue, onChange, values }: IProps) => {
   return (
     <section>
       <select
-        className="select select-bordered text-base-content"
+        className="select select-bordered text-base-content w-36"
         onChange={onChange}
         defaultValue={defaultValue}
       >

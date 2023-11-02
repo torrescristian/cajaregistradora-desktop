@@ -8,6 +8,8 @@ export default function useProductTypeQuery() {
   return useQuery<IProductType[]>([getProductTypeQueryKey()], async () => {
     const res = (await strapi.find(getProductTypeQueryKey(), {
       populate: ['products'],
+      /* @ts-ignore */
+      pageSize: 1000,
     })) as unknown as IProductTypeResponse;
     return res.results;
   });
