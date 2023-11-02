@@ -63,7 +63,7 @@ const ProductItem = ({ product, onClick }: IProps) => {
         <div className="flex flex-col w-full gap-5 justify-between">
           <HighlightedText>{product.name}</HighlightedText>
           <div className="flex flex-row h-32 items-center">
-            <img src={product.image} className="w-1/2 h-fit" />
+            <img src={product.image} className="w-1/2 h-36" />
             <div className="flex flex-col items-center justify-around w-1/2 ">
               <RenderIf condition={product.variants.length}>
                 <Selector

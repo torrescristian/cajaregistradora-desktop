@@ -5,7 +5,6 @@ import useProductsQuery from '@/hooks/services/useProductsQuery';
 import ErrorMessage from '@/components/ErrorMessage';
 import Loader from '@/components/Loader';
 import { useState } from 'react';
-import EditableCollapse from '@/components/EditableCollapse';
 import VariantUpdateTable from '@/components/VariantUpdateTable/VariantUpdateTable';
 
 const Productos = () => {
@@ -26,22 +25,10 @@ const Productos = () => {
         <SearchInput {...searchProps} />
       </div>
       <section className="flex w-full justify-center ">
-        {isMobile ? (
-          <>
-            {productsQuery.isLoading && <Loader />}
-            {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
-            {productsQuery.products.map((product) => (
-              <EditableCollapse key={product.id} product={product} />
-            ))}
-          </>
-        ) : (
-          <>
-            {productsQuery.isLoading && <Loader />}
-            {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
-            {!productsQuery.isLoading && !productsQuery.isError && (
-              <VariantUpdateTable products={productsQuery.products} />
-            )}
-          </>
+        {productsQuery.isLoading && <Loader />}
+        {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
+        {!productsQuery.isLoading && !productsQuery.isError && (
+          <VariantUpdateTable products={productsQuery.products} />
         )}
       </section>
     </PageLayout>
