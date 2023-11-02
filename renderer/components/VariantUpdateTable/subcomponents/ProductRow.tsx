@@ -1,14 +1,13 @@
 import FormControl from '@/components/FormControl';
 import useUpdateProductForm from '@/hooks/useUpdateProduct';
 import { UpdateProductButton } from '@/components/ProductItem.styles';
-import { IProduct} from '@/interfaces/IProduct';
+import { IProduct } from '@/interfaces/IProduct';
 import { useForm } from 'react-hook-form';
 import useUpdateProductMutation from '@/hooks/services/useUpdateProductMutation';
 import ImageControl from '@/components/ImageControl';
 import { Card } from '@/components/Card';
 import { IVariantExpanded } from '@/interfaces/IVariants';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
-
 
 interface IProps {
   product: IProduct;
@@ -21,9 +20,14 @@ interface IFormControl {
 }
 
 const ProductRow = ({ product, variant }: IProps) => {
-
-  const { handleChangeName, isLoading, productName, handleChangeVariantName,variantName, pendingChanges } =
-    useUpdateProductForm({ product, variant });
+  const {
+    handleChangeName,
+    isLoading,
+    productName,
+    handleChangeVariantName,
+    variantName,
+    pendingChanges,
+  } = useUpdateProductForm({ product, variant });
 
   const {
     handleSubmit,
@@ -35,11 +39,8 @@ const ProductRow = ({ product, variant }: IProps) => {
     },
   });
 
-
   const updateProductMutation = useUpdateProductMutation();
   const updateVariantMutation = useUpdateVariantMutation();
-
-
 
   const onSubmit = (data: IFormControl) => {
     console.log(data);
@@ -79,16 +80,17 @@ const ProductRow = ({ product, variant }: IProps) => {
           <UpdateProductButton
             onClick={handleSubmit(onSubmit)}
             pendingChanges={pendingChanges}
-            isLoading={updateProductMutation.isLoading || updateVariantMutation.isLoading}
+            isLoading={
+              updateProductMutation.isLoading || updateVariantMutation.isLoading
+            }
           />
         </section>
-        <div className='divider'>Tipo</div>
+        <div className="divider">Tipo</div>
         <div className="divider">Imagen</div>
       </form>
       <section className="flex flex-col items-center gap-2">
         <ImageControl product={product} />
       </section>
-
     </Card>
   );
 };

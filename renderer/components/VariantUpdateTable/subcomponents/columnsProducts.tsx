@@ -30,13 +30,8 @@ export const columnDefProduct = [
 
   columnHelper.display({
     header: 'Tipo',
-    cell: (props) => (
-      <ProductTypeMenu
-        product={props.row.original.product}
-      />
-    )
-  })
-  ,
+    cell: (props) => <ProductTypeMenu product={props.row.original.product} />,
+  }),
   columnHelper.display({
     header: 'Ver detalles',
     cell: (props) => (

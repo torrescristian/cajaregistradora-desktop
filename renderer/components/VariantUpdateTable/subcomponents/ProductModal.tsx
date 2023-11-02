@@ -28,8 +28,11 @@ export const ProductModal = ({ product, variant }: IProps) => {
         <div>
           <ProductRow product={product} key={product.id} variant={variant} />
         </div>
-        <div className='w-full flex pt-10 justify-end'>
-          <button className="btn btn-link text-error" onClick={() => ref.current?.close()}>
+        <div className="w-full flex pt-10 justify-end">
+          <button
+            className="btn btn-link text-error"
+            onClick={() => ref.current?.close()}
+          >
             Cancelar
           </button>
         </div>

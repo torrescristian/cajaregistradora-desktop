@@ -5,16 +5,11 @@ import { getProductsQueryKey } from './useProductsQuery';
 import { getVariantsQueryKey } from './useCreateVariantMutation';
 import { getProductTypeQueryKey } from './useProductTypesQuery';
 
-
 export default function useUpdateProductMutation() {
   const queryClient = useQueryClient();
 
   return useMutation(async (product: Partial<IProductPayload>) => {
-    const response = strapi.update(
-      getProductsQueryKey(),
-      product.id!,
-      product
-    );
+    const response = strapi.update(getProductsQueryKey(), product.id!, product);
 
     queryClient.invalidateQueries([getProductsQueryKey()]);
     return response;

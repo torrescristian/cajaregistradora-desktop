@@ -10,7 +10,10 @@ interface IUseUpdateProductFormProps {
   variant: IVariantExpanded;
 }
 
-const useUpdateProductForm = ({ product,variant}: IUseUpdateProductFormProps) => {
+const useUpdateProductForm = ({
+  product,
+  variant,
+}: IUseUpdateProductFormProps) => {
   // STATE
   const updateProductMutation = useUpdateProductMutation();
 
@@ -18,20 +21,18 @@ const useUpdateProductForm = ({ product,variant}: IUseUpdateProductFormProps) =>
     product.name,
   );
   const { handleChange: handleChangeVariantName, value: variantName } =
-  useFormControl(variant.name);
+    useFormControl(variant.name);
 
- 
   const pendingChanges = useMemo(() => {
     if (!product) {
       return false;
     }
-    if(!variant){
-      return false
+    if (!variant) {
+      return false;
     }
-    
 
     return product.name !== productName || variant.name !== variantName;
-  }, [product, productName,variant,variantName]);
+  }, [product, productName, variant, variantName]);
 
   // HANDLERS
   const handleSubmit = () => () => {
