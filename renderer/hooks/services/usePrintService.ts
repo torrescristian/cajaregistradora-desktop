@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { findOrderById } from './findOrderById';
+import findTicketById from './findTicketById';
 
 const SOCKET_LOCALHOST = 'http://localhost:4000';
 
@@ -27,14 +28,23 @@ export default function usePrintService() {
   const printOrder = async (orderId: number) => {
     const order = await findOrderById(orderId);
 
-    console.log(order);
-
     _emit(EVENT_TYPE.PRINT_ORDER, order);
   };
 
-  const printInvoice = () => _emit(EVENT_TYPE.PRINT_INVOICE, null);
+  const printInvoice = async (ticketId: number) => {
+    const ticket = await findTicketById(ticketId);
 
-  const printCommand = () => _emit(EVENT_TYPE.PRINT_COMMAND, null);
+    console.log(ticket);
+
+    _emit(EVENT_TYPE.PRINT_INVOICE, ticket);
+  };
+  
+
+  const printCommand = async (orderId: number) => {
+    const order = await findOrderById(orderId);
+
+    _emit(EVENT_TYPE.PRINT_COMMAND, order);
+  };
 
   return {
     printCommand,

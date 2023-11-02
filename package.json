@@ -6,11 +6,12 @@
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
   "main": "app/background.js",
   "scripts": {
-    "start": "next start ./renderer",
-    "dev": "next ./renderer",
-    "build:web": "next build ./renderer",
-    "build": "npm run build:web",
+    "start": "next ./renderer",
+    "dev": "nextron",
+    "build:web": "next renderer",
+    "build": "next build ./renderer",
     "build:nextron": "nextron build",
+    "postinstall": "electron-builder install-app-deps",
     "build:all": "nextron build --all",
     "build:win32": "nextron build --win --ia32",
     "build:win64": "nextron build --win --x64",
@@ -38,7 +39,7 @@
     "escpos-usb": "^3.0.0-alpha.4",
     "express": "^4.18.2",
     "js-cookie": "^3.0.1",
-    "next": "^13.5.6",
+    "next": "13.2.4",
     "next-auth": "^4.21.1",
     "postcss": "^8.4.21",
     "react": "18.2.0",
@@ -52,6 +53,7 @@
     "strapi-sdk-js": "^2.2.0",
     "tailwind-merge": "^1.12.0",
     "tailwindcss": "^3.3.0",
+    "thermal-printer-encoder": "^2.0.0",
     "use-debounce": "^9.0.4",
     "yup": "^1.1.1",
     "zustand": "^4.4.1"
@@ -59,6 +61,7 @@
   "devDependencies": {
     "@types/cookie": "^0.5.1",
     "@types/deep-equal": "^1.0.1",
+    "@types/escpos": "^2.5.2",
     "@types/express": "^4.17.17",
     "@types/js-cookie": "^3.0.3",
     "@types/next-auth": "^3.15.0",
@@ -68,12 +71,19 @@
     "@types/socket.io": "^3.0.2",
     "@types/yup": "^0.32.0",
     "cypress": "^13.3.0",
+    "electron": "^21.3.3",
+    "electron-builder": "^23.6.0",
     "eslint": "^8.45.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
+    "next": "^12.3.4",
+    "nextron": "^8.5.0",
     "prettier": "3.0.0",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "typescript": "5.0.2"
+  },
+  "resolutions": {
+    "usb": "1.8.8"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

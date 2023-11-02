@@ -25,8 +25,8 @@ const columnHelper = createColumnHelper<IColumn>();
 
 export const columnsDef = [
   {
-    accessorFn: (col: IColumn) => col.ticket.id,
-    header: 'Código ID',
+    accessorFn: (col: IColumn) => col.ticket.order.id,
+    header: 'Nro de orden',
   },
   {
     accessorKey: 'date',

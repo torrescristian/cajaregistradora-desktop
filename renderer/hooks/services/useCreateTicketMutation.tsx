@@ -2,6 +2,7 @@ import {
   TICKET_STATUS,
   ITicketPayload,
   PAYMENT_TYPE,
+  ITicket,
 } from '@/interfaces/ITicket';
 import strapi from '@/libs/strapi';
 import { TicketPayloadSchema } from '@/schemas/TicketSchema';
@@ -93,7 +94,7 @@ export default function useCreateTicketMutation() {
     queryClient.invalidateQueries([getCashBalanceKey()]);
 
     return {
-      ticketResponse: res[0],
+      ticketResponse: res[0] as IStrapiSingleResponse<ITicket>,
       orderResponse: res[1] as IStrapiSingleResponse<IOrder>,
       cashBalanceResponse: res[2],
       couponResponse: res[3],

@@ -2,6 +2,7 @@ import { IPromoItem } from './ICart';
 import IClient from './IClient';
 import { ICoupon } from './ICoupon';
 import { IProduct } from './IProduct';
+import IStore from './IStore';
 import { IVariant } from './IVariants';
 import { IResponsePage } from './utils';
 
@@ -33,6 +34,7 @@ export interface IOrder<
   totalPrice: number;
   updatedAt?: string;
   promoItems: IPromoItem[];
+  store: IStore,
 }
 
 export interface IDiscount {
