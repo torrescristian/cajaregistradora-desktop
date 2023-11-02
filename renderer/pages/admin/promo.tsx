@@ -7,7 +7,7 @@ import usePromoQuery from '@/hooks/services/usePromoQuery';
 const Promo = () => {
   const searchProps = useSearchProps();
   const promoQuery = usePromoQuery({
-    query:searchProps.query,
+    query: searchProps.query,
   });
   const promos = promoQuery.data;
 

@@ -106,7 +106,6 @@ export default function useProductsQuery({
           }
         }
 
-
         const res = (await strapi.find(
           getProductsQueryKey(),
           options,

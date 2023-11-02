@@ -42,13 +42,11 @@ const Products = () => {
 
   const products = productsQuery.products as IProduct[];
 
-
   const handleClickPage = (page: number) => () => setActivePage(page);
   const handleSelectPage = (type: IProductType | null) => {
     setSelectedProductType(type);
     setActivePage(1);
   };
-
 
   if (promoQuery.isLoading) {
     return <Loader />;
@@ -83,12 +81,11 @@ const Products = () => {
           />
         </RenderIf>
       </section>
-        <Pagination
-          pagination={productsQuery.pagination}
-          onClick={handleClickPage}
-          isLoading={productsQuery.isLoading}
-        />
-     
+      <Pagination
+        pagination={productsQuery.pagination}
+        onClick={handleClickPage}
+        isLoading={productsQuery.isLoading}
+      />
     </section>
   );
 };
