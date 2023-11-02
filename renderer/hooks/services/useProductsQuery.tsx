@@ -44,14 +44,14 @@ interface IProductsQueryProps {
   query: string;
   selectedProductType?: number;
   page?: number;
-  promo?: number[];
+  showPromo?: boolean;
 }
 
 export default function useProductsQuery({
   query,
   selectedProductType,
   page,
-  promo,
+  showPromo,
 }: IProductsQueryProps) {
   const router = useRouter();
   const [pagination, setPagination] = useState<IProductPage['pagination']>({
@@ -62,7 +62,7 @@ export default function useProductsQuery({
   });
 
   const { data, isLoading, isError, isSuccess, error } = useQuery<IProduct[]>(
-    [getProductsQueryKey(), query, selectedProductType, page],
+    [getProductsQueryKey(), showPromo, query, selectedProductType, page],
     async () => {
       try {
         let options: any = {
@@ -79,7 +79,7 @@ export default function useProductsQuery({
           page: page || 1,
           pageSize: 9,
         };
-        $and: {
+        if (!showPromo) {
           if (selectedProductType) {
             options.filters = {
               type: selectedProductType,
@@ -88,20 +88,24 @@ export default function useProductsQuery({
           if (query) {
             options.filters = {
               ...options.filters,
-              name: {
-                $containsi: query,
-              },
+              $or: [
+                {
+                  name: {
+                    $containsi: query,
+                  },
+                },
+                {
+                  variants: {
+                    name: {
+                      $containsi: query,
+                    },
+                  },
+                },
+              ],
             };
           }
-          $or: {
-            if (promo) {
-              options.filters = {
-                ...options.filters,
-                promo: promo,
-              };
-            }
-          }
         }
+
 
         const res = (await strapi.find(
           getProductsQueryKey(),

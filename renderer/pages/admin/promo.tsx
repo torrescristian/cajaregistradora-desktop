@@ -1,10 +1,14 @@
 import CreateListTabs from '@/components/CreateListTabs';
 import { CreatePromo } from '@/components/Promo/CreatePromo';
 import RenderPromos from '@/components/Promo/RenderPromo';
+import { useSearchProps } from '@/components/SearchInput';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
 
 const Promo = () => {
-  const promoQuery = usePromoQuery();
+  const searchProps = useSearchProps();
+  const promoQuery = usePromoQuery({
+    query:searchProps.query,
+  });
   const promos = promoQuery.data;
 
   if (!promos) {
