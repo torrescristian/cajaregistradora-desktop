@@ -35,9 +35,11 @@ export default function usePromoQuery({
           'categories.category.variants.stock_per_variant',
           'variants',
           'variants.variant.product',
+          'variants.variant.product.variants',
+          'variants.variant.product.default_variant',
           'variants.variant.product.type',
           'variants.variant.stock_per_variant',
-        ],
+          ],
         page: page || 1,
         pageSize: 9,
       };

@@ -23,7 +23,7 @@ interface IProps {
 }
 const ProductItem = ({ product, onClick }: IProps) => {
   const [selectedVariant, setSelectedVariant] = useState(
-    product.default_variant,
+    product.default_variant!,
   );
 
   const { handleClickAdd, isService } = useProductItem({

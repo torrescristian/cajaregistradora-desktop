@@ -7,7 +7,7 @@ export const getCouponQueryKey = () => 'coupons';
 export default function useCouponsQuery() {
   return useQuery<ICoupon[]>([getCouponQueryKey()], async () => {
     const resp = (await strapi.find(getCouponQueryKey(), {
-      populate: ['discount', 'variant', 'variant.product'],
+      populate: ['discount', 'variant', 'variant.product','variant.product.type'],
       filters: {
         availableUses: {
           $gt: 0,

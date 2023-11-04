@@ -17,6 +17,7 @@ export default function useOrderQuery() {
         'order.coupon',
         'order.discount.amount',
         'order.promoItems',
+        'order.promoItems.selectedVariants.stock_per_variants',
         'order.promoItems.promo',
         'cashBalance',
       ],
