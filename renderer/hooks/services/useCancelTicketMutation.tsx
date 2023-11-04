@@ -29,7 +29,7 @@ export default function useCancelTicketMutation() {
       cashBalance,
       returnType,
     }: IProps) => {
-      await yup.number().required().validate(ticketId)
+      await yup.number().required().validate(ticketId);
       await yup.number().required().validate(order.id!);
       await yup.number().required().validate(amountTicket);
       await yup.number().required().validate(cashBalance.id!);
