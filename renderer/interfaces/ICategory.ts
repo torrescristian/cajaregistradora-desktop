@@ -1,5 +1,5 @@
 import { IProduct } from './IProduct';
-import { IVariant } from './IVariants';
+import { IVariant, IVariantExpanded } from './IVariants';
 import { IResponsePage } from './utils';
 
 export interface ICategory<VARIANT = IVariant<null, IProduct>[]> {
@@ -13,4 +13,6 @@ export type ICategoryPayload = ICategory<number[]>;
 
 export type ICategoryPage = IResponsePage<ICategory>;
 
-export type ICategoryResponse = IResponsePage<ICategory>;
+export type ICategoryResponse = IResponsePage<ICategoryExpanded>;
+
+export type ICategoryExpanded = ICategory<IVariantExpanded[]>;

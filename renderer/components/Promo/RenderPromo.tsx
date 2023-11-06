@@ -5,6 +5,9 @@ import { IPromoItem } from '@/interfaces/ICart';
 import useRenderPromo from './useRenderPromo';
 import HighlightedText from '../HighlightedText';
 import FieldLabel from '../FieldLabel';
+import { EditPromoModal } from './EditPromoModal';
+import { TrashIcon } from '@heroicons/react/24/solid';
+import { CancelPromoModal } from './CancelPromoModal';
 
 interface IProps {
   promosItems: IPromoItem[];
@@ -31,10 +34,18 @@ export default function RenderPromos({
       <div className="flex flex-row gap-3 p-5 overflow-x-scroll w-[90vw]">
         {promosItems?.map(({ promo }) => (
           <Card key={promo.id!}>
-            <HighlightedText className="text-xl">{promo.name}</HighlightedText>
-            <HighlightedText className="text-xl">
-              {formatPrice(promo.price)}
-            </HighlightedText>
+            <div className='flex flex-row justify-between items-center gap-3'>
+              <div className='flex flex-col'>
+                <HighlightedText className="text-xl">{promo.name}</HighlightedText>
+                <HighlightedText className="text-xl">
+                  {formatPrice(promo.price)}
+                </HighlightedText>
+              </div>
+              <div className='flex flex-row gap-3'>
+                <EditPromoModal promo={promo} />
+                <CancelPromoModal promoId={promo.id!}/>
+              </div>
+            </div>
             <div className="flex flex-col justify-between p-4 gap-5">
               {promo.categories!.map(({ category, quantity }, index) => (
                 <p key={index} className="text-xl list-item whitespace-nowrap">
@@ -70,7 +81,7 @@ export default function RenderPromos({
                         key={createIndex({ categoryIndex, quantityIndex })}
                         value={
                           selectors[
-                            createIndex({ categoryIndex, quantityIndex })
+                          createIndex({ categoryIndex, quantityIndex })
                           ] || category.variants[0].id!
                         }
                         onChange={handleSelectorChange({

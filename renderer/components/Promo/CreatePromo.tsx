@@ -5,12 +5,12 @@ import SearchInput, { useSearchProps } from '../SearchInput';
 import useProductsQuery from '@/hooks/services/useProductsQuery';
 import { IProduct, IProductType } from '@/interfaces/IProduct';
 import React, { useState } from 'react';
-import { IVariantPromo } from '@/interfaces/IVariants';
+import { IVariantExpanded, IVariantPromo } from '@/interfaces/IVariants';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import useCreatePromoMutation from '@/hooks/services/useCreatePromoMutation';
 import useFormControl from '@/hooks/useFormControl';
-import { ICategory } from '@/interfaces/ICategory';
-import { ICategoryAndQuantity, IVariantAndQuantity } from '@/interfaces/IPromo';
+import { ICategory, ICategoryExpanded } from '@/interfaces/ICategory';
+import { ICategoryAndQuantity, IVariantAndQuantity, PROMO_STATUS } from '@/interfaces/IPromo';
 import CardVariantList from '../CardVariantList';
 import CardCategoryList from '../CardCategoryList';
 import SubmitButton from '../SubmitButton';
@@ -29,13 +29,9 @@ export const CreatePromo = () => {
   });
   const products = productsQuery.products as IProduct[];
 
-  const [selectedVariantList, setSelectedVariantList] = useState<
-    IVariantAndQuantity[]
-  >([]);
-  const [selectedCategoryList, setSelectedCategoryList] = useState<
-    ICategoryAndQuantity[]
-  >([]);
-  const [selectedCategory, setSelectedCategory] = useState<ICategory>();
+  const [selectedVariantList, setSelectedVariantList] = useState<IVariantAndQuantity[]>([]);
+  const [selectedCategoryList, setSelectedCategoryList] = useState<ICategoryAndQuantity[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<ICategoryExpanded>();
 
   const categories = categoryQuery.data;
 
@@ -52,7 +48,7 @@ export const CreatePromo = () => {
 
   const handleClickAddProduct = (props: {
     product: IProduct;
-    variant: IVariantPromo;
+    variant: IVariantExpanded;
   }) => {
     let newVariantList = [];
     if (
@@ -138,6 +134,7 @@ export const CreatePromo = () => {
           category: category.id!,
           quantity,
         })),
+        status: PROMO_STATUS.ENABLED
       });
 
       clearForm();

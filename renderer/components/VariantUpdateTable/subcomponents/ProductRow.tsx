@@ -8,6 +8,8 @@ import ImageControl from '@/components/ImageControl';
 import { Card } from '@/components/Card';
 import { IVariantExpanded } from '@/interfaces/IVariants';
 import useUpdateVariantMutation from '@/hooks/services/useUpdateVariantMutation';
+import RemoveProductItemModal from '@/components/RemoveProductItemModal';
+import { TrashIcon } from '@heroicons/react/24/solid';
 
 interface IProps {
   product: IProduct;
@@ -85,7 +87,11 @@ const ProductRow = ({ product, variant }: IProps) => {
             }
           />
         </section>
-        <div className="divider">Tipo</div>
+        <div className="divider">Mas opciónes</div>
+        <div className='flex flex-col w-full items-center'>
+          <button className='flex flex-row whitespace-nowrap btn btn-error gap-3 w-fit'><TrashIcon className='w-5 h-5' /><p>Eliminar Variante</p></button>
+          <RemoveProductItemModal productId={product.id!} />
+        </div>
         <div className="divider">Imagen</div>
       </form>
       <section className="flex flex-col items-center gap-2">

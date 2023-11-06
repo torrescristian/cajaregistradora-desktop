@@ -11,14 +11,15 @@ export interface IPromo<
   categories: ICategoryAndQuantity<CATEGORY>[];
   name: string;
   price: number;
+  status: PROMO_STATUS
 }
 
-export interface ICategoryAndQuantity<CATEGORY = ICategory> {
+export interface ICategoryAndQuantity<CATEGORY = ICategory<IVariantExpanded[]>> {
   category: CATEGORY;
   quantity: number;
 }
 
-export interface IVariantAndQuantity<VARIANT = IVariantPromo> {
+export interface IVariantAndQuantity<VARIANT = IVariantExpanded> {
   variant: VARIANT;
   quantity: number;
 }
@@ -30,3 +31,8 @@ export type IPromoExpanded = IPromo<
 export type IPromoResponse = IResponsePage<IPromoExpanded>;
 
 export type IPromoPayload = IPromo<number, number>;
+
+export enum PROMO_STATUS {
+  ENABLED = 'ENABLED',
+  DISABLED = 'DISABLED',
+}
