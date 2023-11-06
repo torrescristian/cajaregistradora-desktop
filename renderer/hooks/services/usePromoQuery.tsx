@@ -43,11 +43,11 @@ export default function usePromoQuery({
         page: page || 1,
         pageSize: 9,
       };
-      
+
       options.filters = {
         status: PROMO_STATUS.ENABLED,
       };
-      
+
       if (showPromo) {
         options.filters.name = {
           $containsi: query,

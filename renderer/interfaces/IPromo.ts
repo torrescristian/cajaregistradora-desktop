@@ -11,10 +11,12 @@ export interface IPromo<
   categories: ICategoryAndQuantity<CATEGORY>[];
   name: string;
   price: number;
-  status: PROMO_STATUS
+  status: PROMO_STATUS;
 }
 
-export interface ICategoryAndQuantity<CATEGORY = ICategory<IVariantExpanded[]>> {
+export interface ICategoryAndQuantity<
+  CATEGORY = ICategory<IVariantExpanded[]>,
+> {
   category: CATEGORY;
   quantity: number;
 }

@@ -5,7 +5,12 @@ import {
   formatPrice,
   parseDateToArgentinianFormat,
 } from '../helpers/utils';
-import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL, FONT_SIZE_BIG } from '../helpers/const';
+import {
+  ALIGN,
+  FONT_SIZE_NORMAL,
+  FONT_SIZE_SMALL,
+  FONT_SIZE_BIG,
+} from '../helpers/const';
 import { IOrder, ORDER_STATUS } from '../interfaces/IOrder';
 
 export default function printOrder(order: IOrder) {
@@ -34,7 +39,10 @@ export default function printOrder(order: IOrder) {
 
       // open & set printer
       printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.app');
-      printer.text(FONT_SIZE_BIG).text(`Pedido # ${order.id!}`).text(FONT_SIZE_NORMAL);
+      printer
+        .text(FONT_SIZE_BIG)
+        .text(`Pedido # ${order.id!}`)
+        .text(FONT_SIZE_NORMAL);
 
       // store, client and order data
       printer.text(FONT_SIZE_NORMAL).align(ALIGN.LT).text(order.store.name);
@@ -72,8 +80,7 @@ export default function printOrder(order: IOrder) {
         printer.newLine().align('LT').println(`PROMO: ${promo.name}`);
 
         for (const variant of selectedVariants) {
-          printer
-            .println(`- ${variant.product.name} - ${variant.name}`);
+          printer.println(`- ${variant.product.name} - ${variant.name}`);
         }
 
         printer.align('RT').println(formatPrice(promo.price));

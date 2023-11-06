@@ -88,8 +88,11 @@ const ProductRow = ({ product, variant }: IProps) => {
           />
         </section>
         <div className="divider">Mas opciónes</div>
-        <div className='flex flex-col w-full items-center'>
-          <button className='flex flex-row whitespace-nowrap btn btn-error gap-3 w-fit'><TrashIcon className='w-5 h-5' /><p>Eliminar Variante</p></button>
+        <div className="flex flex-col w-full items-center">
+          <button className="flex flex-row whitespace-nowrap btn btn-error gap-3 w-fit">
+            <TrashIcon className="w-5 h-5" />
+            <p>Eliminar Variante</p>
+          </button>
           <RemoveProductItemModal productId={product.id!} />
         </div>
         <div className="divider">Imagen</div>
