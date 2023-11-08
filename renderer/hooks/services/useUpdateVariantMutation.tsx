@@ -3,8 +3,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getVariantsQueryKey } from './useCreateVariantMutation';
 import {
   IVariant,
-  IVariantExpanded,
-  IVariantPayload,
 } from '@/interfaces/IVariants';
 import { getProductsQueryKey } from './useProductsQuery';
 

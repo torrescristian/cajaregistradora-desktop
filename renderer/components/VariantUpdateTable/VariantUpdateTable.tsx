@@ -1,54 +1,21 @@
-import { IProduct } from '@/interfaces/IProduct';
-import {
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
-import { columnDefProduct } from './subcomponents/columnsProducts';
-import { IVariantExpanded } from '@/interfaces/IVariants';
-import { useMemo, useState } from 'react';
+import { flexRender } from '@tanstack/react-table';
+import { useVariantUpdateTableProps } from './hooks/useVariantUpdateTableProps';
 
 interface IProps {
-  products: IProduct[];
+  tableInstance?: ReturnType<typeof useVariantUpdateTableProps>
+
 }
 
-function VariantUpdateTable({ products }: IProps) {
-  if (!products.length) return null;
+function VariantUpdateTable({ tableInstance }: IProps,
+) {
+  if (!tableInstance) return null;
 
-  const variants = useMemo(
-    () =>
-      products.flatMap((p) =>
-        p.variants.map((v) => ({ ...v, product: p }) as IVariantExpanded),
-      ),
-    [products],
-  );
-  const [data, setData] = useState([...variants]);
-
-  const tableInstance = useReactTable({
-    columns: columnDefProduct,
-    data: variants,
-    getCoreRowModel: getCoreRowModel(),
-    meta: {
-      updateData: (rowIndex: number, columnId: string, value: any) => {
-        setData((old) =>
-          old.map((row, index) => {
-            if (index === rowIndex) {
-              return {
-                ...old[rowIndex],
-                [columnId]: value,
-              };
-            }
-            return row;
-          }),
-        );
-      },
-    },
-  });
+  
 
   return (
     <table className="table table-zebra">
       <thead>
-        {tableInstance.getHeaderGroups().map(({ id, headers }) => (
+        {tableInstance!.getHeaderGroups().map(({ id, headers }) => (
           <tr key={id}>
             {headers.map(({ id: headerId, column, getContext }) => (
               <th key={headerId}>
@@ -59,7 +26,7 @@ function VariantUpdateTable({ products }: IProps) {
         ))}
       </thead>
       <tbody>
-        {tableInstance.getRowModel().rows.map((rowEl) => {
+        {tableInstance!.getRowModel().rows.map((rowEl) => {
           return (
             <tr key={rowEl.id}>
               {rowEl.getVisibleCells().map((cellEl) => {
@@ -67,7 +34,7 @@ function VariantUpdateTable({ products }: IProps) {
                   <td key={cellEl.id}>
                     {flexRender(
                       cellEl.column.columnDef.cell,
-                      cellEl.getContext(),
+                      cellEl.getContext()
                     )}
                   </td>
                 );

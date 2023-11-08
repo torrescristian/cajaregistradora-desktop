@@ -4,10 +4,33 @@ import { ProductModal } from './ProductModal';
 import { StockColumn } from './StockColumn';
 import { PriceColumn } from './PriceColumn';
 import { ProductTypeMenu } from './ProductTypeMenu';
+import { CheckboxTable } from './CheckboxTable';
 
 const columnHelper = createColumnHelper<IVariantExpanded>();
 
 export const columnDefProduct = [
+  {
+    id: "select",
+    header: ({ table } : any) => (
+      <CheckboxTable
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          indeterminate: table.getIsSomeRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler(),
+        }}
+      />
+    ),
+    cell: ({ row } : any) => (
+      <CheckboxTable
+        {...{
+          checked: row.getIsSelected(),
+          disabled: !row.getCanSelect(),
+          indeterminate: row.getIsSomeSelected(),
+          onChange: row.getToggleSelectedHandler(),
+        }}
+      />
+    ),
+  },
   {
     accessorFn: (col: IVariantExpanded) => col.product.name,
     header: 'Producto',

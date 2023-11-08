@@ -4,12 +4,15 @@ import {
   getCoreRowModel,
 } from '@tanstack/react-table';
 import { columnsDef } from './columns';
+import { useState } from 'react';
 
 interface IProps {
   data: any[];
 }
 
 export default function TicketTable({ data }: IProps) {
+  
+  
   const tableInstance = useReactTable({
     columns: columnsDef,
     data,
