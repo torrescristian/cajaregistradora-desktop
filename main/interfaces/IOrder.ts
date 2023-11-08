@@ -34,7 +34,7 @@ export interface IOrder<
   totalPrice: number;
   updatedAt?: string;
   promoItems: IPromoItem[];
-  store: IStore,
+  store: IStore;
 }
 
 export interface IDiscount {

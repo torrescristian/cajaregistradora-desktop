@@ -38,7 +38,6 @@ export default function usePrintService() {
 
     _emit(EVENT_TYPE.PRINT_INVOICE, ticket);
   };
-  
 
   const printCommand = async (orderId: number) => {
     const order = await findOrderById(orderId);

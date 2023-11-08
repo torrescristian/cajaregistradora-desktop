@@ -1,5 +1,9 @@
 import { IProductPage } from '@/interfaces/IProduct';
-import { IPromoExpanded, IPromoResponse } from '@/interfaces/IPromo';
+import {
+  IPromoExpanded,
+  IPromoResponse,
+  PROMO_STATUS,
+} from '@/interfaces/IPromo';
 import strapi from '@/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -8,14 +12,12 @@ export const getPromoQueryKey = () => 'promos';
 
 interface IProductsQueryProps {
   query: string;
-
   page?: number;
   showPromo?: boolean;
 }
 
 export default function usePromoQuery({
   query,
-
   page,
   showPromo,
 }: IProductsQueryProps) {
@@ -41,13 +43,17 @@ export default function usePromoQuery({
         page: page || 1,
         pageSize: 9,
       };
+
+      options.filters = {
+        status: PROMO_STATUS.ENABLED,
+      };
+
       if (showPromo) {
-        options.filters = {
-          name: {
-            $containsi: query,
-          },
+        options.filters.name = {
+          $containsi: query,
         };
       }
+
       const resp = (await strapi.find(
         getPromoQueryKey(),
         options,

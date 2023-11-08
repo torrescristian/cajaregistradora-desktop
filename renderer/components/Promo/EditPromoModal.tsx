@@ -1,31 +1,38 @@
-import useCategoryQuery from '@/hooks/services/useCategoryQuery';
-import { RenderIf } from '../RenderIf';
-import ProductItem from '../ProductItem';
-import SearchInput, { useSearchProps } from '../SearchInput';
-import useProductsQuery from '@/hooks/services/useProductsQuery';
-import { IProduct, IProductType } from '@/interfaces/IProduct';
-import React, { useState } from 'react';
-import { IVariantExpanded, IVariantPromo } from '@/interfaces/IVariants';
-import { PlusIcon } from '@heroicons/react/24/solid';
-import useCreatePromoMutation from '@/hooks/services/useCreatePromoMutation';
-import useFormControl from '@/hooks/useFormControl';
-import { ICategory, ICategoryExpanded } from '@/interfaces/ICategory';
+import { PencilIcon, PlusIcon } from '@heroicons/react/24/solid';
+import React, { useRef, useState } from 'react';
+import CardCategoryList from '../CardCategoryList';
 import {
   ICategoryAndQuantity,
+  IPromo,
   IVariantAndQuantity,
-  PROMO_STATUS,
 } from '@/interfaces/IPromo';
-import CardVariantList from '../CardVariantList';
-import CardCategoryList from '../CardCategoryList';
-import SubmitButton from '../SubmitButton';
-import { toast } from 'react-toastify';
 import FieldLabel from '../FieldLabel';
+import useCategoryQuery from '@/hooks/services/useCategoryQuery';
+import { ICategory, ICategoryExpanded } from '@/interfaces/ICategory';
+import SearchInput, { useSearchProps } from '../SearchInput';
+import ProductItem from '../ProductItem';
+import CardVariantList from '../CardVariantList';
+import useProductsQuery from '@/hooks/services/useProductsQuery';
+import { IProduct, IProductType } from '@/interfaces/IProduct';
+import { IVariantPromo } from '@/interfaces/IVariants';
+import useFormControl from '@/hooks/useFormControl';
+import { useForm } from 'react-hook-form';
+import useUpdatePromo from '@/hooks/services/useUpdatePromo';
+import { toast } from 'react-toastify';
 
-export const CreatePromo = () => {
+interface IProps {
+  promo: IPromo;
+}
+
+export const EditPromoModal = ({ promo }: IProps) => {
+  const ref = useRef<HTMLDialogElement>(null);
+
   const categoryQuery = useCategoryQuery();
-  const createPromoMutation = useCreatePromoMutation();
+  const categories = categoryQuery.data;
+
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType>();
+
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
@@ -35,28 +42,28 @@ export const CreatePromo = () => {
 
   const [selectedVariantList, setSelectedVariantList] = useState<
     IVariantAndQuantity[]
-  >([]);
+  >(promo.variants || []);
   const [selectedCategoryList, setSelectedCategoryList] = useState<
     ICategoryAndQuantity[]
-  >([]);
+  >(promo.categories || []);
   const [selectedCategory, setSelectedCategory] = useState<ICategoryExpanded>();
 
-  const categories = categoryQuery.data;
+  const updatePromo = useUpdatePromo();
 
   const {
     value: name,
     handleChange: handleChangeName,
     setValue: setName,
-  } = useFormControl('');
+  } = useFormControl(promo.name || '');
   const {
     value: price,
     handleChange: handleChangePrice,
     setValue: setPrice,
-  } = useFormControl('');
+  } = useFormControl(promo.price || '');
 
   const handleClickAddProduct = (props: {
     product: IProduct;
-    variant: IVariantExpanded;
+    variant: IVariantPromo;
   }) => {
     let newVariantList = [];
     if (
@@ -90,7 +97,14 @@ export const CreatePromo = () => {
       }),
     );
   };
-
+  const handleChangeSelectedCategory = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const selectedCategoryId = Number(e.target.value);
+    setSelectedCategory(
+      categories?.find((category) => category.id === selectedCategoryId),
+    );
+  };
   const handleClickAddCategory = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!selectedCategory) return;
@@ -111,75 +125,52 @@ export const CreatePromo = () => {
     ]);
   };
 
-  const handleChangeSelectedCategory = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const selectedCategoryId = Number(e.target.value);
-    setSelectedCategory(
-      categories?.find((category) => category.id === selectedCategoryId),
-    );
-  };
-
-  const clearForm = () => {
-    setSelectedVariantList([]);
-    setSelectedCategoryList([]);
-    setName('');
-    setPrice('');
-  };
-
-  const handleCreatePromo = async (e: React.FormEvent) => {
+  const handleSubmitUpdatePromo = async (e: React.MouseEvent) => {
     e.preventDefault();
-
     try {
-      const newPromo = await createPromoMutation.mutateAsync({
+      const newPromo = await updatePromo.mutateAsync({
+        id: promo.id,
         name,
         price,
-        variants: selectedVariantList.map(({ variant, quantity }) => ({
-          variant: variant.id!,
-          quantity,
-        })),
-        categories: selectedCategoryList.map(({ category, quantity }) => ({
-          category: category.id!,
-          quantity,
-        })),
-        status: PROMO_STATUS.ENABLED,
+        categories: selectedCategoryList,
+        variants: selectedVariantList,
+        status: promo.status,
       });
-
-      clearForm();
-      toast.success(
-        `Promoción "${newPromo.data.attributes.name}" creada con éxito!`,
-      );
+      toast.success('Promo actualizada');
+      ref.current?.close();
     } catch (error) {
-      console.log({ error });
-      toast.error(`Error al crear la promoción`);
+      toast.error('Error al actualizar promo');
     }
   };
 
   return (
-    <section className="flex flex-col">
-      <div className="flex flex-col gap-3 items-center p-3">
-        <form
-          className="flex flex-col p-5 gap-7 items-start"
-          onSubmit={handleCreatePromo}
-        >
-          <div className="flex flex-row gap-5  justify-start items-end p-5">
-            <FieldLabel title="Nombre:" className="flex flex-col">
-              <input
-                type="text"
-                className="input input-bordered "
-                value={name}
-                onChange={handleChangeName}
-              />
-            </FieldLabel>
-            <FieldLabel title="Precio:" className="flex flex-col">
-              <input
-                type="number"
-                className="input input-bordered w-36"
-                value={price}
-                onChange={handleChangePrice}
-              />
-            </FieldLabel>
-            <RenderIf condition={categories?.length}>
+    <section className="w-full">
+      <button
+        className="btn btn-primary"
+        onClick={() => ref.current?.showModal()}
+      >
+        <PencilIcon className="w-5 h-5" />
+      </button>
+      <dialog ref={ref} className=" items-end bg-neutral p-10">
+        <form>
+          <div>
+            <div className="flex flex-row w-full justify-evenly">
+              <FieldLabel title="Nombre:" className="flex flex-col">
+                <input
+                  type="text"
+                  className="input input-bordered "
+                  value={name}
+                  onChange={handleChangeName}
+                />
+              </FieldLabel>
+              <FieldLabel title="Precio:" className="flex flex-col">
+                <input
+                  type="number"
+                  className="input input-bordered w-36"
+                  value={price}
+                  onChange={handleChangePrice}
+                />
+              </FieldLabel>
               <div className="flex flex-row items-end">
                 <FieldLabel title="Categorias:" className="flex flex-col">
                   <select
@@ -203,22 +194,15 @@ export const CreatePromo = () => {
                   <PlusIcon className="w-9 h-9" /> Agregar
                 </button>
               </div>
-            </RenderIf>
-          </div>
-          <RenderIf condition={categories?.length}>
-            <div className="flex flex-row items-center gap-3">
-              <div className="flex flex-row gap-3 overflow-x-scroll w-[70vw] ">
-                <CardCategoryList
-                  selectedCategoryList={selectedCategoryList}
-                  setSelectedCategoryList={setSelectedCategoryList}
-                  incrementCategoryByOne={incrementCategoryByOne}
-                />
-              </div>
             </div>
-          </RenderIf>
-          <RenderIf condition={!categories}>
-            <p>No hay categorias</p>
-          </RenderIf>
+            <div className="w-[70vw] overflow-x-scroll">
+              <CardCategoryList
+                selectedCategoryList={selectedCategoryList}
+                setSelectedCategoryList={setSelectedCategoryList}
+                incrementCategoryByOne={incrementCategoryByOne}
+              />
+            </div>
+          </div>
           <div className="flex flex-col">
             <SearchInput {...searchProps} />
             <div className="flex flex-row overflow-x-scroll w-[80vw] gap-5 p-5">
@@ -237,20 +221,14 @@ export const CreatePromo = () => {
               setSelectedVariantList={setSelectedVariantList}
             />
           </div>
-          <SubmitButton
-            mutation={createPromoMutation}
-            className="btn btn-primary w-64 self-end"
-            disabled={
-              (selectedVariantList.length === 0 &&
-                selectedCategoryList.length === 0) ||
-              !name ||
-              !price
-            }
-          >
-            Crear Promo
-          </SubmitButton>
+          <button className="btn btn-success" onClick={handleSubmitUpdatePromo}>
+            Actualizar
+          </button>
         </form>
-      </div>
+        <button className="btn btn-error" onClick={() => ref.current?.close()}>
+          Cerrar
+        </button>
+      </dialog>
     </section>
   );
 };

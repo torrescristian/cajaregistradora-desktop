@@ -30,7 +30,7 @@ export interface ITicket<ORDER = IOrder, CASH_BALANCE = ICashBalance> {
   payments: IPayment[];
   status: TICKET_STATUS;
   totalPrice: number;
-  store: IStore
+  store: IStore;
 }
 
 export type ITicketPayload = ITicket<number, number>;

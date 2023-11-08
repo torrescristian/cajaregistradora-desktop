@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
 } from '@tanstack/react-table';
 import { columnsDef } from './columns';
+import { useState } from 'react';
 
 interface IProps {
   data: any[];
