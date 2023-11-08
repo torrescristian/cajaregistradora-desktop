@@ -17,21 +17,25 @@ const Productos = () => {
     query: searchProps.query,
     page: activePage,
   });
-  const tableInstance = useVariantUpdateTableProps(productsQuery)
+  const tableInstance = useVariantUpdateTableProps(productsQuery);
   const isMobile = useIsMobile();
 
   return (
     <PageLayout>
       <div className="flex flex-row justify-between w-full">
         <h1 className="text-2xl whitespace-nowrap">Reabastecer & Actualizar</h1>
-        <ButtomUpdatePrice variants={tableInstance.getSelectedRowModel().flatRows.map((e) => e.original)}/>
+        <ButtomUpdatePrice
+          variants={tableInstance
+            .getSelectedRowModel()
+            .flatRows.map((e) => e.original)}
+        />
         <SearchInput {...searchProps} />
       </div>
       <section className="flex w-full justify-center ">
         {productsQuery.isLoading && <Loader />}
         {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
         {!productsQuery.isLoading && !productsQuery.isError && (
-          <VariantUpdateTable  tableInstance={tableInstance} />
+          <VariantUpdateTable tableInstance={tableInstance} />
         )}
       </section>
     </PageLayout>

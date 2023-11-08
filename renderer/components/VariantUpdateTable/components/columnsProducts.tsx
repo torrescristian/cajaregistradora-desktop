@@ -10,8 +10,8 @@ const columnHelper = createColumnHelper<IVariantExpanded>();
 
 export const columnDefProduct = [
   {
-    id: "select",
-    header: ({ table } : any) => (
+    id: 'select',
+    header: ({ table }: any) => (
       <CheckboxTable
         {...{
           checked: table.getIsAllRowsSelected(),
@@ -20,7 +20,7 @@ export const columnDefProduct = [
         }}
       />
     ),
-    cell: ({ row } : any) => (
+    cell: ({ row }: any) => (
       <CheckboxTable
         {...{
           checked: row.getIsSelected(),

@@ -2,15 +2,11 @@ import { flexRender } from '@tanstack/react-table';
 import { useVariantUpdateTableProps } from './hooks/useVariantUpdateTableProps';
 
 interface IProps {
-  tableInstance?: ReturnType<typeof useVariantUpdateTableProps>
-
+  tableInstance?: ReturnType<typeof useVariantUpdateTableProps>;
 }
 
-function VariantUpdateTable({ tableInstance }: IProps,
-) {
+function VariantUpdateTable({ tableInstance }: IProps) {
   if (!tableInstance) return null;
-
-  
 
   return (
     <table className="table table-zebra">
@@ -34,7 +30,7 @@ function VariantUpdateTable({ tableInstance }: IProps,
                   <td key={cellEl.id}>
                     {flexRender(
                       cellEl.column.columnDef.cell,
-                      cellEl.getContext()
+                      cellEl.getContext(),
                     )}
                   </td>
                 );

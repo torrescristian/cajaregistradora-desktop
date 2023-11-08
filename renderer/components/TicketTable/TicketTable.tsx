@@ -11,8 +11,6 @@ interface IProps {
 }
 
 export default function TicketTable({ data }: IProps) {
-  
-  
   const tableInstance = useReactTable({
     columns: columnsDef,
     data,
