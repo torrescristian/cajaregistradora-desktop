@@ -1,4 +1,4 @@
-import { ICategory } from '@/interfaces/ICategory';
+import { ICategory, ICategoryExpanded } from '@/interfaces/ICategory';
 import { ICategoryAndQuantity } from '@/interfaces/IPromo';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 
@@ -22,7 +22,7 @@ export default function CardCategoryList({
     };
 
   const handleClickAddCategory =
-    (category: ICategory) => (e: React.MouseEvent) => {
+    (category: ICategoryExpanded) => (e: React.MouseEvent) => {
       e.preventDefault();
       incrementCategoryByOne(category.id!);
     };
