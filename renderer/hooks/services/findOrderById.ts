@@ -16,7 +16,7 @@ export const findOrderById = async (orderId: number): Promise<IOrder> => {
       'promoItems.promo',
       'promoItems.selectedVariants',
       'promoItems.selectedVariants.product',
-      'store'
+      'store',
     ],
   })) as unknown as IOrder;
 

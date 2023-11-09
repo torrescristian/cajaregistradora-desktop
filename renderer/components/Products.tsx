@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { RenderIf } from './RenderIf';
 import RenderPromos from './Promo/RenderPromo';
 import usePromoQuery from '@/hooks/services/usePromoQuery';
-import Pagination from './VariantUpdateTable/subcomponents/Pagination';
+import Pagination from './VariantUpdateTable/components/Pagination';
 
 const Navigation = ({ children }: IComponent) => (
   <section className="flex w-full justify-center items-center flex-col sm:flex-row gap-5">

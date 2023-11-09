@@ -1,6 +1,6 @@
 import strapi from '@/libs/strapi';
 import { getErrorMessage, getUrlFromImage } from '@/libs/utils';
-import { IProduct, IProductPage } from '@/interfaces/IProduct';
+import { IProduct, IProductPage, PRODUCT_STATUS } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -36,6 +36,7 @@ const parseProductFacade = (product: IProduct): IProduct => {
     } as IVariant,
     store: store,
     type: type,
+    status: PRODUCT_STATUS.ENABLED,
   };
   return res;
 };
@@ -78,6 +79,9 @@ export default function useProductsQuery({
           ],
           page: page || 1,
           pageSize: 9,
+        };
+        options.filters = {
+          status: PRODUCT_STATUS.ENABLED,
         };
         if (!showPromo) {
           if (selectedProductType) {

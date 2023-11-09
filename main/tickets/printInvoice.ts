@@ -5,7 +5,12 @@ import {
   formatPrice,
   parseDateToArgentinianFormat,
 } from '../helpers/utils';
-import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL, FONT_SIZE_BIG } from '../helpers/const';
+import {
+  ALIGN,
+  FONT_SIZE_NORMAL,
+  FONT_SIZE_SMALL,
+  FONT_SIZE_BIG,
+} from '../helpers/const';
 import { ITicket } from '../interfaces/ITicket';
 
 export default function printInvoice(ticket: ITicket) {
@@ -15,7 +20,7 @@ export default function printInvoice(ticket: ITicket) {
       return;
     }
 
-    const { order } = ticket
+    const { order } = ticket;
 
     if (!escposUSB) return;
 
@@ -36,31 +41,35 @@ export default function printInvoice(ticket: ITicket) {
       }
 
       // open & set printer
-      printer.drawLine()
+      printer.drawLine();
       printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.app');
 
       // store, client and order data
-      printer.text(FONT_SIZE_BIG).text(ticket.store.name).text(FONT_SIZE_NORMAL);
+      printer
+        .text(FONT_SIZE_BIG)
+        .text(ticket.store.name)
+        .text(FONT_SIZE_NORMAL);
 
       printer
         .align(ALIGN.LT)
         .text(`Pedido # ${order.id!}`)
-        .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`)
+        .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`);
 
       printer.text(FONT_SIZE_NORMAL);
       // total amount & status
       printer
         .align(ALIGN.RT)
-        .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
+        .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
 
       if (ticket.couponDiscount) {
-        printer.text(`Descuento de cupon: ${ticket.couponDiscount}`)
-        printer.text(`Otros descuentos: ${discountToString(order.discount)}`)
+        printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
+        printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
       } else {
-        printer.text(`Descuento: ${discountToString(order.discount)}`)
+        printer.text(`Descuento: ${discountToString(order.discount)}`);
       }
-        
-      printer.text(`Total: ${formatPrice(ticket.totalPrice)}`)
+
+      printer
+        .text(`Total: ${formatPrice(ticket.totalPrice)}`)
         .drawLine()
         .align(ALIGN.CT)
         .text(FONT_SIZE_SMALL)

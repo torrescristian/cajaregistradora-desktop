@@ -99,7 +99,7 @@ export default function printCommand(order: IOrder) {
         return acc.concat(curr);
       }, [] as IItem[]);
 
-      printer.text(FONT_SIZE_BIG)
+      printer.text(FONT_SIZE_BIG);
 
       // order items
       for (const item of items) {

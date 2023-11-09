@@ -1,11 +1,7 @@
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getVariantsQueryKey } from './useCreateVariantMutation';
-import {
-  IVariant,
-  IVariantExpanded,
-  IVariantPayload,
-} from '@/interfaces/IVariants';
+import { IVariant } from '@/interfaces/IVariants';
 import { getProductsQueryKey } from './useProductsQuery';
 
 export default function useUpdateVariantMutation() {

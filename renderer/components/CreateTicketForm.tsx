@@ -58,7 +58,7 @@ export const CreateTicketForm = ({
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
 
-  const { printInvoice } = usePrintService()
+  const { printInvoice } = usePrintService();
 
   const finalTotalPrice = order.totalPrice - couponDiscount;
 
@@ -111,7 +111,7 @@ export const CreateTicketForm = ({
         },
       });
 
-      await printInvoice(ticketResponse.data.id)
+      await printInvoice(ticketResponse.data.id);
 
       toast.success('Pagado con exito');
     } catch (error) {
