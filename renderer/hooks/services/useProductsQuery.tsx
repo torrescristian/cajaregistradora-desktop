@@ -88,6 +88,7 @@ export default function useProductsQuery({
             status: VARIANT_STATUS.ENABLED,
           },
         };
+
         if (!showPromo) {
           if (selectedProductType) {
             options.filters = {
