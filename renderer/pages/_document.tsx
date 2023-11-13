@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link rel='manifest' href='/manifest.json' />
         <meta
           name="title"
           content="Cyberfront.dev | Software desde Traslasierra"

@@ -1,13 +1,17 @@
 import { useAuthState } from '@/contexts/AuthContext';
+import { ISubMenuProps } from '@/interfaces/INavbar';
+import NavButton from './subcomponents/NavButton';
 
-export default function Navbar() {
+export default function Navbar({ isLoggedIn }: ISubMenuProps) {
   const { userData } = useAuthState();
 
   return (
     <nav>
-      <section className="w-full flex flex-col items-center gap-1 mt-3">
-        <h2 className="font-bold whitespace-nowrap">Caja Registradora</h2>
-        <h3 className="text-sm text-center">{userData?.username}</h3>
+      <section className='w-full mb-3'>
+            <div>
+              <h2 className="font-bold whitespace-nowrap">Caja Registradora</h2>
+              <h3 className="text-sm text-center">{userData?.username}</h3>
+            </div>
       </section>
     </nav>
   );

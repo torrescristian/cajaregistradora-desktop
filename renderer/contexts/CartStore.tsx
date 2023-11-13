@@ -302,3 +302,4 @@ export const getDiscountAmount = (state: ICartStore) => state.discountAmount;
 export const getPromoItems = (state: ICartStore) => state.promoItems;
 export const getAddPromo = (state: ICartStore) => state.addPromo;
 export const getRemovePromo = (state: ICartStore) => state.removePromo;
+export const getClearCart = (state: ICartStore) => state.clearCart;

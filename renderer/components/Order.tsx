@@ -3,6 +3,7 @@ import { CreateTicketForm } from './CreateTicketForm';
 import { UpdateOrder } from './UpdateOrder';
 import { RenderIf } from './RenderIf';
 import { Card } from './Card';
+import { getClearCart, useCartStore } from '@/contexts/CartStore';
 interface IProps {
   order: IOrder;
   updateMode?: boolean;
@@ -11,9 +12,11 @@ interface IProps {
 
 function Order({ order, updateMode, onSubmit }: IProps) {
   const createMode = !updateMode;
-
+  const clearCart = useCartStore(getClearCart);
+  
   const handleToggleEdit = () => {
     onSubmit(order);
+    clearCart();
   };
 
   return (

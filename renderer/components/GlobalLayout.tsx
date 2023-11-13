@@ -10,6 +10,7 @@ import useUpadteSeenNotification from '@/hooks/services/useUpdateSeenNotificatio
 import DesktopMenu from './Navbar/subcomponents/DesktopMenu';
 import Navbar from './Navbar/Navbar';
 import CustomToastContainer from './CustomToastContainer';
+import NavButton from './Navbar/subcomponents/NavButton';
 
 interface IProps {
   children: React.ReactNode;
@@ -37,20 +38,18 @@ export default function GlobalLayout({ children }: IProps) {
       <div className="drawer-content flex flex-col items-center">
         <RenderIf condition={isLoggedIn}>
           <div className="w-full flex flex-col gap-5 justify-between sm:mt-4 sm:flex-row sm:w-[85vw] ">
-            <Navbar />
+            <Navbar isLoggedIn={isLoggedIn} />
             <div className="flex flex-row justify-evenly gap-5">
-              <div className="flex">
-                {isOnline ? (
-                  <div className="btn btn-link text-success">
-                    <WifiIcon className="w-6 h-6 " />
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center text-error gap-3">
-                    <WifiIcon className="w-6 h-6" />
-                    <p className="whitespace-nowrap">Sin conexión</p>
-                  </div>
-                )}
-              </div>
+              {isOnline ? (
+                <div className="btn btn-link text-success">
+                  <WifiIcon className="w-6 h-6 " />
+                </div>
+              ) : (
+                <div className="flex flex-col items-center text-error gap-3">
+                  <WifiIcon className="w-6 h-6" />
+                  <p className="whitespace-nowrap">Sin conexión</p>
+                </div>
+              )}
               <div className="indicator">
                 <div className="dropdown dropdown-end">
                   {newNotifications?.length ? (
@@ -86,6 +85,14 @@ export default function GlobalLayout({ children }: IProps) {
                     ))}
                   </ul>
                 </div>
+              </div>
+              <div>
+                <NavButton className="w-min whitespace-nowrap text-secondary-focus" href="/pedidos">
+                  Crear orden
+                </NavButton>
+                <NavButton className='w-min whitespace-nowrap text-secondary-focus' href="/ordenes">
+                  Ordenes pendientes
+                </NavButton>
               </div>
               <label
                 htmlFor="my-drawer"
