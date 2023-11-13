@@ -16,6 +16,8 @@ export default function ProductTypes({
 }: IProps) {
   const productsTypes = useProductTypeQuery();
   const productTypes = productsTypes.data || [];
+  const isLargeScreen = (productTypes: IProductType[]) =>
+    productTypes?.length <= 4;
 
   const handleSelect = (type: IProductType) => () => {
     onSelect(type.id === selectedProductType ? null : type);
@@ -27,8 +29,16 @@ export default function ProductTypes({
     setShowPromo(!showPromo);
   };
 
+  const handleShowProducts = () => {
+    onSelect(null);
+    setShowPromo(false);
+  };
+
   return (
     <section className="flex flex-col sm:flex-row gap-5 items-center">
+      <TabButton className="btn-secondary" onClick={handleShowProducts}>
+        <span>Todos</span>
+      </TabButton>
       <TabButton
         className="btn-secondary"
         isActive={showPromo}
@@ -36,7 +46,7 @@ export default function ProductTypes({
       >
         <span>Promociones</span>
       </TabButton>
-      <RenderIf condition={productTypes?.length <= 5}>
+      <RenderIf condition={!isLargeScreen(productTypes)}>
         {productTypes
           ?.filter((t) => t)
           .map((type: IProductType) => (
@@ -50,7 +60,7 @@ export default function ProductTypes({
             </TabButton>
           ))}
       </RenderIf>
-      <RenderIf condition={productTypes?.length > 5}>
+      <RenderIf condition={isLargeScreen(productTypes)}>
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-secondary  m-1">
             🔎 Categorias

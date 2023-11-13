@@ -10,7 +10,7 @@ import { IVariantPromo } from '@/interfaces/IVariants';
 import HighlightedText from './HighlightedText';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { RemoveProductButton } from './ProductItem.styles';
-import RemoveProductItemModal from './RemoveProductItemModal';
+import RemoveProductItemModal from './VariantUpdateTable/components/RemoveProductItemModal';
 
 const Text = ({ children }: IComponent) => {
   return (

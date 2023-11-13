@@ -4,7 +4,7 @@ import { IProduct, IProductPage, PRODUCT_STATUS } from '@/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { IVariant } from '@/interfaces/IVariants';
+import { IVariant, VARIANT_STATUS } from '@/interfaces/IVariants';
 
 export const getProductsQueryKey = () => 'products';
 
@@ -83,6 +83,12 @@ export default function useProductsQuery({
         options.filters = {
           status: PRODUCT_STATUS.ENABLED,
         };
+        options.filters = {
+          variants: {
+            status: VARIANT_STATUS.ENABLED,
+          },
+        };
+
         if (!showPromo) {
           if (selectedProductType) {
             options.filters = {
