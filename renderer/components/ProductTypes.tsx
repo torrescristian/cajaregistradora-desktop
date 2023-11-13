@@ -16,8 +16,9 @@ export default function ProductTypes({
 }: IProps) {
   const productsTypes = useProductTypeQuery();
   const productTypes = productsTypes.data || [];
-  const isLargeScreen = (productTypes : IProductType[]) => productTypes?.length <= 4;
-  
+  const isLargeScreen = (productTypes: IProductType[]) =>
+    productTypes?.length <= 4;
+
   const handleSelect = (type: IProductType) => () => {
     onSelect(type.id === selectedProductType ? null : type);
     setShowPromo(false);
@@ -31,14 +32,12 @@ export default function ProductTypes({
   const handleShowProducts = () => {
     onSelect(null);
     setShowPromo(false);
-  }
+  };
 
   return (
     <section className="flex flex-col sm:flex-row gap-5 items-center">
-      <TabButton
-      className='btn-secondary'
-      onClick={handleShowProducts}>
-        <span>Todos</span>        
+      <TabButton className="btn-secondary" onClick={handleShowProducts}>
+        <span>Todos</span>
       </TabButton>
       <TabButton
         className="btn-secondary"

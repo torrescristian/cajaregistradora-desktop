@@ -87,10 +87,16 @@ export default function GlobalLayout({ children }: IProps) {
                 </div>
               </div>
               <div>
-                <NavButton className="w-min whitespace-nowrap text-secondary-focus" href="/pedidos">
+                <NavButton
+                  className="w-min whitespace-nowrap text-secondary-focus"
+                  href="/pedidos"
+                >
                   Crear orden
                 </NavButton>
-                <NavButton className='w-min whitespace-nowrap text-secondary-focus' href="/ordenes">
+                <NavButton
+                  className="w-min whitespace-nowrap text-secondary-focus"
+                  href="/ordenes"
+                >
                   Ordenes pendientes
                 </NavButton>
               </div>

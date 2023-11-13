@@ -7,11 +7,11 @@ export default function Navbar({ isLoggedIn }: ISubMenuProps) {
 
   return (
     <nav>
-      <section className='w-full mb-3'>
-            <div>
-              <h2 className="font-bold whitespace-nowrap">Caja Registradora</h2>
-              <h3 className="text-sm text-center">{userData?.username}</h3>
-            </div>
+      <section className="w-full mb-3">
+        <div>
+          <h2 className="font-bold whitespace-nowrap">Caja Registradora</h2>
+          <h3 className="text-sm text-center">{userData?.username}</h3>
+        </div>
       </section>
     </nav>
   );

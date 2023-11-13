@@ -1,6 +1,6 @@
-import useCancelVariantMutation from "@/hooks/services/useCancelVariantMutation";
-import { TrashIcon } from "@heroicons/react/24/solid";
-import { useRef } from "react";
+import useCancelVariantMutation from '@/hooks/services/useCancelVariantMutation';
+import { TrashIcon } from '@heroicons/react/24/solid';
+import { useRef } from 'react';
 
 interface IProps {
   variantId: number;
@@ -9,7 +9,7 @@ interface IProps {
 export default function RemoveVariantModal({ variantId }: IProps) {
   const ref = useRef<HTMLDialogElement>(null);
 
-  const cancelVariantMutation = useCancelVariantMutation() 
+  const cancelVariantMutation = useCancelVariantMutation();
   const handleRemoveVariant = () => {
     cancelVariantMutation.mutate(variantId);
   };

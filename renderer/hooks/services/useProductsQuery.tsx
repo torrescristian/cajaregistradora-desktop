@@ -81,13 +81,13 @@ export default function useProductsQuery({
           pageSize: 9,
         };
         options.filters = {
-          status: PRODUCT_STATUS.ENABLED
+          status: PRODUCT_STATUS.ENABLED,
         };
         options.filters = {
-          variants : {
-            status : VARIANT_STATUS.ENABLED
-          }
-        }
+          variants: {
+            status: VARIANT_STATUS.ENABLED,
+          },
+        };
         if (!showPromo) {
           if (selectedProductType) {
             options.filters = {

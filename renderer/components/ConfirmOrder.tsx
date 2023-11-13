@@ -68,12 +68,20 @@ export const ConfirmOrder = ({
   const [payments, setPayments] = useState<IPayment[]>([]);
   const { printOrder, printCommand, printInvoice } = usePrintService();
 
-  const newTotalPrice = useMemo(() =>
+  const newTotalPrice = useMemo(
+    () =>
       calcDiscount({
         discountAmount,
         discountType,
-        price: (order?.totalPrice || subtotalPrice) - couponDiscount,}),
-    [subtotalPrice, couponDiscount, discountAmount, discountType, order!.totalPrice],
+        price: (order?.totalPrice || subtotalPrice) - couponDiscount,
+      }),
+    [
+      subtotalPrice,
+      couponDiscount,
+      discountAmount,
+      discountType,
+      order!.totalPrice,
+    ],
   );
 
   const orderMutation = useCreateOrderMutation();
@@ -97,7 +105,7 @@ export const ConfirmOrder = ({
     };
   };
 
-  const clearForm = () => { };
+  const clearForm = () => {};
   const createOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
       items,
@@ -176,9 +184,7 @@ export const ConfirmOrder = ({
     const sum = payments.reduce((acc, curr) => acc + Number(curr.amount), 0);
     if (sum !== newTotalPrice) {
       toast.error(
-        `Se está cobrando ${formatPrice(sum)} de ${formatPrice(
-          newTotalPrice,
-        )}`,
+        `Se está cobrando ${formatPrice(sum)} de ${formatPrice(newTotalPrice)}`,
       );
       return;
     }

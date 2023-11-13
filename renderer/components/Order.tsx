@@ -13,7 +13,7 @@ interface IProps {
 function Order({ order, updateMode, onSubmit }: IProps) {
   const createMode = !updateMode;
   const clearCart = useCartStore(getClearCart);
-  
+
   const handleToggleEdit = () => {
     onSubmit(order);
     clearCart();
