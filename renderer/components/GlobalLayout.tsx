@@ -2,12 +2,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Bars3Icon, BellAlertIcon, WifiIcon } from '@heroicons/react/24/solid';
 import useNavBar from './Navbar/useNavBar';
 import { RenderIf } from './RenderIf';
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 import useOnlineStatus from '@/hooks/useOnlineStatus';
 import useNotificationQuery from '@/hooks/services/useNotificationQuery';
 import { twMerge } from 'tailwind-merge';
 import useUpadteSeenNotification from '@/hooks/services/useUpdateSeenNotification';
-import DesktopMenu from './Navbar/subcomponents/DesktopMenu';
+import Menu from './Navbar/subcomponents/Menu';
 import Navbar from './Navbar/Navbar';
 import CustomToastContainer from './CustomToastContainer';
 import NavButton from './Navbar/subcomponents/NavButton';
@@ -119,7 +119,7 @@ export default function GlobalLayout({ children }: IProps) {
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
-          <DesktopMenu isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+          <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         </ul>
       </div>
     </div>

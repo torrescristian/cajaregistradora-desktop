@@ -1,7 +1,7 @@
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getCashBalanceKey } from './useActiveCashBalanceQuery';
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 
 interface IProps {
   initialCashAmount: number;

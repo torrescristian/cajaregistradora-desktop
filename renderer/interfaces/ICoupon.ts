@@ -14,6 +14,7 @@ export interface IPartialVariant {
 
 export interface ICoupon<VARIANT = IPartialVariant> {
   id?: number;
+  uid: string;
   code: string;
   variant: VARIANT | null;
   dueDate?: string;

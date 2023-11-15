@@ -1,7 +1,7 @@
 import {
   getCartItemQuantityByVariantId as getCartItemQuantityByVariantId,
   useCartStore,
-} from '@/contexts/CartStore';
+} from '@/state/CartStore';
 import { IProduct } from '@/interfaces/IProduct';
 import { IVariant } from '@/interfaces/IVariants';
 

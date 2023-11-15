@@ -1,4 +1,4 @@
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 import useLogoutMutation from '@/hooks/services/useLogoutMutation';
 import { useRouter } from 'next/router';
 

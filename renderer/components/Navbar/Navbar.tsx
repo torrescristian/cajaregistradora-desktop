@@ -1,4 +1,4 @@
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 import { ISubMenuProps } from '@/interfaces/INavbar';
 import NavButton from './subcomponents/NavButton';
 

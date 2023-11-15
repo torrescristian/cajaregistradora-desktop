@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ICartState } from '@/interfaces/ICart';
 import Cookie from 'js-cookie';
 import IUser from '@/interfaces/IUser';
-import { useCartStore } from '@/contexts/CartStore';
+import { useCartStore } from '@/state/CartStore';
 
 // KEYS
 export const CART_KEY = 'cart';

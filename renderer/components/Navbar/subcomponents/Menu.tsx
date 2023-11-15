@@ -1,9 +1,9 @@
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 import { ISubMenuProps } from '@/interfaces/INavbar';
 import NavButton from './NavButton';
 import { PhoneIcon } from '@heroicons/react/24/solid';
 
-const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
+const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
 
   return (
@@ -65,4 +65,4 @@ const DesktopMenu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   );
 };
 
-export default DesktopMenu;
+export default Menu;

@@ -1,4 +1,4 @@
-import { getRemovePromo, useCartStore } from '@/contexts/CartStore';
+import { getRemovePromo, useCartStore } from '@/state/CartStore';
 import { IPromoItem } from '@/interfaces/ICart';
 import { formatPrice } from '@/libs/utils';
 import { TrashIcon } from '@heroicons/react/24/solid';

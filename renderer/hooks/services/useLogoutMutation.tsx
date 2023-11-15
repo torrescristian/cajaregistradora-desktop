@@ -1,5 +1,5 @@
 import strapi from '@/libs/strapi';
-import { logout, useAuthDispatch } from '@/contexts/AuthContext';
+import { logout, useAuthDispatch } from '@/state/AuthContext';
 import { USER_KEY, CART_KEY } from '@/libs/localStorageManager';
 import { useMutation } from '@tanstack/react-query';
 import Cookie from 'js-cookie';
@@ -17,7 +17,7 @@ export default function useLogoutMutation() {
       dispatch(logout());
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => { },
     },
   );
 

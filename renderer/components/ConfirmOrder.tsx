@@ -13,7 +13,7 @@ import {
   getSubtotalPrice,
   getTotalPrice,
   useCartStore,
-} from '@/contexts/CartStore';
+} from '@/state/CartStore';
 import { ICartItem, IPromoItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';
@@ -105,7 +105,7 @@ export const ConfirmOrder = ({
     };
   };
 
-  const clearForm = () => {};
+  const clearForm = () => { };
   const createOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
       items,

@@ -1,5 +1,5 @@
 import useIsMobile from '@/hooks/useIsMobile';
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 import ActiveLink from '@/components/ActiveLink';
 import {
   ClipboardDocumentCheckIcon,

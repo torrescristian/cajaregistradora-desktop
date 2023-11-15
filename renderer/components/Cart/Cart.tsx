@@ -7,7 +7,7 @@ import {
   getPromoItems,
   getSubtotalPrice,
   useCartStore,
-} from '@/contexts/CartStore';
+} from '@/state/CartStore';
 import { ConfirmOrder } from '../ConfirmOrder';
 import { Card } from '../Card';
 import { IOrder } from '@/interfaces/IOrder';

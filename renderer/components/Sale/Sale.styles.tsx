@@ -2,7 +2,7 @@ import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
 import { IProduct } from '@/interfaces/IProduct';
 import React from 'react';
 import { IContainerProps, ISaleItemProps } from '@/interfaces/Sale.interfaces';
-import { useSale } from '@/contexts/SaleContext';
+import { useSale } from '@/state/SaleContext';
 import { twMerge } from 'tailwind-merge';
 
 export const Divider = ({

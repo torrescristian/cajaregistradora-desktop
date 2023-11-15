@@ -6,7 +6,7 @@ import { useRef } from 'react';
 import { DataItem } from './DataItem';
 import { toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 
 interface IDeleteTicketModalProps {
   ticket: ITicket;
