@@ -40,8 +40,12 @@ export const EditPromoModal = ({ promo }: IProps) => {
   });
   const products = productsQuery.products as IProduct[];
 
-  const [selectedVariantList, setSelectedVariantList] = useState<IVariantAndQuantity[]>(promo.variants || []);
-  const [selectedCategoryList, setSelectedCategoryList] = useState<ICategoryAndQuantity[]>(promo.categories || []);
+  const [selectedVariantList, setSelectedVariantList] = useState<
+    IVariantAndQuantity[]
+  >(promo.variants || []);
+  const [selectedCategoryList, setSelectedCategoryList] = useState<
+    ICategoryAndQuantity[]
+  >(promo.categories || []);
   const [selectedCategory, setSelectedCategory] = useState<ICategoryExpanded>();
 
   const updatePromo = useUpdatePromo();

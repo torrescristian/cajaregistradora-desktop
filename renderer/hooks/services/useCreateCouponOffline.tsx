@@ -14,5 +14,5 @@ export default function useCreateCouponOffline() {
     setIsLoading(false);
     queryClient.invalidateQueries([getCouponQueryKey()]);
   };
-  return { mutate,isLoading };
+  return { mutate, isLoading };
 }

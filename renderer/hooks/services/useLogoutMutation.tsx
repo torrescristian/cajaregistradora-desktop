@@ -17,7 +17,7 @@ export default function useLogoutMutation() {
       dispatch(logout());
     },
     {
-      onSuccess: () => { },
+      onSuccess: () => {},
     },
   );
 

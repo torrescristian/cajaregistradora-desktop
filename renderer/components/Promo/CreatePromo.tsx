@@ -33,8 +33,12 @@ export const CreatePromo = () => {
   });
   const products = productsQuery.products as IProduct[];
 
-  const [selectedVariantList, setSelectedVariantList] = useState<IVariantAndQuantity[]>([]);
-  const [selectedCategoryList, setSelectedCategoryList] = useState<ICategoryAndQuantity[]>([]);
+  const [selectedVariantList, setSelectedVariantList] = useState<
+    IVariantAndQuantity[]
+  >([]);
+  const [selectedCategoryList, setSelectedCategoryList] = useState<
+    ICategoryAndQuantity[]
+  >([]);
   const [selectedCategory, setSelectedCategory] = useState<ICategoryExpanded>();
 
   const categories = categoryQuery.data;

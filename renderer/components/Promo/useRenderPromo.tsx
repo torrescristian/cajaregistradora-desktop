@@ -29,14 +29,14 @@ export default function useRenderPromo() {
 
   const handleSelectorChange =
     (selectorProps: { categoryIndex: number; quantityIndex: number }) =>
-      (e: React.ChangeEvent<HTMLSelectElement>) => {
-        // Actualiza el estado cuando cambie un selector
-        const newValue = e.target.value;
-        setSelectors((prevSelectors: any) => ({
-          ...prevSelectors,
-          [createIndex(selectorProps)]: newValue,
-        }));
-      };
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      // Actualiza el estado cuando cambie un selector
+      const newValue = e.target.value;
+      setSelectors((prevSelectors: any) => ({
+        ...prevSelectors,
+        [createIndex(selectorProps)]: newValue,
+      }));
+    };
 
   const handleClickConfirmVariants = () => {
     const validatedSelections = selectedPromo?.categories

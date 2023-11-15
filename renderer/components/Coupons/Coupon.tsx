@@ -53,7 +53,7 @@ export default function Coupon({ coupon }: IProps) {
         value={formatPrice(coupon.maxAmount)}
       />
 
-  {/*     <DataItem
+      {/*     <DataItem
         label="Producto Asociado:"
         value={
           coupon.variant

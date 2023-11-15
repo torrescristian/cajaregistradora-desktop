@@ -47,7 +47,8 @@ export const CreateCoupon = () => {
 
   const createCouponMutation = useCreateCouponMutation();
   const createCouponOffline = useCreateCouponOffline();
-  const isLoading = createCouponMutation.isLoading || createCouponOffline.isLoading;
+  const isLoading =
+    createCouponMutation.isLoading || createCouponOffline.isLoading;
 
   const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>();
   const [discountAmount, setDiscountAmount] = useState<number>();
@@ -84,7 +85,7 @@ export const CreateCoupon = () => {
       },
       dueDate: data.dueDate || undefined,
       uid: crypto.randomUUID(),
-    }
+    };
     try {
       if (isOnline) {
         await createCouponMutation.mutateAsync(coupon);
