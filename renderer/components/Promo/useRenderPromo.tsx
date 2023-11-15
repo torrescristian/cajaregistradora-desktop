@@ -1,4 +1,4 @@
-import { getAddPromo, useCartStore } from '@/contexts/CartStore';
+import { getAddPromo, useCartStore } from '@/state/CartStore';
 import { IPromo } from '@/interfaces/IPromo';
 import { range } from '@/libs/utils';
 import { useRef, useState } from 'react';

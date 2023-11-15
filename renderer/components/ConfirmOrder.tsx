@@ -13,7 +13,7 @@ import {
   getSubtotalPrice,
   getTotalPrice,
   useCartStore,
-} from '@/contexts/CartStore';
+} from '@/state/CartStore';
 import { ICartItem, IPromoItem } from '@/interfaces/ICart';
 import useCreateOrderMutation from '@/hooks/services/useCreateOrderMutation';
 import Loader from './Loader';

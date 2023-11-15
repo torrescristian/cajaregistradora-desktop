@@ -7,7 +7,7 @@ import { getTicketsQueryKey } from './useTicketQuery';
 import { getOrderQueryKey } from './useOrderQuery';
 import { ICashBalance } from '@/interfaces/ICashBalance';
 import { getCashBalanceKey } from './useActiveCashBalanceQuery';
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 import { IOrder } from '@/interfaces/IOrder';
 interface IProps {
   ticketId: number;

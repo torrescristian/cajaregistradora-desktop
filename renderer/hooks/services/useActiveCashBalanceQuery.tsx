@@ -6,7 +6,7 @@ import {
 } from '@/interfaces/ICashBalance';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 
 export const getCashBalanceKey = () => 'cash-balances';
 

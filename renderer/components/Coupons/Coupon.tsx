@@ -1,4 +1,4 @@
-import { ICoupon } from '@/interfaces/ICoupon';
+import { ICoupon, ICouponPayload } from '@/interfaces/ICoupon';
 import { formatPrice, parseDateToArgentinianFormat } from '@/libs/utils';
 import { DataItem } from '../DataItem';
 import { DISCOUNT_TYPE, IDiscount } from '@/interfaces/IOrder';
@@ -14,11 +14,11 @@ export default function Coupon({ coupon }: IProps) {
   const cancelCouponMutation = useCancelCouponMutation();
 
   function convertDiscount(discount: IDiscount) {
-    switch (discount.type) {
+    switch (discount?.type) {
       case DISCOUNT_TYPE.FIXED:
-        return formatPrice(discount.amount);
+        return formatPrice(discount?.amount);
       case DISCOUNT_TYPE.PERC:
-        return ` ${discount.amount}%`;
+        return ` ${discount?.amount}%`;
       default:
         return '-';
     }
@@ -38,7 +38,7 @@ export default function Coupon({ coupon }: IProps) {
       </div>
       <DataItem
         label="Descuento:"
-        value={formatPrice(coupon.discount.amount)}
+        value={formatPrice(coupon.discount?.amount)}
       />
       <DataItem
         label="Vencimiento:"
@@ -53,14 +53,14 @@ export default function Coupon({ coupon }: IProps) {
         value={formatPrice(coupon.maxAmount)}
       />
 
-      <DataItem
+      {/*     <DataItem
         label="Producto Asociado:"
         value={
           coupon.variant
             ? `${coupon.variant.product.type.emoji} ${coupon.variant.product.name} ${coupon.variant.name}`
             : '-'
         }
-      />
+      /> */}
 
       <DataItem label="Uso restantes:" value={coupon.availableUses} />
     </Card>

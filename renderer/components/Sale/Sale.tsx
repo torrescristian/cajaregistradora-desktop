@@ -8,7 +8,7 @@ import {
   SaleItemsContainer,
   TotalItems,
 } from './Sale.styles';
-import { SaleContext } from '@/contexts/SaleContext';
+import { SaleContext } from '@/state/SaleContext';
 
 export default function Sale({ sale }: IProps) {
   return (

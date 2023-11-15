@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 import WhatsappButton from '@/components/WhatsappButton';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthState } from '@/state/AuthContext';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = React.useState<string>('');

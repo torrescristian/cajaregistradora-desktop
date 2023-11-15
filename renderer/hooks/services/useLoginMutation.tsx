@@ -1,5 +1,5 @@
 import strapi from '@/libs/strapi';
-import { login, useAuthDispatch } from '@/contexts/AuthContext';
+import { login, useAuthDispatch } from '@/state/AuthContext';
 import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import getUserByJWT from './getUserByJWT';

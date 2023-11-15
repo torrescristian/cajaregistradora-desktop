@@ -3,7 +3,7 @@ import { CreateTicketForm } from './CreateTicketForm';
 import { UpdateOrder } from './UpdateOrder';
 import { RenderIf } from './RenderIf';
 import { Card } from './Card';
-import { getClearCart, useCartStore } from '@/contexts/CartStore';
+import { getClearCart, useCartStore } from '@/state/CartStore';
 interface IProps {
   order: IOrder;
   updateMode?: boolean;

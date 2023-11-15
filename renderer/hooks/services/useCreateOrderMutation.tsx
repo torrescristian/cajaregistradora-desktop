@@ -8,7 +8,7 @@ import {
 import strapi from '@/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getOrderQueryKey } from './useOrderQuery';
-import { getPromoItems, useCartStore } from '@/contexts/CartStore';
+import { getPromoItems, useCartStore } from '@/state/CartStore';
 import { ICoupon } from '@/interfaces/ICoupon';
 import * as yup from 'yup';
 import { IStrapiSingleResponse } from '@/interfaces/utils';

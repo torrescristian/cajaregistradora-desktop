@@ -16,6 +16,8 @@ import { IVariantPromo } from '@/interfaces/IVariants';
 import Loader from '../Loader';
 import { toast } from 'react-toastify';
 import FieldLabel from '../FieldLabel';
+import useOnlineStatus from '@/hooks/useOnlineStatus';
+import useCreateCouponOffline from '@/hooks/services/useCreateCouponOffline';
 
 export const CreateCoupon = () => {
   const {
@@ -41,7 +43,12 @@ export const CreateCoupon = () => {
 
   const products = productsQuery.products as IProduct[];
 
+  const isOnline = useOnlineStatus();
+
   const createCouponMutation = useCreateCouponMutation();
+  const createCouponOffline = useCreateCouponOffline();
+  const isLoading =
+    createCouponMutation.isLoading || createCouponOffline.isLoading;
 
   const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>();
   const [discountAmount, setDiscountAmount] = useState<number>();
@@ -69,17 +76,23 @@ export const CreateCoupon = () => {
   };
 
   const handleSubmitCreateCoupon = async (data: ICouponPayload) => {
+    const coupon = {
+      ...data,
+      variant: showProductList ? selectedVariant?.id! : null,
+      discount: {
+        amount: discountAmount!,
+        type: discountType!,
+      },
+      dueDate: data.dueDate || undefined,
+      uid: crypto.randomUUID(),
+    };
     try {
-      await createCouponMutation.mutateAsync({
-        ...data,
-        variant: showProductList ? selectedVariant?.id! : null,
-        discount: {
-          amount: discountAmount!,
-          type: discountType!,
-        },
-        dueDate: data.dueDate || undefined,
-      });
-      toast.success('Cupón creado');
+      if (isOnline) {
+        await createCouponMutation.mutateAsync(coupon);
+      } else {
+        await createCouponOffline.mutate(coupon);
+      }
+      toast.success('Cupón creado correctamente');
     } catch (error) {
       console.log({ error });
       toast.error('Error al crear el cupón');
@@ -185,9 +198,9 @@ export const CreateCoupon = () => {
           <button
             className="btn btn-square w-64 btn-primary"
             type="submit"
-            disabled={createCouponMutation.isLoading}
+            disabled={isLoading}
           >
-            {createCouponMutation.isLoading ? <Loader /> : 'Crear cupon'}
+            {isLoading ? <Loader /> : 'Crear cupon'}
           </button>
         </div>
       </form>
