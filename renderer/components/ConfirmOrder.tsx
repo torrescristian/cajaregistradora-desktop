@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import ClientForm from './ClientForm';
 import {
   getAdditionalDetails,
@@ -67,11 +67,21 @@ export const ConfirmOrder = ({
   const [payments, setPayments] = useState<IPayment[]>([]);
   const { printOrder, printCommand, printInvoice } = usePrintService();
 
-  const finalTotalPrice = calcDiscount({
-    discountAmount,
-    discountType,
-    price: (order?.totalPrice || subtotalPrice) - couponDiscount,
-  });
+  const newTotalPrice = useMemo(
+    () =>
+      calcDiscount({
+        discountAmount,
+        discountType,
+        price: (order?.totalPrice || subtotalPrice) - couponDiscount,
+      }),
+    [
+      subtotalPrice,
+      couponDiscount,
+      discountAmount,
+      discountType,
+      order?.totalPrice,
+    ],
+  );
 
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
@@ -169,18 +179,16 @@ export const ConfirmOrder = ({
 
   const handleCreateTicket = async () => {
     const sum = payments.reduce((acc, curr) => acc + Number(curr.amount), 0);
-    if (sum !== finalTotalPrice) {
+    if (sum !== newTotalPrice) {
       toast.error(
-        `Se está cobrando ${formatPrice(sum)} de ${formatPrice(
-          finalTotalPrice,
-        )}`,
+        `Se está cobrando ${formatPrice(sum)} de ${formatPrice(newTotalPrice)}`,
       );
       return;
     }
 
     const { orderResponse } = await orderMutation.mutateAsync({
       items,
-      totalPrice: finalTotalPrice,
+      totalPrice: newTotalPrice,
       additionalDetails,
       clientId,
       subtotalPrice,
@@ -192,7 +200,7 @@ export const ConfirmOrder = ({
       await createTicketMutation.mutateAsync({
         ticket: {
           order: orderResponse.data.id,
-          totalPrice: finalTotalPrice,
+          totalPrice: newTotalPrice,
           cashBalance: activeCashBalanceQuery.cashBalance?.id!,
           payments,
           couponDiscount,
@@ -264,7 +272,7 @@ export const ConfirmOrder = ({
             <Payments onChange={handleChangePayments} />
             <DataItem
               label="Total:"
-              value={formatPrice(finalTotalPrice)}
+              value={formatPrice(newTotalPrice)}
               defaultValue=""
               className="text-2xl"
             />
