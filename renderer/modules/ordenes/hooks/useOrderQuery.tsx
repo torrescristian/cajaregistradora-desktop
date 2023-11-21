@@ -1,9 +1,11 @@
-import { IOrderResponse, IOrder, ORDER_STATUS } from '@/modules/ordenes/interfaces/IOrder';
+import {
+  IOrderResponse,
+  IOrder,
+  ORDER_STATUS,
+} from '@/modules/ordenes/interfaces/IOrder';
 import { ORDERS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
-
-
 
 export default function useOrderQuery() {
   return useQuery<IOrder[]>([ORDERS_KEY], async () => {

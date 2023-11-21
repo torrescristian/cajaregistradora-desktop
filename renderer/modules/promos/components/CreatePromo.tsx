@@ -1,7 +1,9 @@
 import useCategoryQuery from '@/modules/categorias/hooks/useCategoryQuery';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import ProductItem from '@/modules/products/components/ProductItem';
-import SearchInput, { useSearchProps } from '@/modules/common/components/SearchInput';
+import SearchInput, {
+  useSearchProps,
+} from '@/modules/common/components/SearchInput';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
 import React, { useState } from 'react';

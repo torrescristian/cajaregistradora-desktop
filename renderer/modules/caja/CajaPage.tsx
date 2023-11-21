@@ -1,39 +1,38 @@
-import PageLayout from "@/modules/common/components/PageLayout";
-import { RenderIf } from "@/modules/common/components/RenderIf";
-import Loader from "@/modules/common/components/Loader";
-import { formatPrice } from "@/modules/common/libs/utils";
-import { format } from "date-fns";
-import useActiveCashBalanceQuery from "./hooks/useActiveCashBalanceQuery";
-import useFormControl from "@/modules/common/hooks/useFormControl";
-import useInitCashMutation from "./hooks/useInitCashMutation";
-import { CashBalanceActivate } from "./components/CashBalanceActive";
-import { CashBalance, CreateCashBalance } from "./components/CashBalance";
-import { CloseCashBalance } from "./components/CloseCashBalance";
+import PageLayout from '@/modules/common/components/PageLayout';
+import { RenderIf } from '@/modules/common/components/RenderIf';
+import Loader from '@/modules/common/components/Loader';
+import { formatPrice } from '@/modules/common/libs/utils';
+import { format } from 'date-fns';
+import useActiveCashBalanceQuery from './hooks/useActiveCashBalanceQuery';
+import useFormControl from '@/modules/common/hooks/useFormControl';
+import useInitCashMutation from './hooks/useInitCashMutation';
+import { CashBalanceActivate } from './components/CashBalanceActive';
+import { CashBalance, CreateCashBalance } from './components/CashBalance';
+import { CloseCashBalance } from './components/CloseCashBalance';
 
-export default function CajaPage(){
+export default function CajaPage() {
+  const {
+    cashBalance,
+    todayCashBalances,
+    isLoading: activeCashLoading,
+    isError,
+    isSuccess,
+    cashIsActive,
+  } = useActiveCashBalanceQuery();
 
-    const {
-        cashBalance,
-        todayCashBalances,
-        isLoading: activeCashLoading,
-        isError,
-        isSuccess,
-        cashIsActive,
-      } = useActiveCashBalanceQuery();
-    
-      const { handleChange, value } = useFormControl(0);
-    
-      const isLoading = activeCashLoading;
-    
-      const initCashMutation = useInitCashMutation();
-      const handleClick = () => {
-        initCashMutation.mutate({
-          initialCashAmount: Number(value),
-        });
-      };
+  const { handleChange, value } = useFormControl(0);
 
-    return(
-        <PageLayout>
+  const isLoading = activeCashLoading;
+
+  const initCashMutation = useInitCashMutation();
+  const handleClick = () => {
+    initCashMutation.mutate({
+      initialCashAmount: Number(value),
+    });
+  };
+
+  return (
+    <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
       <section>
         <ul className="flex flex-col items-center gap-5">
@@ -95,5 +94,5 @@ export default function CajaPage(){
         </section>
       </RenderIf>
     </PageLayout>
-    )
+  );
 }

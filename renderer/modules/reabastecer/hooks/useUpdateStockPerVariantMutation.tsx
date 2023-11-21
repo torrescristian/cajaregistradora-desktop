@@ -4,7 +4,6 @@ import IStockPerVariant from '@/modules/ordenes/interfaces/IStockPerVariant';
 import { toast } from 'react-toastify';
 import { PRODUCTS_KEY, STOCK_PER_VARIANTS_KEY } from '@/modules/common/consts';
 
-
 export interface IUseUpdateVariantMutationProps {
   newStock: number;
   stockPerVariant: IStockPerVariant;

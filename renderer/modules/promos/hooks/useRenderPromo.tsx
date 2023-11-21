@@ -1,4 +1,7 @@
-import { getAddPromo, useCartStore } from '@/modules/cart/contexts/useCartStore';
+import {
+  getAddPromo,
+  useCartStore,
+} from '@/modules/cart/contexts/useCartStore';
 import { IPromo } from '@/modules/promos/interfaces/IPromo';
 import { range } from '@/modules/common/libs/utils';
 import { useRef, useState } from 'react';
@@ -29,14 +32,14 @@ export default function useRenderPromo() {
 
   const handleSelectorChange =
     (selectorProps: { categoryIndex: number; quantityIndex: number }) =>
-      (e: React.ChangeEvent<HTMLSelectElement>) => {
-        // Actualiza el estado cuando cambie un selector
-        const newValue = e.target.value;
-        setSelectors((prevSelectors: any) => ({
-          ...prevSelectors,
-          [createIndex(selectorProps)]: newValue,
-        }));
-      };
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      // Actualiza el estado cuando cambie un selector
+      const newValue = e.target.value;
+      setSelectors((prevSelectors: any) => ({
+        ...prevSelectors,
+        [createIndex(selectorProps)]: newValue,
+      }));
+    };
 
   const handleClickConfirmVariants = () => {
     const validatedSelections = selectedPromo?.categories

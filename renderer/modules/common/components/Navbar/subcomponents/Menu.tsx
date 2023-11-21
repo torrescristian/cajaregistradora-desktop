@@ -28,10 +28,7 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                   Reabastecer
                 </NavButton>
 
-                <NavButton
-                  className="w-full"
-                  href="/admin/crearProductos"
-                >
+                <NavButton className="w-full" href="/admin/crearProductos">
                   Crear Producto
                 </NavButton>
 

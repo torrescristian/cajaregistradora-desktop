@@ -85,10 +85,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
         subtotalPrice,
         totalPrice: state.discountAmount
           ? calcDiscount({
-            discountAmount: state.discountAmount!,
-            discountType: state.discountType!,
-            price: subtotalPrice,
-          })
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: subtotalPrice,
+            })
           : subtotalPrice,
       };
     });
@@ -112,10 +112,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
           subtotalPrice,
           totalPrice: state.discountAmount
             ? calcDiscount({
-              discountAmount: state.discountAmount!,
-              discountType: state.discountType!,
-              price: subtotalPrice,
-            })
+                discountAmount: state.discountAmount!,
+                discountType: state.discountType!,
+                price: subtotalPrice,
+              })
             : subtotalPrice,
         };
       }
@@ -131,10 +131,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
         subtotalPrice,
         totalPrice: state.discountAmount
           ? calcDiscount({
-            discountAmount: state.discountAmount!,
-            discountType: state.discountType!,
-            price: subtotalPrice,
-          })
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: subtotalPrice,
+            })
           : subtotalPrice,
       };
     });
@@ -149,10 +149,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
         subtotalPrice,
         totalPrice: state.discountAmount
           ? calcDiscount({
-            discountAmount: state.discountAmount!,
-            discountType: state.discountType!,
-            price: subtotalPrice,
-          })
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: subtotalPrice,
+            })
           : subtotalPrice,
       };
     });
@@ -176,10 +176,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
           subtotalPrice,
           totalPrice: state.discountAmount
             ? calcDiscount({
-              discountAmount: state.discountAmount!,
-              discountType: state.discountType!,
-              price: state.subtotalPrice,
-            })
+                discountAmount: state.discountAmount!,
+                discountType: state.discountType!,
+                price: state.subtotalPrice,
+              })
             : subtotalPrice,
           reset: true,
         };
@@ -197,10 +197,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
           subtotalPrice,
           totalPrice: state.discountAmount
             ? calcDiscount({
-              discountAmount: state.discountAmount!,
-              discountType: state.discountType!,
-              price: state.subtotalPrice,
-            })
+                discountAmount: state.discountAmount!,
+                discountType: state.discountType!,
+                price: state.subtotalPrice,
+              })
             : subtotalPrice,
           reset: true,
         };
@@ -227,10 +227,10 @@ export const useCartStore = create<ICartStore>()((set) => ({
         subtotalPrice: fixPrice(Math.max(subtotalPrice, 0)),
         totalPrice: state.discountAmount
           ? calcDiscount({
-            discountAmount: state.discountAmount!,
-            discountType: state.discountType!,
-            price: state.subtotalPrice,
-          })
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: state.subtotalPrice,
+            })
           : subtotalPrice,
         reset: true,
       };

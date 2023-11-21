@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { ICategoryExpanded, ICategoryResponse } from '@/modules/categorias/interfaces/ICategory';
+import {
+  ICategoryExpanded,
+  ICategoryResponse,
+} from '@/modules/categorias/interfaces/ICategory';
 import strapi from '@/modules/common/libs/strapi';
 import { CATEGORIES_KEY } from '@/modules/common/consts';
-
-
 
 export default function useCategoryQuery() {
   return useQuery<ICategoryExpanded[]>([CATEGORIES_KEY], async () => {

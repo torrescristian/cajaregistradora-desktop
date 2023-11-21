@@ -2,7 +2,9 @@ import useCreateCategoryMutation from '@/modules/categorias/hooks/useCreateCateg
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import React, { useState } from 'react';
-import SearchInput, { useSearchProps } from '@/modules/common/components/SearchInput';
+import SearchInput, {
+  useSearchProps,
+} from '@/modules/common/components/SearchInput';
 import ProductItem from '@/modules/products/components/ProductItem';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';

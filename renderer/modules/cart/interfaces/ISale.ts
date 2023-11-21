@@ -1,5 +1,8 @@
 import { IProduct } from '@/modules/products/interfaces/IProduct';
-import { IStrapiResponse, IResponsePage } from '@/modules/common/interfaces/utils';
+import {
+  IStrapiResponse,
+  IResponsePage,
+} from '@/modules/common/interfaces/utils';
 
 export interface ISaleItem {
   id?: number;

@@ -1,6 +1,8 @@
 import ProductItem from '@/modules/products/components/ProductItem';
 import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
-import SearchInput, { useSearchProps } from '@/modules/common/components/SearchInput';
+import SearchInput, {
+  useSearchProps,
+} from '@/modules/common/components/SearchInput';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
 import Loader from '@/modules/common/components/Loader';

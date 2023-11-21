@@ -1,10 +1,7 @@
-import ReabastecerPage from "@/modules/reabastecer/ReabastecerPage";
+import ReabastecerPage from '@/modules/reabastecer/ReabastecerPage';
 
 const Reabastecer = () => {
-
-  return (
-   <ReabastecerPage />
-  );
+  return <ReabastecerPage />;
 };
 
 export default Reabastecer;

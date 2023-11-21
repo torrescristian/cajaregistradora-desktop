@@ -2,7 +2,11 @@ import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getCashBalanceKey } from './useActiveCashBalanceQuery';
 
-import { PRODUCTS_KEY, STOCK_PER_VARIANTS_KEY, PRODUCT_TYPE_KEY } from '@/modules/common/consts';
+import {
+  PRODUCTS_KEY,
+  STOCK_PER_VARIANTS_KEY,
+  PRODUCT_TYPE_KEY,
+} from '@/modules/common/consts';
 
 export default function useCancelCashBalanceMutation() {
   const queryClient = useQueryClient();

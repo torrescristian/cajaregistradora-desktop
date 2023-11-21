@@ -82,7 +82,7 @@ export default function RenderPromos({
                         key={createIndex({ categoryIndex, quantityIndex })}
                         value={
                           selectors[
-                          createIndex({ categoryIndex, quantityIndex })
+                            createIndex({ categoryIndex, quantityIndex })
                           ] || category.variants[0].id!
                         }
                         onChange={handleSelectorChange({

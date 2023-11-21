@@ -1,10 +1,8 @@
 import useFormControl from '../../common/hooks/useFormControl';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import useUpdateProductMutation from '@/modules/reabastecer/hooks/useUpdateProductMutation';
-import { useMemo} from 'react';
+import { useMemo } from 'react';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
-;
-
 interface IUseUpdateProductFormProps {
   product: IProduct;
   variant: IVariantExpanded;

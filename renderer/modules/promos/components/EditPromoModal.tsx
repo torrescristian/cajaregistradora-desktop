@@ -9,7 +9,9 @@ import {
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCategoryQuery from '@/modules/categorias/hooks/useCategoryQuery';
 import { ICategoryExpanded } from '@/modules/categorias/interfaces/ICategory';
-import SearchInput, { useSearchProps } from '@/modules/common/components/SearchInput';
+import SearchInput, {
+  useSearchProps,
+} from '@/modules/common/components/SearchInput';
 import ProductItem from '@/modules/products/components/ProductItem';
 import CardVariantList from './CardVariantList';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';

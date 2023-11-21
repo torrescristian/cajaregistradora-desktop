@@ -1,6 +1,9 @@
 import { mergeClasses } from '@/modules/common/libs/utils';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { IActionButton, IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
+import {
+  IActionButton,
+  IComponent,
+} from '@/modules/common/interfaces/ProductItem.interfaces';
 import Loader from '../../common/components/Loader';
 
 export const CollapseTitle = ({

@@ -1,10 +1,7 @@
 import CouponsPage from '@/modules/cupones/CouponsPage';
 
 const Cupones = () => {
-
-  return (
-    <CouponsPage />
-  );
+  return <CouponsPage />;
 };
 
 export default Cupones;

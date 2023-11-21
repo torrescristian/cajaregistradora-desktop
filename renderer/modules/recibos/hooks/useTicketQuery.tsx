@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { ITicket, ITicketResponse } from '@/modules/recibos/interfaces/ITicket';
 import { TICKETS_KEY } from '@/modules/common/consts';
 
-
 export default function useOrderQuery() {
   return useQuery<ITicket[]>([TICKETS_KEY], async () => {
     const ticketResponse = (await strapi.find(TICKETS_KEY, {

@@ -1,5 +1,8 @@
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import { formatPrice, parseDateToArgentinianFormat } from '@/modules/common/libs/utils';
+import {
+  formatPrice,
+  parseDateToArgentinianFormat,
+} from '@/modules/common/libs/utils';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { DISCOUNT_TYPE, IDiscount } from '@/modules/ordenes/interfaces/IOrder';
 import { TrashIcon } from '@heroicons/react/24/solid';

@@ -7,11 +7,7 @@ export default function useUpdateVariantMutation() {
   const queryClient = useQueryClient();
 
   return useMutation(async (variant: Partial<IVariant>) => {
-    const res = await strapi.update(
-      VARIANTS_KEY,
-      variant.id!,
-      variant,
-    );
+    const res = await strapi.update(VARIANTS_KEY, variant.id!, variant);
 
     queryClient.invalidateQueries([PRODUCTS_KEY]);
     queryClient.invalidateQueries([VARIANTS_KEY]);

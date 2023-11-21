@@ -7,8 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import { sub } from 'date-fns';
 import { NOTIFICATIONS_KEY } from '../consts';
 
-
-
 function useNotificationQuery() {
   return useQuery<INotification[]>([NOTIFICATIONS_KEY], async () => {
     const resp = (await strapi.find(NOTIFICATIONS_KEY, {

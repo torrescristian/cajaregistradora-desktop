@@ -1,7 +1,13 @@
-import { formatPrice, parseDateToArgentinianFormat } from '@/modules/common/libs/utils';
+import {
+  formatPrice,
+  parseDateToArgentinianFormat,
+} from '@/modules/common/libs/utils';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import React from 'react';
-import { IContainerProps, ISaleItemProps } from '@/modules/common/interfaces/Sale.interfaces';
+import {
+  IContainerProps,
+  ISaleItemProps,
+} from '@/modules/common/interfaces/Sale.interfaces';
 import { useSale } from '@/modules/common/contexts/SaleContext';
 import { twMerge } from 'tailwind-merge';
 

@@ -2,7 +2,9 @@ import { useForm } from 'react-hook-form';
 import FormFieldText from '@/modules/common/components/FormFieldText';
 import useCreateCouponMutation from '@/modules/cupones/hooks/useCreateCouponMutation';
 import { useState } from 'react';
-import SearchInput, { useSearchProps } from '@/modules/common/components/SearchInput';
+import SearchInput, {
+  useSearchProps,
+} from '@/modules/common/components/SearchInput';
 import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import ProductItem from '@/modules/products/components/ProductItem';

@@ -2,7 +2,6 @@ import { CLIENTS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-
 interface IProps {
   id: number;
   name: string;

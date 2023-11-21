@@ -3,7 +3,6 @@ import { COUPONS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-
 export default function useCreateCouponMutation() {
   const queryClient = useQueryClient();
   return useMutation(async (coupon: ICouponPayload) => {

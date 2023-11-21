@@ -13,7 +13,6 @@ export interface IUseCreateVariantMutationProps {
   minimum_stock: number;
 }
 
-
 export default function useCreateVariantMutation() {
   const queryClient = useQueryClient();
   return useMutation(

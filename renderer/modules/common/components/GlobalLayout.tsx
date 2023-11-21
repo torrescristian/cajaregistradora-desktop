@@ -7,7 +7,6 @@ import useNavBar from '../hooks/useNavBar';
 import Navbar from './Navbar/Navbar';
 import Menu from './Navbar/subcomponents/Menu';
 
-
 interface IProps {
   children: React.ReactNode;
 }

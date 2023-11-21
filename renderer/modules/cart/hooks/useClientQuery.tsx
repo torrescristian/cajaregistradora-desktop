@@ -15,24 +15,24 @@ const parseClientFacade = (clientsResponse: IClientResponse): IClient[] => {
 export default function useClientsQuery(filter?: string) {
   const filters = filter
     ? {
-      $or: [
-        {
-          address: {
-            $containsi: filter,
+        $or: [
+          {
+            address: {
+              $containsi: filter,
+            },
           },
-        },
-        {
-          name: {
-            $containsi: filter,
+          {
+            name: {
+              $containsi: filter,
+            },
           },
-        },
-        {
-          phone_number: {
-            $containsi: filter,
+          {
+            phone_number: {
+              $containsi: filter,
+            },
           },
-        },
-      ],
-    }
+        ],
+      }
     : {};
 
   return useQuery<IClient[]>([CLIENTS_KEY, filter], async () => {

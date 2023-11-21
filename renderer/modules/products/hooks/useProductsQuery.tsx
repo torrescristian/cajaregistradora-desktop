@@ -1,12 +1,15 @@
 import strapi from '@/modules/common/libs/strapi';
 import { getErrorMessage, getUrlFromImage } from '@/modules/common/libs/utils';
-import { IProduct, IProductPage, PRODUCT_STATUS } from '@/modules/products/interfaces/IProduct';
+import {
+  IProduct,
+  IProductPage,
+  PRODUCT_STATUS,
+} from '@/modules/products/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { IVariant } from '@/modules/common/interfaces/IVariants';
 import { PRODUCTS_KEY } from '@/modules/common/consts';
-
 
 const parseProductFacade = (product: IProduct): IProduct => {
   const { name, id, isService, variants, image, default_variant, store, type } =

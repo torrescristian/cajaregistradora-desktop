@@ -7,12 +7,19 @@ import {
 import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { getPromoItems, useCartStore } from '@/modules/cart/contexts/useCartStore';
+import {
+  getPromoItems,
+  useCartStore,
+} from '@/modules/cart/contexts/useCartStore';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import * as yup from 'yup';
 import { IStrapiSingleResponse } from '@/modules/common/interfaces/utils';
 import { parsePromoItemsToCartItems } from '@/modules/common/libs/utils';
-import { PRODUCTS_KEY, STOCK_PER_VARIANTS_KEY, ORDERS_KEY } from '@/modules/common/consts';
+import {
+  PRODUCTS_KEY,
+  STOCK_PER_VARIANTS_KEY,
+  ORDERS_KEY,
+} from '@/modules/common/consts';
 import { ICartItem, IPromoItem } from '../interfaces/ICart';
 
 interface IProps {
@@ -33,10 +40,7 @@ export default function useCreateOrderMutation() {
 
   return useMutation(async (props: IProps) => {
     const resp = [null, null, null] as [any, any, any];
-    resp[0] = await strapi.create(
-      ORDERS_KEY,
-      parseOrderToPayLoad(props),
-    );
+    resp[0] = await strapi.create(ORDERS_KEY, parseOrderToPayLoad(props));
 
     const excludeServiceItem = (item: ICartItem): boolean =>
       !item.product.isService;

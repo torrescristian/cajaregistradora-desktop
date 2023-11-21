@@ -1,6 +1,9 @@
 import useProductTypeQuery from '@/modules/products/hooks/useProductTypesQuery';
 import useUpdateProductMutation from '@/modules/reabastecer/hooks/useUpdateProductMutation';
-import { IProduct, IProductPayload } from '@/modules/products/interfaces/IProduct';
+import {
+  IProduct,
+  IProductPayload,
+} from '@/modules/products/interfaces/IProduct';
 import { useForm } from 'react-hook-form';
 
 interface IProps {

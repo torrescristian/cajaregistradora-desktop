@@ -3,7 +3,6 @@ import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PRODUCT_TYPE_KEY } from '@/modules/common/consts';
 
-
 export default function useCreateProductType() {
   const queryClient = useQueryClient();
   return useMutation(async (productType: IProductType) => {

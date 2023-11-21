@@ -1,5 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { IProduct, IProductPayload, IProductType } from '@/modules/products/interfaces/IProduct';
+import {
+  IProduct,
+  IProductPayload,
+  IProductType,
+} from '@/modules/products/interfaces/IProduct';
 import { useImageControl } from '@/modules/cupones/hooks/useImageControl';
 import CreateVariantsTable from '@/modules/crear-producto/components/CreateVariantsTable';
 import { useState } from 'react';

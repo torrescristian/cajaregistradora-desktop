@@ -35,15 +35,11 @@ export default function useCancelTicketMutation() {
       await yup.number().required().validate(cashBalance.id!);
       await yup.number().required().validate(cashBalance.newCashAmount);
       const cancelOrderResult = await cancelOrderMutation.mutate(order);
-      const updateTicketResult = await strapi.update(
-        TICKETS_KEY,
-        ticketId,
-        {
-          status: isOwner
-            ? TICKET_STATUS.REFUNDED
-            : TICKET_STATUS.WAITING_FOR_REFUND,
-        },
-      );
+      const updateTicketResult = await strapi.update(TICKETS_KEY, ticketId, {
+        status: isOwner
+          ? TICKET_STATUS.REFUNDED
+          : TICKET_STATUS.WAITING_FOR_REFUND,
+      });
       const returnMoney = await strapi.update(
         getCashBalanceKey(),
         cashBalance.id!,
