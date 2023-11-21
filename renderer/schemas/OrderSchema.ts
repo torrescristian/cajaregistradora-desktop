@@ -1,4 +1,4 @@
-import { DISCOUNT_TYPE } from '@/interfaces/IOrder';
+import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import * as yup from 'yup';
 import ClientSchema from './ClientSchema';
 import OrderItemsSchema from './OrderItemsSchema';

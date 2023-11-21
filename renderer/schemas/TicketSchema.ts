@@ -1,4 +1,7 @@
-import { PAYMENT_TYPE, TICKET_STATUS } from '@/interfaces/ITicket';
+import {
+  PAYMENT_TYPE,
+  TICKET_STATUS,
+} from '@/modules/recibos/interfaces/ITicket';
 import * as yup from 'yup';
 import OrderSchema from './OrderSchema';
 
