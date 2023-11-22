@@ -22,40 +22,12 @@ interface IProps {
   onClick?: (props: { product: IProduct; variant: IVariantPromo }) => void;
 }
 const ProductItem = ({ product, onClick }: IProps) => {
-  const [selectedVariant, setSelectedVariant] = useState(
-    product.default_variant,
-  );
 
-  const { handleClickAdd, isService } = useProductItem({
+  const { handleChangeVariant,selectedVariant,handleClick } = useProductItem({
     product,
-    selectedVariant,
+    onClick,
   });
 
-  const handleChangeVariant = (e: any) => {
-    product.variants.map((variant) => {
-      if (variant.name === e.target.value) {
-        setSelectedVariant(variant);
-      }
-    });
-  };
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (onClick) {
-      onClick({
-        product,
-        variant: {
-          ...selectedVariant,
-          product: product,
-        },
-      });
-      console.table({ product, selectedVariant });
-      return;
-    }
-
-    handleClickAdd();
-  };
 
   return (
     <Card data-test="product-item" tabIndex={0}>

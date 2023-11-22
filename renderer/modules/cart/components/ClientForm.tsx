@@ -107,7 +107,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
     };
 
   return (
-    <section className="bg-red w-96">
+    <section className="bg-red w-full sm:w-96">
       <dialog ref={dialogRef} className="p-10">
         <form onSubmit={handleClickSubmit} className="flex flex-col gap-3">
           <FormField

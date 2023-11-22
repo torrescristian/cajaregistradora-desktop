@@ -48,7 +48,7 @@ export const Payment = ({
         value={payment.amount}
         type="number"
         placeholder="0.00"
-        className="input input-bordered w-36"
+        className="input input-bordered w-28 sm:w-36"
       />
       <div className="flex flex-row gap-2">
         <button className="btn btn-primary btn-square" onClick={onNewPayment}>

@@ -2,20 +2,34 @@ import { useAuthState } from '@/modules/common/contexts/AuthContext';
 import { ISubMenuProps } from '@/modules/common/interfaces/INavbar';
 import NavButton from './NavButton';
 import { PhoneIcon } from '@heroicons/react/24/solid';
+import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
+
 
 const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
+  const isMobile = useIsMobile();
 
   return (
-    <div className="drawer-side">
-      <label
-        htmlFor="menu-drawer"
-        aria-label="close sidebar"
-        className="drawer-overlay"
-      ></label>
+
       <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
         {isLoggedIn && (
           <ul>
+            {isMobile ? (
+              <ul>
+                <NavButton
+                  className="w-full"
+                  href="/pedidos"
+                >
+                  Crear orden
+                </NavButton>
+                <NavButton
+                  className="w-full"
+                  href="/ordenes"
+                >
+                  Ordenes pendientes
+                </NavButton>
+              </ul>
+            ) : null}
             <NavButton className="w-full" href="/recibos">
               Recibos
             </NavButton>
@@ -65,7 +79,8 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
           </ul>
         )}
       </section>
-    </div>
+   
+
   );
 };
 

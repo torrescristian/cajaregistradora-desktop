@@ -3,6 +3,8 @@ import { CreateTicketForm } from './CreateTicketForm';
 import { UpdateOrder } from './UpdateOrder';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { Card } from '@/modules/common/components/Card';
+import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
+import { CreateTicketFormMobile } from './CreateTicketFormMobile';
 interface IProps {
   order: IOrder;
   updateMode?: boolean;
@@ -11,7 +13,7 @@ interface IProps {
 
 function Order({ order, updateMode, onSubmit }: IProps) {
   const createMode = !updateMode;
-
+  const isMobile = useIsMobile();
   const handleToggleEdit = () => {
     onSubmit(order);
   };
@@ -19,7 +21,14 @@ function Order({ order, updateMode, onSubmit }: IProps) {
   return (
     <Card>
       <RenderIf condition={createMode}>
-        <CreateTicketForm order={order} handleToggleEdit={handleToggleEdit} />
+        {isMobile ? (
+          <CreateTicketFormMobile
+            order={order}
+            handleToggleEdit={handleToggleEdit}
+          />
+        ) : (
+          <CreateTicketForm order={order} handleToggleEdit={handleToggleEdit} />
+        )}
       </RenderIf>
       <RenderIf condition={updateMode}>
         <UpdateOrder order={order} onSubmit={handleToggleEdit} />
