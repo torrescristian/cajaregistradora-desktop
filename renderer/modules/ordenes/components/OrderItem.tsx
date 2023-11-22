@@ -7,7 +7,7 @@ interface IProps {
   updateMode?: boolean;
 }
 function OrderItem({ item, updateMode }: IProps) {
-  const { handleClickRemove} = useProductItem({
+  const { handleClickRemove } = useProductItem({
     product: item.product!,
     selectedVariant: item.selectedVariant,
   });

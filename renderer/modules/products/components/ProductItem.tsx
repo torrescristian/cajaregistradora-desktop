@@ -22,12 +22,10 @@ interface IProps {
   onClick?: (props: { product: IProduct; variant: IVariantPromo }) => void;
 }
 const ProductItem = ({ product, onClick }: IProps) => {
-
-  const { handleChangeVariant,selectedVariant,handleClick } = useProductItem({
+  const { handleChangeVariant, selectedVariant, handleClick } = useProductItem({
     product,
     onClick,
   });
-
 
   return (
     <Card data-test="product-item" tabIndex={0}>

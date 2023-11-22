@@ -15,24 +15,20 @@ interface IProps {
   children: React.ReactNode;
 }
 export default function GlobalLayout({ children }: IProps) {
-
   const isMobile = useIsMobile();
 
   const { isOpen, content: Content, closeModal } = useModalStore();
-
 
   return (
     <div className="drawer drawer-end">
       <CustomToastContainer />
       <input id="menu-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
-      <section className=' p-5'>
+      <div className="drawer-content">
+        <section className=" p-5">
           <Navbar />
-          <section className="flex flex-col container">
-            {children}
-          </section>
-      </section>
-        </div>
+          <section className="flex flex-col container">{children}</section>
+        </section>
+      </div>
       <div className="drawer-side">
         <label
           htmlFor="menu-drawer"
@@ -40,7 +36,6 @@ export default function GlobalLayout({ children }: IProps) {
           className="drawer-overlay"
         ></label>
         {Content}
-
       </div>
     </div>
   );

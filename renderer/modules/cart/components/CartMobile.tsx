@@ -70,7 +70,7 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
           ))}
           <CartPromo promosItems={promosItems} />
         </div>
-        <Card className='flex flex-row justify-end'>
+        <Card className="flex flex-row justify-end">
           <p>
             <span className="text-xl text-primary">Total:</span>{' '}
             {formatPrice(subtotalPrice)}
@@ -79,7 +79,7 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
             <div className="flex flex-row gap-3 w-full">
               <button
                 className="btn btn-primary"
-                onClick={() => openModal(<ConfirmOrderMobile/>) }
+                onClick={() => openModal(<ConfirmOrderMobile />)}
               >
                 Pasar Orden
               </button>

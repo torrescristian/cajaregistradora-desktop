@@ -13,8 +13,8 @@ export default function PedidosPage() {
     return <Loader />;
   }
   return isMobile ? (
-    <div className='flex flex-col w-full'>
-      <ProductsMobile/>
+    <div className="flex flex-col w-full">
+      <ProductsMobile />
     </div>
   ) : (
     <section className="flex w-full flex-col items-start relative justify-between gap-2 ">

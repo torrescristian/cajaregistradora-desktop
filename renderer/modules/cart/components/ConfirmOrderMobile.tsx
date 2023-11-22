@@ -118,7 +118,6 @@ export const ConfirmOrderMobile = ({
       coupon,
       promoItems: promoItems!,
     });
-    
 
     await printOrder(orderResponse.data.id);
     await printCommand(orderResponse.data.id);
@@ -222,8 +221,8 @@ export const ConfirmOrderMobile = ({
 
   return (
     <section className="bg-neutral p-5 ">
-      <CustomToastContainer/>
-      <section className='flex flex-col'>
+      <CustomToastContainer />
+      <section className="flex flex-col">
         <ClientForm
           onSelect={(client) => addClientId(client?.id || null)}
           defaultClient={order?.client}

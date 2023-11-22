@@ -12,7 +12,7 @@ interface IProps {
 
 const CartItem = ({ product, variant }: IProps) => {
   const { cartItemQuantity, handleClickAdd, handleClickRemove } =
-    useProductItem({ product, selectedVariant : variant });
+    useProductItem({ product, selectedVariant: variant });
 
   return (
     <Card data-test="productItem" tabIndex={0}>

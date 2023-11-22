@@ -8,12 +8,11 @@ import { useState } from 'react';
 
 interface IProps {
   product: IProduct;
-  onClick?:(props: { product: IProduct; variant: IVariantPromo }) => void;
+  onClick?: (props: { product: IProduct; variant: IVariantPromo }) => void;
   selectedVariant?: IVariant;
 }
 
 const useProductItem = (props: IProps) => {
-  
   const [selectedVariant, setSelectedVariant] = useState(
     props.selectedVariant || props.product.default_variant,
   );
@@ -29,42 +28,41 @@ const useProductItem = (props: IProps) => {
       ),
     }));
 
-  
-    const handleChangeVariant = (e: any) => {
-     props.product.variants.map((variant) => {
-        if (variant.name === e.target.value) {
-          setSelectedVariant(variant);
-        }
-      });
-    };
-  
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-  
-      if (props.onClick) {
-        props.onClick({
-          product : props.product,
-          variant: {
-            ...selectedVariant,
-            product: props.product,
-          },
-        });
-        return;
+  const handleChangeVariant = (e: any) => {
+    props.product.variants.map((variant) => {
+      if (variant.name === e.target.value) {
+        setSelectedVariant(variant);
       }
-  
-      handleClickAdd();
-    };
+    });
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (props.onClick) {
+      props.onClick({
+        product: props.product,
+        variant: {
+          ...selectedVariant,
+          product: props.product,
+        },
+      });
+      return;
+    }
+
+    handleClickAdd();
+  };
 
   const handleClickAdd = () => {
-    addProduct({ product : props.product, selectedVariant });
+    addProduct({ product: props.product, selectedVariant });
   };
 
   const handleClickRemove = () => {
-    removeProduct({ product : props.product, selectedVariant });
+    removeProduct({ product: props.product, selectedVariant });
   };
 
   const handleClickClear = () => {
-    removeCartItem({ product : props.product, selectedVariant });
+    removeCartItem({ product: props.product, selectedVariant });
   };
 
   return {
@@ -75,7 +73,7 @@ const useProductItem = (props: IProps) => {
     isService,
     selectedVariant,
     handleChangeVariant,
-    handleClick
+    handleClick,
   };
 };
 
