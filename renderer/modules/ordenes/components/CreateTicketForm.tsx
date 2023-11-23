@@ -14,7 +14,11 @@ import {
 } from '@heroicons/react/24/solid';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import { DISCOUNT_TYPE, IOrder } from '@/modules/ordenes/interfaces/IOrder';
+import {
+  DISCOUNT_TYPE,
+  IDiscount,
+  IOrder,
+} from '@/modules/ordenes/interfaces/IOrder';
 import { IPayment } from '@/modules/recibos/interfaces/ITicket';
 import { useForm } from 'react-hook-form';
 import OrderItem from './OrderItem';
@@ -31,6 +35,7 @@ import HighlightedText from '@/modules/common/components/HighlightedText';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import Payments from './Payments';
 import { IPromoItem } from '@/modules/cart/interfaces/ICart';
+import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 
 interface IProps {
   order: IOrder;
@@ -57,10 +62,21 @@ export const CreateTicketForm = ({
   const [payments, setPayments] = useState<IPayment[]>([]);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
+  const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>(
+    DISCOUNT_TYPE.FIXED,
+  );
+  const [discountAmount, setDiscountAmount] = useState<number>(
+    order.discount?.amount!,
+  );
 
   const { printInvoice } = usePrintService();
 
-  const finalTotalPrice = order.totalPrice - couponDiscount;
+  const finalTotalPrice = order.totalPrice - couponDiscount - discountAmount;
+
+  const handleChangeDiscountType = (discount: IDiscount) => {
+    setDiscountType(discount.type);
+    setDiscountAmount(discount.amount);
+  };
 
   const handleCancelOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -99,8 +115,8 @@ export const CreateTicketForm = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-                discountAmount: order.discount?.amount!,
-                discountType: order.discount?.type!,
+                discountAmount,
+                discountType: discountType!,
                 price: finalTotalPrice,
               })
             : couponDiscount,
@@ -234,28 +250,11 @@ export const CreateTicketForm = ({
             onChange={handleCouponDiscountAmount}
             coupon={coupon}
           />
-          <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.FIXED}>
-            <DataItem
-              label="Descuento:"
-              value={formatPrice(order.discount?.amount!)}
-              defaultValue=""
-            />
-          </RenderIf>
-          <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.PERC}>
-            <DataItem
-              label="Descuento:"
-              value={order.discount?.amount! + '%'}
-              defaultValue=""
-            />
-          </RenderIf>
-          <RenderIf condition={!order.discount}>
-            <DataItem
-              label="Descuento:"
-              value=""
-              defaultValue={formatPrice(0)}
-            />
-          </RenderIf>
-
+          <DiscountTypeControl
+            discountAmount={discountAmount}
+            discountType={discountType}
+            onChange={handleChangeDiscountType}
+          />
           <DataItem
             label="Total:"
             value={formatPrice(finalTotalPrice)}

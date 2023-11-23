@@ -56,7 +56,7 @@ export const columnDefProduct = [
     cell: (props) => <ProductTypeMenu product={props.row.original.product} />,
   }),
   columnHelper.display({
-    header: 'Ver detalles',
+    header: 'Mas opciónes',
     cell: (props) => (
       <ProductModal
         product={props.row.original.product}

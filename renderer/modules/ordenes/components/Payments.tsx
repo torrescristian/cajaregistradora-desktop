@@ -5,9 +5,10 @@ import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
 
 interface IProps {
   onChange: (newPayments: IPayment[]) => void;
+  newTotalPrice?: number;
 }
 
-export default function Payments({ onChange }: IProps) {
+export default function Payments({ onChange, newTotalPrice }: IProps) {
   const [payments, setPayments] = useState<IPayment[]>([
     {
       amount: 0,
@@ -59,6 +60,7 @@ export default function Payments({ onChange }: IProps) {
           onNewPayment={handleClickAddPaymentMethod}
           onDelete={handleDelete(index)}
           payment={payment}
+          newTotalPrice={newTotalPrice!}
         />
       ))}
     </section>

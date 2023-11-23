@@ -6,7 +6,7 @@ import CustomToastContainer from './CustomToastContainer';
 import useNavBar from '../hooks/useNavBar';
 import Navbar from './Navbar/Navbar';
 import Menu from './Navbar/subcomponents/Menu';
-import { CartDrawer } from './CartDrawer';
+import { CartDrawer } from './Mobile/CartDrawer';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { useState } from 'react';
 import { useModalStore } from '../contexts/useModalStore';
@@ -35,6 +35,7 @@ export default function GlobalLayout({ children }: IProps) {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
+
         {Content}
       </div>
     </div>

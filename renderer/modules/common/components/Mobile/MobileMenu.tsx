@@ -4,7 +4,7 @@ import { useAuthState } from '@/modules/common/contexts/AuthContext';
 import { Bars3Icon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { ISubMenuProps } from '@/modules/common/interfaces/INavbar';
-import NavButton from './NavButton';
+import NavButton from '../Navbar/subcomponents/NavButton';
 
 const MobileMenu = ({ isLoggedIn, onLogout }: ISubMenuProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
