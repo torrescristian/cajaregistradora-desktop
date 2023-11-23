@@ -9,15 +9,15 @@ import {
 import { Card } from '@/modules/common/components/Card';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import CartPromo from './CartPromo';
-import { Divider } from './Sale/Sale.styles';
-import { ICartItem } from '../interfaces/ICart';
+import CartPromo from '../../../cart/components/CartPromo';
+import { Divider } from '../../../cart/components/Sale/Sale.styles';
+import { ICartItem } from '../../../cart/interfaces/ICart';
 import CartItemMobile from './CartItemMobile';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import { ConfirmOrderMobile } from './ConfirmOrderMobile';
 
 const ProductContainer = ({ children }: IComponent) => (
-  <section className="flex flex-col sm:flex-row w-full gap-5 justify-between">
+  <section className="flex flex-col w-full gap-5 justify-between ">
     {children}
   </section>
 );
@@ -26,7 +26,7 @@ const Layout = ({
   children,
   totalAmount,
 }: IComponent & { totalAmount?: number }) => (
-  <section className="flex w-full flex-col items-center gap-5">
+  <section className="flex w-full flex-col items-center gap-5 p-3 h-screen ">
     <Divider>Carrito</Divider>
     {children}
     <section>
@@ -52,7 +52,7 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
   const subtotalPrice = useCartStore(getSubtotalPrice);
   const promosItems = useCartStore(getPromoItems);
 
-  const { openModal } = useModalStore();
+  const { openModal, closeModal } = useModalStore();
   if (updateMode && !order) {
     throw new Error('Missing order to update');
   }
@@ -60,7 +60,7 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
   return (
     <Layout>
       <ProductContainer>
-        <div className="flex flex-col gap-3 overflow-y-scroll">
+        <div className="flex flex-col gap-3 overflow-y-scroll h-[70vh]">
           {items.map((item) => (
             <CartItemMobile
               key={item.selectedVariant.id}
@@ -70,13 +70,13 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
           ))}
           <CartPromo promosItems={promosItems} />
         </div>
-        <Card className="p-3 border-2 border-secondary flex flex-col bottom-0 w-full inset-x-0 items-center bg-base-200 sticky z-20">
-          <p>
+        <Card className="flex flex-row w-full">
+          <p className="text-center">
             <span className="text-xl text-primary">Total:</span>{' '}
             {formatPrice(subtotalPrice)}
           </p>
           <RenderIf condition={items.length || promosItems.length}>
-            <div className="flex flex-col gap-3 w-full">
+            <div className="flex flex-row gap-3 w-full justify-end">
               <button
                 className="btn btn-primary"
                 onClick={() => openModal(<ConfirmOrderMobile />)}
@@ -96,6 +96,14 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
             </section>
           </RenderIf>
         </Card>
+        <label
+          htmlFor="carrito-drawer"
+          aria-label="cerrar sidebar"
+          className="btn btn-error"
+          onClick={() => closeModal()}
+        >
+          Salir
+        </label>
       </ProductContainer>
     </Layout>
   );

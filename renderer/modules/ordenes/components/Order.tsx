@@ -4,7 +4,7 @@ import { UpdateOrder } from './UpdateOrder';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { Card } from '@/modules/common/components/Card';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
-import { CreateTicketFormMobile } from './CreateTicketFormMobile';
+import { CreateTicketFormMobile } from '../../common/components/Mobile/CreateTicketFormMobile';
 interface IProps {
   order: IOrder;
   updateMode?: boolean;

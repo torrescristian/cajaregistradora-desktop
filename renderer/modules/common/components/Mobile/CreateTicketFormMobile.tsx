@@ -17,19 +17,19 @@ import { RenderIf } from '@/modules/common/components/RenderIf';
 import { DISCOUNT_TYPE, IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { IPayment } from '@/modules/recibos/interfaces/ITicket';
 import { useForm } from 'react-hook-form';
-import OrderItem from './OrderItem';
+import OrderItem from '../../../ordenes/components/OrderItem';
 import Loader from '@/modules/common/components/Loader';
 import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
 import useCancelOrderMutation from '@/modules/ordenes/hooks/useCancelOrderMutation';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
 import { useState } from 'react';
-import ValidateCoupon from './ValidateCoupon';
+import ValidateCoupon from '../../../ordenes/components/ValidateCoupon';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HighlightedText from '@/modules/common/components/HighlightedText';
 import usePrintService from '@/modules/common/hooks/usePrintService';
-import Payments from './Payments';
+import Payments from '../../../ordenes/components/Payments';
 import { IPromoItem } from '@/modules/cart/interfaces/ICart';
 
 interface IProps {
@@ -267,7 +267,10 @@ export const CreateTicketFormMobile = ({
               defaultValue=""
               className="text-2xl"
             />
-            <Payments onChange={handleChangePayments} />
+            <Payments
+              newTotalPrice={finalTotalPrice}
+              onChange={handleChangePayments}
+            />
             <button
               type="submit"
               disabled={createTicketMutation.isLoading || updateMode}

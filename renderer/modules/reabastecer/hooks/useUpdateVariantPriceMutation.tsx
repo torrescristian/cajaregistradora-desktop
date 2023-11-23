@@ -30,10 +30,9 @@ export default function useUpdateVariantPriceMutation() {
     const res = await strapi.update(VARIANTS_KEY, variant.id!, {
       price: newPrice,
     });
-    console.log(res);
-
-    await queryClient.invalidateQueries([PRODUCTS_KEY]);
     toast.success('Precio actualizado correctamente');
-    return [res];
+    await queryClient.invalidateQueries([PRODUCTS_KEY]);
+    await queryClient.invalidateQueries([VARIANTS_KEY]);
+    return res;
   });
 }
