@@ -145,7 +145,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
         </form>
       </dialog>
       <FieldLabel
-        title="Buscar cliente por Nombre, Direc. o Tel."
+        title="Buscar cliente por nombre, dirección o número de teléfono"
         className="input-group flex flex-col"
       >
         <input
@@ -153,33 +153,40 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
           value={search}
           className="input input-bordered my-3"
         />
-        <RenderIf condition={client?.name}>
-          <section className="flex flex-row justify-between gap-3 pt-1 pb-3 items-center">
-            <div className="flex flex-col">
-              <p className="text-stone-500">Cliente Seleccionado: </p>
-              <p className="text-primary">{client?.name}</p>
-            </div>
-            <button
-              className="btn btn-error text-stone-50"
-              onClick={handleDeleteClient}
-            >
-              <TrashIcon className="h-4 w-4" />
-            </button>
-          </section>
-        </RenderIf>
-        <RenderIf condition={!client?.name}>
-          <section className="pt-1 pb-3">
-            <p className="text-stone-500">Consumidor Final</p>
-          </section>
-        </RenderIf>
+        <div className="flex flex-row w-full justify-between">
+          <RenderIf condition={client?.name}>
+            <section className="flex flex-row justify-between gap-3 pt-1 pb-3 items-center">
+              <div className="flex flex-col">
+                <p className="text-stone-500">Cliente Seleccionado: </p>
+                <p className="text-primary">{client?.name}</p>
+              </div>
+              <button
+                className="btn btn-error text-stone-50"
+                onClick={handleDeleteClient}
+              >
+                <TrashIcon className="h-4 w-4" />
+              </button>
+            </section>
+          </RenderIf>
+          <RenderIf condition={!client?.name}>
+            <section className="pt-1 pb-3">
+              <p className="text-stone-500">Consumidor Final</p>
+              <button
+                className="btn btn-secondary"
+                onClick={() => dialogRef.current?.showModal()}
+              >
+                Nuevo Cliente
+              </button>
+            </section>
+          </RenderIf>
+        </div>
       </FieldLabel>
       <RenderIf condition={clientQuery.isLoading}>
         <Loader />
       </RenderIf>
       <RenderIf condition={!clientQuery.isLoading}>
         <RenderIf condition={!!clientQuery?.data}>
-          <p></p>
-          <ul className="h-72 overflow-y-scroll flex flex-col justify-start items-end">
+          <ul className="h-72 overflow-y-scroll flex flex-col justify-start items-end mt-3">
             {clientQuery.data?.map((client) => (
               <li
                 key={client.id}
@@ -205,14 +212,6 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
                 </div>
               </li>
             ))}
-            <li>
-              <button
-                className="btn btn-secondary"
-                onClick={() => dialogRef.current?.showModal()}
-              >
-                Nuevo Cliente
-              </button>
-            </li>
           </ul>
         </RenderIf>
       </RenderIf>

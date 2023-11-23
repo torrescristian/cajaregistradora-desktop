@@ -9,7 +9,7 @@ export const NavbarUser = () => {
     <div className="flex flex-col">
       <h2 className="font-bold text-center whitespace-nowrap">
         {isMobile ? (
-          <span className="text-sm">Caja Registradora</span>
+          <span className="text-xs">Caja Registradora</span>
         ) : (
           'Caja Registradora'
         )}

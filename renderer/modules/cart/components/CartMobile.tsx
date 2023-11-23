@@ -70,13 +70,13 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
           ))}
           <CartPromo promosItems={promosItems} />
         </div>
-        <Card className="flex flex-row justify-end">
+        <Card className="p-3 border-2 border-secondary flex flex-col bottom-0 w-full inset-x-0 items-center bg-base-200 sticky z-20">
           <p>
             <span className="text-xl text-primary">Total:</span>{' '}
             {formatPrice(subtotalPrice)}
           </p>
           <RenderIf condition={items.length || promosItems.length}>
-            <div className="flex flex-row gap-3 w-full">
+            <div className="flex flex-col gap-3 w-full">
               <button
                 className="btn btn-primary"
                 onClick={() => openModal(<ConfirmOrderMobile />)}

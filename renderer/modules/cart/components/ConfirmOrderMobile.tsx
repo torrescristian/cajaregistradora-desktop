@@ -38,6 +38,7 @@ import Payments from '@/modules/ordenes/components/Payments';
 import { ICartItem, IPromoItem } from '../interfaces/ICart';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import CustomToastContainer from '@/modules/common/components/CustomToastContainer';
+import { Divider } from './Sale/Sale.styles';
 
 interface IProps {
   updateMode?: boolean;
@@ -220,13 +221,16 @@ export const ConfirmOrderMobile = ({
   }
 
   return (
-    <section className="bg-neutral p-5 ">
+    <section className="bg-neutral p-5">
       <CustomToastContainer />
       <section className="flex flex-col">
+        <Divider />
+
         <ClientForm
           onSelect={(client) => addClientId(client?.id || null)}
           defaultClient={order?.client}
         />
+        <Divider />
 
         <div className="flex flex-col gap-5">
           <label className="label">Detalles adicionales:</label>
@@ -235,40 +239,45 @@ export const ConfirmOrderMobile = ({
             value={additionalDetails}
             onChange={handleChangeAdditionalsDetails}
           />
+          <Divider />
+
           <DiscountTypeControl
             onChange={handleChangeDiscountType}
             discountAmount={order?.discount?.amount}
             discountType={order?.discount?.type}
           />
+          <Divider />
+
           <ValidateCoupon
             onChange={handleCouponDiscountAmount}
             subtotalPrice={order?.subtotalPrice! || subtotalPrice}
             coupon={coupon}
           />
+
           <Payments onChange={handleChangePayments} />
           <DataItem
             label="Total:"
             value={formatPrice(newTotalPrice)}
             defaultValue=""
-            className="text-2xl"
+            className="text-2xl text-right"
           />
         </div>
       </section>
-      <div className="flex flex-col sm:flex-row justify-between pt-5">
+      <div className="flex flex-col sm:flex-row justify-between pt-5 gap-3">
+        <button
+          onClick={handleSubmit}
+          className="btn sticky top-0 z-20 sm:w-fit whitespace-nowrap btn-primary text-primary-content"
+        >
+          {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
+        </button>
+        <button className="btn btn-secondary" onClick={handleCreateTicket}>
+          Finalizar venta
+        </button>
         <button
           className="btn btn-link text-error"
           onClick={() => openModal(null)}
         >
           Cancelar
-        </button>
-        <button className="btn btn-link" onClick={handleCreateTicket}>
-          Finalizar venta
-        </button>
-        <button
-          onClick={handleSubmit}
-          className="btn sticky top-0 z-20 sm:w-fit whitespace-nowrap btn-primary text-xl text-primary-content"
-        >
-          {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
         </button>
       </div>
     </section>

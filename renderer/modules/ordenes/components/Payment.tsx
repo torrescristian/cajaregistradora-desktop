@@ -2,7 +2,7 @@ import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { Selector } from '@/modules/common/components/Selector';
 import { ChevronDoubleDownIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { paymentTypesAndLabels } from '@/modules/recibos/utils/utils';
-
+import FieldLabel from '@/modules/common/components/FieldLabel';
 interface IProps {
   onChange: (payment: IPayment) => void;
   onNewPayment: (e: React.SyntheticEvent<HTMLButtonElement>) => void;
@@ -34,23 +34,26 @@ export const Payment = ({
   };
 
   return (
-    <section className="w-min flex flex-row gap-2">
-      <Selector
-        onChange={handleSelectType}
-        defaultValue={payment.type}
-        values={paymentTypesAndLabels.map(({ label, type }) => ({
-          label,
-          value: type,
-        }))}
-      />
-      <input
-        onChange={handleChangeAmount}
-        value={payment.amount}
-        type="number"
-        placeholder="0.00"
-        className="input input-bordered w-28 sm:w-36"
-      />
-      <div className="flex flex-row gap-2">
+    <section className="flex flex-col gap-3">
+      <div className="flex flex-row gap-3 w-full justify-between">
+        <Selector
+          className="w-full flex-1"
+          onChange={handleSelectType}
+          defaultValue={payment.type}
+          values={paymentTypesAndLabels.map(({ label, type }) => ({
+            label,
+            value: type,
+          }))}
+        />
+        <input
+          onChange={handleChangeAmount}
+          value={payment.amount}
+          type="number"
+          placeholder="0.00"
+          className="input input-bordered w-28 sm:w-36"
+        />
+      </div>
+      <div className="flex flex-row gap-2 w-full justify-end">
         <button className="btn btn-primary btn-square" onClick={onNewPayment}>
           <ChevronDoubleDownIcon className="w-4 h-4" />
         </button>

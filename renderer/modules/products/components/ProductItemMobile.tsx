@@ -26,7 +26,7 @@ export const ProductItemMobile = ({ product }: IProps) => {
   return (
     <div className="flex flex-col w-full mt-3 border-2 p-4">
       <HighlightedText>{product.name}</HighlightedText>
-      <div className="flex flex-row w-full gap-3 items-center">
+      <div className="flex flex-row w-full gap-3 items-center text-right">
         <img src={product.image} className="w-1/2" />
         <div className="flex flex-col w-full justify-between ">
           <RenderIf condition={product.variants.length}>
@@ -39,17 +39,17 @@ export const ProductItemMobile = ({ product }: IProps) => {
               }))}
             />
           </RenderIf>
-          <p>{formatPrice(selectedVariant.price)}</p>
+          <p className="my-3">{formatPrice(selectedVariant.price)}</p>
 
           {cartItemQuantity > 0 ? (
             <div className="flex flex-row gap-3 w-full justify-end items-center">
               <RemoveProductButton onClick={handleClickRemove} />
-              <p>{cartItemQuantity} un.</p>
+              <p>&times;{cartItemQuantity}</p>
               <AddProductButton onClick={handleClickAdd} />
             </div>
           ) : (
             <button
-              className="btn btn-primary w-fit px-10 rounded-lg"
+              className="btn btn-primary w-full rounded-lg"
               onClick={handleClick}
               data-test="add-product"
             >

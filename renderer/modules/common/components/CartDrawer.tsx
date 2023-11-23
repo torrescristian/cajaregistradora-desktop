@@ -8,7 +8,7 @@ export const CartDrawer = () => {
         aria-label="cerrar sidebar"
         className="drawer-overlay"
       ></label>
-      <ul className="menu bg-base-200 p-5 text-base-content w-[80vw]">
+      <ul className="menu bg-base-200 p-5 text-base-content w-[80vw] h-full">
         {/* Sidebar content here */}
         <CartMobile />
       </ul>
