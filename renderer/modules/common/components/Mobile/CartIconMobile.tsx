@@ -1,8 +1,11 @@
-import { CartDrawer } from '@/modules/common/components/CartDrawer';
+import { CartDrawer } from '@/modules/common/components/Mobile/CartDrawer';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
-import { ICartItem } from '../interfaces/ICart';
-import { getCartItems, useCartStore } from '../contexts/useCartStore';
+import { ICartItem } from '../../../cart/interfaces/ICart';
+import {
+  getCartItems,
+  useCartStore,
+} from '../../../cart/contexts/useCartStore';
 
 export const CartIconMobile = () => {
   const { openModal } = useModalStore();

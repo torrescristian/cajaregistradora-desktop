@@ -43,8 +43,8 @@ export default function Navbar() {
           </div>
         </div>
       ) : (
-        <section className="w-full flex flex-row justify-between ">
-          <div className="flex flex-row">
+        <section className="w-full flex flex-row">
+          <div className="flex flex-row w-full justify-between">
             <NavbarUser />
             <NotificationsIcon />
             <WifiStatus />
