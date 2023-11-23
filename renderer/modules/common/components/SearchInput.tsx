@@ -39,7 +39,7 @@ export default function SearchInput({ search, onSearch }: ISearchInputProps) {
   return (
     <section
       data-test="search-input"
-      className="form-control flex w-96 flex-row"
+      className="form-control flex w-full flex-row"
     >
       <input
         data-test="search-input-field"

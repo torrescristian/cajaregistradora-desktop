@@ -80,7 +80,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
           value={code}
         />
       </label>
-      <div className="flex flex-row w-full whitespace-nowrap justify-between">
+      <div className="flex flex-row whitespace-nowrap justify-between">
         <RenderIf condition={error && query !== ''}>
           <ErrorMessage>{error}</ErrorMessage>
         </RenderIf>

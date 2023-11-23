@@ -60,7 +60,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
     }),
   setCart: (cartPayload: ISetCart) =>
     set({
-      cartItems: cartPayload.cartItems,
+      cartItems: structuredClone(cartPayload.cartItems),
       clientId: cartPayload.clientId,
       additionalDetails: cartPayload.additionalDetails,
       subtotalPrice: cartPayload.subtotalPrice,

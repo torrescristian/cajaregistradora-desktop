@@ -21,6 +21,7 @@ import {
   ORDERS_KEY,
 } from '@/modules/common/consts';
 import { ICartItem, IPromoItem } from '../interfaces/ICart';
+import { toast } from 'react-toastify';
 
 interface IProps {
   items: ICartItem[];
@@ -40,23 +41,27 @@ export default function useCreateOrderMutation() {
 
   return useMutation(async (props: IProps) => {
     const resp = [null, null, null] as [any, any, any];
-    resp[0] = await strapi.create(ORDERS_KEY, parseOrderToPayLoad(props));
+    try {
+      resp[0] = await strapi.create(ORDERS_KEY, parseOrderToPayLoad(props));
 
-    const excludeServiceItem = (item: ICartItem): boolean =>
-      !item.product.isService;
+      const excludeServiceItem = (item: ICartItem): boolean =>
+        !item.product.isService;
 
-    const itemsToUpdate = props.items.filter(excludeServiceItem);
-    if (itemsToUpdate.length) {
-      resp[1] = await updateStock(itemsToUpdate);
+      const itemsToUpdate = props.items.filter(excludeServiceItem);
+      if (itemsToUpdate.length) {
+        resp[1] = await updateStock(itemsToUpdate);
+      }
+      if (promoItems.length) {
+        resp[2] = await updateStock(parsePromoItemsToCartItems(promoItems));
+      }
+      toast.success('Orden creada con exito');
+      queryClient.invalidateQueries([ORDERS_KEY]);
+      queryClient.invalidateQueries([PRODUCTS_KEY]);
+      queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);
+      clearCart();
+    } catch (error) {
+      toast.error('Error al crear orden');
     }
-    if (promoItems.length) {
-      resp[2] = await updateStock(parsePromoItemsToCartItems(promoItems));
-    }
-
-    queryClient.invalidateQueries([ORDERS_KEY]);
-    queryClient.invalidateQueries([PRODUCTS_KEY]);
-    queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);
-    clearCart();
     return {
       orderResponse: resp[0] as IStrapiSingleResponse<IOrder>,
       productsStockUpdateResponse: resp[1],

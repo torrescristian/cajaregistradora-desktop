@@ -1,10 +1,10 @@
 import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import useTicketQuery from './hooks/useTicketQuery';
-import PageLayout from '@/modules/common/components/PageLayout';
-import Loader from '@/modules/common/components/Loader';
 import { parseDateToArgentinianFormat } from '@/modules/common/libs/utils';
 import { IColumnTicket } from './interfaces/IColumnTicket';
 import TicketTable from './components/TicketTable';
+import Loader from '../common/components/Loader';
+import PageLayout from '../common/components/PageLayout';
 
 export default function RecibosPage() {
   function getLabelByPaymentsType(payments: IPayment[]) {
