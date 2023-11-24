@@ -25,7 +25,6 @@ import {
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 import ValidateCoupon from '@/modules/ordenes/components/ValidateCoupon';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-
 import { IPayment } from '@/modules/recibos/interfaces/ITicket';
 import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';

@@ -11,7 +11,7 @@ interface IProps {
 export default function Payments({ onChange, newTotalPrice }: IProps) {
   const [payments, setPayments] = useState<IPayment[]>([
     {
-      amount: 0,
+      amount: newTotalPrice!,
       type: PAYMENT_TYPE.CASH,
     },
   ]);

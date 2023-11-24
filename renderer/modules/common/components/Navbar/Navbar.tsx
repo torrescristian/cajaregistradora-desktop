@@ -21,8 +21,8 @@ export default function Navbar() {
   return (
     <nav>
       {isMobile ? (
-        <div className="w-full flex flex-col">
-          <div className="w-full flex flex-row">
+        <div className="w-full flex flex-col absolute bg-neutral p-4 z-20 left-0 top-0">
+          <div className="w-full flex flex-row items-center sticky z-80 ">
             <NavbarUser />
             <NotificationsIcon />
             <WifiStatus />
@@ -43,8 +43,8 @@ export default function Navbar() {
           </div>
         </div>
       ) : (
-        <section className="w-full flex flex-row">
-          <div className="flex flex-row w-full justify-between">
+        <section className="w-full flex flex-row mb-7">
+          <div className="flex flex-row w-full items-center justify-between">
             <NavbarUser />
             <NotificationsIcon />
             <WifiStatus />

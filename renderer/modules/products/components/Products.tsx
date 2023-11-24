@@ -18,7 +18,7 @@ const Navigation = ({ children }: IComponent) => (
 const Products = () => {
   const {
     promos,
-    handleClickPage,
+    handleNextPage,
     handleSelectPage,
     products,
     showPromo,
@@ -64,7 +64,7 @@ const Products = () => {
       </section>
       <Pagination
         pagination={productsQuery.pagination}
-        onClick={handleClickPage}
+        onClick={handleNextPage}
         isLoading={productsQuery.isLoading}
       />
     </section>

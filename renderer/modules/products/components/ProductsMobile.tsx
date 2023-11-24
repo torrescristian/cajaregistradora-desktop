@@ -4,11 +4,15 @@ import SearchInput from '@/modules/common/components/SearchInput';
 import { ProductItemMobile } from './ProductItemMobile';
 import { CartIconMobile } from '@/modules/common/components/Mobile/CartIconMobile';
 import ProductTypes from './ProductTypes';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { RenderIf } from '@/modules/common/components/RenderIf';
+import RenderPromos from '@/modules/promos/components/RenderPromo';
+import Pagination from '@/modules/common/components/Pagination';
 
 export const ProductsMobile = () => {
   const {
     promos,
-    handleClickPage,
+    handleNextPage,
     handleSelectPage,
     products,
     showPromo,
@@ -23,7 +27,7 @@ export const ProductsMobile = () => {
     return <Loader />;
   }
   return (
-    <section className="w-full flex flex-col">
+    <section className="w-full flex flex-col mt-16">
       <div className="flex flex-row items-center justify-between p-3 gap-5">
         <ProductTypes
           setShowPromo={setShowPromo}
@@ -34,9 +38,27 @@ export const ProductsMobile = () => {
         <SearchInput {...searchProps} />
         <CartIconMobile />
       </div>
-      {products.map((product) => (
-        <ProductItemMobile key={product.id} product={product} />
-      ))}
+      <div>
+        <RenderIf condition={!showPromo}>
+          {products.map((product) => (
+            <ProductItemMobile key={product.id} product={product} />
+          ))}
+        </RenderIf>
+        <RenderIf condition={showPromo}>
+          <RenderPromos
+            promosItems={promos!.map((promo) => ({
+              promo,
+              selectedVariants: [],
+            }))}
+            salesMode
+          />
+        </RenderIf>
+      </div>
+      <Pagination
+        pagination={productsQuery.pagination}
+        onClick={handleNextPage}
+        isLoading={productsQuery.isLoading}
+      />
     </section>
   );
 };

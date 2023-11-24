@@ -18,7 +18,7 @@ export const Payment = ({
   payment,
   newTotalPrice,
 }: IProps) => {
-  const [priceDefault, setPriceDefault] = useState(newTotalPrice);
+  const [paymentAmount, setPaymentAmount] = useState<number>(newTotalPrice!);
 
   const handleSelectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as PAYMENT_TYPE;
@@ -29,12 +29,10 @@ export const Payment = ({
   };
 
   const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPriceDefault(Number(e.target.value));
-    const { value } = e.target;
-    const amount = value === '' ? '' : Number(value);
+    setPaymentAmount(Number(e.target.value));
     onChange({
       ...payment,
-      amount,
+      amount: paymentAmount,
     });
   };
 
@@ -52,7 +50,7 @@ export const Payment = ({
         />
         <input
           onChange={handleChangeAmount}
-          value={priceDefault}
+          value={paymentAmount}
           type="number"
           placeholder="0.00"
           className="input input-bordered w-28 sm:w-36"
