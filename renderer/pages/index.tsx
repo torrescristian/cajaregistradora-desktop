@@ -19,7 +19,7 @@ const CajaRegistradoraApp: React.FC = () => {
   const router = useRouter();
 
   return (
-    <section className="flex flex-col gap-5">
+    <section className="flex flex-col gap-5 justify-center items-center">
       <div className="w-full flex flex-col items-end gap-3">
         <h1 className="text-lg">Caja Registradora</h1>
         <span className="italic">Tu aliado en las ventas</span>
@@ -84,8 +84,8 @@ const CajaRegistradoraApp: React.FC = () => {
           CajaRegistradora.app.
         </p>
       </div> */}
-      <WhatsappButton />
-      <div className="p-10 w-full" />
+      <WhatsappButton className="fixed bottom-12 w-fit" />
+      <div className="p-10" />
       <Footer />
     </section>
   );
