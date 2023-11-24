@@ -1,5 +1,6 @@
 import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
 import Footer from '@/modules/common/components/Footer';
+import WhatsappButton from '@/modules/common/components/WhatsappButton';
 import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -30,17 +31,11 @@ const CajaRegistradoraApp: React.FC = () => {
         </button>
       </div>
       <div>
-        <Subtitle>📱 Pedidos Rápidos desde Tu Teléfono:</Subtitle>
+        <Subtitle>
+          📱 🖥️ Pedidos Rápidos desde Tu Teléfono o Computadora:
+        </Subtitle>
         <Parragraph>
           Realiza pedidos en segundos. Selecciona, ajusta y revisa fácilmente.
-        </Parragraph>
-      </div>
-
-      <div>
-        <Subtitle>🖥️ Compra Rápida en Cualquier Dispositivo:</Subtitle>
-        <Parragraph>
-          Adaptable a tu ritmo. Crea, modifica o cancela pedidos desde cualquier
-          lugar.
         </Parragraph>
       </div>
 
@@ -53,7 +48,7 @@ const CajaRegistradoraApp: React.FC = () => {
       </div>
 
       <div>
-        <Subtitle>🎟️ Impresión de Tickets sin Complicaciones:</Subtitle>
+        <Subtitle>🎟️ Impresión de Tickets:</Subtitle>
         <Parragraph>
           Genera tickets fácilmente: cliente, comanda y precio final.
         </Parragraph>
@@ -89,6 +84,7 @@ const CajaRegistradoraApp: React.FC = () => {
           CajaRegistradora.app.
         </p>
       </div> */}
+      <WhatsappButton />
       <div className="p-10 w-full" />
       <Footer />
     </section>
