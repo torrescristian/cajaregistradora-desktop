@@ -6,17 +6,8 @@ export const NavbarUser = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="w-full flex flex-col items-start">
-      <div className="flex flex-col items-center">
-        <h2 className="font-bold text-center whitespace-nowrap">
-          {isMobile ? (
-            <span className="text-sm">Caja Registradora</span>
-          ) : (
-            'Caja Registradora'
-          )}
-        </h2>
-        <h3 className="text-sm text-center">{userData?.username}</h3>
-      </div>
+    <div className="w-full items-start">
+      <img src="/images/logo.png" className="w-20" />
     </div>
   );
 };

@@ -54,7 +54,7 @@ export default function RecibosPage() {
   );
 
   return (
-    <PageLayout className="grid grid-cols-3 gap-5 justify-center overflow-x-scroll ">
+    <PageLayout className="grid grid-cols-3 gap-5 justify-center mt-20 overflow-x-scroll ">
       <TicketTable data={data} />
     </PageLayout>
   );

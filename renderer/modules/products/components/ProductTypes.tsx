@@ -34,13 +34,13 @@ export default function ProductTypes({
     <section className="flex flex-col sm:flex-row gap-5 items-center">
       {isMobile ? (
         <RenderIf condition={productTypes?.length}>
-          <div className="dropdown">
+          <div className="dropdown z-[1]">
             <label tabIndex={0} className="btn btn-secondary  m-1">
               <FunnelIcon className="w-5 h-5 text-secondary-content" />
             </label>
             <div
               tabIndex={0}
-              className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64"
+              className="dropdown-content flex flex-col p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64"
             >
               <TabButton
                 className="btn-secondary"
