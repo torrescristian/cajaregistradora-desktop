@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import IClient from '@/modules/cart/interfaces/IClient';
 import { CLIENTS_KEY } from '@/modules/common/consts';
 
-export default function useCreateOrderMutation() {
+export default function useCreateClientMutation() {
   const queryClient = useQueryClient();
 
   return useMutation(async (client: IClient) => {

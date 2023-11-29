@@ -51,12 +51,12 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
           <ReceiptRefundIcon
             className={twMerge(
               'h-5',
-              disabled ? 'text-stone-500' : 'text-white',
+              disabled ? 'text-text-base-content' : 'text-white',
             )}
           />
         )}
       </button>
-      <dialog ref={ref} className="bg-transparent p-10">
+      <dialog ref={ref} className="bg-transparent p-10 w-[90vw] sm:w-min">
         <form method="dialog" className="modal-box gap-3 flex flex-col w-fit">
           {pending ? (
             <p className="text-xl font-bold">Esperando al administrador ⏳</p>

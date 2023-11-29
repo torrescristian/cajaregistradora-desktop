@@ -9,9 +9,10 @@ interface IProps {
   order: IOrder;
   updateMode?: boolean;
   onSubmit: (order: IOrder) => void;
+  closeUpdateMode : () => void;
 }
 
-function Order({ order, updateMode, onSubmit }: IProps) {
+function Order({ order, updateMode, onSubmit,closeUpdateMode }: IProps) {
   const createMode = !updateMode;
   const isMobile = useIsMobile();
   const handleToggleEdit = () => {
@@ -31,7 +32,7 @@ function Order({ order, updateMode, onSubmit }: IProps) {
         )}
       </RenderIf>
       <RenderIf condition={updateMode}>
-        <UpdateOrder order={order} onSubmit={handleToggleEdit} />
+        <UpdateOrder order={order} updateMode onSubmit={handleToggleEdit} closeUpdateMode={closeUpdateMode} />
       </RenderIf>
     </Card>
   );

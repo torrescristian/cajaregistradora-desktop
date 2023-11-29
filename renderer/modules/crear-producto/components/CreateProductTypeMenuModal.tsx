@@ -47,7 +47,7 @@ export const CreateProductTypeMenuModal = () => {
       <button className="btn btn-primary" onClick={handleOpenModalProductType}>
         Crear Menu
       </button>
-      <dialog ref={ref} className="bg-neutral modal-box p-3 ">
+      <dialog ref={ref} className="bg-base-100 modal-box p-3 ">
         <EmojiSelector
           selectedEmoji={selectedEmoji!}
           setSelectedEmoji={setSelectedEmoji}

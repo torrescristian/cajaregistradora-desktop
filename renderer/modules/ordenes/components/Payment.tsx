@@ -37,7 +37,7 @@ export const Payment = ({
   };
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col text-base-content gap-3">
       <div className="flex flex-row gap-3 w-full justify-between">
         <Selector
           className="w-full flex-1"
@@ -53,7 +53,7 @@ export const Payment = ({
           value={paymentAmount}
           type="number"
           placeholder="0.00"
-          className="input input-bordered w-28 sm:w-36"
+          className="input input-bordered text-base-content w-28 sm:w-36 "
         />
       </div>
       <div className="flex flex-row gap-2 w-full justify-end">

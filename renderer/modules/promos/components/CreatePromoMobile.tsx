@@ -1,29 +1,31 @@
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import ProductItem from '@/modules/products/components/ProductItem';
-import SearchInput from '@/modules/common/components/SearchInput';
+import SearchInput, {
+} from '@/modules/common/components/SearchInput';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import CardVariantList from './CardVariantList';
 import CardCategoryList from './CardCategoryList';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreatePromo from '../hooks/useCreatePromo';
+import { ProductItemMobile } from '@/modules/products/components/ProductItemMobile';
 
-export const CreatePromo = () => {
+export const CreatePromoMobile = () => {
 
-  const { handleCreatePromo, handleChangeName, name, price, handleChangePrice, categories,
-    handleChangeSelectedCategory, selectedCategory, handleClickAddCategory, selectedCategoryList,
-    setSelectedCategoryList, incrementCategoryByOne, searchProps, handleClickAddProduct, products,
-    selectedVariantList, setSelectedVariantList, createPromoMutation,
+  const {handleCreatePromo,handleChangeName,name,price,handleChangePrice,categories,
+    handleChangeSelectedCategory,selectedCategory,handleClickAddCategory,selectedCategoryList,
+    setSelectedCategoryList,incrementCategoryByOne,searchProps,handleClickAddProduct,products,
+    selectedVariantList,setSelectedVariantList,createPromoMutation,
   } = useCreatePromo();
 
   return (
     <section className="flex flex-col">
-      <div className="flex flex-col gap-3 items-center p-3">
+      <div className="flex flex-col gap-3 items-center">
         <form
-          className="flex flex-col p-5 gap-7 items-start"
+          className="flex flex-col p-5 gap-5 items-start"
           onSubmit={handleCreatePromo}
         >
-          <div className="flex flex-row gap-5  justify-start items-end p-5">
+          <div className="flex flex-col gap-5  justify-start p-5">
             <FieldLabel title="Nombre:" className="flex flex-col">
               <input
                 type="text"
@@ -41,10 +43,11 @@ export const CreatePromo = () => {
               />
             </FieldLabel>
             <RenderIf condition={categories?.length}>
-              <div className="flex flex-row items-end">
-                <FieldLabel title="Categorias:" className="flex flex-col">
+              <div className='divider'>Categorias</div>
+              <div className="flex flex-col items-end">
+                <FieldLabel title="Categorias:" className="w-full flex flex-col">
                   <select
-                    className="select select-bordered "
+                    className="select select-bordered"
                     onChange={handleChangeSelectedCategory}
                     value={selectedCategory?.id}
                     defaultValue={0}
@@ -58,7 +61,7 @@ export const CreatePromo = () => {
                   </select>
                 </FieldLabel>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary w-full"
                   onClick={handleClickAddCategory}
                 >
                   <PlusIcon className="w-9 h-9" /> Agregar
@@ -67,8 +70,8 @@ export const CreatePromo = () => {
             </RenderIf>
           </div>
           <RenderIf condition={categories?.length}>
-            <div className="flex flex-row items-center gap-3">
-              <div className="flex flex-row gap-3 overflow-x-scroll w-[70vw] ">
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col gap-3 overflow-y-scroll h-max ">
                 <CardCategoryList
                   selectedCategoryList={selectedCategoryList}
                   setSelectedCategoryList={setSelectedCategoryList}
@@ -81,10 +84,11 @@ export const CreatePromo = () => {
             <p>No hay categorias</p>
           </RenderIf>
           <div className="flex flex-col">
+            <div className='divider'>Productos</div>
             <SearchInput {...searchProps} />
-            <div className="flex flex-row overflow-x-scroll w-[80vw] gap-5 p-5">
+            <div className="flex flex-col overflow-y-scroll h-full w-full">
               {products.map((product) => (
-                <ProductItem
+                <ProductItemMobile
                   key={product.id}
                   product={product}
                   onClick={handleClickAddProduct}

@@ -14,7 +14,7 @@ import { Divider } from '../../../cart/components/Sale/Sale.styles';
 import { ICartItem } from '../../../cart/interfaces/ICart';
 import CartItemMobile from './CartItemMobile';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
-import { ConfirmOrderMobile } from './ConfirmOrderMobile';
+import { ConfirmOrderMobile } from '../../../cart/components/ConfirmOrderMobile';
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-col w-full gap-5 justify-between ">
@@ -45,9 +45,15 @@ interface IProps {
   updateMode?: boolean;
   order?: IOrder;
   onSubmit?: () => void;
+  closeUpdateMode: () => void;
 }
 
-const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
+const CartMobile = ({
+  updateMode,
+  order,
+  onSubmit,
+  closeUpdateMode,
+}: IProps) => {
   const items = useCartStore(getCartItems) as ICartItem[];
   const subtotalPrice = useCartStore(getSubtotalPrice);
   const promosItems = useCartStore(getPromoItems);
@@ -70,24 +76,29 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
           ))}
           <CartPromo promosItems={promosItems} />
         </div>
-        <Card className="flex flex-row w-full">
+        <Card className="flex flex-col items-center md:flex-row text-base-content gap-5 w-full">
           <p className="text-center">
-            <span className="text-xl text-primary">Total:</span>{' '}
+            <span className="text-xl">Total:</span>{' '}
             {formatPrice(subtotalPrice)}
           </p>
           <RenderIf condition={items.length || promosItems.length}>
-            <div className="flex flex-row gap-3 w-full justify-end">
+            <div className="flex flex-row justify-center gap-3 w-full md:justify-end ">
               <button
                 className="btn btn-primary"
-                onClick={() => openModal(<ConfirmOrderMobile />)}
+                onClick={() =>
+                  openModal(
+                    <ConfirmOrderMobile
+                      closeUpdateMode={closeUpdateMode}
+                      updateMode={updateMode}
+                      order={order}
+                      onSubmit={onSubmit}
+                      promoItems={promosItems}
+                    />,
+                  )
+                }
               >
                 Pasar Orden
               </button>
-              {updateMode ? (
-                <button className="btn btn-error" onClick={onSubmit}>
-                  Cancelar
-                </button>
-              ) : null}
             </div>
           </RenderIf>
           <RenderIf condition={!items.length && !promosItems.length}>
@@ -95,15 +106,15 @@ const CartMobile = ({ updateMode, order, onSubmit }: IProps) => {
               No hay productos en el carrito
             </section>
           </RenderIf>
+          <label
+            htmlFor="carrito-drawer"
+            aria-label="cerrar sidebar"
+            className="btn btn-error"
+            onClick={() => closeModal()}
+          >
+            Salir
+          </label>
         </Card>
-        <label
-          htmlFor="carrito-drawer"
-          aria-label="cerrar sidebar"
-          className="btn btn-error"
-          onClick={() => closeModal()}
-        >
-          Salir
-        </label>
       </ProductContainer>
     </Layout>
   );

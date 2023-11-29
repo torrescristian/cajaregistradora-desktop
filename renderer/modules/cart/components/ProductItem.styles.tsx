@@ -80,7 +80,7 @@ export const AddProductButtonWithText = ({
   <ActionButton
     onClick={onClick}
     disabled={disabled}
-    className="btn-square w-min bg-green-400 text-2xl uppercase text-stone-50 hover:bg-green-600 focus:bg-green-400"
+    className="btn-square w-min bg-green-400 text-2xl uppercase text-text-base-content hover:bg-green-600 focus:bg-green-400"
   >
     Agregar
   </ActionButton>
@@ -89,7 +89,7 @@ export const AddProductButtonWithText = ({
 export const AddProductButton = ({ onClick }: IActionButton & {}) => (
   <ActionButton
     onClick={onClick}
-    className="btn-square px-2  bg-green-400 text-stone-50 hover:bg-green-600 focus:bg-green-400"
+    className="btn-square px-2  bg-green-400 text-text-base-content hover:bg-green-600 focus:bg-green-400"
   >
     <PlusIcon className="h-8 w-8" />
   </ActionButton>
@@ -116,7 +116,7 @@ export const UpdateProductButton = ({
 export const RemoveProductButton = ({ onClick }: IActionButton) => (
   <ActionButton
     onClick={onClick}
-    className="btn-error btn-square px-2  bg-red-500 text-stone-50 hover:bg-red-700 focus:bg-red-500"
+    className="btn-error btn-square px-2  bg-red-500 text-text-base-content hover:bg-red-700 focus:bg-red-500"
   >
     <MinusIcon className="h-8 w-8" />
   </ActionButton>
@@ -125,7 +125,7 @@ export const RemoveProductButton = ({ onClick }: IActionButton) => (
 export const ClearButton = ({ onClick }: IActionButton) => (
   <ActionButton
     onClick={onClick}
-    className="btn-error btn-square px-2  bg-red-500 text-stone-50 hover:bg-red-700 focus:bg-red-500"
+    className="btn-error btn-square px-2  bg-red-500 text-text-base-content hover:bg-red-700 focus:bg-red-500"
   >
     <TrashIcon className="h-8 w-8" />
   </ActionButton>

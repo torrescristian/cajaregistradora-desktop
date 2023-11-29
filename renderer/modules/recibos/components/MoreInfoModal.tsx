@@ -22,7 +22,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
       <button className="btn" onClick={() => handleClickMoreInfo()}>
         <InformationCircleIcon className="h-5" />
       </button>
-      <dialog ref={ref} className="bg-transparent p-15 w-[40vw]">
+      <dialog ref={ref} className="bg-transparent p-15 w-[90vw] sm:w-[40vw]">
         <form method="dialog" className="modal-box gap-10">
           <dl className="flex flex-col gap-5 ">
             <div className="divider">
@@ -53,7 +53,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
                 value={ticket.order.additionalDetails}
               />
             </RenderIf>
-            <Divider className="text-stone-500">Metodos de pago</Divider>
+            <Divider className="text-text-base-content">Metodos de pago</Divider>
             <DataItem
               label="Subtotal:"
               value={formatPrice(ticket.order.subtotalPrice)}
@@ -86,7 +86,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             ))}
           </dl>
           <RenderIf condition={ticket.order.items.length > 0}>
-            <div className="divider text-stone-500">Productos</div>
+            <div className="divider text-text-base-content">Productos</div>
             <div className="flex flex-col p-5 overflow-y-scroll">
               {ticket.order.items.map((item) => (
                 <OrderItem
@@ -98,7 +98,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             </div>
           </RenderIf>
           <RenderIf condition={ticket.order.promoItems.length > 0}>
-            <div className="divider text-stone-500">Promos</div>
+            <div className="divider text-text-base-content">Promos</div>
             {ticket.order.promoItems.map(({ promo }) => (
               <div key={promo.id!} className="flex p-4">
                 <p>{promo.name}</p>

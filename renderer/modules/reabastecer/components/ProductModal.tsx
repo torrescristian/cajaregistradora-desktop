@@ -24,7 +24,7 @@ export const ProductModal = ({ product, variant }: IProps) => {
       >
         <EllipsisHorizontalIcon className="w-8 h-8" />
       </button>
-      <dialog ref={ref} className="bg-neutral  modal-box p-15 w-[40vw]">
+      <dialog ref={ref} className="bg-base-100  modal-box p-15 w-[40vw]">
         <div>
           <ProductRow product={product} key={product.id} variant={variant} />
         </div>

@@ -152,7 +152,7 @@ export const EditPromoModal = ({ promo }: IProps) => {
       >
         <PencilIcon className="w-5 h-5" />
       </button>
-      <dialog ref={ref} className=" items-end bg-neutral p-10">
+      <dialog ref={ref} className=" items-end bg-base-100 p-10">
         <form>
           <div>
             <div className="flex flex-row w-full justify-evenly">

@@ -119,10 +119,10 @@ export const CreateTicketForm = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-                discountAmount,
-                discountType: discountType!,
-                price: finalTotalPrice,
-              })
+              discountAmount,
+              discountType: discountType!,
+              price: finalTotalPrice,
+            })
             : couponDiscount,
         },
         coupon: {
@@ -152,7 +152,7 @@ export const CreateTicketForm = ({
 
   return (
     <form
-      className="flex w-full h-full justify-between flex-col p-5 gap-5"
+      className="flex w-full h-full justify-between bg-base-100 flex-col p-5 gap-5"
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
       <div className="flex flex-row justify-between gap-3">
@@ -167,7 +167,7 @@ export const CreateTicketForm = ({
         </div>
         <div className="flex flex-row gap-3">
           <button
-            className="btn btn-secondary text-stone-50"
+            className="btn btn-secondary text-base-content"
             onClick={handleToggleEdit}
           >
             <PencilIcon className="w-full h-6 " />
@@ -175,7 +175,7 @@ export const CreateTicketForm = ({
 
           <button
             disabled={cancelOrderMutation.isLoading}
-            className="btn btn-error text-stone-50"
+            className="btn btn-error text-base-content"
             onClick={handleCancelOrder}
           >
             <TrashIcon className="w-full h-6 " />
@@ -187,18 +187,18 @@ export const CreateTicketForm = ({
         <datalist className="flex flex-col gap-4">
           <p className="flex flex-row items-center gap-3 ">
             {' '}
-            <CalendarDaysIcon className="w-5 inline text-stone-500" />{' '}
+            <CalendarDaysIcon className="w-5 inline text-neutral-focus" />{' '}
             {parseDateToArgentinianFormat(order.createdAt)}
           </p>
           {order.address ? (
             <p className="flex flex-row items-center gap-3 ">
-              <MapPinIcon className="w-5 inline text-stone-500" />{' '}
+              <MapPinIcon className="w-5 inline text-neutral-focus" />{' '}
               {order.address}
             </p>
           ) : null}
           {order.client?.phone_number ? (
             <p className="flex flex-row items-center gap-3">
-              <DevicePhoneMobileIcon className="w-5 inline  text-stone-500" />{' '}
+              <DevicePhoneMobileIcon className="w-5 inline  text-neutral-focus" />{' '}
               {order.client?.phone_number}
             </p>
           ) : null}
@@ -272,7 +272,7 @@ export const CreateTicketForm = ({
           <button
             type="submit"
             disabled={createTicketMutation.isLoading || updateMode}
-            className="btn btn-success disabled:btn-disabled text-stone-50"
+            className="btn btn-success disabled:btn-disabled text-neutral-focus"
           >
             {createTicketMutation.isLoading ? <Loader /> : 'Confirmar orden'}
           </button>

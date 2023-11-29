@@ -11,7 +11,7 @@ export const useProductsProps = () => {
   const [promosSelectedPage, setPromosSelectedPage] = useState(1);
   const [activePage, setActivePage] = useState(1);
   const [selectedProductType, setSelectedProductType] =
-    useState<IProductType | null>();
+    useState<IProductType | null>(null);
 
   const promoQuery = usePromoQuery({
     query: searchProps.query,

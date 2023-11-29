@@ -19,7 +19,7 @@ const FormFieldText = ({
 }: IFormControl) => {
   return (
     <div className="form-control w-2/5">
-      <label className="label-text whitespace-nowrap text-stone-500">
+      <label className="label-text whitespace-nowrap text-text-base-content">
         {label}
       </label>
       <label className="input-group">
@@ -45,7 +45,7 @@ const FormFieldText = ({
       </label>
       {/* @ts-ignore */}
       {errors?.[formKey] && (
-        <p className="alert bg-red-500 p-4 text-stone-100">
+        <p className="alert bg-red-500 p-4 text-text-base-content">
           {/* @ts-ignore */}
           {errors?.[formKey]?.message}
         </p>

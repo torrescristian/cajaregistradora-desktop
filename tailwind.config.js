@@ -13,6 +13,7 @@ module.exports = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['business'],
+    themes: ['business','corporate'],
   },
 };
+

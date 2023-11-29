@@ -47,16 +47,16 @@ export default function CardVariantList({
     };
 
   return (
-    <div className="flex flex-row gap-5 overflow-x-scroll w-[80vw] ">
+    <div className="flex flex-row gap-2 flex-wrap ">
       {selectedVariantList.map(({ variant, quantity }, index) => (
         <div
-          className="flex flex-col gap-3 items-center p-3 border-2 "
+          className="flex flex-col items-center border-2 p-5 gap-3"
           key={index}
         >
-          <div className="flex flex-row justify-between gap-3 w-full items-center">
+          <div className="flex flex-row justify-between items-center gap-5 p-2 w-full">
             <p className="text-xl">
               {variant.product.name} - {variant.name}{' '}
-              {formatPrice(variant.price)}
+
             </p>
             <button
               className="btn btn-error"
@@ -65,19 +65,22 @@ export default function CardVariantList({
               <TrashIcon className="w-5 h-5" />
             </button>
           </div>
-          <div className="flex flex-row items-center p-4 gap-4">
+          <div className="flex flex-row items-center gap-5">
+            <p>{formatPrice(variant.price)}</p>
+
+
             <button
-              className="btn btn-success"
-              onClick={incrementVariantByOne(variant.id!)}
-            >
-              <PlusIcon className="w-5 h-5" />
-            </button>
-            <p className="text-xl">x{quantity}</p>
-            <button
-              className="btn btn-error"
+              className="btn btn-error text-text-base-content"
               onClick={handleClickRemoveVariantQuantity(index)}
             >
               <MinusIcon className="w-5 h-5" />
+            </button>
+            <p className="text-xl">x{quantity}</p>
+            <button
+              className="btn btn-success text-text-base-content"
+              onClick={incrementVariantByOne(variant.id!)}
+            >
+              <PlusIcon className="w-5 h-5" />
             </button>
           </div>
         </div>

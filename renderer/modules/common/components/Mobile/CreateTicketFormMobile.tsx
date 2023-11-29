@@ -4,10 +4,8 @@ import {
   parseDateToArgentinianFormat,
 } from '@/modules/common/libs/utils';
 import {
-  ArrowSmallDownIcon,
   CalendarDaysIcon,
   ChevronDownIcon,
-  ChevronUpDownIcon,
   ChevronUpIcon,
   DevicePhoneMobileIcon,
   MapPinIcon,
@@ -119,10 +117,10 @@ export const CreateTicketFormMobile = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-                discountAmount,
-                discountType,
-                price: finalTotalPrice,
-              })
+              discountAmount,
+              discountType,
+              price: finalTotalPrice,
+            })
             : couponDiscount,
         },
         coupon: {
@@ -160,17 +158,17 @@ export const CreateTicketFormMobile = ({
   };
   return (
     <form
-      className="flex w-full h-full justify-between flex-col gap-5"
+      className="flex w-fullflex-col"
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
-      <div className="collapse  bg-base-200">
+      <div className="collapse bg-base-200">
         <input
           type="checkbox"
           onChange={handleToggleAccordion}
-          name="my-accordion-3   "
+          name="my-accordion-3"
         />
         <div className="collapse-title text-xl font-medium">
-          <div className="flex flex-row gap-3 items-center">
+          <div className="flex flex-row gap-16 items-end justify-between">
             <div className="flex flex-col gap-10">
               <p className="text-xl font-bold">
                 <ShoppingCartIcon className="w-5 inline" /> Orden # {order.id}{' '}
@@ -180,50 +178,51 @@ export const CreateTicketFormMobile = ({
                 {order.client?.name || 'Consumidor Final'}
               </p>
             </div>
-            <div className="flex flex-col gap-5">
-              <div className="flex flex-row gap-2">
-                <button
-                  className="btn btn-secondary text-stone-50"
-                  onClick={handleToggleEdit}
-                >
-                  <PencilIcon className="w-full h-6 " />
-                </button>
-
-                <button
-                  disabled={cancelOrderMutation.isLoading}
-                  className="btn btn-error text-stone-50"
-                  onClick={handleCancelOrder}
-                >
-                  <TrashIcon className="w-full h-6 " />
-                </button>
-              </div>
-              <button className="btn btn-outline">
-                {isCheckedAcordion ? (
-                  <ChevronUpIcon className="w-5 h-5" />
-                ) : (
-                  <ChevronDownIcon className="w-5 h-5" />
-                )}
-              </button>
-            </div>
+            <button className="btn w-max btn-outline">
+              {isCheckedAcordion ? (
+                <ChevronUpIcon className="w-5 h-5" />
+              ) : (
+                <ChevronDownIcon className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
         <div className="collapse-content">
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-row justify-end gap-3">
+              <button
+                className="btn btn-secondary text-text-base-content"
+                onClick={handleToggleEdit}
+              >
+                <PencilIcon className="w-full h-6 " />
+              </button>
+
+              <button
+                disabled={cancelOrderMutation.isLoading}
+                className="btn btn-error text-text-base-content"
+                onClick={handleCancelOrder}
+              >
+                <TrashIcon className="w-full h-6 " />
+              </button>
+            </div>
+
+          </div>
           <div className="flex flex-col">
             <datalist className="flex flex-col gap-4">
               <p className="flex flex-row items-center gap-3 ">
                 {' '}
-                <CalendarDaysIcon className="w-5 inline text-stone-500" />{' '}
+                <CalendarDaysIcon className="w-5 inline text-text-base-content" />{' '}
                 {parseDateToArgentinianFormat(order.createdAt)}
               </p>
               {order.address ? (
                 <p className="flex flex-row items-center gap-3 ">
-                  <MapPinIcon className="w-5 inline text-stone-500" />{' '}
+                  <MapPinIcon className="w-5 inline text-text-base-content" />{' '}
                   {order.address}
                 </p>
               ) : null}
               {order.client?.phone_number ? (
                 <p className="flex flex-row items-center gap-3">
-                  <DevicePhoneMobileIcon className="w-5 inline  text-stone-500" />{' '}
+                  <DevicePhoneMobileIcon className="w-5 inline  text-text-base-content" />{' '}
                   {order.client?.phone_number}
                 </p>
               ) : null}
@@ -301,7 +300,7 @@ export const CreateTicketFormMobile = ({
               <button
                 type="submit"
                 disabled={createTicketMutation.isLoading || updateMode}
-                className="btn btn-success disabled:btn-disabled text-stone-50"
+                className="btn btn-success disabled:btn-disabled text-text-base-content"
               >
                 {createTicketMutation.isLoading ? (
                   <Loader />

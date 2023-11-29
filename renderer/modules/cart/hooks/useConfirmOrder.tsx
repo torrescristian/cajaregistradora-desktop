@@ -1,5 +1,9 @@
-import { useMemo, useRef, useState } from 'react';
-import ClientForm from '../../../cart/components/ClientForm';
+import {
+  DISCOUNT_TYPE,
+  IDiscount,
+  IOrder,
+  IOrderItem,
+} from '@/modules/ordenes/interfaces/IOrder';
 import {
   getAdditionalDetails,
   getCartItems,
@@ -12,47 +16,34 @@ import {
   getSubtotalPrice,
   getTotalPrice,
   useCartStore,
-} from '@/modules/cart/contexts/useCartStore';
-import useCreateOrderMutation from '@/modules/cart/hooks/useCreateOrderMutation';
-import Loader from '@/modules/common/components/Loader';
-import useUpdateOrderMutation from '@/modules/cart/hooks/useUpdateOrderMutation';
-import {
-  DISCOUNT_TYPE,
-  IDiscount,
-  IOrder,
-  IOrderItem,
-} from '@/modules/ordenes/interfaces/IOrder';
-import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
-import ValidateCoupon from '@/modules/ordenes/components/ValidateCoupon';
+} from '../contexts/useCartStore';
+import { ICartItem, IPromoItem } from '../interfaces/ICart';
+import { useMemo, useRef, useState } from 'react';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-
-import { IPayment } from '@/modules/recibos/interfaces/ITicket';
+import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import usePrintService from '@/modules/common/hooks/usePrintService';
+import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
+import useUpdateOrderMutation from './useUpdateOrderMutation';
 import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
-import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
-import { DataItem } from '@/modules/common/components/DataItem';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import usePrintService from '@/modules/common/hooks/usePrintService';
-import Payments from '@/modules/ordenes/components/Payments';
-import { ICartItem, IPromoItem } from '../../../cart/interfaces/ICart';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
-import CustomToastContainer from '@/modules/common/components/CustomToastContainer';
+import { toast } from 'react-toastify';
+import useCreateOrderMutation from './useCreateOrderMutation';
 
 interface IProps {
   updateMode?: boolean;
   order?: IOrder;
   onSubmit?: () => void;
   promoItems?: IPromoItem[];
+  closeUpdateMode?: () => void;
 }
 
-export const ConfirmOrderMobile = ({
-  updateMode,
-  order,
+export default function useConfirmOrder({
   onSubmit,
+  order,
   promoItems,
-}: IProps) => {
-  // TODO: Create clear cart
+  updateMode,
+}: IProps) {
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
   const subtotalPrice = useCartStore(getSubtotalPrice);
@@ -62,20 +53,19 @@ export const ConfirmOrderMobile = ({
   const setAdditionalDetails = useCartStore(getSetAdditionalDetails);
   const setDiscountType = useCartStore(getSetDiscountType);
   const setDiscountAmount = useCartStore(getSetDiscountAmount);
-  const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
-  const discountAmount = useCartStore(getDiscountAmount) || 0;
-
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  const [coupon, setCoupon] = useState<ICoupon>();
-  const [payments, setPayments] = useState<IPayment[]>([]);
-  const { printOrder, printCommand, printInvoice } = usePrintService();
+  const discountAmount = useCartStore(getDiscountAmount) || 0;
+  const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
 
   const newTotalPrice = useMemo(
     () =>
       calcDiscount({
         discountAmount,
         discountType,
-        price: (order?.totalPrice || subtotalPrice) - couponDiscount,
+        price:
+          (order?.totalPrice || subtotalPrice) -
+          couponDiscount -
+          discountAmount,
       }),
     [
       subtotalPrice,
@@ -85,7 +75,16 @@ export const ConfirmOrderMobile = ({
       order?.totalPrice,
     ],
   );
+  const [coupon, setCoupon] = useState<ICoupon>();
+  const [payments, setPayments] = useState<IPayment[]>([
+    {
+      amount: newTotalPrice,
+      type: PAYMENT_TYPE.CASH,
+    },
+  ]);
+  const { printOrder, printCommand, printInvoice } = usePrintService();
 
+  const ref = useRef<HTMLDialogElement>(null);
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
     onSuccess: () => {
@@ -110,7 +109,7 @@ export const ConfirmOrderMobile = ({
   const createOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
       items,
-      totalPrice,
+      totalPrice: newTotalPrice,
       additionalDetails,
       clientId,
       subtotalPrice,
@@ -129,7 +128,7 @@ export const ConfirmOrderMobile = ({
       order: {
         id: order!.id!,
         client: clientId!,
-        totalPrice,
+        totalPrice: newTotalPrice,
         additionalDetails,
         subtotalPrice,
         discount: { amount: discountAmount!, type: discountType! },
@@ -147,6 +146,7 @@ export const ConfirmOrderMobile = ({
     } else {
       createOrder();
     }
+    closeModal();
     clearForm();
   };
 
@@ -210,70 +210,31 @@ export const ConfirmOrderMobile = ({
         },
       });
 
+    closeModal();
     await printOrder(updatedOrderResponse.data.id);
     await printCommand(orderResponse.data.id);
     await printInvoice(ticketResponse.data.id);
   };
+  const handleClickConfirmOrder = () => {
+    ref.current?.showModal();
+  };
 
-  if (orderMutation.isLoading) {
-    return <Loader />;
-  }
-
-  return (
-    <section className="p-5 bg-neutral ">
-      <CustomToastContainer />
-      <section className="flex flex-col">
-        <ClientForm
-          onSelect={(client) => addClientId(client?.id || null)}
-          defaultClient={order?.client}
-        />
-
-        <div className="flex flex-col gap-5">
-          <label className="label">Detalles adicionales:</label>
-          <textarea
-            className="textarea textarea-bordered"
-            value={additionalDetails}
-            onChange={handleChangeAdditionalsDetails}
-          />
-          <DiscountTypeControl
-            onChange={handleChangeDiscountType}
-            discountAmount={order?.discount?.amount}
-            discountType={order?.discount?.type}
-          />
-          <ValidateCoupon
-            onChange={handleCouponDiscountAmount}
-            subtotalPrice={order?.subtotalPrice! || subtotalPrice}
-            coupon={coupon}
-          />
-          <Payments
-            newTotalPrice={newTotalPrice}
-            onChange={handleChangePayments}
-          />
-          <DataItem
-            label="Total:"
-            value={formatPrice(newTotalPrice)}
-            defaultValue=""
-            className="text-2xl"
-          />
-        </div>
-      </section>
-      <div className="flex flex-col sm:flex-row justify-between pt-5">
-        <button
-          className="btn btn-link text-error"
-          onClick={() => closeModal()}
-        >
-          Cancelar
-        </button>
-        <button className="btn btn-link" onClick={handleCreateTicket}>
-          Finalizar venta
-        </button>
-        <button
-          onClick={handleSubmit}
-          className="btn sticky top-0 z-20 sm:w-fit whitespace-nowrap btn-primary text-xl text-primary-content"
-        >
-          {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
-        </button>
-      </div>
-    </section>
-  );
-};
+  return {
+    orderMutation,
+    addClientId,
+    additionalDetails,
+    handleChangeAdditionalsDetails,
+    handleChangeDiscountType,
+    handleCouponDiscountAmount,
+    handleClickConfirmOrder,
+    subtotalPrice,
+    coupon,
+    newTotalPrice,
+    handleChangePayments,
+    handleSubmit,
+    handleCreateTicket,
+    closeModal,
+    ref,
+    items,
+  };
+}

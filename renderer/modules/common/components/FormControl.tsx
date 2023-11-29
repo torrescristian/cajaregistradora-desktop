@@ -21,7 +21,7 @@ const FormControl = ({
       <RenderIf condition={!hideLabel}>
         <label
           htmlFor={name}
-          className="whitespace-nowrap text-stone-500 text-center"
+          className="whitespace-nowrap text-base-content text-center"
         >
           {text}
         </label>

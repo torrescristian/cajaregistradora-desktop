@@ -7,10 +7,11 @@ import { useDebounce } from 'use-debounce';
 import FormField from '@/modules/common/components/FormFieldText';
 import Loader from '@/modules/common/components/Loader';
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import useCreateClientMutation from '@/modules/cart/hooks/useCreateOrderMutation.1';
 import { PencilIcon, PhoneIcon, TrashIcon } from '@heroicons/react/24/solid';
 import FieldLabel from '@/modules/common/components/FieldLabel';
-import useUpdateClientMutation from '@/modules/cart/hooks/useUpdateClientMutation';
+import useCreateClientMutation from '../hooks/useCreateClientMutation';
+import useUpdateClientMutation from '../hooks/useUpdateClientMutation';
+
 
 interface IProps {
   onSelect: (client: IClient | null) => void;
@@ -151,17 +152,17 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
         <input
           onChange={handleChange}
           value={search}
-          className="input input-bordered my-3"
+          className="input input-bordered text-neutral my-3"
         />
         <div className="flex flex-row w-full justify-between">
           <RenderIf condition={client?.name}>
             <section className="flex flex-row justify-between gap-3 pt-1 pb-3 items-center">
               <div className="flex flex-col">
-                <p className="text-stone-500">Cliente Seleccionado: </p>
-                <p className="text-primary">{client?.name}</p>
+                <p className="text-base-content">Cliente Seleccionado: </p>
+                <p className="text-base-content">{client?.name}</p>
               </div>
               <button
-                className="btn btn-error text-stone-50"
+                className="btn btn-error text-base-content"
                 onClick={handleDeleteClient}
               >
                 <TrashIcon className="h-4 w-4" />
@@ -170,7 +171,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
           </RenderIf>
           <RenderIf condition={!client?.name}>
             <section className="pt-1 pb-3">
-              <p className="text-stone-500">Consumidor Final</p>
+              <p className="text-base-content">Consumidor Final</p>
               <button
                 className="btn btn-secondary"
                 onClick={() => dialogRef.current?.showModal()}
@@ -194,7 +195,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
                 onClick={handleClick(client)}
               >
                 <div className="flex flex-row justify-between">
-                  <p className="text-xl">{client.name}</p>
+                  <p className="text-xl text-base-content">{client.name}</p>
                   <button
                     className="btn-sm btn-primary"
                     onClick={handleClickUpdateClient(client)}
@@ -203,9 +204,9 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
                   </button>
                 </div>
                 <div className="flex flex-row pt-3 justify-between">
-                  <p className="text-sm text-stone-500">{client.address}</p>
+                  <p className="text-sm text-base-content">{client.address}</p>
                   <RenderIf condition={Boolean(client.phone_number)}>
-                    <p className="text-sm text-stone-500 flex flex-row items-center gap-2">
+                    <p className="text-sm text-base-content flex flex-row items-center gap-2">
                       <PhoneIcon className="h-4 w-4" /> {client.phone_number}
                     </p>
                   </RenderIf>

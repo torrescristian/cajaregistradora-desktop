@@ -48,7 +48,7 @@ const MobileMenu = ({ isLoggedIn, onLogout }: ISubMenuProps) => {
                 )}
                 <WhatsappButton />
                 <NavButton
-                  className="w-full bg-red-500 text-stone-50 hover:bg-red-700"
+                  className="w-full bg-red-500 text-text-base-content hover:bg-red-700"
                   onClick={handleLogout}
                 >
                   Cerrar Sesión

@@ -33,8 +33,8 @@ export default function Coupon({ coupon }: IProps) {
 
   return (
     <Card className="items-start gap-3">
-      <div className="flex flex-row justify-between w-full">
-        <DataItem label={'Código:'} value={coupon.code} />
+      <div className="flex flex-row justify-between w-full sm:w-[20vw]">
+        <DataItem label={'Código:'} value={coupon.code} className='sm:flex-col flex-row flex-wrap' />
         <button className="btn btn-error" onClick={handleCancelCupon}>
           <TrashIcon className="h-5 w-5" />
         </button>
@@ -42,18 +42,22 @@ export default function Coupon({ coupon }: IProps) {
       <DataItem
         label="Descuento:"
         value={formatPrice(coupon.discount.amount)}
+        className='sm:flex-col flex-row flex-wrap'
       />
       <DataItem
         label="Vencimiento:"
         value={parseDateToArgentinianFormat(coupon.dueDate)}
+        className='sm:flex-col flex-row flex-wrap'
       />
       <DataItem
         label="Tipo de descuento:"
         value={convertDiscount(coupon.discount)}
+        className='sm:flex-col flex-row flex-wrap'
       />
       <DataItem
         label="Descuento máximo:"
         value={formatPrice(coupon.maxAmount)}
+        className='sm:flex-col flex-row flex-wrap'
       />
 
       <DataItem
@@ -63,9 +67,10 @@ export default function Coupon({ coupon }: IProps) {
             ? `${coupon.variant.product.type.emoji} ${coupon.variant.product.name} ${coupon.variant.name}`
             : '-'
         }
+        className='sm:flex-col flex-row flex-wrap'
       />
 
-      <DataItem label="Uso restantes:" value={coupon.availableUses} />
+      <DataItem className='sm:flex-col flex-row flex-wrap' label="Uso restantes:" value={coupon.availableUses} />
     </Card>
   );
 }
