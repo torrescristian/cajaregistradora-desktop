@@ -1,6 +1,5 @@
 import FormFieldText from '@/modules/common/components/FormFieldText';
-import SearchInput, {
-} from '@/modules/common/components/SearchInput';
+import SearchInput from '@/modules/common/components/SearchInput';
 import ProductItem from '@/modules/products/components/ProductItem';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '@/modules/common/components/RenderIf';
@@ -12,7 +11,6 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreateCoupon from '../hooks/useCreateCoupon';
 
 export const CreateCoupon = () => {
-
   const {
     handleSubmit,
     handleSubmitCreateCoupon,

@@ -1,8 +1,6 @@
 import ClientForm from './ClientForm';
 import Loader from '@/modules/common/components/Loader';
-import {
-  IOrder,
-} from '@/modules/ordenes/interfaces/IOrder';
+import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 import ValidateCoupon from '@/modules/ordenes/components/ValidateCoupon';
 import { formatPrice } from '@/modules/common/libs/utils';
@@ -42,7 +40,13 @@ export const ConfirmOrderMobile = ({
     handleSubmit,
     handleCreateTicket,
     closeModal,
-  } = useConfirmOrder({ onSubmit, order, promoItems, updateMode, closeUpdateMode });
+  } = useConfirmOrder({
+    onSubmit,
+    order,
+    promoItems,
+    updateMode,
+    closeUpdateMode,
+  });
 
   if (orderMutation.isLoading) {
     return <Loader />;
@@ -57,7 +61,7 @@ export const ConfirmOrderMobile = ({
           defaultClient={order?.client}
         />
 
-        <div className="flex flex-col gap-5 " >
+        <div className="flex flex-col gap-5 ">
           <label className="label">Detalles adicionales:</label>
           <textarea
             className="textarea textarea-bordered"
@@ -94,7 +98,10 @@ export const ConfirmOrderMobile = ({
           {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
         </button>
         {updateMode ? null : (
-          <button className="btn btn-secondary w-full" onClick={handleCreateTicket}>
+          <button
+            className="btn btn-secondary w-full"
+            onClick={handleCreateTicket}
+          >
             Finalizar venta
           </button>
         )}

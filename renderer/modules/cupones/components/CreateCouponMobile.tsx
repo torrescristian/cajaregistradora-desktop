@@ -86,19 +86,20 @@ export const CreateCouponMobile = () => {
         <div className="flex flex-col items-center w-full gap-5 flex-wrap">
           <RenderIf condition={showProductList}>
             <RenderIf condition={!selectedVariant}>
-              <div className='divider'>Productos</div>
+              <div className="divider">Productos</div>
               <SearchInput {...searchProps} />
               <div className="flex flex-col overflow-x-scroll  h-[70vh]">
                 {products.map((product) => (
                   <ProductItemMobile
-                   key={product.id}
+                    key={product.id}
                     product={product}
-                    onClick={handleClickAddProduct}  />
+                    onClick={handleClickAddProduct}
+                  />
                 ))}
               </div>
             </RenderIf>
             <RenderIf condition={selectedVariant}>
-              <div className='divider'>Producto selecionado</div>
+              <div className="divider">Producto selecionado</div>
               <div className="flex flex-col items-center p-5 gap-5 flex-wrap w-full border-2">
                 <div className="flex flex-row justify-between w-full items-center ">
                   <p className="font-bold">

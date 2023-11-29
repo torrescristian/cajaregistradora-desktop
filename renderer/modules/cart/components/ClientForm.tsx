@@ -12,7 +12,6 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreateClientMutation from '../hooks/useCreateClientMutation';
 import useUpdateClientMutation from '../hooks/useUpdateClientMutation';
 
-
 interface IProps {
   onSelect: (client: IClient | null) => void;
   defaultClient?: IClient;

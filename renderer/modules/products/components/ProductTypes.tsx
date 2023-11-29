@@ -67,7 +67,7 @@ export default function ProductTypes({
       ) : (
         <>
           <TabButton
-            className='btn-secondary'
+            className="btn-secondary"
             isActive={selectedProductType === null}
             onClick={handleSelect(null)}
           >
@@ -96,8 +96,11 @@ export default function ProductTypes({
           </RenderIf>
           <RenderIf condition={productTypes?.length > 3}>
             <div className="dropdown">
-              <label tabIndex={0} className="btn flex-nowrap gap-3 btn-secondary  m-1">
-                <FunnelIcon className='w-5 h-5' /> Filtrar
+              <label
+                tabIndex={0}
+                className="btn flex-nowrap gap-3 btn-secondary  m-1"
+              >
+                <FunnelIcon className="w-5 h-5" /> Filtrar
               </label>
               <div
                 tabIndex={0}

@@ -69,17 +69,18 @@ export default function CreateVariantsTable({
     setVariants(newVariants);
   };
 
-  const handleClickRemoveVariant = (indexToRemove: number) => (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const newVariants = [...variants];
-    newVariants.splice(indexToRemove, 1);
-    setVariants(newVariants);
-  };
+  const handleClickRemoveVariant =
+    (indexToRemove: number) => (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      const newVariants = [...variants];
+      newVariants.splice(indexToRemove, 1);
+      setVariants(newVariants);
+    };
 
   return (
     <div className="overflow-x-scroll w-80 sm:w-full sm:justify-center flex flex-col items-center gap-4 p-4">
       <table className=" table table-caption ">
-        <thead >
+        <thead>
           <tr>
             <th>Variante inicial</th>
             <th>Nombre</th>

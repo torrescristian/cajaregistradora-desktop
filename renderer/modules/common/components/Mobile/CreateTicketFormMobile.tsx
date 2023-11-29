@@ -117,10 +117,10 @@ export const CreateTicketFormMobile = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-              discountAmount,
-              discountType,
-              price: finalTotalPrice,
-            })
+                discountAmount,
+                discountType,
+                price: finalTotalPrice,
+              })
             : couponDiscount,
         },
         coupon: {
@@ -205,7 +205,6 @@ export const CreateTicketFormMobile = ({
                 <TrashIcon className="w-full h-6 " />
               </button>
             </div>
-
           </div>
           <div className="flex flex-col">
             <datalist className="flex flex-col gap-4">

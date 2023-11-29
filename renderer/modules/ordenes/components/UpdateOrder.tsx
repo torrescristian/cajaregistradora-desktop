@@ -14,7 +14,12 @@ interface IProps {
   updateMode?: boolean;
 }
 
-export const UpdateOrder = ({ order, onSubmit,closeUpdateMode,updateMode }: IProps) => {
+export const UpdateOrder = ({
+  order,
+  onSubmit,
+  closeUpdateMode,
+  updateMode,
+}: IProps) => {
   const setCart = useCartStore(getSetCart);
   const isMobile = useIsMobile();
 
@@ -25,7 +30,6 @@ export const UpdateOrder = ({ order, onSubmit,closeUpdateMode,updateMode }: IPro
       selectedVariant: orderItem.selectedVariant!,
     };
   };
-
 
   useEffect(() => {
     setCart({
@@ -41,12 +45,17 @@ export const UpdateOrder = ({ order, onSubmit,closeUpdateMode,updateMode }: IPro
   }, []);
 
   return (
-    <section >
-      {isMobile ? 
-      (<div>
-        <ProductsMobile updateMode={updateMode} order={order} onSubmit={onSubmit} closeUpdateMode={closeUpdateMode} />
-      </div>)
-      : (
+    <section>
+      {isMobile ? (
+        <div>
+          <ProductsMobile
+            updateMode={updateMode}
+            order={order}
+            onSubmit={onSubmit}
+            closeUpdateMode={closeUpdateMode}
+          />
+        </div>
+      ) : (
         <div className="flex flex-col w-[85vw]">
           <Products />
           <Cart updateMode order={order} onSubmit={onSubmit} />

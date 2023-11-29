@@ -9,11 +9,25 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreatePromo from '../hooks/useCreatePromo';
 
 export const CreatePromo = () => {
-
-  const { handleCreatePromo, handleChangeName, name, price, handleChangePrice, categories,
-    handleChangeSelectedCategory, selectedCategory, handleClickAddCategory, selectedCategoryList,
-    setSelectedCategoryList, incrementCategoryByOne, searchProps, handleClickAddProduct, products,
-    selectedVariantList, setSelectedVariantList, createPromoMutation,
+  const {
+    handleCreatePromo,
+    handleChangeName,
+    name,
+    price,
+    handleChangePrice,
+    categories,
+    handleChangeSelectedCategory,
+    selectedCategory,
+    handleClickAddCategory,
+    selectedCategoryList,
+    setSelectedCategoryList,
+    incrementCategoryByOne,
+    searchProps,
+    handleClickAddProduct,
+    products,
+    selectedVariantList,
+    setSelectedVariantList,
+    createPromoMutation,
   } = useCreatePromo();
 
   return (

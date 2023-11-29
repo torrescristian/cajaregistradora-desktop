@@ -21,7 +21,11 @@ export default function PromoPage() {
     <CreateListTabs name="promo">
       {(createMode: boolean) =>
         createMode ? (
-          isMobile ? <CreatePromoMobile /> : <CreatePromo />
+          isMobile ? (
+            <CreatePromoMobile />
+          ) : (
+            <CreatePromo />
+          )
         ) : (
           <RenderPromos
             promosItems={promos.map((promo) => ({

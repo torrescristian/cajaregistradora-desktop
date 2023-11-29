@@ -119,10 +119,10 @@ export const CreateTicketForm = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-              discountAmount,
-              discountType: discountType!,
-              price: finalTotalPrice,
-            })
+                discountAmount,
+                discountType: discountType!,
+                price: finalTotalPrice,
+              })
             : couponDiscount,
         },
         coupon: {

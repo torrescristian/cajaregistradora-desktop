@@ -15,7 +15,12 @@ interface IProps {
   closeUpdateMode: () => void;
 }
 
-export const CartIconMobile = ({onSubmit,order,updateMode,closeUpdateMode} :IProps) => {
+export const CartIconMobile = ({
+  onSubmit,
+  order,
+  updateMode,
+  closeUpdateMode,
+}: IProps) => {
   const { openModal } = useModalStore();
   const items = useCartStore(getCartItems) as ICartItem[];
 
@@ -29,7 +34,16 @@ export const CartIconMobile = ({onSubmit,order,updateMode,closeUpdateMode} :IPro
           <label
             htmlFor="menu-drawer"
             className="drawer-button btn btn-primary"
-            onClick={() => openModal(<CartDrawer  updateMode={updateMode} closeUpdateMode={closeUpdateMode}   order={order} onSubmit={onSubmit} />)}
+            onClick={() =>
+              openModal(
+                <CartDrawer
+                  updateMode={updateMode}
+                  closeUpdateMode={closeUpdateMode}
+                  order={order}
+                  onSubmit={onSubmit}
+                />,
+              )
+            }
           >
             <ShoppingCartIcon className="w-5 h-5" />
           </label>
@@ -39,7 +53,16 @@ export const CartIconMobile = ({onSubmit,order,updateMode,closeUpdateMode} :IPro
           <label
             htmlFor="menu-drawer"
             className="drawer-button btn btn-disabled btn-primary"
-            onClick={() => openModal(<CartDrawer  updateMode={updateMode} closeUpdateMode={closeUpdateMode} order={order} onSubmit={onSubmit} />)}
+            onClick={() =>
+              openModal(
+                <CartDrawer
+                  updateMode={updateMode}
+                  closeUpdateMode={closeUpdateMode}
+                  order={order}
+                  onSubmit={onSubmit}
+                />,
+              )
+            }
           >
             <ShoppingCartIcon className="w-5 h-5" />
           </label>

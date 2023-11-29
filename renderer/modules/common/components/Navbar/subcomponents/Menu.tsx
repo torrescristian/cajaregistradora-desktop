@@ -69,7 +69,7 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
               <p className="font-bold text-success">Atención al cliente</p>
             </a>
           </li>
-          <li className='w-full justify-center'>
+          <li className="w-full justify-center">
             <ChangeTheme />
           </li>
         </ul>

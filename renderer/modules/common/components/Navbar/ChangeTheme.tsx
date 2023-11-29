@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const ChangeTheme = () => {
   const [theme, setTheme] = useState(
@@ -18,7 +18,6 @@ export const ChangeTheme = () => {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
-
 
   return (
     <label className="cursor-pointer grid place-items-center">

@@ -53,7 +53,9 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
                 value={ticket.order.additionalDetails}
               />
             </RenderIf>
-            <Divider className="text-text-base-content">Metodos de pago</Divider>
+            <Divider className="text-text-base-content">
+              Metodos de pago
+            </Divider>
             <DataItem
               label="Subtotal:"
               value={formatPrice(ticket.order.subtotalPrice)}

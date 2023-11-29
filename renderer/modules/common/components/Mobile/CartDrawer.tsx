@@ -9,7 +9,12 @@ interface IProps {
   closeUpdateMode: () => void;
 }
 
-export const CartDrawer = ({ onSubmit, order, updateMode,closeUpdateMode }: IProps) => {
+export const CartDrawer = ({
+  onSubmit,
+  order,
+  updateMode,
+  closeUpdateMode,
+}: IProps) => {
   const { isOpen } = useModalStore();
   return (
     <div className="drawer-side">
@@ -19,7 +24,12 @@ export const CartDrawer = ({ onSubmit, order, updateMode,closeUpdateMode }: IPro
         className={isOpen ? 'drawer-overlay' : ''}
       ></label>
       <ul className="bg-base-100">
-        <CartMobile updateMode={updateMode} closeUpdateMode={closeUpdateMode} order={order} onSubmit={onSubmit} />
+        <CartMobile
+          updateMode={updateMode}
+          closeUpdateMode={closeUpdateMode}
+          order={order}
+          onSubmit={onSubmit}
+        />
       </ul>
     </div>
   );

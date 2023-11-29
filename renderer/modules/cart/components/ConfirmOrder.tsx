@@ -49,7 +49,9 @@ export const ConfirmOrder = ({
     return (
       <div className="p-10 toast toast-top toast-end">
         <div className="alert alert-success">
-          <span className="text-text-base-content text-xl">Pedido agregado 🎉</span>
+          <span className="text-text-base-content text-xl">
+            Pedido agregado 🎉
+          </span>
         </div>
       </div>
     );

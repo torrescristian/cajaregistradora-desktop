@@ -78,8 +78,7 @@ const CartMobile = ({
         </div>
         <Card className="flex flex-col items-center md:flex-row text-base-content gap-5 w-full">
           <p className="text-center">
-            <span className="text-xl">Total:</span>{' '}
-            {formatPrice(subtotalPrice)}
+            <span className="text-xl">Total:</span> {formatPrice(subtotalPrice)}
           </p>
           <RenderIf condition={items.length || promosItems.length}>
             <div className="flex flex-row justify-center gap-3 w-full md:justify-end ">

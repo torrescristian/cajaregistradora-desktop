@@ -17,7 +17,12 @@ interface IProps {
   closeUpdateMode?: () => void;
 }
 
-export const ProductsMobile = ({ updateMode, order, onSubmit, closeUpdateMode }: IProps) => {
+export const ProductsMobile = ({
+  updateMode,
+  order,
+  onSubmit,
+  closeUpdateMode,
+}: IProps) => {
   const isMobile = useIsMobile();
   const {
     promos,
@@ -38,41 +43,48 @@ export const ProductsMobile = ({ updateMode, order, onSubmit, closeUpdateMode }:
   return (
     <section className="w-full flex flex-col mt-20 gap-3 p-3 md:mt-0">
       {updateMode ? (
-        <div className='w-full flex justify-center'>
-          <button
-            className="btn w-max btn-error"
-            onClick={closeUpdateMode}
-          >
+        <div className="w-full flex justify-center">
+          <button className="btn w-max btn-error" onClick={closeUpdateMode}>
             Dejar de editar
           </button>
         </div>
       ) : null}
       <div className="flex flex-row items-center justify-between p-3 gap-5">
         {isMobile ? (
-        <>
-          <ProductTypes
-            setShowPromo={setShowPromo}
-            showPromo={showPromo}
-            onSelect={handleSelectPage}
-            selectedProductType={selectedProductType?.id!}
-          />
-          <SearchInput {...searchProps} />
-          <CartIconMobile updateMode={updateMode} order={order} onSubmit={onSubmit} closeUpdateMode={closeUpdateMode!} />
-        </>
+          <>
+            <ProductTypes
+              setShowPromo={setShowPromo}
+              showPromo={showPromo}
+              onSelect={handleSelectPage}
+              selectedProductType={selectedProductType?.id!}
+            />
+            <SearchInput {...searchProps} />
+            <CartIconMobile
+              updateMode={updateMode}
+              order={order}
+              onSubmit={onSubmit}
+              closeUpdateMode={closeUpdateMode!}
+            />
+          </>
         ) : (
-        <>
-          <SearchInput {...searchProps} />
-          <ProductTypes
-            setShowPromo={setShowPromo}
-            showPromo={showPromo}
-            onSelect={handleSelectPage}
-            selectedProductType={selectedProductType?.id!}
-          />
-          <CartIconMobile updateMode={updateMode} order={order} onSubmit={onSubmit} closeUpdateMode={closeUpdateMode!} />
-        </>
+          <>
+            <SearchInput {...searchProps} />
+            <ProductTypes
+              setShowPromo={setShowPromo}
+              showPromo={showPromo}
+              onSelect={handleSelectPage}
+              selectedProductType={selectedProductType?.id!}
+            />
+            <CartIconMobile
+              updateMode={updateMode}
+              order={order}
+              onSubmit={onSubmit}
+              closeUpdateMode={closeUpdateMode!}
+            />
+          </>
         )}
       </div>
-      <div className='md:flex md:flex-row md:flex-wrap '>
+      <div className="md:flex md:flex-row md:flex-wrap ">
         <RenderIf condition={!showPromo}>
           {products.map((product) => (
             <ProductItemMobile key={product.id} product={product} />

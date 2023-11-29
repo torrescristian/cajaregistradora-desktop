@@ -13,10 +13,9 @@ import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 interface IProps {
   product: IProduct;
   onClick?: (props: { product: IProduct; variant: IVariantPromo }) => void;
-
 }
 
-export const ProductItemMobile = ({ product,onClick }: IProps) => {
+export const ProductItemMobile = ({ product, onClick }: IProps) => {
   const {
     handleChangeVariant,
     handleClick,
@@ -24,7 +23,7 @@ export const ProductItemMobile = ({ product,onClick }: IProps) => {
     cartItemQuantity,
     handleClickRemove,
     handleClickAdd,
-  } = useProductItem({ product,onClick });
+  } = useProductItem({ product, onClick });
 
   return (
     <div className="flex flex-col md:w-1/3 w-full mt-3 border-2 p-4">

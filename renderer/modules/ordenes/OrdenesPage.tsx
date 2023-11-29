@@ -18,8 +18,8 @@ export default function OrdenesPage() {
   const orderQuery = useOrderQuery();
 
   const closeUpdateMode = () => {
-    setOrderToUpdate(null)
-  }
+    setOrderToUpdate(null);
+  };
 
   if (orderQuery.isLoading) {
     return <Loader />;

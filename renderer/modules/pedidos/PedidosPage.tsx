@@ -13,7 +13,5 @@ export default function PedidosPage() {
     return <Loader />;
   }
 
-  return (
-      <ProductsMobile />
-  );
+  return <ProductsMobile />;
 }

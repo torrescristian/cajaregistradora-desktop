@@ -34,7 +34,11 @@ const ProductControlMobile = ({ controlType, product }: IProps) => {
         className="flex flex-col gap-5 border-2 w-full items-start border-slate-500 shadow-2xl"
       >
         <section className="flex flex-col gap-5">
-          <FieldLabel title="Nombre:" columnMode className="input-group items-center">
+          <FieldLabel
+            title="Nombre:"
+            columnMode
+            className="input-group items-center"
+          >
             <input
               type="text"
               className="input input-bordered input-secondary"
@@ -58,7 +62,11 @@ const ProductControlMobile = ({ controlType, product }: IProps) => {
             </select>
           </FieldLabel>
 
-          <FieldLabel title="Imagen:" columnMode className="input-group items-center">
+          <FieldLabel
+            title="Imagen:"
+            columnMode
+            className="input-group items-center"
+          >
             <input
               type="file"
               name="files"
