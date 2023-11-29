@@ -19,7 +19,7 @@ export default function FieldLabel({
         className,
       )}
     >
-      <span className="text-neutral-content">{title}</span>
+      <span className="text-base-content">{title}</span>
       {children}
     </label>
   );

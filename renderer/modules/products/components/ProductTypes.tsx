@@ -20,8 +20,8 @@ export default function ProductTypes({
   const productTypes = productsTypes.data || [];
 
   const isMobile = useIsMobile();
-  const handleSelect = (type: IProductType) => () => {
-    onSelect(type.id === selectedProductType ? null : type);
+  const handleSelect = (type: IProductType | null) => () => {
+    onSelect(type?.id === selectedProductType ? null : type);
     setShowPromo(false);
   };
 
@@ -34,13 +34,13 @@ export default function ProductTypes({
     <section className="flex flex-col sm:flex-row gap-5 items-center">
       {isMobile ? (
         <RenderIf condition={productTypes?.length}>
-          <div className="dropdown">
+          <div className="dropdown z-[1]">
             <label tabIndex={0} className="btn btn-secondary  m-1">
               <FunnelIcon className="w-5 h-5 text-secondary-content" />
             </label>
             <div
               tabIndex={0}
-              className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64"
+              className="dropdown-content flex flex-col p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-base-100-focus rounded-box w-64"
             >
               <TabButton
                 className="btn-secondary"
@@ -68,12 +68,19 @@ export default function ProductTypes({
         <>
           <TabButton
             className="btn-secondary"
+            isActive={selectedProductType === null}
+            onClick={handleSelect(null)}
+          >
+            <span>Todos</span>
+          </TabButton>
+          <TabButton
+            className="btn-secondary"
             isActive={showPromo}
             onClick={handleClickPromo}
           >
             <span>Promociones</span>
           </TabButton>
-          <RenderIf condition={productTypes?.length <= 5}>
+          <RenderIf condition={productTypes?.length <= 3}>
             {productTypes
               ?.filter((t) => t)
               .map((type: IProductType) => (
@@ -87,14 +94,17 @@ export default function ProductTypes({
                 </TabButton>
               ))}
           </RenderIf>
-          <RenderIf condition={productTypes?.length > 5}>
+          <RenderIf condition={productTypes?.length > 3}>
             <div className="dropdown">
-              <label tabIndex={0} className="btn btn-secondary  m-1">
-                🔎 Categorias
+              <label
+                tabIndex={0}
+                className="btn flex-nowrap gap-3 btn-secondary  m-1"
+              >
+                <FunnelIcon className="w-5 h-5" /> Filtrar
               </label>
               <div
                 tabIndex={0}
-                className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-neutral-focus rounded-box w-64"
+                className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-base-100-focus rounded-box w-64"
               >
                 {productTypes
                   ?.filter((t) => t)

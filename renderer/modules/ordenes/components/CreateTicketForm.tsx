@@ -19,7 +19,7 @@ import {
   IDiscount,
   IOrder,
 } from '@/modules/ordenes/interfaces/IOrder';
-import { IPayment } from '@/modules/recibos/interfaces/ITicket';
+import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { useForm } from 'react-hook-form';
 import OrderItem from './OrderItem';
 import Loader from '@/modules/common/components/Loader';
@@ -58,8 +58,6 @@ export const CreateTicketForm = ({
   const createTicketMutation = useCreateTicketMutation();
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
-
-  const [payments, setPayments] = useState<IPayment[]>([]);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>(
@@ -68,10 +66,16 @@ export const CreateTicketForm = ({
   const [discountAmount, setDiscountAmount] = useState<number>(
     order.discount?.amount!,
   );
+  const finalTotalPrice = order.totalPrice - couponDiscount - discountAmount;
+
+  const [payments, setPayments] = useState<IPayment[]>([
+    {
+      amount: finalTotalPrice,
+      type: PAYMENT_TYPE.CASH,
+    },
+  ]);
 
   const { printInvoice } = usePrintService();
-
-  const finalTotalPrice = order.totalPrice - couponDiscount - discountAmount;
 
   const handleChangeDiscountType = (discount: IDiscount) => {
     setDiscountType(discount.type);
@@ -98,7 +102,7 @@ export const CreateTicketForm = ({
   } = useForm<IFormControl>({
     defaultValues: {
       additionalDetails: order.additionalDetails,
-      discountAmount: order.discount?.amount || 0,
+      discountAmount,
       discountType: order.discount?.type || DISCOUNT_TYPE.FIXED,
       totalPrice: order.totalPrice,
       promoItems: order.promoItems,
@@ -148,7 +152,7 @@ export const CreateTicketForm = ({
 
   return (
     <form
-      className="flex w-full h-full justify-between flex-col gap-5"
+      className="flex w-full h-full justify-between bg-base-100 flex-col p-5 gap-5"
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
       <div className="flex flex-row justify-between gap-3">
@@ -163,7 +167,7 @@ export const CreateTicketForm = ({
         </div>
         <div className="flex flex-row gap-3">
           <button
-            className="btn btn-secondary text-stone-50"
+            className="btn btn-secondary text-base-content"
             onClick={handleToggleEdit}
           >
             <PencilIcon className="w-full h-6 " />
@@ -171,7 +175,7 @@ export const CreateTicketForm = ({
 
           <button
             disabled={cancelOrderMutation.isLoading}
-            className="btn btn-error text-stone-50"
+            className="btn btn-error text-base-content"
             onClick={handleCancelOrder}
           >
             <TrashIcon className="w-full h-6 " />
@@ -183,18 +187,18 @@ export const CreateTicketForm = ({
         <datalist className="flex flex-col gap-4">
           <p className="flex flex-row items-center gap-3 ">
             {' '}
-            <CalendarDaysIcon className="w-5 inline text-stone-500" />{' '}
+            <CalendarDaysIcon className="w-5 inline text-neutral-focus" />{' '}
             {parseDateToArgentinianFormat(order.createdAt)}
           </p>
           {order.address ? (
             <p className="flex flex-row items-center gap-3 ">
-              <MapPinIcon className="w-5 inline text-stone-500" />{' '}
+              <MapPinIcon className="w-5 inline text-neutral-focus" />{' '}
               {order.address}
             </p>
           ) : null}
           {order.client?.phone_number ? (
             <p className="flex flex-row items-center gap-3">
-              <DevicePhoneMobileIcon className="w-5 inline  text-stone-500" />{' '}
+              <DevicePhoneMobileIcon className="w-5 inline  text-neutral-focus" />{' '}
               {order.client?.phone_number}
             </p>
           ) : null}
@@ -261,11 +265,14 @@ export const CreateTicketForm = ({
             defaultValue=""
             className="text-2xl"
           />
-          <Payments onChange={handleChangePayments} />
+          <Payments
+            newTotalPrice={finalTotalPrice!}
+            onChange={handleChangePayments}
+          />
           <button
             type="submit"
             disabled={createTicketMutation.isLoading || updateMode}
-            className="btn btn-success disabled:btn-disabled text-stone-50"
+            className="btn btn-success disabled:btn-disabled text-neutral-focus"
           >
             {createTicketMutation.isLoading ? <Loader /> : 'Confirmar orden'}
           </button>

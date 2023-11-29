@@ -69,15 +69,17 @@ export default function CreateVariantsTable({
     setVariants(newVariants);
   };
 
-  const handleClickRemoveVariant = (indexToRemove: number) => {
-    const newVariants = [...variants];
-    newVariants.splice(indexToRemove, 1);
-    setVariants(newVariants);
-  };
+  const handleClickRemoveVariant =
+    (indexToRemove: number) => (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      const newVariants = [...variants];
+      newVariants.splice(indexToRemove, 1);
+      setVariants(newVariants);
+    };
 
   return (
-    <div className="overflow-x-auto w-full justify-center flex flex-col items-center gap-4 p-4">
-      <table className="table table-zebra">
+    <div className="overflow-x-scroll w-80 sm:w-full sm:justify-center flex flex-col items-center gap-4 p-4">
+      <table className=" table table-caption ">
         <thead>
           <tr>
             <th>Variante inicial</th>
@@ -141,8 +143,8 @@ export default function CreateVariantsTable({
                 </RenderIf>
                 <td>
                   <button
-                    className="btn btn-error text-stone-50"
-                    onClick={() => handleClickRemoveVariant(index)}
+                    className="btn btn-error text-text-base-content"
+                    onClick={handleClickRemoveVariant(index)}
                   >
                     <MinusIcon className="w-5 h-5" />
                   </button>

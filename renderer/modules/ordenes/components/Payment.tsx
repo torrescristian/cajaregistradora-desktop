@@ -18,7 +18,7 @@ export const Payment = ({
   payment,
   newTotalPrice,
 }: IProps) => {
-  const [priceDefault, setPriceDefault] = useState(newTotalPrice);
+  const [paymentAmount, setPaymentAmount] = useState<number>(newTotalPrice!);
 
   const handleSelectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as PAYMENT_TYPE;
@@ -29,17 +29,15 @@ export const Payment = ({
   };
 
   const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPriceDefault(Number(e.target.value));
-    const { value } = e.target;
-    const amount = value === '' ? '' : Number(value);
+    setPaymentAmount(Number(e.target.value));
     onChange({
       ...payment,
-      amount,
+      amount: paymentAmount,
     });
   };
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col text-base-content gap-3">
       <div className="flex flex-row gap-3 w-full justify-between">
         <Selector
           className="w-full flex-1"
@@ -52,10 +50,10 @@ export const Payment = ({
         />
         <input
           onChange={handleChangeAmount}
-          value={priceDefault}
+          value={paymentAmount}
           type="number"
           placeholder="0.00"
-          className="input input-bordered w-28 sm:w-36"
+          className="input input-bordered text-base-content w-28 sm:w-36 "
         />
       </div>
       <div className="flex flex-row gap-2 w-full justify-end">

@@ -4,7 +4,7 @@ import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
 const PageLayout = ({ children, className }: IComponent) => (
   <main
     className={mergeClasses(
-      'mb-28 flex sm:w-full flex-col sm:items-center gap-y-5 px-5 ',
+      'sm:mb-28 mt-28 flex sm:w-full flex-col sm:items-center gap-y-5 px-5 ',
       className,
     )}
   >

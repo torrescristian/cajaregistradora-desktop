@@ -18,7 +18,11 @@ const CartItemMobile = ({ product, variant }: IProps) => {
     useProductItem({ product, selectedVariant: variant });
 
   return (
-    <Card data-test="productItem" className="items-end gap-3" tabIndex={0}>
+    <Card
+      data-test="productItem"
+      className="items-end gap-3 text-base-content"
+      tabIndex={0}
+    >
       <p className="font-bold whitespace-nowrap self-start">
         {product.type.emoji} {product.name} - {variant.name}
       </p>

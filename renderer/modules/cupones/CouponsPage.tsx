@@ -3,9 +3,12 @@ import useCouponsQuery from './hooks/useCouponsQuery';
 import CreateListTabs from '@/modules/common/components/CreateListTabs';
 import { CreateCoupon } from '@/modules/cupones/components/CreateCoupon';
 import Coupon from './components/Coupon';
+import useIsMobile from '../reabastecer/hooks/useIsMobile';
+import { CreateCouponMobile } from './components/CreateCouponMobile';
 
 export default function CouponsPage() {
   const couponQuery = useCouponsQuery();
+  const isMobile = useIsMobile();
 
   if (couponQuery.isLoading) {
     return <Loader />;
@@ -16,9 +19,13 @@ export default function CouponsPage() {
       <CreateListTabs name="cupón">
         {(createMode) =>
           createMode ? (
-            <CreateCoupon />
+            isMobile ? (
+              <CreateCouponMobile />
+            ) : (
+              <CreateCoupon />
+            )
           ) : (
-            <div className="flex gap-4 overflow-x-scroll">
+            <div className="flex flex-col sm:flex-row w-full gap-5 overflow-y-scroll h-full sm:overflow-x-scroll">
               {couponQuery.data?.map((coupon) => (
                 <Coupon key={coupon.id} coupon={coupon} />
               ))}

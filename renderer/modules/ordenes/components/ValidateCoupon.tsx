@@ -72,7 +72,7 @@ const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
 
   return (
     <section>
-      <label className="text-primary-content">
+      <label className="text-base-content">
         Cupon:{' '}
         <input
           className="input input-bordered"

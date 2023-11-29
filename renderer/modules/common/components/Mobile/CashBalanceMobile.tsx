@@ -11,9 +11,9 @@ interface IProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const CashBalance = ({ value, onChange }: IProps) => {
+export const CashBalanceMobile = ({ value, onChange }: IProps) => {
   return (
-    <section className="w-max rounded-lg p-5 text-center shadow-xl">
+    <section className="w-full rounded-lg p-5 text-center shadow-xl">
       <label className="label">Monto inicial de la caja:</label>
       <input
         className="input w-full input-bordered"
@@ -30,7 +30,7 @@ interface ICreateCashBalanceProps {
 }
 export const CreateCashBalance = ({ onClick }: ICreateCashBalanceProps) => (
   <button
-    className="btn flex w-fit btn-primary text-primary-content p-5"
+    className="btn flex w-fit btn-primary text-primary-content"
     onClick={onClick}
   >
     Iniciar Caja

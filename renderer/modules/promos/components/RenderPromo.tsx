@@ -30,10 +30,10 @@ export default function RenderPromos({
 
   return (
     <section className="flex flex-col">
-      <div className="flex flex-row gap-3 p-5 overflow-x-scroll w-[90vw]">
+      <div className="flex flex-col sm:flex-row gap-3 p-5 w-max overflow-y-scroll h-full sm:overflow-x-scroll sm:w-[90vw]">
         {promosItems?.map(({ promo }) => (
           <Card key={promo.id!}>
-            <div className="flex flex-row justify-between items-center gap-3">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
               <div className="flex flex-col">
                 <HighlightedText className="text-xl">
                   {promo.name}

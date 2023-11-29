@@ -5,6 +5,8 @@ import {
 } from '@/modules/common/libs/utils';
 import {
   CalendarDaysIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   DevicePhoneMobileIcon,
   MapPinIcon,
   PencilIcon,
@@ -14,8 +16,12 @@ import {
 } from '@heroicons/react/24/solid';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import { DISCOUNT_TYPE, IOrder } from '@/modules/ordenes/interfaces/IOrder';
-import { IPayment } from '@/modules/recibos/interfaces/ITicket';
+import {
+  DISCOUNT_TYPE,
+  IDiscount,
+  IOrder,
+} from '@/modules/ordenes/interfaces/IOrder';
+import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { useForm } from 'react-hook-form';
 import OrderItem from '../../../ordenes/components/OrderItem';
 import Loader from '@/modules/common/components/Loader';
@@ -31,6 +37,7 @@ import HighlightedText from '@/modules/common/components/HighlightedText';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import Payments from '../../../ordenes/components/Payments';
 import { IPromoItem } from '@/modules/cart/interfaces/ICart';
+import { DiscountTypeControl } from '../DiscountTypeControl';
 
 interface IProps {
   order: IOrder;
@@ -53,15 +60,30 @@ export const CreateTicketFormMobile = ({
   const createTicketMutation = useCreateTicketMutation();
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
-
-  const [payments, setPayments] = useState<IPayment[]>([]);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  const [discountAmount, setDiscountAmount] = useState<number>(
+    order.discount?.amount!,
+  );
+  const finalTotalPrice = order.totalPrice - couponDiscount - discountAmount;
+
+  const [payments, setPayments] = useState<IPayment[]>([
+    {
+      amount: finalTotalPrice,
+      type: PAYMENT_TYPE.CASH,
+    },
+  ]);
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
+  const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
+
+  const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>(
+    DISCOUNT_TYPE.FIXED,
+  );
 
   const { printInvoice } = usePrintService();
 
-  const finalTotalPrice = order.totalPrice - couponDiscount;
-
+  const handleToggleAccordion = () => {
+    setIsCheckedAcordion(!isCheckedAcordion);
+  };
   const handleCancelOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
@@ -72,18 +94,14 @@ export const CreateTicketFormMobile = ({
     }
   };
 
-  const handleChangePayments = (newPayments: IPayment[]) => {
-    setPayments(newPayments);
-  };
-
   const {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormControl>({
     defaultValues: {
       additionalDetails: order.additionalDetails,
-      discountAmount: order.discount?.amount || 0,
-      discountType: order.discount?.type || DISCOUNT_TYPE.FIXED,
+      discountAmount,
+      discountType,
       totalPrice: order.totalPrice,
       promoItems: order.promoItems,
     },
@@ -99,8 +117,8 @@ export const CreateTicketFormMobile = ({
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-                discountAmount: order.discount?.amount!,
-                discountType: order.discount?.type!,
+                discountAmount,
+                discountType,
                 price: finalTotalPrice,
               })
             : couponDiscount,
@@ -115,6 +133,7 @@ export const CreateTicketFormMobile = ({
 
       toast.success('Pagado con exito');
     } catch (error) {
+      console.error(error);
       toast.error(`No se está cobrando correctamente`);
     }
   };
@@ -129,28 +148,50 @@ export const CreateTicketFormMobile = ({
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
   };
+  const handleChangeDiscountType = (discount: IDiscount) => {
+    setDiscountType(discount.type);
+    setDiscountAmount(discount.amount);
+  };
 
+  const handleChangePayments = (newPayments: IPayment[]) => {
+    setPayments(newPayments);
+  };
   return (
     <form
-      className="flex w-full h-full justify-between flex-col gap-5"
+      className="flex w-fullflex-col"
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
-      <div className="join join-vertical w-full">
-        <input type="radio" name="my-accordion-1" />
+      <div className="collapse bg-base-200">
+        <input
+          type="checkbox"
+          onChange={handleToggleAccordion}
+          name="my-accordion-3"
+        />
         <div className="collapse-title text-xl font-medium">
-          <div className="flex flex-row justify-between gap-3">
-            <div className="flex flex-col">
-              <p className="text-2xl font-bold">
+          <div className="flex flex-row gap-16 items-end justify-between">
+            <div className="flex flex-col gap-10">
+              <p className="text-xl font-bold">
                 <ShoppingCartIcon className="w-5 inline" /> Orden # {order.id}{' '}
               </p>
-              <p>
+              <p className="whitespace-nowrap text-lg">
                 <UserIcon className="w-5 inline" />{' '}
                 {order.client?.name || 'Consumidor Final'}
               </p>
             </div>
-            <div className="flex flex-row gap-3">
+            <button className="btn w-max btn-outline">
+              {isCheckedAcordion ? (
+                <ChevronUpIcon className="w-5 h-5" />
+              ) : (
+                <ChevronDownIcon className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+        </div>
+        <div className="collapse-content">
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-row justify-end gap-3">
               <button
-                className="btn btn-secondary text-stone-50"
+                className="btn btn-secondary text-text-base-content"
                 onClick={handleToggleEdit}
               >
                 <PencilIcon className="w-full h-6 " />
@@ -158,126 +199,115 @@ export const CreateTicketFormMobile = ({
 
               <button
                 disabled={cancelOrderMutation.isLoading}
-                className="btn btn-error text-stone-50"
+                className="btn btn-error text-text-base-content"
                 onClick={handleCancelOrder}
               >
                 <TrashIcon className="w-full h-6 " />
               </button>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="collapse-content">
-        <div className="flex flex-col">
-          <datalist className="flex flex-col gap-4">
-            <p className="flex flex-row items-center gap-3 ">
-              {' '}
-              <CalendarDaysIcon className="w-5 inline text-stone-500" />{' '}
-              {parseDateToArgentinianFormat(order.createdAt)}
-            </p>
-            {order.address ? (
+          <div className="flex flex-col">
+            <datalist className="flex flex-col gap-4">
               <p className="flex flex-row items-center gap-3 ">
-                <MapPinIcon className="w-5 inline text-stone-500" />{' '}
-                {order.address}
+                {' '}
+                <CalendarDaysIcon className="w-5 inline text-text-base-content" />{' '}
+                {parseDateToArgentinianFormat(order.createdAt)}
               </p>
-            ) : null}
-            {order.client?.phone_number ? (
-              <p className="flex flex-row items-center gap-3">
-                <DevicePhoneMobileIcon className="w-5 inline  text-stone-500" />{' '}
-                {order.client?.phone_number}
-              </p>
-            ) : null}
-            {order.additionalDetails && (
+              {order.address ? (
+                <p className="flex flex-row items-center gap-3 ">
+                  <MapPinIcon className="w-5 inline text-text-base-content" />{' '}
+                  {order.address}
+                </p>
+              ) : null}
+              {order.client?.phone_number ? (
+                <p className="flex flex-row items-center gap-3">
+                  <DevicePhoneMobileIcon className="w-5 inline  text-text-base-content" />{' '}
+                  {order.client?.phone_number}
+                </p>
+              ) : null}
+              {order.additionalDetails && (
+                <DataItem
+                  label="Observaciones:"
+                  value={order.additionalDetails}
+                  defaultValue=""
+                />
+              )}
+
+              <div className="divider" />
+            </datalist>
+            <div className="flex flex-col p-5 gap-3 overflow-y-scroll h-44">
+              {order.items.map((item, itemIndex) => (
+                <OrderItem
+                  updateMode={updateMode}
+                  key={itemIndex}
+                  item={item}
+                />
+              ))}
+              {order.promoItems.map((promoItem, indexPromo) => (
+                <RenderIf condition={promoItem.promo} key={indexPromo}>
+                  <div className="flex flex-col gap-2">
+                    <div className="divider">Promo</div>
+                    <p className="text-xl text-center">
+                      ✨ {promoItem.promo?.name}
+                    </p>
+                    <HighlightedText>
+                      {formatPrice(promoItem.promo.price)}
+                    </HighlightedText>
+                    {promoItem.selectedVariants?.map((v, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm"
+                      >
+                        <p>
+                          {v.product.type.emoji} {v.product.name} -{' '}
+                          <span>{v.name}</span>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </RenderIf>
+              ))}
+            </div>
+
+            <div className="divider">Pagos</div>
+            <div className="flex flex-col gap-4">
               <DataItem
-                label="Observaciones:"
-                value={order.additionalDetails}
+                label="Subtotal:"
+                value={formatPrice(order.subtotalPrice)}
                 defaultValue=""
               />
-            )}
-
-            <div className="divider" />
-          </datalist>
-          <div className="flex flex-col p-5 gap-3 overflow-y-scroll h-44">
-            {order.items.map((item, itemIndex) => (
-              <OrderItem updateMode={updateMode} key={itemIndex} item={item} />
-            ))}
-            {order.promoItems.map((promoItem, indexPromo) => (
-              <RenderIf condition={promoItem.promo} key={indexPromo}>
-                <div className="flex flex-col gap-2">
-                  <div className="divider">Promo</div>
-                  <p className="text-xl text-center">
-                    ✨ {promoItem.promo?.name}
-                  </p>
-                  <HighlightedText>
-                    {formatPrice(promoItem.promo.price)}
-                  </HighlightedText>
-                  {promoItem.selectedVariants?.map((v, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-row p-4 gap-4 whitespace-nowrap justify-between text-sm"
-                    >
-                      <p>
-                        {v.product.type.emoji} {v.product.name} -{' '}
-                        <span>{v.name}</span>
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </RenderIf>
-            ))}
-          </div>
-
-          <div className="divider">Pagos</div>
-          <div className="flex flex-col gap-4">
-            <DataItem
-              label="Subtotal:"
-              value={formatPrice(order.subtotalPrice)}
-              defaultValue=""
-            />
-            <ValidateCoupon
-              subtotalPrice={order.subtotalPrice}
-              onChange={handleCouponDiscountAmount}
-              coupon={coupon}
-            />
-            <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.FIXED}>
+              <ValidateCoupon
+                subtotalPrice={order.subtotalPrice}
+                onChange={handleCouponDiscountAmount}
+                coupon={coupon}
+              />
+              <DiscountTypeControl
+                discountAmount={discountAmount}
+                discountType={discountType}
+                onChange={handleChangeDiscountType}
+              />
               <DataItem
-                label="Descuento:"
-                value={formatPrice(order.discount?.amount!)}
+                label="Total:"
+                value={formatPrice(finalTotalPrice)}
                 defaultValue=""
+                className="text-2xl"
               />
-            </RenderIf>
-            <RenderIf condition={order.discount?.type! === DISCOUNT_TYPE.PERC}>
-              <DataItem
-                label="Descuento:"
-                value={order.discount?.amount! + '%'}
-                defaultValue=""
+              <Payments
+                newTotalPrice={finalTotalPrice}
+                onChange={handleChangePayments}
               />
-            </RenderIf>
-            <RenderIf condition={!order.discount}>
-              <DataItem
-                label="Descuento:"
-                value=""
-                defaultValue={formatPrice(0)}
-              />
-            </RenderIf>
-
-            <DataItem
-              label="Total:"
-              value={formatPrice(finalTotalPrice)}
-              defaultValue=""
-              className="text-2xl"
-            />
-            <Payments
-              newTotalPrice={finalTotalPrice}
-              onChange={handleChangePayments}
-            />
-            <button
-              type="submit"
-              disabled={createTicketMutation.isLoading || updateMode}
-              className="btn btn-success disabled:btn-disabled text-stone-50"
-            >
-              {createTicketMutation.isLoading ? <Loader /> : 'Confirmar orden'}
-            </button>
+              <button
+                type="submit"
+                disabled={createTicketMutation.isLoading || updateMode}
+                className="btn btn-success disabled:btn-disabled text-text-base-content"
+              >
+                {createTicketMutation.isLoading ? (
+                  <Loader />
+                ) : (
+                  'Confirmar orden'
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>

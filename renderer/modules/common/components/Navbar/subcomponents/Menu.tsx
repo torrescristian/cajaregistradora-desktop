@@ -3,19 +3,20 @@ import { ISubMenuProps } from '@/modules/common/interfaces/INavbar';
 import NavButton from './NavButton';
 import { PhoneIcon } from '@heroicons/react/24/solid';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
+import { ChangeTheme } from '../ChangeTheme';
 
 const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
   const isMobile = useIsMobile();
 
   return (
-    <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
+    <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-text-base-content ">
       {isLoggedIn && (
         <ul>
           {isMobile ? (
             <ul>
               <NavButton className="w-full" href="/pedidos">
-                Crear orden
+                Pedidos
               </NavButton>
               <NavButton className="w-full" href="/ordenes">
                 Ordenes pendientes
@@ -67,6 +68,9 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
               <PhoneIcon className="w-6 h-6 text-success" />{' '}
               <p className="font-bold text-success">Atención al cliente</p>
             </a>
+          </li>
+          <li className="w-full justify-center">
+            <ChangeTheme />
           </li>
         </ul>
       )}

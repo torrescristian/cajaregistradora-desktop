@@ -11,7 +11,7 @@ export const useProductsProps = () => {
   const [promosSelectedPage, setPromosSelectedPage] = useState(1);
   const [activePage, setActivePage] = useState(1);
   const [selectedProductType, setSelectedProductType] =
-    useState<IProductType | null>();
+    useState<IProductType | null>(null);
 
   const promoQuery = usePromoQuery({
     query: searchProps.query,
@@ -29,7 +29,7 @@ export const useProductsProps = () => {
 
   const products = productsQuery.products as IProduct[];
 
-  const handleClickPage = (page: number) => () => setActivePage(page);
+  const handleNextPage = (page: number) => () => setActivePage(page);
   const handleSelectPage = (type: IProductType | null) => {
     setSelectedProductType(type);
     setActivePage(1);
@@ -37,7 +37,7 @@ export const useProductsProps = () => {
 
   return {
     products,
-    handleClickPage,
+    handleNextPage,
     handleSelectPage,
     promos,
     showPromo,

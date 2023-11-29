@@ -8,12 +8,14 @@ import {
   AddProductButton,
   RemoveProductButton,
 } from '@/modules/cart/components/ProductItem.styles';
+import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 
 interface IProps {
   product: IProduct;
+  onClick?: (props: { product: IProduct; variant: IVariantPromo }) => void;
 }
 
-export const ProductItemMobile = ({ product }: IProps) => {
+export const ProductItemMobile = ({ product, onClick }: IProps) => {
   const {
     handleChangeVariant,
     handleClick,
@@ -21,10 +23,10 @@ export const ProductItemMobile = ({ product }: IProps) => {
     cartItemQuantity,
     handleClickRemove,
     handleClickAdd,
-  } = useProductItem({ product });
+  } = useProductItem({ product, onClick });
 
   return (
-    <div className="flex flex-col w-full mt-3 border-2 p-4">
+    <div className="flex flex-col md:w-1/3 w-full mt-3 border-2 p-4">
       <HighlightedText>{product.name}</HighlightedText>
       <div className="flex flex-row w-full gap-3 items-center text-right">
         <img src={product.image} className="w-1/2" />

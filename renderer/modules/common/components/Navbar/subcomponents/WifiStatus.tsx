@@ -7,7 +7,7 @@ export const WifiStatus = () => {
     <div>
       {isOnline ? (
         <div className="btn btn-link text-success">
-          <WifiIcon className="w-6 h-6 " />
+          <WifiIcon className="w-5 h-5 " />
         </div>
       ) : (
         <div className="flex flex-col items-center text-error gap-3">

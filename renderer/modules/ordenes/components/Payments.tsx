@@ -11,7 +11,7 @@ interface IProps {
 export default function Payments({ onChange, newTotalPrice }: IProps) {
   const [payments, setPayments] = useState<IPayment[]>([
     {
-      amount: 0,
+      amount: newTotalPrice!,
       type: PAYMENT_TYPE.CASH,
     },
   ]);
@@ -52,7 +52,7 @@ export default function Payments({ onChange, newTotalPrice }: IProps) {
 
   return (
     <section>
-      <Divider className="text-stone-500">Formas de pago</Divider>
+      <Divider className="text-base-content">Formas de pago</Divider>
       {payments.map((payment: IPayment, index) => (
         <Payment
           key={index}

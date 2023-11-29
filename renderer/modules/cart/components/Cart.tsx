@@ -12,9 +12,11 @@ import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import CartPromo from './CartPromo';
 import CartItem from './CartItem';
-import { ConfirmOrder } from './ConfirmOrder';
+
 import { Divider } from './Sale/Sale.styles';
 import { ICartItem } from '../interfaces/ICart';
+import { ConfirmOrderMobile } from './ConfirmOrderMobile';
+import { ConfirmOrder } from './ConfirmOrder';
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-col sm:flex-row w-full gap-5 justify-between">
@@ -78,7 +80,7 @@ const Cart = ({ updateMode, order, onSubmit }: IProps) => {
           </section>
           <section className="w-max">
             <RenderIf condition={items.length || promosItems.length}>
-              <ConfirmOrder
+              <ConfirmOrderMobile
                 updateMode={updateMode}
                 order={order}
                 onSubmit={onSubmit}

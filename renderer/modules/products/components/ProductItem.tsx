@@ -11,7 +11,7 @@ import HighlightedText from '@/modules/common/components/HighlightedText';
 
 const Text = ({ children }: IComponent) => {
   return (
-    <p className="font-bold text-xl rounded-lg whitespace-nowrap text-center text-base-content ">
+    <p className="font-bold text-xl rounded-lg whitespace-nowrap text-center text-text-base-content ">
       {children}
     </p>
   );

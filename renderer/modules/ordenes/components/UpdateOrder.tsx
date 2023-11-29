@@ -4,14 +4,24 @@ import { useEffect } from 'react';
 import Products from '@/modules/products/components/Products';
 import Cart from '@/modules/cart/components/Cart';
 import { ICartItem } from '@/modules/cart/interfaces/ICart';
+import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
+import { ProductsMobile } from '@/modules/products/components/ProductsMobile';
 
 interface IProps {
   order: IOrder;
   onSubmit: () => void;
+  closeUpdateMode: () => void;
+  updateMode?: boolean;
 }
 
-export const UpdateOrder = ({ order, onSubmit }: IProps) => {
+export const UpdateOrder = ({
+  order,
+  onSubmit,
+  closeUpdateMode,
+  updateMode,
+}: IProps) => {
   const setCart = useCartStore(getSetCart);
+  const isMobile = useIsMobile();
 
   const adaptOrderItemToCartItem = (orderItem: IOrderItem): ICartItem => {
     return {
@@ -35,9 +45,22 @@ export const UpdateOrder = ({ order, onSubmit }: IProps) => {
   }, []);
 
   return (
-    <section className="flex flex-col w-[85vw]">
-      <Products />
-      <Cart updateMode order={order} onSubmit={onSubmit} />
+    <section>
+      {isMobile ? (
+        <div>
+          <ProductsMobile
+            updateMode={updateMode}
+            order={order}
+            onSubmit={onSubmit}
+            closeUpdateMode={closeUpdateMode}
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col w-[85vw]">
+          <Products />
+          <Cart updateMode order={order} onSubmit={onSubmit} />
+        </div>
+      )}
     </section>
   );
 };

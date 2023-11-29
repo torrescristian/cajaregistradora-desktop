@@ -6,10 +6,10 @@ interface IProps {
   cashBalance: ICashBalanceExpanded | null;
 }
 
-export const CashBalanceActivate = ({ cashBalance }: IProps) => {
+export const CashBalanceActivateMobile = ({ cashBalance }: IProps) => {
   return (
-    <section className="flex flex-col">
-      <div className="flex flex-col sm:items-end gap-3 w-min shadow-2xl p-3 md:p-10 border-2">
+    <section className="flex flex-col w-full items-center">
+      <div className="flex flex-col gap-3 items-start w-full shadow-2xl p-5 border-2">
         <h2 className="font-bold text-2xl text-text-base-content">
           Caja activa #{cashBalance?.id}
         </h2>

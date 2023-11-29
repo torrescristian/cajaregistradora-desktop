@@ -16,7 +16,7 @@ export const NotificationsIcon = () => {
     updateSeenNotification.mutateAsync(id);
   };
   return (
-    <div className="flex justify-center gap-5 items-center">
+    <div className="flex w-full justify-end items-center">
       <div className="indicator">
         <div className="dropdown dropdown-end">
           {newNotifications?.length ? (
@@ -40,7 +40,7 @@ export const NotificationsIcon = () => {
                 <div
                   className={twMerge(
                     notification.seen
-                      ? 'bg-neutral text-neutral-content'
+                      ? 'bg-base-100 text-text-base-content'
                       : 'bg-blue-400',
                     'w-full justify-between whitespace-nowrap',
                   )}

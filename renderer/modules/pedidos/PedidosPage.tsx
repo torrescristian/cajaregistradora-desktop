@@ -12,24 +12,6 @@ export default function PedidosPage() {
   if (isLoading) {
     return <Loader />;
   }
-  return isMobile ? (
-    <div className="flex flex-col w-full">
-      <ProductsMobile />
-    </div>
-  ) : (
-    <section className="flex w-full flex-col items-start relative justify-between gap-2 ">
-      <RenderIf condition={isLoading}>
-        <Loader />
-      </RenderIf>
-      <RenderIf condition={!isLoading}>
-        <RenderIf condition={cashIsActive}>
-          <Products />
-          <Cart />
-        </RenderIf>
-        <RenderIf condition={!cashIsActive}>
-          <p className="text-xl w-full text-center">No hay caja activa</p>
-        </RenderIf>
-      </RenderIf>
-    </section>
-  );
+
+  return <ProductsMobile />;
 }

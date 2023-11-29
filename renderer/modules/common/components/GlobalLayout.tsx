@@ -26,7 +26,7 @@ export default function GlobalLayout({ children }: IProps) {
       <div className="drawer-content">
         <section className=" p-5">
           <Navbar />
-          <section className="flex flex-col container">{children}</section>
+          <section className="flex flex-col">{children}</section>
         </section>
       </div>
       <div className="drawer-side">

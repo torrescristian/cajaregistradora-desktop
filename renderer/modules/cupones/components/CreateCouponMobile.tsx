@@ -1,6 +1,5 @@
 import FormFieldText from '@/modules/common/components/FormFieldText';
 import SearchInput from '@/modules/common/components/SearchInput';
-import ProductItem from '@/modules/products/components/ProductItem';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
@@ -9,8 +8,9 @@ import { Card } from '@/modules/common/components/Card';
 import Loader from '@/modules/common/components/Loader';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreateCoupon from '../hooks/useCreateCoupon';
+import { ProductItemMobile } from '@/modules/products/components/ProductItemMobile';
 
-export const CreateCoupon = () => {
+export const CreateCouponMobile = () => {
   const {
     handleSubmit,
     handleSubmitCreateCoupon,
@@ -29,15 +29,14 @@ export const CreateCoupon = () => {
     searchProps,
     handleCheckProduct,
   } = useCreateCoupon();
-
   return (
     <Card>
       <form
         onSubmit={handleSubmit(handleSubmitCreateCoupon)}
-        className="flex flex-col p-4 gap-10"
+        className="flex flex-col gap-5 flex-wrap"
       >
-        <div className="flex flex-row gap-10 w-full justify-between">
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col flex-wrap w-full gap-5">
+          <div className="flex flex-col gap-5 flex-wrap">
             <FormFieldText
               register={register}
               errors={errors}
@@ -48,11 +47,11 @@ export const CreateCoupon = () => {
               <input
                 type="date"
                 {...register('dueDate')}
-                className="w-full input-secondary"
+                className="w-full text-center input-secondary"
               />
             </FieldLabel>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-wrap">
             <DiscountTypeControl
               onChange={handleChangeDiscountType}
               discountAmount={discountAmount}
@@ -67,7 +66,7 @@ export const CreateCoupon = () => {
               />
             </RenderIf>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-wrap">
             <FormFieldText
               errors={errors}
               register={register}
@@ -76,7 +75,7 @@ export const CreateCoupon = () => {
             />
           </div>
         </div>
-        <FieldLabel title="Agregar un producto" className="gap-2">
+        <FieldLabel title="Agregar un producto" className="gap-5">
           <input
             type="checkbox"
             className="checkbox checkbox-primary order-first"
@@ -84,13 +83,14 @@ export const CreateCoupon = () => {
             onChange={handleCheckProduct}
           />
         </FieldLabel>
-        <div className="flex flex-col items-end gap-4">
+        <div className="flex flex-col items-center w-full gap-5 flex-wrap">
           <RenderIf condition={showProductList}>
             <RenderIf condition={!selectedVariant}>
+              <div className="divider">Productos</div>
               <SearchInput {...searchProps} />
-              <div className="flex flex-row overflow-x-scroll gap-5 p-5 w-[80vw]">
+              <div className="flex flex-col overflow-x-scroll  h-[70vh]">
                 {products.map((product) => (
-                  <ProductItem
+                  <ProductItemMobile
                     key={product.id}
                     product={product}
                     onClick={handleClickAddProduct}
@@ -99,8 +99,9 @@ export const CreateCoupon = () => {
               </div>
             </RenderIf>
             <RenderIf condition={selectedVariant}>
-              <div className="flex flex-col p-3 border-2 gap-5 items-center">
-                <div className="flex flex-row gap-5 justify-between items-center">
+              <div className="divider">Producto selecionado</div>
+              <div className="flex flex-col items-center p-5 gap-5 flex-wrap w-full border-2">
+                <div className="flex flex-row justify-between w-full items-center ">
                   <p className="font-bold">
                     {`${selectedProduct?.type.emoji} ${selectedProduct?.name} ${selectedVariant?.name}`}
                   </p>
@@ -116,7 +117,7 @@ export const CreateCoupon = () => {
             </RenderIf>
           </RenderIf>
           <button
-            className="btn btn-square w-64 btn-primary"
+            className="btn btn-square w-max btn-primary"
             type="submit"
             disabled={createCouponMutation.isLoading}
           >

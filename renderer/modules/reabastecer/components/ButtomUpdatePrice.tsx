@@ -85,7 +85,7 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
       >
         Actualizar precio
       </button>
-      <dialog ref={ref} className="bg-neutral p-5 w-[50vw] shadow-lg">
+      <dialog ref={ref} className="bg-base-100 p-5 w-[50vw] shadow-lg">
         <form className="flex flex-col gap-8 items-center  ">
           <p className="text-xl font-bold ">
             Actualizar el precio de las variantes seleccionadas
@@ -140,7 +140,7 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
               Cancelar
             </button>
             <button
-              className="btn btn-success text-neutral-content"
+              className="btn btn-success text-text-base-content"
               onClick={handleClick}
             >
               Actualizar
