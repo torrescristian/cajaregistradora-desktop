@@ -60,7 +60,7 @@ export default function useProductsQuery({
   const router = useRouter();
   const [pagination, setPagination] = useState<IProductPage['pagination']>({
     page: 1,
-    pageSize: 20,
+    pageSize: 12,
     pageCount: 1,
     total: 1,
   });
@@ -81,7 +81,7 @@ export default function useProductsQuery({
             'promo',
           ],
           page: page || 1,
-          pageSize: 9,
+          pageSize: 12,
         };
         options.filters = {
           status: PRODUCT_STATUS.ENABLED,

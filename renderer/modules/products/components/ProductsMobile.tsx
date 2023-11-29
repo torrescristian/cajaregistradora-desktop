@@ -84,7 +84,7 @@ export const ProductsMobile = ({
           </>
         )}
       </div>
-      <div className="md:flex md:flex-row md:flex-wrap ">
+      <div className="md:flex md:flex-row md:justify-center md:flex-wrap gap-5">
         <RenderIf condition={!showPromo}>
           {products.map((product) => (
             <ProductItemMobile key={product.id} product={product} />

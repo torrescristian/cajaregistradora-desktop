@@ -7,8 +7,8 @@ import useIsMobile from '../reabastecer/hooks/useIsMobile';
 import { ProductsMobile } from '../products/components/ProductsMobile';
 
 export default function PedidosPage() {
-  const { isLoading, cashIsActive } = useActiveCashBalanceQuery();
-  const isMobile = useIsMobile();
+  const { isLoading } = useActiveCashBalanceQuery();
+
   if (isLoading) {
     return <Loader />;
   }

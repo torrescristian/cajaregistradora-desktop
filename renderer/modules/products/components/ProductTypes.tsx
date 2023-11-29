@@ -98,13 +98,13 @@ export default function ProductTypes({
             <div className="dropdown">
               <label
                 tabIndex={0}
-                className="btn flex-nowrap gap-3 btn-secondary  m-1"
+                className="btn flex-nowrap gap-3 btn-secondary m-1"
               >
                 <FunnelIcon className="w-5 h-5" /> Filtrar
               </label>
               <div
                 tabIndex={0}
-                className="dropdown-content flex flex-col z-[1]  p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-base-100-focus rounded-box w-64"
+                className="dropdown-content flex flex-col z-[1] overflow-y-scroll h-[40vh] shadow rounded-box w-64"
               >
                 {productTypes
                   ?.filter((t) => t)
