@@ -12,22 +12,23 @@ import useCreateCoupon from '../hooks/useCreateCoupon';
 
 export const CreateCoupon = () => {
   const {
-    handleSubmit,
-    handleSubmitCreateCoupon,
-    register,
-    errors,
-    handleChangeDiscountType,
+    createCouponMutation,
     discountAmount,
     discountType,
-    showProductList,
-    createCouponMutation,
-    selectedProduct,
-    handleClickRemoveProduct,
-    selectedVariant,
-    handleClickAddProduct,
-    products,
-    searchProps,
+    errors,
     handleCheckProduct,
+    handleClickAddProduct,
+    handleClickRemoveProduct,
+    handleSubmit,
+    handleSubmitCreateCoupon,
+    products,
+    register,
+    searchProps,
+    selectedProduct,
+    selectedVariant,
+    setDiscountAmount,
+    setDiscountType,
+    showProductList,
   } = useCreateCoupon();
 
   return (
@@ -54,7 +55,8 @@ export const CreateCoupon = () => {
           </div>
           <div className="flex flex-col">
             <DiscountTypeControl
-              onChange={handleChangeDiscountType}
+              onChangeAmount={setDiscountAmount}
+              onChangeType={setDiscountType}
               discountAmount={discountAmount}
               discountType={discountType}
             />

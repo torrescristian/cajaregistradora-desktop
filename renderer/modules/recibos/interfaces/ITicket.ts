@@ -3,6 +3,7 @@ import { IOrder } from '../../ordenes/interfaces/IOrder';
 import { IResponsePage } from '@/modules/common/interfaces/utils';
 
 export interface IPayment {
+  uuid?: string;
   amount: number | '';
   type: PAYMENT_TYPE;
 }

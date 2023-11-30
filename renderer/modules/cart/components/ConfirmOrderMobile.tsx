@@ -27,19 +27,28 @@ export const ConfirmOrderMobile = ({
   closeUpdateMode,
 }: IProps) => {
   const {
-    orderMutation,
     addClientId,
     additionalDetails,
-    handleChangeAdditionalsDetails,
-    handleChangeDiscountType,
-    handleCouponDiscountAmount,
-    subtotalPrice,
-    coupon,
-    newTotalPrice,
-    handleChangePayments,
-    handleSubmit,
-    handleCreateTicket,
     closeModal,
+    coupon,
+    discountAmount,
+    discountType,
+    handleChangeAdditionalsDetails,
+    handleChangePayment,
+    handleClickAddPaymentMethod,
+
+    handleCouponDiscountAmount,
+    handleCreateTicket,
+    handleDeletePayment,
+    handleSubmit,
+
+    newTotalPrice,
+    orderMutation,
+    payments,
+
+    setDiscountAmount,
+    setDiscountType,
+    subtotalPrice,
   } = useConfirmOrder({
     onSubmit,
     order,
@@ -69,9 +78,10 @@ export const ConfirmOrderMobile = ({
             onChange={handleChangeAdditionalsDetails}
           />
           <DiscountTypeControl
-            onChange={handleChangeDiscountType}
-            discountAmount={order?.discount?.amount}
-            discountType={order?.discount?.type}
+            onChangeAmount={setDiscountAmount}
+            onChangeType={setDiscountType}
+            discountAmount={discountAmount}
+            discountType={discountType}
           />
           <ValidateCoupon
             onChange={handleCouponDiscountAmount}
@@ -80,7 +90,10 @@ export const ConfirmOrderMobile = ({
           />
           <Payments
             newTotalPrice={newTotalPrice}
-            onChange={handleChangePayments}
+            payments={payments}
+            onChange={handleChangePayment}
+            onDelete={handleDeletePayment}
+            onNewPayment={handleClickAddPaymentMethod}
           />
           <DataItem
             label="Total:"

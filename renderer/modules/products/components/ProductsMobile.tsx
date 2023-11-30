@@ -25,16 +25,17 @@ export const ProductsMobile = ({
 }: IProps) => {
   const isMobile = useIsMobile();
   const {
-    promos,
     handleNextPage,
     handleSelectPage,
     products,
-    showPromo,
     productsQuery,
+    promoItems,
     promoQuery,
+    promos,
     searchProps,
     selectedProductType,
     setShowPromo,
+    showPromo,
   } = useProductsProps();
 
   if (promoQuery.isLoading) {
@@ -63,6 +64,7 @@ export const ProductsMobile = ({
               updateMode={updateMode}
               order={order}
               onSubmit={onSubmit}
+              promoItems={promoItems}
               closeUpdateMode={closeUpdateMode!}
             />
           </>
@@ -78,6 +80,7 @@ export const ProductsMobile = ({
             <CartIconMobile
               updateMode={updateMode}
               order={order}
+              promoItems={promoItems}
               onSubmit={onSubmit}
               closeUpdateMode={closeUpdateMode!}
             />

@@ -16,7 +16,8 @@ export const CreateCouponMobile = () => {
     handleSubmitCreateCoupon,
     register,
     errors,
-    handleChangeDiscountType,
+    setDiscountAmount,
+    setDiscountType,
     discountAmount,
     discountType,
     showProductList,
@@ -53,7 +54,8 @@ export const CreateCouponMobile = () => {
           </div>
           <div className="flex flex-col flex-wrap">
             <DiscountTypeControl
-              onChange={handleChangeDiscountType}
+              onChangeAmount={setDiscountAmount}
+              onChangeType={setDiscountType}
               discountAmount={discountAmount}
               discountType={discountType}
             />

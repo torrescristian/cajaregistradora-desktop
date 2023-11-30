@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { IProduct, IProductType } from '../interfaces/IProduct';
 import usePromoQuery from '@/modules/promos/hooks/usePromoQuery';
 import useProductsQuery from './useProductsQuery';
+import {
+  getPromoItems,
+  useCartStore,
+} from '@/modules/cart/contexts/useCartStore';
 
 export const useProductsProps = () => {
   const searchProps = useSearchProps();
@@ -12,7 +16,7 @@ export const useProductsProps = () => {
   const [activePage, setActivePage] = useState(1);
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType | null>(null);
-
+  const promoItems = useCartStore(getPromoItems);
   const promoQuery = usePromoQuery({
     query: searchProps.query,
     showPromo,
@@ -46,5 +50,6 @@ export const useProductsProps = () => {
     searchProps,
     setShowPromo,
     selectedProductType,
+    promoItems,
   };
 };
