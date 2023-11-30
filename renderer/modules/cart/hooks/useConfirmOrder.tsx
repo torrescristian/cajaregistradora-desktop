@@ -20,7 +20,6 @@ import {
 import { ICartItem, IPromoItem } from '../interfaces/ICart';
 import { useMemo, useRef, useState } from 'react';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
 import useUpdateOrderMutation from './useUpdateOrderMutation';
@@ -29,6 +28,7 @@ import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalance
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import { toast } from 'react-toastify';
 import useCreateOrderMutation from './useCreateOrderMutation';
+import usePayments from '@/modules/ordenes/hooks/usePayments';
 
 interface IProps {
   updateMode?: boolean;
@@ -54,34 +54,22 @@ export default function useConfirmOrder({
   const setDiscountType = useCartStore(getSetDiscountType);
   const setDiscountAmount = useCartStore(getSetDiscountAmount);
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  const discountAmount = useCartStore(getDiscountAmount) || 0;
+  const discountAmount = useCartStore(getDiscountAmount) || '';
   const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
 
   const newTotalPrice = useMemo(
-    () =>
-      calcDiscount({
-        discountAmount,
-        discountType,
-        price:
-          (order?.totalPrice || subtotalPrice) -
-          couponDiscount -
-          discountAmount,
-      }),
-    [
-      subtotalPrice,
-      couponDiscount,
-      discountAmount,
-      discountType,
-      order?.totalPrice,
-    ],
+    () => (order?.totalPrice || totalPrice) - couponDiscount,
+    [totalPrice, couponDiscount, order?.totalPrice],
   );
   const [coupon, setCoupon] = useState<ICoupon>();
-  const [payments, setPayments] = useState<IPayment[]>([
-    {
-      amount: newTotalPrice,
-      type: PAYMENT_TYPE.CASH,
-    },
-  ]);
+
+  const {
+    handleChangePayment,
+    handleClickAddPaymentMethod,
+    handleDeletePayment,
+    payments,
+  } = usePayments({ newTotalPrice });
+
   const { printOrder, printCommand, printInvoice } = usePrintService();
 
   const ref = useRef<HTMLDialogElement>(null);
@@ -94,7 +82,7 @@ export default function useConfirmOrder({
 
   const createTicketMutation = useCreateTicketMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
-  const { openModal, closeModal } = useModalStore();
+  const { closeModal } = useModalStore();
 
   const adaptCartItemToOrderItem = (cartItem: ICartItem): IOrderItem => {
     return {
@@ -113,7 +101,7 @@ export default function useConfirmOrder({
       additionalDetails,
       clientId,
       subtotalPrice,
-      discount: { amount: discountAmount!, type: discountType! },
+      discount: { amount: Number(discountAmount!), type: discountType! },
       coupon,
       promoItems: promoItems!,
     });
@@ -131,7 +119,7 @@ export default function useConfirmOrder({
         totalPrice: newTotalPrice,
         additionalDetails,
         subtotalPrice,
-        discount: { amount: discountAmount!, type: discountType! },
+        discount: { amount: Number(discountAmount!), type: discountType! },
         items: items.map(adaptCartItemToOrderItem),
         status: order!.status,
         coupon,
@@ -172,10 +160,6 @@ export default function useConfirmOrder({
     setCoupon(coupon);
   };
 
-  const handleChangePayments = (newPayments: IPayment[]) => {
-    setPayments(newPayments);
-  };
-
   const handleCreateTicket = async () => {
     const sum = payments.reduce((acc, curr) => acc + Number(curr.amount), 0);
     if (sum !== newTotalPrice) {
@@ -191,7 +175,7 @@ export default function useConfirmOrder({
       additionalDetails,
       clientId,
       subtotalPrice,
-      discount: { amount: discountAmount!, type: discountType! },
+      discount: { amount: Number(discountAmount!), type: discountType! },
       promoItems: promoItems!,
     });
 
@@ -220,21 +204,28 @@ export default function useConfirmOrder({
   };
 
   return {
-    orderMutation,
     addClientId,
     additionalDetails,
+    closeModal,
+    coupon,
+    discountAmount,
+    discountType,
     handleChangeAdditionalsDetails,
     handleChangeDiscountType,
-    handleCouponDiscountAmount,
+    handleChangePayment,
+    handleClickAddPaymentMethod,
     handleClickConfirmOrder,
-    subtotalPrice,
-    coupon,
-    newTotalPrice,
-    handleChangePayments,
-    handleSubmit,
+    handleCouponDiscountAmount,
     handleCreateTicket,
-    closeModal,
-    ref,
+    handleDeletePayment,
+    handleSubmit,
     items,
+    newTotalPrice,
+    orderMutation,
+    payments,
+    ref,
+    setDiscountAmount,
+    setDiscountType,
+    subtotalPrice,
   };
 }

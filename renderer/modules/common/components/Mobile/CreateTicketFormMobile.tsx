@@ -1,5 +1,4 @@
 import {
-  calcDiscount,
   formatPrice,
   parseDateToArgentinianFormat,
 } from '@/modules/common/libs/utils';
@@ -16,146 +15,47 @@ import {
 } from '@heroicons/react/24/solid';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import {
-  DISCOUNT_TYPE,
-  IDiscount,
-  IOrder,
-} from '@/modules/ordenes/interfaces/IOrder';
-import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
-import { useForm } from 'react-hook-form';
+import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import OrderItem from '../../../ordenes/components/OrderItem';
 import Loader from '@/modules/common/components/Loader';
-import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
-import useCancelOrderMutation from '@/modules/ordenes/hooks/useCancelOrderMutation';
-import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
-import { useState } from 'react';
 import ValidateCoupon from '../../../ordenes/components/ValidateCoupon';
-import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HighlightedText from '@/modules/common/components/HighlightedText';
-import usePrintService from '@/modules/common/hooks/usePrintService';
 import Payments from '../../../ordenes/components/Payments';
-import { IPromoItem } from '@/modules/cart/interfaces/ICart';
 import { DiscountTypeControl } from '../DiscountTypeControl';
+import useCreateTicketForm from '../../../ordenes/hooks/useCreateTicketForm';
 
 interface IProps {
   order: IOrder;
   updateMode?: boolean;
   handleToggleEdit: () => void;
 }
-interface IFormControl {
-  additionalDetails: string;
-  totalPrice: number;
-  discountAmount: number;
-  discountType: DISCOUNT_TYPE;
-  promoItems: IPromoItem[];
-}
-
 export const CreateTicketFormMobile = ({
   order,
   updateMode,
   handleToggleEdit,
 }: IProps) => {
-  const createTicketMutation = useCreateTicketMutation();
-  const cancelOrderMutation = useCancelOrderMutation();
-  const activeCashBalanceQuery = useActiveCashBalanceQuery();
-  const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  const [discountAmount, setDiscountAmount] = useState<number>(
-    order.discount?.amount!,
-  );
-  const finalTotalPrice = order.totalPrice - couponDiscount - discountAmount;
-
-  const [payments, setPayments] = useState<IPayment[]>([
-    {
-      amount: finalTotalPrice,
-      type: PAYMENT_TYPE.CASH,
-    },
-  ]);
-  const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
-  const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
-
-  const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>(
-    DISCOUNT_TYPE.FIXED,
-  );
-
-  const { printInvoice } = usePrintService();
-
-  const handleToggleAccordion = () => {
-    setIsCheckedAcordion(!isCheckedAcordion);
-  };
-  const handleCancelOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    try {
-      await cancelOrderMutation.mutateAsync(order);
-      toast.success('Orden cancelada con exito');
-    } catch (e) {
-      toast.error('No se pudo cancelar la orden');
-    }
-  };
-
   const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormControl>({
-    defaultValues: {
-      additionalDetails: order.additionalDetails,
-      discountAmount,
-      discountType,
-      totalPrice: order.totalPrice,
-      promoItems: order.promoItems,
-    },
-  });
-
-  const handleSubmitCreateTicket = async () => {
-    try {
-      const { ticketResponse } = await createTicketMutation.mutateAsync({
-        ticket: {
-          order: order.id!,
-          totalPrice: finalTotalPrice,
-          cashBalance: activeCashBalanceQuery.cashBalance?.id!,
-          payments,
-          couponDiscount: order.discount
-            ? calcDiscount({
-                discountAmount,
-                discountType,
-                price: finalTotalPrice,
-              })
-            : couponDiscount,
-        },
-        coupon: {
-          id: order.coupon?.id || coupon?.id,
-          availableUses: order.coupon?.availableUses || coupon?.availableUses!,
-        },
-      });
-
-      await printInvoice(ticketResponse.data.id);
-
-      toast.success('Pagado con exito');
-    } catch (error) {
-      console.error(error);
-      toast.error(`No se está cobrando correctamente`);
-    }
-  };
-
-  const handleCouponDiscountAmount = ({
-    couponDiscount,
+    cancelOrderMutation,
     coupon,
-  }: {
-    couponDiscount: number;
-    coupon: ICoupon;
-  }) => {
-    setCouponDiscount(couponDiscount || 0);
-    setCoupon(coupon);
-  };
-  const handleChangeDiscountType = (discount: IDiscount) => {
-    setDiscountType(discount.type);
-    setDiscountAmount(discount.amount);
-  };
+    createTicketMutation,
+    discountAmount,
+    discountType,
+    finalTotalPrice,
+    handleCancelOrder,
+    handleChangePayment,
+    handleClickAddPaymentMethod,
+    handleCouponDiscountAmount,
+    handleDeletePayment,
+    handleSubmit,
+    handleSubmitCreateTicket,
+    handleToggleAccordion,
+    isCheckedAcordion,
+    payments,
+    setDiscountAmount,
+    setDiscountType,
+  } = useCreateTicketForm({ order });
 
-  const handleChangePayments = (newPayments: IPayment[]) => {
-    setPayments(newPayments);
-  };
   return (
     <form
       className="flex w-fullflex-col"
@@ -284,7 +184,8 @@ export const CreateTicketFormMobile = ({
               <DiscountTypeControl
                 discountAmount={discountAmount}
                 discountType={discountType}
-                onChange={handleChangeDiscountType}
+                onChangeAmount={setDiscountAmount}
+                onChangeType={setDiscountType}
               />
               <DataItem
                 label="Total:"
@@ -294,7 +195,10 @@ export const CreateTicketFormMobile = ({
               />
               <Payments
                 newTotalPrice={finalTotalPrice}
-                onChange={handleChangePayments}
+                onChange={handleChangePayment}
+                onDelete={handleDeletePayment}
+                onNewPayment={handleClickAddPaymentMethod}
+                payments={payments}
               />
               <button
                 type="submit"

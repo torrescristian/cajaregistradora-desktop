@@ -50,7 +50,7 @@ export function range(end: number) {
 
 interface ICalcDiscount {
   price: number;
-  discountAmount: number;
+  discountAmount: number | string;
   discountType: DISCOUNT_TYPE;
 }
 
@@ -60,9 +60,9 @@ export function calcDiscount({
   discountType,
 }: ICalcDiscount) {
   if (discountType === DISCOUNT_TYPE.FIXED) {
-    return price - discountAmount;
+    return price - Number(discountAmount);
   }
-  return price * (1 - discountAmount / 100);
+  return price * (1 - Number(discountAmount) / 100);
 }
 
 export const getUrlFromImage = (image: any) => {
@@ -72,7 +72,7 @@ export const getUrlFromImage = (image: any) => {
 export const getStrapiUrl = () => {
   return (
     process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-    'https://control.cajaregistradora.app'
+    'https://api.cajaregistradora.app'
   );
 };
 

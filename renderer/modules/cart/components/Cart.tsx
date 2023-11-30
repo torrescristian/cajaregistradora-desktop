@@ -8,15 +8,13 @@ import {
 } from '@/modules/cart/contexts/useCartStore';
 import { Card } from '@/modules/common/components/Card';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
-
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import CartPromo from './CartPromo';
 import CartItem from './CartItem';
-
 import { Divider } from './Sale/Sale.styles';
 import { ICartItem } from '../interfaces/ICart';
 import { ConfirmOrderMobile } from './ConfirmOrderMobile';
-import { ConfirmOrder } from './ConfirmOrder';
+
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-col sm:flex-row w-full gap-5 justify-between">

@@ -8,6 +8,7 @@ import useCreateCouponMutation from './useCreateCouponMutation';
 import { DISCOUNT_TYPE, IDiscount } from '@/modules/ordenes/interfaces/IOrder';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 import { toast } from 'react-toastify';
+import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 
 export default function useCreateCoupon() {
   const {
@@ -35,8 +36,7 @@ export default function useCreateCoupon() {
 
   const createCouponMutation = useCreateCouponMutation();
 
-  const [discountType, setDiscountType] = useState<DISCOUNT_TYPE>();
-  const [discountAmount, setDiscountAmount] = useState<number>();
+  const {discountAmount,discountType,setDiscountAmount,setDiscountType} = useCalcDiscountType()
 
   const [selectedVariant, setSelectedVariant] = useState<IVariantPromo | null>({
     ...products[0]?.default_variant,
@@ -66,7 +66,7 @@ export default function useCreateCoupon() {
         ...data,
         variant: showProductList ? selectedVariant?.id! : null,
         discount: {
-          amount: discountAmount!,
+          amount: Number(discountAmount!),
           type: discountType!,
         },
         dueDate: data.dueDate || undefined,
@@ -106,5 +106,7 @@ export default function useCreateCoupon() {
     products,
     searchProps,
     handleCheckProduct,
+    setDiscountAmount,
+    setDiscountType,
   };
 }

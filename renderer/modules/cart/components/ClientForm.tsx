@@ -67,7 +67,11 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
   };
 
   const handleSubmitCreateClient = (data: IClientForm) => {
-    createClientMutation.mutate(data);
+    createClientMutation.mutate({
+      name: data.name,
+      address: data.address,
+      phone_number: data.phone_number,
+    });
     reset();
   };
 
@@ -81,7 +85,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
       id: data.id!,
       name: data.name,
       address: data.address,
-      number_phone: data.phone_number,
+      phone_number: data.phone_number,
     });
   };
 
@@ -98,6 +102,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
 
   const handleClickUpdateClient =
     (client: IClient) => (e: React.MouseEvent) => {
+      e.preventDefault();
       setUpdateMode(true);
       dialogRef.current?.showModal();
       setValue('id', client.id);

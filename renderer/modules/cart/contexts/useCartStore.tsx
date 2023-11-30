@@ -37,7 +37,7 @@ type ICartStore = ICartState & {
   setCart: (cartPayload: ISetCart) => void;
   setAdditionalDetails: (additionalDetails: string) => void;
   setDiscountType: (discountType: DISCOUNT_TYPE) => void;
-  setDiscountAmount: (discountAmount: number) => void;
+  setDiscountAmount: (discountAmount: number | string) => void;
   promoItems: IPromoItem[];
   addPromo: (promoItem: IPromoItem) => void;
   removePromo: (index: number) => void;
@@ -260,7 +260,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         price: state.subtotalPrice,
       }),
     })),
-  setDiscountAmount: (discountAmount: number) =>
+  setDiscountAmount: (discountAmount: number | string) =>
     set((state) => ({
       discountAmount,
       totalPrice: calcDiscount({

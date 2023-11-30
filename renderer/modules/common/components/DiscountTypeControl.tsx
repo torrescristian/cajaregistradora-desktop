@@ -1,28 +1,23 @@
-import { useEffect } from 'react';
-import { DISCOUNT_TYPE, IDiscount } from '@/modules/ordenes/interfaces/IOrder';
+import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import { RenderIf } from './RenderIf';
-import useFormControl from '@/modules/common/hooks/useFormControl';
 import FormControl from './FormControl';
 import FieldLabel from './FieldLabel';
 
 interface IProps {
-  onChange: (discount: IDiscount) => void;
+  onChangeAmount: (value: string) => void;
+  onChangeType: (value: DISCOUNT_TYPE) => void;
   discountType?: DISCOUNT_TYPE;
   discountAmount?: number | string;
 }
 
-export const DiscountTypeControl = (props: IProps) => {
-  const { value: discountType, handleChange: handleDiscountType } =
-    useFormControl(props.discountType || DISCOUNT_TYPE.FIXED);
-  const { value: discountAmount, handleChange: handleChangeDiscountAmount } =
-    useFormControl(props.discountAmount || '');
+export const DiscountTypeControl = ({ onChangeAmount, onChangeType, discountAmount, discountType }: IProps) => {
 
-  useEffect(() => {
-    props.onChange({
-      type: discountType,
-      amount: Number(discountAmount),
-    });
-  }, [discountType, discountAmount]);
+  const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeAmount(e.target.value)
+  }
+  const handleDiscountType = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeType(e.target.value as DISCOUNT_TYPE)
+  }
 
   return (
     <section>
@@ -32,7 +27,7 @@ export const DiscountTypeControl = (props: IProps) => {
           name="discountAmount"
           type="text"
           value={discountAmount}
-          onChange={handleChangeDiscountAmount}
+          onChange={handleChangeAmount}
           fullWidth
           posfix="%"
         />
@@ -43,7 +38,7 @@ export const DiscountTypeControl = (props: IProps) => {
           name="discountAmount"
           type="text"
           value={discountAmount}
-          onChange={handleChangeDiscountAmount}
+          onChange={handleChangeAmount}
           fullWidth
           suffix="$"
         />
