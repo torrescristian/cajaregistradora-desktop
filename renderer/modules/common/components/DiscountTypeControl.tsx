@@ -10,14 +10,18 @@ interface IProps {
   discountAmount?: number | string;
 }
 
-export const DiscountTypeControl = ({ onChangeAmount, onChangeType, discountAmount, discountType }: IProps) => {
-
+export const DiscountTypeControl = ({
+  onChangeAmount,
+  onChangeType,
+  discountAmount,
+  discountType,
+}: IProps) => {
   const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeAmount(e.target.value)
-  }
+    onChangeAmount(e.target.value);
+  };
   const handleDiscountType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeType(e.target.value as DISCOUNT_TYPE)
-  }
+    onChangeType(e.target.value as DISCOUNT_TYPE);
+  };
 
   return (
     <section>

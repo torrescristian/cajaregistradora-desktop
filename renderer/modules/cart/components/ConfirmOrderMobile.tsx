@@ -11,7 +11,6 @@ import CustomToastContainer from '@/modules/common/components/CustomToastContain
 import useConfirmOrder from '../hooks/useConfirmOrder';
 import { IPromoItem } from '../interfaces/ICart';
 
-
 interface IProps {
   updateMode?: boolean;
   order?: IOrder;
@@ -95,7 +94,6 @@ export const ConfirmOrderMobile = ({
             onChange={handleChangePayment}
             onDelete={handleDeletePayment}
             onNewPayment={handleClickAddPaymentMethod}
-
           />
           <DataItem
             label="Total:"

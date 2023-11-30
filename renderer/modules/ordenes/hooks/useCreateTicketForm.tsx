@@ -30,15 +30,16 @@ export default function useCreateTicketForm({ order }: IProps) {
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
 
-  const { discountAmount,discountType,setDiscountAmount,setDiscountType } = useCalcDiscountType({
-    discountAmount: order.discount?.amount,
-    discountType: order.discount?.type,
-  })
-  const finalTotalPrice = order.totalPrice - couponDiscount - Number(discountAmount);
+  const { discountAmount, discountType, setDiscountAmount, setDiscountType } =
+    useCalcDiscountType({
+      discountAmount: order.discount?.amount,
+      discountType: order.discount?.type,
+    });
+  const finalTotalPrice =
+    order.totalPrice - couponDiscount - Number(discountAmount);
 
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
-
 
   const {
     handleChangePayment,
@@ -84,10 +85,10 @@ export default function useCreateTicketForm({ order }: IProps) {
           payments,
           couponDiscount: order.discount
             ? calcDiscount({
-              discountAmount,
-              discountType ,
-              price: finalTotalPrice,
-            })
+                discountAmount,
+                discountType,
+                price: finalTotalPrice,
+              })
             : couponDiscount,
         },
         coupon: {
@@ -115,7 +116,6 @@ export default function useCreateTicketForm({ order }: IProps) {
     setCouponDiscount(couponDiscount || 0);
     setCoupon(coupon);
   };
- 
 
   return {
     setDiscountAmount,

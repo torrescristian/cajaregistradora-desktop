@@ -6,7 +6,7 @@ import { useState } from 'react';
 interface IProps {
   onChange: (payment: IPayment) => void;
   onNewPayment: () => void;
-  onDelete: (uuid: string)  => void;
+  onDelete: (uuid: string) => void;
   payment: IPayment;
   newTotalPrice?: number;
 }
@@ -18,8 +18,6 @@ export const Payment = ({
   payment,
   newTotalPrice,
 }: IProps) => {
-  
-
   const handleSelectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as PAYMENT_TYPE;
     onChange({
@@ -29,22 +27,22 @@ export const Payment = ({
   };
 
   const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {value} = e.target;
+    const { value } = e.target;
     onChange({
       ...payment,
-      amount: value === '' ? value : Number(value) ,
+      amount: value === '' ? value : Number(value),
     });
   };
 
   const handleClickDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     onDelete(payment.uuid!);
-  }
+  };
 
   const handleNewPayment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     onNewPayment();
-  }
+  };
 
   return (
     <section className="flex flex-col text-base-content gap-3">
@@ -66,10 +64,16 @@ export const Payment = ({
         />
       </div>
       <div className="flex flex-row gap-2 w-full justify-end">
-        <button className="btn btn-primary btn-square" onClick={handleNewPayment}>
+        <button
+          className="btn btn-primary btn-square"
+          onClick={handleNewPayment}
+        >
           <ChevronDoubleDownIcon className="w-4 h-4" />
         </button>
-        <button className="btn btn-error btn-square" onClick={handleClickDelete}>
+        <button
+          className="btn btn-error btn-square"
+          onClick={handleClickDelete}
+        >
           <TrashIcon className="w-4 h-4" />
         </button>
       </div>

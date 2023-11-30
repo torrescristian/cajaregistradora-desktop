@@ -15,7 +15,6 @@ import { Divider } from './Sale/Sale.styles';
 import { ICartItem } from '../interfaces/ICart';
 import { ConfirmOrderMobile } from './ConfirmOrderMobile';
 
-
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-col sm:flex-row w-full gap-5 justify-between">
     {children}

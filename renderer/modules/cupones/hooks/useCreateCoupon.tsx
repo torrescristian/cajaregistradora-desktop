@@ -36,7 +36,8 @@ export default function useCreateCoupon() {
 
   const createCouponMutation = useCreateCouponMutation();
 
-  const {discountAmount,discountType,setDiscountAmount,setDiscountType} = useCalcDiscountType()
+  const { discountAmount, discountType, setDiscountAmount, setDiscountType } =
+    useCalcDiscountType();
 
   const [selectedVariant, setSelectedVariant] = useState<IVariantPromo | null>({
     ...products[0]?.default_variant,

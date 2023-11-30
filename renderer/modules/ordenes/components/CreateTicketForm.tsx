@@ -82,7 +82,7 @@ export const CreateTicketForm = ({
       onSubmit={handleSubmit(handleSubmitCreateTicket)}
     >
       <div className="flex flex-row gap-5">
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           <div className="flex flex-row gap-3">
             <div className="flex flex-col">
               <p className="text-2xl font-bold">
@@ -168,7 +168,7 @@ export const CreateTicketForm = ({
             ))}
           </div>
         </div>
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           <div className="divider">Pagos</div>
           <div className="flex flex-col gap-4">
             <DataItem

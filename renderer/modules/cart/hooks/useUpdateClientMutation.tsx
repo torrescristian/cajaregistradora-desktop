@@ -5,13 +5,15 @@ import IClient from '../interfaces/IClient';
 
 export default function useUpdateClientMutation() {
   const queryClient = useQueryClient();
-  return useMutation(async ({ id, name, address, phone_number }: Required<IClient>) => {
-    const resp = await strapi.update(CLIENTS_KEY, id, {
-      name,
-      address,
-      phone_number,
-    });
-    queryClient.invalidateQueries([CLIENTS_KEY]);
-    return resp;
-  });
+  return useMutation(
+    async ({ id, name, address, phone_number }: Required<IClient>) => {
+      const resp = await strapi.update(CLIENTS_KEY, id, {
+        name,
+        address,
+        phone_number,
+      });
+      queryClient.invalidateQueries([CLIENTS_KEY]);
+      return resp;
+    },
+  );
 }
