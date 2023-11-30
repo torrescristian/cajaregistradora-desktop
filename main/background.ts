@@ -6,7 +6,7 @@ import createSocketServer from './createSocketServer';
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
 if (isProd) {
-  serve({ directory: 'app' });
+  serve({ directory: 'renderer' });
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
