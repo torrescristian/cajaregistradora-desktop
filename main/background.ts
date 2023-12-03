@@ -2,16 +2,16 @@ import { app } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
 import createSocketServer from './createSocketServer';
+const debug = require('electron-debug');
 
+debug();
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
 if (isProd) {
-  serve({ directory: 'renderer' });
+  serve({ directory: 'app' });
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
-
-createSocketServer(app);
 
 (async () => {
   await app.whenReady();
@@ -21,8 +21,10 @@ createSocketServer(app);
     height: 600,
     webPreferences: {
       webSecurity: false,
+      nodeIntegration: true, // TODO: remove
     },
   });
+  createSocketServer(app);
   if (isProd) {
     await mainWindow.loadURL('app://./index.html');
   } else {
