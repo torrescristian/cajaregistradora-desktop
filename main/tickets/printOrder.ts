@@ -1,10 +1,7 @@
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
-import {
-  discountToString,
-  formatPrice,
-  parseDateToArgentinianFormat,
-} from '../helpers/utils';
+
+import { formatPrice, parseDateToArgentinianFormat } from '../helpers/utils';
 import {
   ALIGN,
   FONT_SIZE_NORMAL,
@@ -19,25 +16,28 @@ export default function printOrder(order: IOrder) {
       console.log('Missing Order', order);
       return;
     }
-    if (!escposUSB) return;
+    if (!escposUSB) throw new Error('No escpos USB found');
 
     escpos.USB = escposUSB;
 
     const connectedDevices = escpos.USB.findPrinter() as any[];
-    if (!connectedDevices.length) return;
+    if (!connectedDevices.length) throw new Error('No connected devices');
 
-    const device = new escpos.USB();
+    let device: escpos.USB;
     const options = { width: 32 };
-
-    const printer = new escpos.Printer(device, options as any);
+    let printer;
+    try {
+      device = new escpos.USB();
+      printer = new escpos.Printer(device, options as any);
+    } catch (error) {
+      console.error(error);
+    }
 
     device.open((error) => {
-      if (error) {
-        console.log({ error });
-        return;
-      }
+      console.log({ error });
+      if (error) throw new Error(error);
 
-      // open & set printer
+      // open & set printer4
       printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.app');
       printer
         .text(FONT_SIZE_BIG)
@@ -107,6 +107,7 @@ export default function printOrder(order: IOrder) {
       printer.cut().close();
     });
   } catch (error) {
+    console.log(error);
     if (error.includes('Can not find printer')) {
       console.log('Error: Can not find printer');
     }

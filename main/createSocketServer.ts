@@ -11,23 +11,27 @@ export default function createSocketServer(app) {
   const io = new Server(httpServer, {});
 
   io.on('connection', (socket: Socket) => {
-    console.log('Un cliente se ha conectado');
+    try {
+      console.log('Un cliente se ha conectado');
 
-    socket.on('disconnect', (reason) => {
-      console.log({ reason });
-    });
+      socket.on('disconnect', (reason) => {
+        console.log({ reason });
+      });
 
-    socket.on('print:order', (props) => {
-      printOrder(JSON.parse(props));
-    });
+      socket.on('print:order', (props) => {
+        printOrder(JSON.parse(props));
+      });
 
-    socket.on('print:command', (props) => {
-      printCommand(JSON.parse(props));
-    });
+      socket.on('print:command', (props) => {
+        printCommand(JSON.parse(props));
+      });
 
-    socket.on('print:invoice', (props) => {
-      printInvoice(JSON.parse(props));
-    });
+      socket.on('print:invoice', (props) => {
+        printInvoice(JSON.parse(props));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   const port = 4000;

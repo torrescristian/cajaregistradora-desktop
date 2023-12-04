@@ -89,5 +89,8 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "overrides": {
+    "usb": "1.9.2"
   }
 }
