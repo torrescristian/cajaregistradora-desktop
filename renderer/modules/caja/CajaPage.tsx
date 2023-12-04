@@ -12,6 +12,9 @@ import { CloseCashBalance } from './components/CloseCashBalance';
 import useIsMobile from '../reabastecer/hooks/useIsMobile';
 import { CashBalanceActivateMobile } from '../common/components/Mobile/CashBalanceActiveMobile';
 import { CashBalanceMobile } from '../common/components/Mobile/CashBalanceMobile';
+import { TICKET_STATUS } from '../recibos/interfaces/ITicket';
+import useTicketQuery from '../recibos/hooks/useTicketQuery';
+import useTicketPendingQuery from '../recibos/hooks/useTicketPendingQuery';
 
 export default function CajaPage() {
   const {
@@ -22,6 +25,9 @@ export default function CajaPage() {
     isSuccess,
     cashIsActive,
   } = useActiveCashBalanceQuery();
+
+  const ticketPendingQuery = useTicketPendingQuery();
+  const ticketPending = ticketPendingQuery.data || [];
 
   const { handleChange, value } = useFormControl(0);
 
@@ -38,6 +44,12 @@ export default function CajaPage() {
   return (
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
+      <RenderIf condition={ticketPending.length > 0}>
+        <p>
+          Hay tickets esperando confirmacion{' '}
+          <span className="badge-secondary p-2">{ticketPending.length}</span>
+        </p>
+      </RenderIf>
       {isMobile ? (
         <div className="w-full">
           <section className="flex">

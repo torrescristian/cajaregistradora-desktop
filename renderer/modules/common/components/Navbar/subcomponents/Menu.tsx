@@ -18,9 +18,9 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
               <NavButton className="w-full" href="/pedidos">
                 Pedidos
               </NavButton>
-              <NavButton className="w-full" href="/ordenes">
+              {/*               <NavButton className="w-full" href="/ordenes">
                 Ordenes pendientes
-              </NavButton>
+              </NavButton> */}
             </ul>
           ) : null}
           <NavButton className="w-full" href="/recibos">

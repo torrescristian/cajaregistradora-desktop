@@ -1,5 +1,9 @@
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  getCoreRowModel,
+  getFilteredRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { columnDefProduct } from '@/modules/reabastecer/components/columnsProducts';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
@@ -14,7 +18,7 @@ export const useVariantUpdateTableProps = ({ products }: IProps) => {
     return products?.flatMap(
       (p) => p.variants?.map((v) => ({ ...v, product: p }) as IVariantExpanded),
     );
-  }, [products]);
+  }, [products, products?.length]);
   const [data, setData] = useState([...variants]);
 
   const [rowSelected, setRowSelected] = useState({});
@@ -23,6 +27,7 @@ export const useVariantUpdateTableProps = ({ products }: IProps) => {
     columns: columnDefProduct,
     data: variants,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     meta: {
       updateData: (rowIndex: number, columnId: string, value: any) => {
         setData((old) =>

@@ -27,6 +27,7 @@ const Products = () => {
     searchProps,
     selectedProductType,
     setShowPromo,
+    totalPages,
   } = useProductsProps();
 
   if (promoQuery.isLoading) {
@@ -63,7 +64,7 @@ const Products = () => {
         </RenderIf>
       </section>
       <Pagination
-        pagination={productsQuery.pagination}
+        pagination={totalPages!}
         onClick={handleNextPage}
         isLoading={productsQuery.isLoading}
       />

@@ -1,16 +1,5 @@
-import { useForm } from 'react-hook-form';
-import {
-  IProduct,
-  IProductPayload,
-  IProductType,
-} from '@/modules/products/interfaces/IProduct';
-import { useImageControl } from '@/modules/cupones/hooks/useImageControl';
+import { IProduct } from '@/modules/products/interfaces/IProduct';
 import CreateVariantsTable from '@/modules/crear-producto/components/CreateVariantsTable';
-import { useState } from 'react';
-import useCreateProductAndVariantMutation from '@/modules/cupones/hooks/useCreateProductAndVariantMutation';
-import { toast } from 'react-toastify';
-import { IVariantPayload } from '@/modules/common/interfaces/IVariants';
-import useProductTypeQuery from '@/modules/products/hooks/useProductTypesQuery';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import { CreateProductTypeMenuModal } from './CreateProductTypeMenuModal';

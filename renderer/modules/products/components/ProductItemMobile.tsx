@@ -26,11 +26,11 @@ export const ProductItemMobile = ({ product, onClick }: IProps) => {
   } = useProductItem({ product, onClick });
 
   return (
-    <div className="flex flex-col md:w-1/5 w-full mt-3 border-2 p-4">
+    <div className="flex flex-col w-full mt-3 border-2 p-5">
       <HighlightedText>{product.name}</HighlightedText>
-      <div className="flex flex-row w-full gap-3 items-center text-right">
-        <img src={product.image} className="w-1/2" />
-        <div className="flex flex-col w-full justify-between ">
+      <div className="flex flex-row w-full gap-3 items-center">
+        <img src={product.image} className="w-32" />
+        <div className="flex flex-col w-full">
           <RenderIf condition={product.variants.length}>
             <Selector
               onChange={handleChangeVariant}
@@ -44,14 +44,14 @@ export const ProductItemMobile = ({ product, onClick }: IProps) => {
           <p className="my-3">{formatPrice(selectedVariant.price)}</p>
 
           {cartItemQuantity > 0 ? (
-            <div className="flex flex-row gap-3 w-full justify-end items-center">
+            <div className="flex flex-row gap-2 w-min items-center">
               <RemoveProductButton onClick={handleClickRemove} />
               <p>&times;{cartItemQuantity}</p>
               <AddProductButton onClick={handleClickAdd} />
             </div>
           ) : (
             <button
-              className="btn btn-primary w-full rounded-lg"
+              className="btn btn-primary w-min rounded-lg"
               onClick={handleClick}
               data-test="add-product"
             >

@@ -36,6 +36,7 @@ export const ProductsMobile = ({
     selectedProductType,
     setShowPromo,
     showPromo,
+    totalPages,
   } = useProductsProps();
 
   if (promoQuery.isLoading) {
@@ -87,7 +88,7 @@ export const ProductsMobile = ({
           </>
         )}
       </div>
-      <div className="md:flex md:flex-row md:justify-center md:flex-wrap gap-5">
+      <div className="md:grid md:grid-cols-4 md:justify-center md:flex-wrap gap-5">
         <RenderIf condition={!showPromo}>
           {products.map((product) => (
             <ProductItemMobile key={product.id} product={product} />
@@ -104,7 +105,7 @@ export const ProductsMobile = ({
         </RenderIf>
       </div>
       <Pagination
-        pagination={productsQuery.pagination}
+        pagination={totalPages!}
         onClick={handleNextPage}
         isLoading={productsQuery.isLoading}
       />
