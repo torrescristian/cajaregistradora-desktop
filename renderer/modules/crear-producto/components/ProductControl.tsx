@@ -1,6 +1,4 @@
-import {
-  IProduct,
-} from '@/modules/products/interfaces/IProduct';
+import { IProduct } from '@/modules/products/interfaces/IProduct';
 import CreateVariantsTable from '@/modules/crear-producto/components/CreateVariantsTable';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import FieldLabel from '@/modules/common/components/FieldLabel';

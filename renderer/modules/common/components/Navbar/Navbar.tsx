@@ -57,7 +57,7 @@ export default function Navbar() {
               >
                 Pedidos
               </NavButton>
- {/*              <NavButton
+              {/*              <NavButton
                 className="w-min whitespace-nowrap text-secondary-focus"
                 href="/ordenes"
               >

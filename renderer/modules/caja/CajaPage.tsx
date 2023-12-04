@@ -45,7 +45,10 @@ export default function CajaPage() {
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
       <RenderIf condition={ticketPending.length > 0}>
-        <p>Hay tickets esperando confirmacion <span className='badge-secondary p-2'>{ticketPending.length}</span></p>
+        <p>
+          Hay tickets esperando confirmacion{' '}
+          <span className="badge-secondary p-2">{ticketPending.length}</span>
+        </p>
       </RenderIf>
       {isMobile ? (
         <div className="w-full">
@@ -87,7 +90,6 @@ export default function CajaPage() {
                   <Loader className="mt-5" />
                 </RenderIf>
                 <RenderIf condition={!isLoading && isSuccess}>
-
                   <RenderIf condition={cashIsActive}>
                     <CashBalanceActivate cashBalance={cashBalance} />
                   </RenderIf>

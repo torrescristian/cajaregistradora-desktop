@@ -67,7 +67,7 @@ export default function useProductsQuery({
   const defaultPagination = {
     page: 1,
     totalPage: 1,
-    pageSize:10,
+    pageSize: 10,
     total: 10,
   };
 

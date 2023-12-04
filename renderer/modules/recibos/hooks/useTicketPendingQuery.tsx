@@ -1,6 +1,10 @@
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
-import { ITicket, ITicketResponse, TICKET_STATUS } from '@/modules/recibos/interfaces/ITicket';
+import {
+  ITicket,
+  ITicketResponse,
+  TICKET_STATUS,
+} from '@/modules/recibos/interfaces/ITicket';
 import { TICKETS_KEY } from '@/modules/common/consts';
 
 export default function useTicketPendingQuery() {
@@ -20,9 +24,8 @@ export default function useTicketPendingQuery() {
         'cashBalance',
       ],
       filters: {
-        status :  TICKET_STATUS.WAITING_FOR_REFUND,
-        
-      }
+        status: TICKET_STATUS.WAITING_FOR_REFUND,
+      },
     })) as unknown as ITicketResponse;
     return ticketResponse.results;
   });
