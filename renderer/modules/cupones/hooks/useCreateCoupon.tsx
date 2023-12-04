@@ -5,7 +5,7 @@ import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
 import { useSearchProps } from '@/modules/common/components/SearchInput';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import useCreateCouponMutation from './useCreateCouponMutation';
-import { DISCOUNT_TYPE, IDiscount } from '@/modules/ordenes/interfaces/IOrder';
+import { IDiscount } from '@/modules/ordenes/interfaces/IOrder';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 import { toast } from 'react-toastify';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';

@@ -13,7 +13,7 @@ export interface IResponsePage<T> {
   pagination: {
     page: number;
     pageSize: number;
-    pageCount: number;
+    pageCount?: number;
     total: number;
   };
 }

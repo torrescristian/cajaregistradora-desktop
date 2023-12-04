@@ -104,12 +104,14 @@ export const ConfirmOrderMobile = ({
         </div>
       </section>
       <div className="flex flex-col w-full items-center gap-5 pt-5">
-        <button
-          onClick={handleSubmit}
-          className="btn w-full sticky top-0 z-20  whitespace-nowrap btn-primary text-xl text-primary-content"
-        >
-          {updateMode ? 'Actualizar orden' : 'Crear orden pendiente'}
-        </button>
+        {updateMode ? (
+          <button
+            onClick={handleSubmit}
+            className="btn w-full sticky top-0 z-20  whitespace-nowrap btn-primary text-xl text-primary-content"
+          >
+            Actualizar orden
+          </button>
+        ) : null}
         {updateMode ? null : (
           <button
             className="btn btn-secondary w-full"

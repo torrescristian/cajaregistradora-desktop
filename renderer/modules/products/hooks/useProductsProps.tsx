@@ -32,6 +32,7 @@ export const useProductsProps = () => {
   });
 
   const products = productsQuery.products as IProduct[];
+  const totalPages = productsQuery.pagination;
 
   const handleNextPage = (page: number) => () => setActivePage(page);
   const handleSelectPage = (type: IProductType | null) => {
@@ -51,5 +52,6 @@ export const useProductsProps = () => {
     setShowPromo,
     selectedProductType,
     promoItems,
+    totalPages,
   };
 };

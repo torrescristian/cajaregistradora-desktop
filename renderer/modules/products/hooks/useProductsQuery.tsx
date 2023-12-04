@@ -7,10 +7,8 @@ import {
 } from '@/modules/products/interfaces/IProduct';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { IVariant } from '@/modules/common/interfaces/IVariants';
 import { PRODUCTS_KEY } from '@/modules/common/consts';
-
+import { IVariant } from '@/modules/common/interfaces/IVariants';
 const parseProductFacade = (product: IProduct): IProduct => {
   const { name, id, isService, variants, image, default_variant, store, type } =
     product;
@@ -49,6 +47,12 @@ interface IProductsQueryProps {
   selectedProductType?: number;
   page?: number;
   showPromo?: boolean;
+  pageSize?: number;
+}
+
+interface IProps {
+  pagination: IProductPage['pagination'];
+  products: IProduct[];
 }
 
 export default function useProductsQuery({
@@ -56,17 +60,19 @@ export default function useProductsQuery({
   selectedProductType,
   page,
   showPromo,
+  pageSize,
 }: IProductsQueryProps) {
   const router = useRouter();
-  const [pagination, setPagination] = useState<IProductPage['pagination']>({
-    page: 1,
-    pageSize: 12,
-    pageCount: 1,
-    total: 1,
-  });
 
-  const { data, isLoading, isError, isSuccess, error } = useQuery<IProduct[]>(
-    [PRODUCTS_KEY, showPromo, query, selectedProductType, page],
+  const defaultPagination = {
+    page: 1,
+    totalPage: 1,
+    pageSize:10,
+    total: 10,
+  };
+
+  const { data, isLoading, isError, isSuccess, error } = useQuery<IProps>(
+    [PRODUCTS_KEY, showPromo, query, selectedProductType, page, pageSize],
     async () => {
       try {
         let options: any = {
@@ -80,9 +86,10 @@ export default function useProductsQuery({
             'type',
             'promo',
           ],
-          page: page || 1,
-          pageSize: 12,
+          page,
+          pageSize,
         };
+
         options.filters = {
           status: PRODUCT_STATUS.ENABLED,
         };
@@ -118,27 +125,40 @@ export default function useProductsQuery({
           options,
         )) as unknown as IProductPage;
 
-        if (!res) return [];
-
-        const parsedRes = res.results.map(parseProductFacade);
-
-        setPagination(res.pagination);
-
-        return parsedRes;
-      } catch (error: any) {
-        console.error('🚀 ~ file: useProductsQuery.tsx:71 ~ error:', error);
-        if ([401, 403].includes(getErrorMessage(error).status)) {
-          router.push('/');
-
-          return [];
+        if (!res) {
+          return {
+            pagination: defaultPagination,
+            products: [],
+          };
         }
 
-        return [];
+        return {
+          pagination: res.pagination,
+          products: res.results.map(parseProductFacade),
+        };
+      } catch (e: any) {
+        console.error('🚀 ~ file: useProductsQuery.tsx:71 ~ error:', e);
+        if ([401, 403].includes(getErrorMessage(e).status)) {
+          router.push('/');
+          return {
+            pagination: defaultPagination,
+            products: [],
+          };
+        }
+        return {
+          pagination: defaultPagination,
+          products: [],
+        };
       }
     },
   );
-
-  const products = data || [];
-
-  return { products, isLoading, isError, isSuccess, pagination, error };
+  const products = data?.products || [];
+  return {
+    products,
+    isLoading,
+    isError,
+    isSuccess,
+    pagination: data?.pagination,
+    error,
+  };
 }

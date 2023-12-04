@@ -2,9 +2,8 @@ import { app } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
 import createSocketServer from './createSocketServer';
-const debug = require('electron-debug');
 
-debug();
+
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
 if (isProd) {

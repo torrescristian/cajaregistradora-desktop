@@ -13,7 +13,7 @@ const Pagination = ({ pagination, onClick, isLoading }: IPagination) => {
 
   return (
     <section className="flex flex-row justify-center gap-5">
-      {range(pagination.pageCount).map((i) => {
+      {range(pagination.pageCount!).map((i) => {
         const page = i + 1;
         return (
           <button
