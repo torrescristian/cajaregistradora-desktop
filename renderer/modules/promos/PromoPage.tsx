@@ -14,7 +14,6 @@ export default function PromoPage() {
   const promos = promoQuery.data;
   const isMobile = useIsMobile();
 
-
   if (!promos) {
     return null;
   }
@@ -33,7 +32,8 @@ export default function PromoPage() {
               promo,
               selectedVariants: [],
             }))}
-            editButton />
+            editButton
+          />
         )
       }
     </CreateListTabs>

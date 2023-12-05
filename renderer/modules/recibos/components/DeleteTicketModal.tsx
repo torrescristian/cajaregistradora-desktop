@@ -61,7 +61,9 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
         <form method="dialog" className="modal-box gap-3 flex flex-col w-fit">
           <RenderIf condition={pending && !isOwner}>
             <p className="text-xl font-bold">Esperando al administrador ⏳</p>
-            <button className='btn' onClick={(e) => ref.current?.close()}>Ok</button>
+            <button className="btn" onClick={(e) => ref.current?.close()}>
+              Ok
+            </button>
           </RenderIf>
           <RenderIf condition={!pending || isOwner}>
             <div>
@@ -90,7 +92,9 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
                     ? 'Reembolsar Efectivo'
                     : 'Notificar reembolso de efectivo'}
                 </button>
-                <button className='btn'onClick={(e) => ref.current?.close()} >Mantener</button>
+                <button className="btn" onClick={(e) => ref.current?.close()}>
+                  Mantener
+                </button>
               </div>
             </div>
           </RenderIf>

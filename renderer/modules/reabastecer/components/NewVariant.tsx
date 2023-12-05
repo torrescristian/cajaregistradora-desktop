@@ -2,15 +2,12 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 
-
-interface IProps{
-    product: IProduct;
+interface IProps {
+  product: IProduct;
 }
 
-
-export const NewVariant = ({product} : IProps) => {
-
-   /* const createNewVariant = useCreateNewVariant(); */
+export const NewVariant = ({ product }: IProps) => {
+  /* const createNewVariant = useCreateNewVariant(); */
 
   return (
     <section className="w-full">

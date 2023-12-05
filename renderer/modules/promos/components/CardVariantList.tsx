@@ -50,9 +50,7 @@ export default function CardVariantList({
   return (
     <div className="flex flex-row gap-4 pt-5 flex-wrap ">
       {selectedVariantList.map(({ variant, quantity }, index) => (
-        <Card
-          key={index}
-        >
+        <Card key={index}>
           <div className="flex flex-row justify-between items-center gap-5 p-2 w-full">
             <p className="text-xl">
               {variant.product.name} - {variant.name}{' '}
