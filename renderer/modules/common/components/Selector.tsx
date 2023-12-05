@@ -16,7 +16,7 @@ export const Selector = ({
   return (
     <select
       className={twMerge(
-        'select select-bordered text-text-base-content w-full',
+        'select select-bordered text-base-content w-full',
         className,
       )}
       onChange={onChange}

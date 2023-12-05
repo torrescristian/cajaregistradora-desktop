@@ -39,7 +39,7 @@ export default function Coupon({ coupon }: IProps) {
           value={coupon.code}
           className="sm:flex-col flex-row flex-wrap"
         />
-        <button className="btn btn-error" onClick={handleCancelCupon}>
+        <button className="btn btn-error text-neutral-content" onClick={handleCancelCupon}>
           <TrashIcon className="h-5 w-5" />
         </button>
       </div>

@@ -3,6 +3,11 @@ import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import ProductRow from './ProductRow';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
+import { Card } from '@/modules/common/components/Card';
+import FieldLabel from '@/modules/common/components/FieldLabel';
+import { ProductTypeMenu } from './ProductTypeMenu';
+import { RenderIf } from '@/modules/common/components/RenderIf';
+import { NewVariant } from './NewVariant';
 
 interface IProps {
   product: IProduct;
@@ -25,9 +30,12 @@ export const ProductModal = ({ product, variant }: IProps) => {
         <EllipsisHorizontalIcon className="w-8 h-8" />
       </button>
       <dialog ref={ref} className="bg-base-100  modal-box p-15 w-[40vw]">
-        <div>
-          <ProductRow product={product} key={product.id} variant={variant} />
-        </div>
+        <Card>
+          <div>
+            <ProductRow product={product} key={product.id} variant={variant} />
+          </div>
+          {/* <NewVariant product={product} /> */}
+        </Card>
         <div className="w-full flex pt-10 justify-end">
           <button
             className="btn btn-link text-error"

@@ -58,7 +58,7 @@ const ProductRow = ({ product, variant }: IProps) => {
   };
 
   return (
-    <Card>
+    <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex items-end gap-3">
           <FormControl
@@ -100,7 +100,7 @@ const ProductRow = ({ product, variant }: IProps) => {
       <section className="flex flex-col items-center gap-2">
         <ImageControl product={product} />
       </section>
-    </Card>
+    </div>
   );
 };
 

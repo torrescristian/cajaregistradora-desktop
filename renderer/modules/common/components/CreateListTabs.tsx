@@ -15,7 +15,7 @@ export default function CreateListTabs({ children, name }: IProps) {
           Listar {name}
         </TabButton>
         <TabButton isActive={createMode} onClick={() => setCreateMode(true)}>
-          Crear {name}
+         {name}
         </TabButton>
       </section>
       <section className="flex flex-col w-full gap-5">

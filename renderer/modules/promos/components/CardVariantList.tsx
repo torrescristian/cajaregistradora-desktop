@@ -1,6 +1,7 @@
 import { IVariantAndQuantity } from '@/modules/promos/interfaces/IPromo';
 import { formatPrice } from '@/modules/common/libs/utils';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { Card } from '@/modules/common/components/Card';
 
 interface IProps {
   selectedVariantList: IVariantAndQuantity[];
@@ -47,10 +48,9 @@ export default function CardVariantList({
     };
 
   return (
-    <div className="flex flex-row gap-2 flex-wrap ">
+    <div className="flex flex-row gap-4 pt-5 flex-wrap ">
       {selectedVariantList.map(({ variant, quantity }, index) => (
-        <div
-          className="flex flex-col items-center border-2 p-5 gap-3"
+        <Card
           key={index}
         >
           <div className="flex flex-row justify-between items-center gap-5 p-2 w-full">
@@ -58,7 +58,7 @@ export default function CardVariantList({
               {variant.product.name} - {variant.name}{' '}
             </p>
             <button
-              className="btn btn-error"
+              className="btn btn-error text-neutral-content"
               onClick={handleClickRemoveVariant(index)}
             >
               <TrashIcon className="w-5 h-5" />
@@ -68,20 +68,20 @@ export default function CardVariantList({
             <p>{formatPrice(variant.price)}</p>
 
             <button
-              className="btn btn-error text-text-base-content"
+              className="btn btn-error text-neutral-content"
               onClick={handleClickRemoveVariantQuantity(index)}
             >
               <MinusIcon className="w-5 h-5" />
             </button>
             <p className="text-xl">x{quantity}</p>
             <button
-              className="btn btn-success text-text-base-content"
+              className="btn btn-success text-neutral-content"
               onClick={incrementVariantByOne(variant.id!)}
             >
               <PlusIcon className="w-5 h-5" />
             </button>
           </div>
-        </div>
+        </Card>
       ))}
     </div>
   );
