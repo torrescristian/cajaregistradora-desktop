@@ -32,6 +32,7 @@ export default function PromoPage() {
               promo,
               selectedVariants: [],
             }))}
+            editButton
           />
         )
       }

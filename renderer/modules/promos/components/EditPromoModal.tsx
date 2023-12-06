@@ -153,7 +153,7 @@ export const EditPromoModal = ({ promo }: IProps) => {
         <PencilIcon className="w-5 h-5" />
       </button>
       <dialog ref={ref} className=" items-end bg-base-100 p-10">
-        <form>
+        <form className="flex flex-col w-full">
           <div>
             <div className="flex flex-row w-full justify-evenly">
               <FieldLabel title="Nombre:" className="flex flex-col">
@@ -189,7 +189,7 @@ export const EditPromoModal = ({ promo }: IProps) => {
                   </select>
                 </FieldLabel>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary text-neutral-content"
                   onClick={handleClickAddCategory}
                 >
                   <PlusIcon className="w-9 h-9" /> Agregar
@@ -222,13 +222,21 @@ export const EditPromoModal = ({ promo }: IProps) => {
               setSelectedVariantList={setSelectedVariantList}
             />
           </div>
-          <button className="btn btn-success" onClick={handleSubmitUpdatePromo}>
-            Actualizar
-          </button>
+          <div className="flex flex-row w-full p-5 justify-end gap-5">
+            <button
+              className="btn btn-error text-neutral-content"
+              onClick={() => ref.current?.close()}
+            >
+              Cerrar
+            </button>
+            <button
+              className="btn btn-success text-neutral-content"
+              onClick={handleSubmitUpdatePromo}
+            >
+              Actualizar
+            </button>
+          </div>
         </form>
-        <button className="btn btn-error" onClick={() => ref.current?.close()}>
-          Cerrar
-        </button>
       </dialog>
     </section>
   );

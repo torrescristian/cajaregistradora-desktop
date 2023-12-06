@@ -45,33 +45,34 @@ export default function CardCategoryList({
   return (
     <section className="flex flex-col sm:flex-row gap-5 p-4">
       {selectedCategoryList.map(({ category, quantity }, index) => (
-        <div className="flex flex-row  border-2 p-3 " key={index}>
-          <div className="flex flex-col text-center items-start gap-5 whitespace-nowrap">
+        <div className="flex flex-col  border-2 p-5 gap-5 " key={index}>
+          <div className="flex flex-row w-full items-center gap-5">
             <p key={category.id} className="text-xl sm:text-2xl font-bold">
               {category.name}
             </p>
-            <div className="flex flex-row items-center p-4 gap-4">
-              <button
-                className="btn btn-success"
-                onClick={handleClickAddCategory(category)}
-              >
-                <PlusIcon className="w-5 h-5" />
-              </button>
-              <p className="text-xl">x{quantity}</p>
-              <button
-                className="btn btn-error"
-                onClick={handleClickRemoveQuantity(index)}
-              >
-                <MinusIcon className="w-5 h-5" />
-              </button>
-            </div>
+            <button
+              className="btn btn-error text-neutral-content"
+              onClick={handleClickRemoveCategory(index)}
+            >
+              <TrashIcon className="w-5 h-5" />
+            </button>
           </div>
-          <button
-            className="btn btn-error"
-            onClick={handleClickRemoveCategory(index)}
-          >
-            <TrashIcon className="w-5 h-5" />
-          </button>
+
+          <div className="flex flex-row w-full justify-evenly items-center">
+            <button
+              className="btn btn-success text-neutral-content"
+              onClick={handleClickAddCategory(category)}
+            >
+              <PlusIcon className="w-5 h-5" />
+            </button>
+            <p className="text-xl">x{quantity}</p>
+            <button
+              className="btn btn-error text-neutral-content"
+              onClick={handleClickRemoveQuantity(index)}
+            >
+              <MinusIcon className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       ))}
     </section>

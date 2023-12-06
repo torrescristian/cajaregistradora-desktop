@@ -7,6 +7,7 @@ import { DataItem } from '../../common/components/DataItem';
 import { toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
+import { RenderIf } from '@/modules/common/components/RenderIf';
 
 interface IDeleteTicketModalProps {
   ticket: ITicket;
@@ -58,9 +59,13 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
       </button>
       <dialog ref={ref} className="bg-transparent p-10 w-[90vw] sm:w-min">
         <form method="dialog" className="modal-box gap-3 flex flex-col w-fit">
-          {pending ? (
+          <RenderIf condition={pending && !isOwner}>
             <p className="text-xl font-bold">Esperando al administrador ⏳</p>
-          ) : (
+            <button className="btn" onClick={(e) => ref.current?.close()}>
+              Ok
+            </button>
+          </RenderIf>
+          <RenderIf condition={!pending || isOwner}>
             <div>
               <h3 className="font-bold text-lg">
                 ¿Desea reembolsar la venta # {ticket.id}?
@@ -87,10 +92,12 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
                     ? 'Reembolsar Efectivo'
                     : 'Notificar reembolso de efectivo'}
                 </button>
+                <button className="btn" onClick={(e) => ref.current?.close()}>
+                  Mantener
+                </button>
               </div>
             </div>
-          )}
-          <button className="btn ">{pending ? 'Ok' : 'Mantener'}</button>
+          </RenderIf>
         </form>
       </dialog>
     </>

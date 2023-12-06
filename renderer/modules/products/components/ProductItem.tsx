@@ -11,7 +11,7 @@ import HighlightedText from '@/modules/common/components/HighlightedText';
 
 const Text = ({ children }: IComponent) => {
   return (
-    <p className="font-bold text-xl rounded-lg whitespace-nowrap text-center text-text-base-content ">
+    <p className="font-bold text-xl rounded-lg whitespace-nowrap text-center text-base-content ">
       {children}
     </p>
   );
@@ -60,7 +60,7 @@ const ProductItem = ({ product, onClick }: IProps) => {
               )}
             </Text>
             <button
-              className="btn btn-primary w-fit px-10 rounded-lg"
+              className="btn btn-primary w-fit px-10 rounded-lg text-neutral-content"
               onClick={handleClick}
               data-test="add-product"
             >

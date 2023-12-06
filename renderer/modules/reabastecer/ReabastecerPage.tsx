@@ -42,11 +42,7 @@ export default function ReabastecerPage() {
             .getSelectedRowModel()
             .flatRows.map((e) => e.original)}
         />
-        <select
-          className="select select-bordered"
-          value={pageSize}
-          onChange={handleChangeVisibilityProduct}
-        >
+        <select className="select select-bordered">
           <option>Cantidad de productos visibles</option>
           <option>15</option>
           <option>25</option>

@@ -12,11 +12,13 @@ interface IProps {
   promosItems: IPromoItem[];
   salesMode?: boolean;
   setPromosSelected?: number;
+  editButton?: boolean;
 }
 
 export default function RenderPromos({
   promosItems,
   salesMode: createMode,
+  editButton,
 }: IProps) {
   const {
     createIndex,
@@ -42,10 +44,12 @@ export default function RenderPromos({
                   {formatPrice(promo.price)}
                 </HighlightedText>
               </div>
-              <div className="flex flex-row gap-3">
-                <EditPromoModal promo={promo} />
-                <CancelPromoModal promoId={promo.id!} />
-              </div>
+              {editButton ? (
+                <div className="flex flex-row gap-3">
+                  <EditPromoModal promo={promo} />
+                  <CancelPromoModal promoId={promo.id!} />
+                </div>
+              ) : null}
             </div>
             <div className="flex flex-col justify-between p-4 gap-5">
               {promo.categories!.map(({ category, quantity }, index) => (
