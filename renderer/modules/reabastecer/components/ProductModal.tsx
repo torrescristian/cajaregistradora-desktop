@@ -34,7 +34,7 @@ export const ProductModal = ({ product, variant }: IProps) => {
           <div>
             <ProductRow product={product} key={product.id} variant={variant} />
           </div>
-          {/* <NewVariant product={product} /> */}
+          <NewVariant product={product} />
         </Card>
         <div className="w-full flex pt-10 justify-end">
           <button
