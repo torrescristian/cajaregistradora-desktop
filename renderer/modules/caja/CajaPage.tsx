@@ -12,9 +12,10 @@ import { CloseCashBalance } from './components/CloseCashBalance';
 import useIsMobile from '../reabastecer/hooks/useIsMobile';
 import { CashBalanceActivateMobile } from '../common/components/Mobile/CashBalanceActiveMobile';
 import { CashBalanceMobile } from '../common/components/Mobile/CashBalanceMobile';
-import { TICKET_STATUS } from '../recibos/interfaces/ITicket';
-import useTicketQuery from '../recibos/hooks/useTicketQuery';
 import useTicketPendingQuery from '../recibos/hooks/useTicketPendingQuery';
+import { isOwner } from '../common/libs/auth';
+import { CancelTicketPending } from './components/CancelTicketPending';
+import { useAuthState } from '../common/contexts/AuthContext';
 
 export default function CajaPage() {
   const {
@@ -28,6 +29,8 @@ export default function CajaPage() {
 
   const ticketPendingQuery = useTicketPendingQuery();
   const ticketPending = ticketPendingQuery.data || [];
+
+  const { isOwner } = useAuthState();
 
   const { handleChange, value } = useFormControl(0);
 
@@ -44,11 +47,28 @@ export default function CajaPage() {
   return (
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
-      <RenderIf condition={ticketPending.length > 0}>
-        <p>
-          Hay tickets esperando confirmacion{' '}
-          <span className="badge-secondary p-2">{ticketPending.length}</span>
-        </p>
+      <RenderIf condition={isOwner}>
+        <RenderIf condition={ticketPending.length > 0}>
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-warning m-1">
+              <p>
+                Hay{' '}
+                <span className="badge-error badge p-3">
+                  {ticketPending.length}
+                </span>{' '}
+                pendientes en espera
+              </p>
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[10] p-5 shadow bg-neutral rounded-box md:w-[45vw] h-[45vh] md:h-[65vh] overflow-x-scroll "
+            >
+              {ticketPending.map((ticket) => (
+                <CancelTicketPending key={ticket.id} ticket={ticket} />
+              ))}
+            </ul>
+          </div>
+        </RenderIf>
       </RenderIf>
       {isMobile ? (
         <div className="w-full">

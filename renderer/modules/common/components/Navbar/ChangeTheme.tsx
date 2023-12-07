@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export const ChangeTheme = () => {
   const [theme, setTheme] = useState(
-    localStorage.getItem('theme') || 'corporate',
+    localStorage.getItem('theme') || 'business',
   );
   const toggleTheme = () => {
     const newTheme = theme === 'corporate' ? 'business' : 'corporate';
@@ -23,6 +23,7 @@ export const ChangeTheme = () => {
     <label className="cursor-pointer grid place-items-center">
       <input
         type="checkbox"
+        value={theme}
         onChange={toggleTheme}
         className="toggle theme-controller bg-text-base-content row-start-1 col-start-1 col-span-2"
       />

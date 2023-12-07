@@ -51,12 +51,6 @@ export default function Navbar() {
             <WifiStatus />
 
             <div className="flex flex-row">
-              <NavButton
-                className="w-min whitespace-nowrap text-secondary-focus"
-                href="/pedidos"
-              >
-                Pedidos
-              </NavButton>
               {/*              <NavButton
                 className="w-min whitespace-nowrap text-secondary-focus"
                 href="/ordenes"

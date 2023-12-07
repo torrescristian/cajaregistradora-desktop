@@ -13,16 +13,14 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
     <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-text-base-content ">
       {isLoggedIn && (
         <ul>
-          {isMobile ? (
-            <ul>
-              <NavButton className="w-full" href="/pedidos">
-                Pedidos
-              </NavButton>
-              {/*               <NavButton className="w-full" href="/ordenes">
+          <ul>
+            <NavButton className="w-full" href="/pedidos">
+              Pedidos
+            </NavButton>
+            {/*               <NavButton className="w-full" href="/ordenes">
                 Ordenes pendientes
               </NavButton> */}
-            </ul>
-          ) : null}
+          </ul>
           <NavButton className="w-full" href="/recibos">
             Recibos
           </NavButton>
