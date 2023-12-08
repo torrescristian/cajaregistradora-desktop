@@ -16,11 +16,13 @@ interface IProductsQueryProps {
   showPromo?: boolean;
 }
 
-export default function usePromoQuery({
-  query,
-  page,
-  showPromo,
-}: IProductsQueryProps) {
+export default function usePromoQuery(
+  { query, page, showPromo }: IProductsQueryProps = {
+    query: '',
+    page: 1,
+    showPromo: true,
+  },
+) {
   const [pagination, setPagination] = useState<IProductPage['pagination']>({
     page: 1,
     pageSize: 20,
@@ -30,6 +32,10 @@ export default function usePromoQuery({
   return useQuery<IPromoExpanded[]>(
     [getPromoQueryKey(), page, showPromo, query],
     async () => {
+      if (!showPromo) {
+        return [];
+      }
+
       let options: any = {
         populate: [
           'categories',
@@ -48,11 +54,9 @@ export default function usePromoQuery({
         status: PROMO_STATUS.ENABLED,
       };
 
-      if (showPromo) {
-        options.filters.name = {
-          $containsi: query,
-        };
-      }
+      options.filters.name = {
+        $containsi: query,
+      };
 
       const resp = (await strapi.find(
         getPromoQueryKey(),

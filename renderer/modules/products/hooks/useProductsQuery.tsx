@@ -59,7 +59,6 @@ export default function useProductsQuery({
   query,
   selectedProductType,
   page,
-  showPromo,
   pageSize,
 }: IProductsQueryProps) {
   const router = useRouter();
@@ -73,7 +72,7 @@ export default function useProductsQuery({
 
   const queryClient = useQueryClient();
   const { data, isLoading, isError, isSuccess, error } = useQuery<IProps>(
-    [PRODUCTS_KEY, showPromo, query, selectedProductType, page, pageSize],
+    [query, selectedProductType, page, pageSize],
     async () => {
       try {
         let options: any = {
@@ -94,31 +93,31 @@ export default function useProductsQuery({
         options.filters = {
           status: PRODUCT_STATUS.ENABLED,
         };
-        if (!showPromo) {
-          if (selectedProductType) {
-            options.filters = {
-              type: selectedProductType,
-            };
-          }
-          if (query) {
-            options.filters = {
-              ...options.filters,
-              $or: [
-                {
+
+        if (selectedProductType) {
+          options.filters = {
+            type: selectedProductType,
+          };
+        }
+
+        if (query) {
+          options.filters = {
+            ...options.filters,
+            $or: [
+              {
+                name: {
+                  $containsi: query,
+                },
+              },
+              {
+                variants: {
                   name: {
                     $containsi: query,
                   },
                 },
-                {
-                  variants: {
-                    name: {
-                      $containsi: query,
-                    },
-                  },
-                },
-              ],
-            };
-          }
+              },
+            ],
+          };
         }
 
         const res = (await strapi.find(

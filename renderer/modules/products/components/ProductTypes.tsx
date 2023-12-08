@@ -22,11 +22,15 @@ export default function ProductTypes({
   const isMobile = useIsMobile();
   const handleSelect = (type: IProductType | null) => () => {
     onSelect(type?.id === selectedProductType ? null : type);
-    setShowPromo(false);
+    if (showPromo) {
+      setShowPromo(false);
+    }
   };
 
   const handleClickPromo = () => {
-    onSelect(null);
+    if (selectedProductType) {
+      onSelect(null);
+    }
     setShowPromo(!showPromo);
   };
 

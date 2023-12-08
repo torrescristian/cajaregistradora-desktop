@@ -12,7 +12,6 @@ export const useProductsProps = () => {
   const searchProps = useSearchProps();
 
   const [showPromo, setShowPromo] = useState(false);
-  const [promosSelectedPage, setPromosSelectedPage] = useState(1);
   const [activePage, setActivePage] = useState(1);
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType | null>(null);
@@ -20,7 +19,7 @@ export const useProductsProps = () => {
   const promoQuery = usePromoQuery({
     query: searchProps.query,
     showPromo,
-    page: promosSelectedPage,
+    page: activePage,
   });
   const promos = promoQuery.data;
 
