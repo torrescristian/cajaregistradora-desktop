@@ -5,6 +5,7 @@ import { IColumnTicket } from './interfaces/IColumnTicket';
 import TicketTable from './components/TicketTable';
 import Loader from '../common/components/Loader';
 import PageLayout from '../common/components/PageLayout';
+import NoMobileVersion from '../common/components/NoMobileVersion';
 
 export default function RecibosPage() {
   function getLabelByPaymentsType(payments: IPayment[]) {
@@ -55,6 +56,7 @@ export default function RecibosPage() {
 
   return (
     <PageLayout className="gap-5 justify-center p-5  sm:mt-2 mt-20 overflow-x-scroll ">
+      <NoMobileVersion />
       <TicketTable data={data} />
     </PageLayout>
   );

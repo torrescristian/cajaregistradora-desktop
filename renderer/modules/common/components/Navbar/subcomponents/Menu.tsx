@@ -38,15 +38,15 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
               </NavButton>
 
               <NavButton className="w-full" href="/admin/cupones">
-                Crear cupones
+                Cupones
               </NavButton>
 
               <NavButton className="w-full" href="/admin/promo">
-                Crear Promos
+                Promos
               </NavButton>
 
               <NavButton className="w-full" href="/categorias">
-                Crear Categorias
+                Categorias
               </NavButton>
             </>
           ) : null}

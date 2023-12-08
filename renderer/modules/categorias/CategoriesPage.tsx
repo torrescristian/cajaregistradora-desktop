@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
 
-export const CreateCategories = () => {
+export default function CategoriesPage() {
   const createCategoryMutation = useCreateCategoryMutation();
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
@@ -84,7 +84,7 @@ export const CreateCategories = () => {
   return (
     <section className="w-full">
       <div className="flex flex-col items-center">
-        <h1 className="text-2xl mb-5">Crea tu categoria</h1>
+        <h1 className="text-2xl mt-16">Crea tu categoria</h1>
         <form
           className="flex flex-col gap-5 p-4 w-[90vw]"
           onSubmit={handleSubmitCategory}
@@ -146,4 +146,4 @@ export const CreateCategories = () => {
       </div>
     </section>
   );
-};
+}

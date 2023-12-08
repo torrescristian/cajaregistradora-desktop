@@ -9,6 +9,7 @@ import Loader from '@/modules/common/components/Loader';
 import ErrorMessage from '@/modules/common/components/ErrorMessage';
 import { useVariantUpdateTableProps } from '@/modules/reabastecer/hooks/useVariantUpdateTableProps';
 import VariantUpdateTable from './components/VariantUpdateTable';
+import NoMobileVersion from '../common/components/NoMobileVersion';
 
 export default function ReabastecerPage() {
   const searchProps = useSearchProps();
@@ -35,6 +36,7 @@ export default function ReabastecerPage() {
   return (
     <PageLayout>
       <h1 className="text-2xl whitespace-nowrap">Reabastecer & Actualizar</h1>
+      <NoMobileVersion />
       <div className="flex flex-row justify-between gap-10 w-full">
         <SearchInput {...searchProps} />
         <ButtomUpdatePrice

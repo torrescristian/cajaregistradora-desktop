@@ -48,6 +48,13 @@ export default function ProductTypes({
             >
               <TabButton
                 className="btn-secondary"
+                isActive={selectedProductType === null}
+                onClick={handleSelect(null)}
+              >
+                <span>Todos</span>
+              </TabButton>
+              <TabButton
+                className="btn-secondary"
                 isActive={showPromo}
                 onClick={handleClickPromo}
               >

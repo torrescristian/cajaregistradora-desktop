@@ -1,9 +1,5 @@
-import Categories from '@/modules/categorias/Categories';
+import CategoriesPage from '@/modules/categorias/CategoriesPage';
 
 export default function categorias() {
-  return (
-    <section>
-      <Categories />
-    </section>
-  );
+  return <CategoriesPage />;
 }

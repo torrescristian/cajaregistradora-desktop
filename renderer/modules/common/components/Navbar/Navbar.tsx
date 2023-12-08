@@ -22,8 +22,8 @@ export default function Navbar() {
   return (
     <nav>
       {isMobile ? (
-        <div className="w-full flex flex-col absolute bg-base-100 z-30 left-0 top-0">
-          <div className="w-full flex flex-row items-center gap-2 justify-between sticky z-80 px-8 py-3">
+        <div className="w-full flex flex-col absolute bg-base-100 left-0 top-0 z-30">
+          <div className="w-full flex flex-row items-center gap-2 justify-between sticky px-8 py-3">
             <NavbarUser />
             <NotificationsIcon />
             <WifiStatus />

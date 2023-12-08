@@ -92,7 +92,7 @@ export const ProductsMobile = ({
           </>
         )}
       </div>
-      <div className="md:grid md:grid-cols-4 md:justify-center md:flex-wrap gap-5">
+      <div className="sm:grid-cols-2 sm:grid xl:grid-cols-4 sm:justify-center sm:flex-wrap gap-5">
         <RenderIf condition={!showPromo}>
           {products.map((product) => (
             <ProductItemMobile key={product.id} product={product} />
@@ -108,11 +108,13 @@ export const ProductsMobile = ({
           />
         </RenderIf>
       </div>
-      <Pagination
-        pagination={totalPages!}
-        onClick={handleNextPage}
-        isLoading={productsQuery.isLoading}
-      />
+      <RenderIf condition={!showPromo}>
+        <Pagination
+          pagination={totalPages!}
+          onClick={handleNextPage}
+          isLoading={productsQuery.isLoading}
+        />
+      </RenderIf>
     </section>
   );
 };

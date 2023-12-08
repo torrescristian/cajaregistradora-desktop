@@ -5,7 +5,7 @@ export const NavbarUser = () => {
   const isMobile = useIsMobile();
   const { userData } = useAuthState();
   return (
-    <div className="w-max flex flex-row items-start">
+    <div className="w-max flex flex-row items-center">
       <img src="/images/logo.png" className="w-36 sm:w-20" />
       {isMobile ? null : (
         <div className="flex flex-col w-full">
