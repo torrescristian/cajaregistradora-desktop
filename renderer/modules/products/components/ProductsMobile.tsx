@@ -43,15 +43,19 @@ export const ProductsMobile = ({
     return <Loader />;
   }
   return (
-    <section className="w-full flex flex-col mt-20 gap-3 p-3 md:mt-0">
-      {updateMode ? (
+    <section className="w-full flex flex-col mt-10 gap-3 p-3 md:mt-0">
+      <RenderIf condition={updateMode}>
         <div className="w-full flex justify-center">
           <button className="btn w-max btn-error" onClick={closeUpdateMode}>
             Dejar de editar
           </button>
         </div>
-      ) : null}
-      <div className="flex flex-row items-center justify-between p-3 gap-5">
+      </RenderIf>
+      <div
+        className={
+          'flex flex-row items-center justify-between p-3 gap-5 bg-base-100 sticky top-16 z-30 md:top-0'
+        }
+      >
         {isMobile ? (
           <>
             <ProductTypes

@@ -15,6 +15,7 @@ import { ICartItem } from '../../../cart/interfaces/ICart';
 import CartItemMobile from './CartItemMobile';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import { ConfirmOrderMobile } from '../../../cart/components/ConfirmOrderMobile';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-col w-full gap-5 justify-between ">
@@ -80,8 +81,17 @@ const CartMobile = ({
           <p className="text-center">
             <span className="text-xl">Total:</span> {formatPrice(subtotalPrice)}
           </p>
-          <RenderIf condition={items.length || promosItems.length}>
-            <div className="flex flex-row justify-center gap-3 w-full md:justify-end ">
+          <div className="flex flex-row justify-between w-full">
+            <label
+              htmlFor="carrito-drawer"
+              aria-label="cerrar sidebar"
+              className="btn btn-ghost"
+              onClick={() => closeModal()}
+            >
+              <XMarkIcon className="text-error" width={20} />
+              Cerrar
+            </label>
+            <RenderIf condition={items.length || promosItems.length}>
               <button
                 className="btn btn-primary"
                 onClick={() =>
@@ -98,21 +108,13 @@ const CartMobile = ({
               >
                 Pasar Orden
               </button>
-            </div>
-          </RenderIf>
-          <RenderIf condition={!items.length && !promosItems.length}>
-            <section className="bg-info text-primary-content p-4 w-full">
-              No hay productos en el carrito
-            </section>
-          </RenderIf>
-          <label
-            htmlFor="carrito-drawer"
-            aria-label="cerrar sidebar"
-            className="btn btn-error"
-            onClick={() => closeModal()}
-          >
-            Salir
-          </label>
+            </RenderIf>
+            <RenderIf condition={!items.length && !promosItems.length}>
+              <section className="bg-info text-primary-content p-4 w-full">
+                No hay productos en el carrito
+              </section>
+            </RenderIf>
+          </div>
         </Card>
       </ProductContainer>
     </Layout>

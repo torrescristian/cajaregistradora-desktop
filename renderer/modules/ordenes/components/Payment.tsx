@@ -19,11 +19,6 @@ export const Payment = ({
   payment,
   newTotalPrice,
 }: IProps) => {
-  const totalNewPrice = useMemo(
-    () => newTotalPrice! + Number(payment.amount),
-    [newTotalPrice, payment.amount],
-  );
-
   const handleSelectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as PAYMENT_TYPE;
     onChange({
@@ -64,7 +59,7 @@ export const Payment = ({
         />
         <input
           onChange={handleChangeAmount}
-          value={totalNewPrice}
+          value={newTotalPrice}
           placeholder="0.00"
           className="input input-bordered text-base-content w-28 sm:w-36 "
         />

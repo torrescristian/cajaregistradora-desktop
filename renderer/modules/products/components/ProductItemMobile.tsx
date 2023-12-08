@@ -30,7 +30,7 @@ export const ProductItemMobile = ({ product, onClick }: IProps) => {
       <HighlightedText>{product.name}</HighlightedText>
       <div className="flex flex-row w-full gap-3 items-center">
         <img src={product.image} className="w-32" />
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full items-end">
           <RenderIf condition={product.variants.length}>
             <Selector
               onChange={handleChangeVariant}

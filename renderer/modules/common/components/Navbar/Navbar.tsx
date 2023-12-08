@@ -22,15 +22,15 @@ export default function Navbar() {
   return (
     <nav>
       {isMobile ? (
-        <div className="w-full flex flex-col absolute bg-base-100 z-20 left-0 top-0">
-          <div className="w-full flex flex-row items-center gap-2 justify-start sticky z-80 ">
+        <div className="w-full flex flex-col absolute bg-base-100 z-30 left-0 top-0">
+          <div className="w-full flex flex-row items-center gap-2 justify-between sticky z-80 px-8 py-3">
             <NavbarUser />
             <NotificationsIcon />
             <WifiStatus />
-            <div className="flex flex-row w-full">
+            <div className="flex flex-row">
               <label
                 htmlFor="menu-drawer"
-                className="btn btn-secondary  drawer-button"
+                className="btn btn-secondary w-full drawer-button flex flex-row flex-nowrap"
                 onClick={() =>
                   openModal(
                     <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,
@@ -44,7 +44,7 @@ export default function Navbar() {
           </div>
         </div>
       ) : (
-        <section className="w-full flex flex-row mb-7">
+        <section className="w-full flex flex-row">
           <div className="flex flex-row w-full items-center justify-between">
             <NavbarUser />
             <NotificationsIcon />

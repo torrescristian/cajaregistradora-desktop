@@ -6,7 +6,7 @@ export const NavbarUser = () => {
   const { userData } = useAuthState();
   return (
     <div className="w-max flex flex-row items-start">
-      <img src="/images/logo.png" className="w-56 sm:w-20" />
+      <img src="/images/logo.png" className="w-36 sm:w-20" />
       {isMobile ? null : (
         <div className="flex flex-col w-full">
           <p className="whitespace-nowrap">Caja Registradora</p>

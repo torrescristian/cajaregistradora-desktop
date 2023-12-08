@@ -24,7 +24,7 @@ export default function GlobalLayout({ children }: IProps) {
       <CustomToastContainer />
       <input id="menu-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <section className=" p-5">
+        <section className="p-5">
           <Navbar />
           <section className="flex flex-col">{children}</section>
         </section>
