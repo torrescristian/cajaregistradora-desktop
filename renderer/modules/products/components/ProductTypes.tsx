@@ -35,7 +35,7 @@ export default function ProductTypes({
   };
 
   return (
-    <section className="flex flex-col sm:flex-row gap-5 items-center">
+    <section className="flex flex-col sm:flex-row items-center">
       {isMobile ? (
         <RenderIf condition={productTypes?.length}>
           <div className="dropdown z-[1]">
@@ -44,7 +44,7 @@ export default function ProductTypes({
             </label>
             <div
               tabIndex={0}
-              className="dropdown-content flex flex-col p-2 gap-5 overflow-y-scroll h-[40vh] shadow bg-base-100-focus rounded-box w-64"
+              className="dropdown-content flex flex-col p-2 bg-neutral overflow-y-scroll h-[40vh] shadow rounded-box w-64"
             >
               <TabButton
                 className="btn-secondary"

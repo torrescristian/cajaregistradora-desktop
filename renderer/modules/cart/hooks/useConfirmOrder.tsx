@@ -61,6 +61,7 @@ export default function useConfirmOrder({
     () => (order?.totalPrice || totalPrice) - couponDiscount,
     [totalPrice, couponDiscount, order?.totalPrice],
   );
+
   const [coupon, setCoupon] = useState<ICoupon>();
 
   const {

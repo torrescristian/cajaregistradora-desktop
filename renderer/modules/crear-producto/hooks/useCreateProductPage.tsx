@@ -89,7 +89,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
         variants,
         defaultVariantIndex,
       });
-      toast.success('Producto creado correctamente');
+      toast.success(`Producto creado correctamente ${data.name}`);
       clearForm();
     } catch (error) {
       toast.error(`No se logro crear el producto`);

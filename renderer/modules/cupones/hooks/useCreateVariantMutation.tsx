@@ -50,7 +50,6 @@ export default function useCreateVariantMutation() {
             default_variant: res.data.id,
           });
         }
-        toast.success('Variante creada correctamente');
         queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);
         return res;
       } catch (e) {
