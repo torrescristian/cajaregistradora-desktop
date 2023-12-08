@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import useCreateVariantMutation from './useCreateVariantMutation';
 import { IVariantPayload } from '@/modules/common/interfaces/IVariants';
 import { PRODUCTS_KEY } from '@/modules/common/consts';
+import { toast } from 'react-toastify';
 
 interface IProps {
   data: IProductPayload;
@@ -38,6 +39,7 @@ export default function useCreateProductAndVariantMutation() {
           minimum_stock: variant.minimum_stock!,
         });
       }
+      toast.success('Variantes creada correctamente');
       queryClient.invalidateQueries([PRODUCTS_KEY]);
       return res;
     },

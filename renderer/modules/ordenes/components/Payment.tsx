@@ -2,7 +2,8 @@ import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { Selector } from '@/modules/common/components/Selector';
 import { ChevronDoubleDownIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { paymentTypesAndLabels } from '@/modules/recibos/utils/utils';
-import { useState } from 'react';
+import { useMemo } from 'react';
+
 interface IProps {
   onChange: (payment: IPayment) => void;
   onNewPayment: () => void;
@@ -18,6 +19,11 @@ export const Payment = ({
   payment,
   newTotalPrice,
 }: IProps) => {
+  const totalNewPrice = useMemo(
+    () => newTotalPrice! + Number(payment.amount),
+    [newTotalPrice, payment.amount],
+  );
+
   const handleSelectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as PAYMENT_TYPE;
     onChange({
@@ -58,7 +64,7 @@ export const Payment = ({
         />
         <input
           onChange={handleChangeAmount}
-          value={payment.amount}
+          value={totalNewPrice}
           placeholder="0.00"
           className="input input-bordered text-base-content w-28 sm:w-36 "
         />
