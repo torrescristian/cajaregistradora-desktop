@@ -11,7 +11,7 @@ export interface ICashBalance<
   initialCashAmount: number;
   newCashAmount: number;
   seller: USER;
-  ticket: TICKET;
+  tickets: TICKET[];
   totalAmount: number;
 }
 

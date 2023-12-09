@@ -13,9 +13,11 @@ import useIsMobile from '../reabastecer/hooks/useIsMobile';
 import { CashBalanceActivateMobile } from '../common/components/Mobile/CashBalanceActiveMobile';
 import { CashBalanceMobile } from '../common/components/Mobile/CashBalanceMobile';
 import useTicketPendingQuery from '../recibos/hooks/useTicketPendingQuery';
-import { isOwner } from '../common/libs/auth';
 import { CancelTicketPending } from './components/CancelTicketPending';
 import { useAuthState } from '../common/contexts/AuthContext';
+import { ICashBalance } from './interfaces/ICashBalance';
+import React from 'react';
+import usePrintService from '../common/hooks/usePrintService';
 
 export default function CajaPage() {
   const {
@@ -43,6 +45,14 @@ export default function CajaPage() {
       initialCashAmount: Number(value),
     });
   };
+
+  const { printCash } = usePrintService()
+
+  const handleClickReprint = (cashBalance: ICashBalance) => (e: React.MouseEvent) => {
+    e.preventDefault()
+
+    printCash(cashBalance.id!)
+  }
 
   return (
     <PageLayout>
@@ -137,7 +147,7 @@ export default function CajaPage() {
           <RenderIf condition={todayCashBalances.length}>
             <section className="w-full flex flex-col gap-5">
               <p className="text-2xl text-center">Cajas del dia</p>
-              <div className="flex flex-row w-full gap-5 overflow-x-scroll">
+              <div className="flex flex-row w-full gap-5 flex-wrap w-1/4">
                 {todayCashBalances.map((todayCashBalance) => (
                   <div
                     key={todayCashBalance.id!}
@@ -157,6 +167,7 @@ export default function CajaPage() {
                       {format(new Date(todayCashBalance.completedAt), 'HH:mm')}
                       Hs
                     </p>
+                    <button onClick={handleClickReprint(todayCashBalance)} className="btn btn-secondary">Reimprimir Ticket</button>
                   </div>
                 ))}
               </div>

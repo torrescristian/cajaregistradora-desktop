@@ -14,8 +14,14 @@ import {
   FONT_SIZE_BIG,
 } from '../helpers/const';
 import { ITicket } from '../interfaces/ITicket';
+import { ICashBalance } from '../interfaces/ICashBalance';
 
-export default function printCashBalance(tickets: ITicket[]) {
+interface IProps {
+    tickets: ITicket[];
+    cashBalance: ICashBalance  
+}
+
+export default function printCashBalance({ cashBalance, tickets }: IProps) {
   try {
     if (!tickets[0].order?.id) {
       console.log('There is not Order ID');
@@ -67,6 +73,12 @@ export default function printCashBalance(tickets: ITicket[]) {
 
       printer
         .drawLine()
+        .align(ALIGN.LT)
+        .text(`Total Bruto: ${formatPrice(cashBalance.totalAmount)}`)
+        .text(`Total Efectivo: ${formatPrice(cashBalance.newCashAmount)}`)
+
+
+      printer
         .align(ALIGN.CT)
         .text(FONT_SIZE_SMALL)
         .text('Sin validez fiscal');

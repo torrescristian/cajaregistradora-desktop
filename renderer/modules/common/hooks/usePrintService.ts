@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { findOrderById } from '../../ordenes/hooks/findOrderById';
 import findTicketById from '../../recibos/services/findTicketById';
-import findTicketsByCashId from '@/modules/recibos/services/findTicketsByCashId';
+import findCashOptionsById from '@/modules/recibos/services/findTicketsByCashId';
 
 const SOCKET_LOCALHOST = 'http://localhost:4000';
 
@@ -34,9 +34,9 @@ export default function usePrintService() {
   };
 
   const printCash = async (cashId: number) => {
-    const tickets = await findTicketsByCashId(cashId);
+    const options = await findCashOptionsById(cashId);
 
-    _emit(EVENT_TYPE.PRINT_CASH, tickets);
+    _emit(EVENT_TYPE.PRINT_CASH, options);
   };
 
   // const printInvoice = async (ticketId: number) => {
