@@ -17,8 +17,8 @@ import { ITicket } from '../interfaces/ITicket';
 import { ICashBalance } from '../interfaces/ICashBalance';
 
 interface IProps {
-    tickets: ITicket[];
-    cashBalance: ICashBalance  
+  tickets: ITicket[];
+  cashBalance: ICashBalance;
 }
 
 export default function printCashBalance({ cashBalance, tickets }: IProps) {
@@ -75,13 +75,9 @@ export default function printCashBalance({ cashBalance, tickets }: IProps) {
         .drawLine()
         .align(ALIGN.LT)
         .text(`Total Bruto: ${formatPrice(cashBalance.totalAmount)}`)
-        .text(`Total Efectivo: ${formatPrice(cashBalance.newCashAmount)}`)
+        .text(`Total Efectivo: ${formatPrice(cashBalance.newCashAmount)}`);
 
-
-      printer
-        .align(ALIGN.CT)
-        .text(FONT_SIZE_SMALL)
-        .text('Sin validez fiscal');
+      printer.align(ALIGN.CT).text(FONT_SIZE_SMALL).text('Sin validez fiscal');
 
       // close printer
       printer.cut().close();

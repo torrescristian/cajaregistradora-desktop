@@ -6,13 +6,13 @@ import { ITicket, ITicketResponse } from '@/modules/recibos/interfaces/ITicket';
 
 interface IResponse {
   tickets: ITicket[];
-  cashBalance: ICashBalance
+  cashBalance: ICashBalance;
 }
 
 export default async function findCashOptionsById(
-  cashId: number
+  cashId: number,
 ): Promise<IResponse> {
-  const cashBalance = await findACashById(cashId)
+  const cashBalance = await findACashById(cashId);
 
   const ticketResponse = (await strapi.find(TICKETS_KEY, {
     populate: [
@@ -40,9 +40,8 @@ export default async function findCashOptionsById(
     pageSize: 10000,
   })) as unknown as ITicketResponse;
 
-
   return {
     tickets: ticketResponse.results,
-    cashBalance: cashBalance!
+    cashBalance: cashBalance!,
   };
 }

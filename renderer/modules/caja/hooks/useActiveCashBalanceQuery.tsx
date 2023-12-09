@@ -20,41 +20,41 @@ export default function useActiveCashBalanceQuery() {
   const { userData } = useAuthState();
   const { data, isLoading, isError, isSuccess } = useQuery<IProps | null>(
     [getCashBalanceKey(), userData?.id],
-      async () => {
-        try {
-          const today = new Date();
+    async () => {
+      try {
+        const today = new Date();
 
-          const res = (await strapi.find(getCashBalanceKey(), {
-            filters: {
-              seller: userData!.id,
-              $or: [
-                {
-                  completedAt: { $null: true },
+        const res = (await strapi.find(getCashBalanceKey(), {
+          filters: {
+            seller: userData!.id,
+            $or: [
+              {
+                completedAt: { $null: true },
+              },
+              {
+                completedAt: {
+                  $gt: today.setHours(0, 0, 0, 0),
                 },
-                {
-                  completedAt: {
-                    $gt: today.setHours(0, 0, 0, 0),
-                  },
-                },
-              ],
-            },
-            populate: ['cash-balances', 'seller', 'ticket', 'order'],
-          })) as unknown as ICashBalancePage;
+              },
+            ],
+          },
+          populate: ['cash-balances', 'seller', 'ticket', 'order'],
+        })) as unknown as ICashBalancePage;
 
-          if (!res) return null;
-          const todayCashBalances = res.results;
-          const cashBalance = todayCashBalances.filter(
-            (cashBalance) => cashBalance.completedAt === null,
-          )[0];
-          return { cashBalance, todayCashBalances };
-        } catch (error: any) {
-          if ([401, 403].includes(getErrorMessage(error).status)) {
-            return null;
-          }
-
+        if (!res) return null;
+        const todayCashBalances = res.results;
+        const cashBalance = todayCashBalances.filter(
+          (cashBalance) => cashBalance.completedAt === null,
+        )[0];
+        return { cashBalance, todayCashBalances };
+      } catch (error: any) {
+        if ([401, 403].includes(getErrorMessage(error).status)) {
           return null;
         }
-      },
+
+        return null;
+      }
+    },
   );
 
   const cashBalance = data?.cashBalance || null;

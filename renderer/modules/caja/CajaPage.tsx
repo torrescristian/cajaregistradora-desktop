@@ -46,13 +46,14 @@ export default function CajaPage() {
     });
   };
 
-  const { printCash } = usePrintService()
+  const { printCash } = usePrintService();
 
-  const handleClickReprint = (cashBalance: ICashBalance) => (e: React.MouseEvent) => {
-    e.preventDefault()
+  const handleClickReprint =
+    (cashBalance: ICashBalance) => (e: React.MouseEvent) => {
+      e.preventDefault();
 
-    printCash(cashBalance.id!)
-  }
+      printCash(cashBalance.id!);
+    };
 
   return (
     <PageLayout>
@@ -167,7 +168,12 @@ export default function CajaPage() {
                       {format(new Date(todayCashBalance.completedAt), 'HH:mm')}
                       Hs
                     </p>
-                    <button onClick={handleClickReprint(todayCashBalance)} className="btn btn-secondary">Reimprimir Ticket</button>
+                    <button
+                      onClick={handleClickReprint(todayCashBalance)}
+                      className="btn btn-secondary"
+                    >
+                      Reimprimir Ticket
+                    </button>
                   </div>
                 ))}
               </div>
