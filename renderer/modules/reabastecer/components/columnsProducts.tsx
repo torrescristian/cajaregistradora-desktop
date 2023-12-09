@@ -32,6 +32,10 @@ export const columnDefProduct = [
     ),
   },
   {
+    accessorFn: (col: IVariantExpanded) => col.id,
+    header: 'ID',
+  },
+  {
     accessorFn: (col: IVariantExpanded) => col.product.name,
     header: 'Producto',
   },

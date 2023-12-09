@@ -3,6 +3,8 @@ import useUpdateVariantPriceMutation from '@/modules/reabastecer/hooks/useUpdate
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { TrashIcon } from '@heroicons/react/24/solid';
+import useCancelVariantMutation from '../hooks/useCancelVariantMutation';
 
 interface IProps {
   variants: IVariantExpanded[];
@@ -15,6 +17,7 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
   const [variantPrice, setVariantPrice] = useState<number | null>(null);
 
   const updateVariantPriceMutation = useUpdateVariantPriceMutation();
+  const cancelVariantMutation = useCancelVariantMutation();
 
   const handleFixedPriceChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -39,7 +42,7 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
     ref.current?.close();
   };
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClickUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log({ variants });
     try {
@@ -77,13 +80,20 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
     }
   };
 
+  const handleClickRemoveVariants = (e: React.MouseEvent) => {
+    e.preventDefault();
+    variants.map((variant) => {
+      cancelVariantMutation.mutate(variant.id!);
+    });
+  };
+
   return (
     <section className="w-min whitespace-nowrap">
       <button
         className="btn btn-primary"
         onClick={() => ref.current?.showModal()}
       >
-        Actualizar precio
+        Operaciones en lote
       </button>
       <dialog ref={ref} className="bg-base-100 p-5 w-[50vw] shadow-lg">
         <form className="flex flex-col gap-8 items-center  ">
@@ -132,16 +142,24 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
               />
             </label>
           </FieldLabel>
-          <div className="flex flex-row w-full gap-5 justify-end">
+          {/* <button
+            onClick={handleClickRemoveVariants}
+            className="flex flex-row whitespace-nowrap text-error btn btn-ghost gap-3 w-fit"
+          >
+            <TrashIcon className="w-5 h-5" />
+            <p>Eliminar Variantes</p>
+          </button> */}
+
+          <div className="flex flex-row w-full gap-5 justify-between">
             <button
-              className="btn btn-error btn-link text-error"
+              className="btn btn-error btn-ghost text-neutral-content"
               onClick={handleCloseModal}
             >
               Cancelar
             </button>
             <button
               className="btn btn-success text-text-base-content"
-              onClick={handleClick}
+              onClick={handleClickUpdate}
             >
               Actualizar
             </button>

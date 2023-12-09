@@ -53,7 +53,7 @@ export const ProductsMobile = ({
       </RenderIf>
       <div
         className={
-          'flex flex-row items-center justify-between p-3 gap-5 bg-base-100 sticky top-16 z-30 md:top-0'
+          'flex flex-row items-center justify-between p-3 gap-5 bg-base-100 sticky top-24 z-30 md:top-0'
         }
       >
         {isMobile ? (

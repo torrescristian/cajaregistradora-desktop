@@ -16,7 +16,7 @@ export const NotificationsIcon = () => {
     updateSeenNotification.mutateAsync(id);
   };
   return (
-    <div className="flex w-full justify-end items-center">
+    <div className="flex flex-1 justify-end items-center">
       <div className="indicator">
         <div className="dropdown dropdown-end">
           {newNotifications?.length ? (

@@ -10,6 +10,7 @@ import useUpdateVariantMutation from '@/modules/reabastecer/hooks/useUpdateVaria
 import RemoveProductItemModal from '@/modules/reabastecer/components/RemoveProductItemModal';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { UpdateProductButton } from '@/modules/cart/components/ProductItem.styles';
+import { toast } from 'react-toastify';
 
 interface IProps {
   product: IProduct;
@@ -55,6 +56,7 @@ const ProductRow = ({ product, variant }: IProps) => {
       id: variant.id!,
       name: variantName,
     });
+    toast.success('Actualización Exitosa!')
   };
 
   return (
