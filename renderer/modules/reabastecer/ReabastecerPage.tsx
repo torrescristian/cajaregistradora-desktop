@@ -30,7 +30,7 @@ export default function ReabastecerPage() {
   const handleChangeVisibilityProduct = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    e.preventDefault()
+    e.preventDefault();
     setPageSize(Number(e.target.value));
   };
 

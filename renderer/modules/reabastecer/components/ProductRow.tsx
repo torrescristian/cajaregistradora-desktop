@@ -56,7 +56,7 @@ const ProductRow = ({ product, variant }: IProps) => {
       id: variant.id!,
       name: variantName,
     });
-    toast.success('Actualización Exitosa!')
+    toast.success('Actualización Exitosa!');
   };
 
   return (
