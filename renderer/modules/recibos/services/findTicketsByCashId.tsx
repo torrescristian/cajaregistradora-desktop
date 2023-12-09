@@ -37,6 +37,7 @@ export default async function findCashOptionsById(
     filters: {
       cashBalance: cashId,
     },
+    // @ts-ignore
     pageSize: 10000,
   })) as unknown as ITicketResponse;
 

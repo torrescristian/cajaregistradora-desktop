@@ -16,7 +16,7 @@ export default function useCancelCashBalanceMutation() {
   return useMutation(async (cashBalanceId: number) => {
     const res = await strapi.update(getCashBalanceKey(), cashBalanceId, {
       completedAt: new Date(),
-    });
+    }) as any;
 
     printCash(res.data.id);
 

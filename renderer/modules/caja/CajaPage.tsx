@@ -15,7 +15,7 @@ import { CashBalanceMobile } from '../common/components/Mobile/CashBalanceMobile
 import useTicketPendingQuery from '../recibos/hooks/useTicketPendingQuery';
 import { CancelTicketPending } from './components/CancelTicketPending';
 import { useAuthState } from '../common/contexts/AuthContext';
-import { ICashBalance } from './interfaces/ICashBalance';
+import { ICashBalance, ICashBalanceExpanded } from './interfaces/ICashBalance';
 import React from 'react';
 import usePrintService from '../common/hooks/usePrintService';
 
@@ -49,7 +49,7 @@ export default function CajaPage() {
   const { printCash } = usePrintService();
 
   const handleClickReprint =
-    (cashBalance: ICashBalance) => (e: React.MouseEvent) => {
+    (cashBalance: ICashBalance | ICashBalanceExpanded) => (e: React.MouseEvent) => {
       e.preventDefault();
 
       printCash(cashBalance.id!);
