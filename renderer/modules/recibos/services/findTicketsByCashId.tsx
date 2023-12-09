@@ -24,12 +24,12 @@ export default async function findTicketsByCashId(
       'order.promoItems.selectedVariants',
       'order.promoItems.selectedVariants.product',
       'order.store',
-      'store'
+      'store',
     ],
     filters: {
-        cashBalance: cashId
+      cashBalance: cashId,
     },
-    pageSize: 10000
+    pageSize: 10000,
   })) as unknown as ITicketResponse;
   return ticketResponse.results;
 }

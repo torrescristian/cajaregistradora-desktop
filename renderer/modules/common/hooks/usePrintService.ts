@@ -56,6 +56,6 @@ export default function usePrintService() {
   return {
     printCommand,
     printOrder,
-    printCash
+    printCash,
   };
 }

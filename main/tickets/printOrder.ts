@@ -1,7 +1,11 @@
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
 
-import { discountToString, formatPrice, parseDateToArgentinianFormat } from '../helpers/utils';
+import {
+  discountToString,
+  formatPrice,
+  parseDateToArgentinianFormat,
+} from '../helpers/utils';
 import {
   ALIGN,
   FONT_SIZE_NORMAL,
@@ -12,7 +16,7 @@ import { ITicket } from '../interfaces/ITicket';
 
 export default function printOrder(ticket: ITicket) {
   try {
-    const { order } = ticket
+    const { order } = ticket;
 
     if (!order?.id) {
       console.log('Missing Order', order);
@@ -109,7 +113,6 @@ export default function printOrder(ticket: ITicket) {
         .text(FONT_SIZE_SMALL)
         .text('Sin validez fiscal');
 
-
       // close printer
       printer.cut().close();
     });
@@ -118,6 +121,5 @@ export default function printOrder(ticket: ITicket) {
     if (error.includes('Can not find printer')) {
       console.log('Error: Can not find printer');
     }
-
   }
 }

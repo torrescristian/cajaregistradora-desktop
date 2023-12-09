@@ -11,14 +11,14 @@ import usePrintService from '@/modules/common/hooks/usePrintService';
 
 export default function useCancelCashBalanceMutation() {
   const queryClient = useQueryClient();
-  const { printCash } = usePrintService()
+  const { printCash } = usePrintService();
 
   return useMutation(async (cashBalanceId: number) => {
     const res = await strapi.update(getCashBalanceKey(), cashBalanceId, {
       completedAt: new Date(),
     });
 
-    printCash(res.data.id)
+    printCash(res.data.id);
 
     queryClient.invalidateQueries([getCashBalanceKey()]);
     queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);

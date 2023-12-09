@@ -106,7 +106,6 @@ export default function useConfirmOrder({
     //   coupon,
     //   promoItems: promoItems!,
     // });
-
     // await printOrder(orderResponse.data.id);
     // await printCommand(orderResponse.data.id);
     // closeModal();
