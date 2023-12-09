@@ -49,7 +49,8 @@ export default function CajaPage() {
   const { printCash } = usePrintService();
 
   const handleClickReprint =
-    (cashBalance: ICashBalance | ICashBalanceExpanded) => (e: React.MouseEvent) => {
+    (cashBalance: ICashBalance | ICashBalanceExpanded) =>
+    (e: React.MouseEvent) => {
       e.preventDefault();
 
       printCash(cashBalance.id!);
