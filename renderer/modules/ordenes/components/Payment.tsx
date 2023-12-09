@@ -59,7 +59,7 @@ export const Payment = ({
         />
         <input
           onChange={handleChangeAmount}
-          value={newTotalPrice}
+          value={payment.amount}
           placeholder="0.00"
           className="input input-bordered text-base-content w-28 sm:w-36 "
         />

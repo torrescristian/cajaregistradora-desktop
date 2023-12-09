@@ -1,17 +1,19 @@
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
 
-import { formatPrice, parseDateToArgentinianFormat } from '../helpers/utils';
+import { discountToString, formatPrice, parseDateToArgentinianFormat } from '../helpers/utils';
 import {
   ALIGN,
   FONT_SIZE_NORMAL,
   FONT_SIZE_SMALL,
   FONT_SIZE_BIG,
 } from '../helpers/const';
-import { IOrder, ORDER_STATUS } from '../interfaces/IOrder';
+import { ITicket } from '../interfaces/ITicket';
 
-export default function printOrder(order: IOrder) {
+export default function printOrder(ticket: ITicket) {
   try {
+    const { order } = ticket
+
     if (!order?.id) {
       console.log('Missing Order', order);
       return;
@@ -88,20 +90,25 @@ export default function printOrder(order: IOrder) {
 
       printer.text(FONT_SIZE_NORMAL);
       // total amount & status
+      printer.text(FONT_SIZE_NORMAL);
+      // total amount & status
       printer
-        .align('RT')
-        .newLine()
-        .text(`Total: ${formatPrice(order.subtotalPrice)}`)
+        .align(ALIGN.RT)
+        .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
+
+      if (ticket.couponDiscount) {
+        printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
+        printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
+      } else {
+        printer.text(`Descuento: ${discountToString(order.discount)}`);
+      }
+      printer
+        .text(`Total: ${formatPrice(ticket.totalPrice)}`)
         .drawLine()
-        .align('LT')
-        .text(
-          `Pago: ${
-            order.status === ORDER_STATUS.PENDING ? 'PENDIENTE' : 'ABONADO'
-          }`,
-        )
         .align(ALIGN.CT)
         .text(FONT_SIZE_SMALL)
         .text('Sin validez fiscal');
+
 
       // close printer
       printer.cut().close();
@@ -111,5 +118,6 @@ export default function printOrder(order: IOrder) {
     if (error.includes('Can not find printer')) {
       console.log('Error: Can not find printer');
     }
+
   }
 }

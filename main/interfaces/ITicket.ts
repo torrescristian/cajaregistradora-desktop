@@ -24,6 +24,7 @@ export enum TICKET_STATUS {
 
 export interface ITicket<ORDER = IOrder, CASH_BALANCE = ICashBalance> {
   cashBalance: CASH_BALANCE;
+  createdAt?: string;
   couponDiscount: number;
   id?: number;
   order: ORDER;

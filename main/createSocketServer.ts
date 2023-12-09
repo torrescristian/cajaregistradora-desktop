@@ -4,6 +4,7 @@ import { Server, Socket } from 'socket.io';
 import printOrder from './tickets/printOrder';
 import printCommand from './tickets/printCommand';
 import printInvoice from './tickets/printInvoice';
+import printCashBalance from './tickets/printCashBalance';
 
 export default function createSocketServer(app) {
   const expressApp = express();
@@ -26,9 +27,13 @@ export default function createSocketServer(app) {
         printCommand(JSON.parse(props));
       });
 
-      socket.on('print:invoice', (props) => {
-        printInvoice(JSON.parse(props));
+      socket.on('print:cash', (props) => {
+        printCashBalance(JSON.parse(props));
       });
+
+      // socket.on('print:invoice', (props) => {
+      //   printInvoice(JSON.parse(props));
+      // });
     } catch (error) {
       console.log(error);
     }

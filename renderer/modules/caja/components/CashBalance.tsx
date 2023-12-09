@@ -17,7 +17,6 @@ export const CashBalance = ({ value, onChange }: IProps) => {
       <label className="label">Monto inicial de la caja:</label>
       <input
         className="input w-full input-bordered"
-        type="number"
         value={value}
         onChange={onChange}
       />
@@ -30,7 +29,7 @@ interface ICreateCashBalanceProps {
 }
 export const CreateCashBalance = ({ onClick }: ICreateCashBalanceProps) => (
   <button
-    className="btn flex w-fit btn-primary text-primary-content p-5"
+    className="btn flex w-fit btn-primary text-primary-content"
     onClick={onClick}
   >
     Iniciar Caja

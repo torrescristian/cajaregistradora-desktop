@@ -10,11 +10,20 @@ export default async function findTicketById(
     populate: [
       'cashBalance',
       'order',
-      'order.client',
-      'order.coupon',
       'order.discount.amount',
       'payments',
-      'store',
+      'order.client',
+      'order.items.product',
+      'order.items.product.image',
+      'order.discount',
+      'order.payments',
+      'order.items.selectedVariant',
+      'order.coupon',
+      'order.promoItems',
+      'order.promoItems.promo',
+      'order.promoItems.selectedVariants',
+      'order.promoItems.selectedVariants.product',
+      'order.store',
     ],
   })) as unknown as ITicket;
   return ticketResponse;

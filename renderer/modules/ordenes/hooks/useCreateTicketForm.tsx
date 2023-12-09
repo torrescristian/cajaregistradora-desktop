@@ -48,7 +48,6 @@ export default function useCreateTicketForm({ order }: IProps) {
     payments,
   } = usePayments({ newTotalPrice: finalTotalPrice });
 
-  const { printInvoice } = usePrintService();
   const handleToggleAccordion = () => {
     setIsCheckedAcordion(!isCheckedAcordion);
   };
@@ -96,8 +95,6 @@ export default function useCreateTicketForm({ order }: IProps) {
           availableUses: order.coupon?.availableUses || coupon?.availableUses!,
         },
       });
-
-      await printInvoice(ticketResponse.data.id);
 
       toast.success('Pagado con exito');
     } catch (error) {

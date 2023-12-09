@@ -24,6 +24,13 @@ export const parseDateToArgentinianFormat = (date?: Date | string) => {
   );
 };
 
+export const parseDateToTime = (date?: Date | string) => {
+  if (!date) return null;
+
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  return `${dateObj.getHours()}:${dateObj.getMinutes()}`
+};
+
 export const discountToString = (discount: IDiscount) => {
   return discount.type === DISCOUNT_TYPE.FIXED
     ? formatPrice(discount.amount)

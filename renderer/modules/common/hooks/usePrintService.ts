@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { findOrderById } from '../../ordenes/hooks/findOrderById';
-import findTicketById from '../../recibos/hooks/findTicketById';
+import findTicketById from '../../recibos/services/findTicketById';
+import findTicketsByCashId from '@/modules/recibos/services/findTicketsByCashId';
 
 const SOCKET_LOCALHOST = 'http://localhost:4000';
 
@@ -9,6 +10,7 @@ enum EVENT_TYPE {
   PRINT_ORDER = 'print:order',
   PRINT_INVOICE = 'print:invoice',
   PRINT_COMMAND = 'print:command',
+  PRINT_CASH = 'print:cash',
 }
 
 export default function usePrintService() {
@@ -25,19 +27,25 @@ export default function usePrintService() {
   const _emit = (event: EVENT_TYPE, props: any) =>
     socket.emit(event, JSON.stringify(props));
 
-  const printOrder = async (orderId: number) => {
-    const order = await findOrderById(orderId);
-
-    _emit(EVENT_TYPE.PRINT_ORDER, order);
-  };
-
-  const printInvoice = async (ticketId: number) => {
+  const printOrder = async (ticketId: number) => {
     const ticket = await findTicketById(ticketId);
 
-    console.log(ticket);
-
-    _emit(EVENT_TYPE.PRINT_INVOICE, ticket);
+    _emit(EVENT_TYPE.PRINT_ORDER, ticket);
   };
+
+  const printCash = async (cashId: number) => {
+    const tickets = await findTicketsByCashId(cashId);
+
+    _emit(EVENT_TYPE.PRINT_CASH, tickets);
+  };
+
+  // const printInvoice = async (ticketId: number) => {
+  //   const ticket = await findTicketById(ticketId);
+
+  //   console.log(ticket);
+
+  //   _emit(EVENT_TYPE.PRINT_INVOICE, ticket);
+  // };
 
   const printCommand = async (orderId: number) => {
     const order = await findOrderById(orderId);
@@ -47,7 +55,7 @@ export default function usePrintService() {
 
   return {
     printCommand,
-    printInvoice,
     printOrder,
+    printCash
   };
 }
