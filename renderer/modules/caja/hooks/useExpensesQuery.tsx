@@ -1,0 +1,17 @@
+import { EXPENSES_KEY } from '@/modules/common/consts';
+import { IExpense, IExpensesResponse } from '../interfaces/IExpense';
+import strapi from '@/modules/common/libs/strapi';
+import { useQuery } from '@tanstack/react-query';
+import useActiveCashBalanceQuery from './useActiveCashBalanceQuery';
+
+export default function useExpensesQuery() {
+  const { cashBalance } = useActiveCashBalanceQuery();
+  return useQuery<IExpense[]>([EXPENSES_KEY], async () => {
+    const resp = (await strapi.find(EXPENSES_KEY, {
+      filters: {
+        cashBalance: cashBalance?.id,
+      },
+    })) as unknown as IExpensesResponse;
+    return resp.results;
+  });
+}

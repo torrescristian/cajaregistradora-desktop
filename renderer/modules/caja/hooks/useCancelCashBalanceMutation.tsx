@@ -1,11 +1,11 @@
 import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getCashBalanceKey } from './useActiveCashBalanceQuery';
 
 import {
   PRODUCTS_KEY,
   STOCK_PER_VARIANTS_KEY,
   PRODUCT_TYPE_KEY,
+  CASH_BALANCE_KEY,
 } from '@/modules/common/consts';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 
@@ -14,13 +14,13 @@ export default function useCancelCashBalanceMutation() {
   const { printCash } = usePrintService();
 
   return useMutation(async (cashBalanceId: number) => {
-    const res = (await strapi.update(getCashBalanceKey(), cashBalanceId, {
+    const res = (await strapi.update(CASH_BALANCE_KEY, cashBalanceId, {
       completedAt: new Date(),
     })) as any;
 
     printCash(res.data.id);
 
-    queryClient.invalidateQueries([getCashBalanceKey()]);
+    queryClient.invalidateQueries([CASH_BALANCE_KEY]);
     queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);
     queryClient.invalidateQueries([PRODUCT_TYPE_KEY]);
     queryClient.invalidateQueries([PRODUCTS_KEY]);
