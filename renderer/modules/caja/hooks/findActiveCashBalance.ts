@@ -1,14 +1,15 @@
 import strapi from '@/modules/common/libs/strapi';
-import { getCashBalanceKey } from './useActiveCashBalanceQuery';
+
 import { ICashBalance } from '../interfaces/ICashBalance';
 import { getErrorMessage } from '@/modules/common/libs/utils';
+import { CASH_BALANCE_KEY } from '@/modules/common/consts';
 
 export default async function findACashById(
   cashId: number,
 ): Promise<ICashBalance | null> {
   try {
     const cashBalance = (await strapi.findOne(
-      getCashBalanceKey(),
+      CASH_BALANCE_KEY,
       cashId,
     )) as unknown as ICashBalance;
 

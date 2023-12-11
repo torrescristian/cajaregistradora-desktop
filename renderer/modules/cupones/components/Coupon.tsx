@@ -8,14 +8,13 @@ import { DISCOUNT_TYPE, IDiscount } from '@/modules/ordenes/interfaces/IOrder';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { Card } from '@/modules/common/components/Card';
 import useCancelCouponMutation from '@/modules/cupones/hooks/useCancelCouponMutation';
+import CancelCouponButton from './CancelCouponButton';
 
 interface IProps {
   coupon: ICoupon;
 }
 
 export default function Coupon({ coupon }: IProps) {
-  const cancelCouponMutation = useCancelCouponMutation();
-
   function convertDiscount(discount: IDiscount) {
     switch (discount.type) {
       case DISCOUNT_TYPE.FIXED:
@@ -27,10 +26,6 @@ export default function Coupon({ coupon }: IProps) {
     }
   }
 
-  const handleCancelCupon = () => {
-    cancelCouponMutation.mutate(coupon.id!);
-  };
-
   return (
     <Card className="items-start gap-3">
       <div className="flex flex-row justify-between w-full sm:w-[20vw]">
@@ -39,12 +34,8 @@ export default function Coupon({ coupon }: IProps) {
           value={coupon.code}
           className="sm:flex-col flex-row flex-wrap"
         />
-        <button
-          className="btn btn-error text-neutral-content"
-          onClick={handleCancelCupon}
-        >
-          <TrashIcon className="h-5 w-5" />
-        </button>
+
+        <CancelCouponButton couponId={coupon.id!} />
       </div>
       <DataItem
         label="Descuento:"

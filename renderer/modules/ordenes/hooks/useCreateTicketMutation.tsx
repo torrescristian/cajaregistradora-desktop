@@ -8,12 +8,15 @@ import strapi from '@/modules/common/libs/strapi';
 import { TicketPayloadSchema } from '@/schemas/TicketSchema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { IOrder, ORDER_STATUS } from '@/modules/ordenes/interfaces/IOrder';
-import useActiveCashBalanceQuery, {
-  getCashBalanceKey,
-} from '../../caja/hooks/useActiveCashBalanceQuery';
+import useActiveCashBalanceQuery from '../../caja/hooks/useActiveCashBalanceQuery';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import { IStrapiSingleResponse } from '@/modules/common/interfaces/utils';
-import { TICKETS_KEY, ORDERS_KEY, COUPONS_KEY } from '@/modules/common/consts';
+import {
+  TICKETS_KEY,
+  ORDERS_KEY,
+  COUPONS_KEY,
+  CASH_BALANCE_KEY,
+} from '@/modules/common/consts';
 
 type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 
@@ -72,7 +75,7 @@ export default function useCreateTicketMutation() {
     }
 
     const newCashBalancePromise = strapi.update(
-      getCashBalanceKey(),
+      CASH_BALANCE_KEY,
       cashBalance?.id!,
       {
         totalAmount: cashBalance?.totalAmount! + ticket.totalPrice,
@@ -89,7 +92,7 @@ export default function useCreateTicketMutation() {
 
     queryClient.invalidateQueries([ORDERS_KEY]);
     queryClient.invalidateQueries([TICKETS_KEY]);
-    queryClient.invalidateQueries([getCashBalanceKey()]);
+    queryClient.invalidateQueries([CASH_BALANCE_KEY]);
 
     return {
       ticketResponse: res[0] as IStrapiSingleResponse<ITicket>,

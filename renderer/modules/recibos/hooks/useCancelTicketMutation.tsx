@@ -5,10 +5,13 @@ import strapi from '@/modules/common/libs/strapi';
 import * as yup from 'yup';
 
 import { ICashBalance } from '@/modules/caja/interfaces/ICashBalance';
-import { getCashBalanceKey } from '../../caja/hooks/useActiveCashBalanceQuery';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
-import { TICKETS_KEY, ORDERS_KEY } from '@/modules/common/consts';
+import {
+  TICKETS_KEY,
+  ORDERS_KEY,
+  CASH_BALANCE_KEY,
+} from '@/modules/common/consts';
 interface IProps {
   ticketId: number;
   order: IOrder;
@@ -41,7 +44,7 @@ export default function useCancelTicketMutation() {
           : TICKET_STATUS.WAITING_FOR_REFUND,
       });
       const returnMoney = await strapi.update(
-        getCashBalanceKey(),
+        CASH_BALANCE_KEY,
         cashBalance.id!,
         {
           newCashAmount:
