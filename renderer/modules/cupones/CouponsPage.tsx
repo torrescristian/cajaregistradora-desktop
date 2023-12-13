@@ -32,25 +32,24 @@ export default function CouponsPage() {
 
   return (
     <section className="flex flex-col gap-7 justify-between w-full">
-      <CreateListTabs name="cupón">
-        {(createMode) =>
-          createMode ? (
-            isMobile ? (
-              <CreateCouponMobile />
-            ) : (
-              <CreateCoupon />
-            )
-          ) : isMobile ? (
-            <div className="flex flex-col sm:flex-row w-full gap-5 overflow-y-scroll h-full sm:overflow-x-scroll">
-              {couponQuery.data?.map((coupon) => (
+      <CreateListTabs
+        tabs={[
+          {
+            label: 'Crear cupón',
+            component: isMobile ? <CreateCouponMobile /> : <CreateCoupon />,
+          },
+          {
+            label: 'Cupones',
+            component: isMobile ? (
+              couponQuery.data?.map((coupon) => (
                 <Coupon key={coupon.id} coupon={coupon} />
-              ))}
-            </div>
-          ) : (
-            <CouponTable coupon={data} />
-          )
-        }
-      </CreateListTabs>
+              ))
+            ) : (
+              <CouponTable coupon={data} />
+            ),
+          },
+        ]}
+      ></CreateListTabs>
     </section>
   );
 }

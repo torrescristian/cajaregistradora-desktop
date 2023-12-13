@@ -12,9 +12,10 @@ export default function useExpensesQuery() {
   const { cashBalance } = useActiveCashBalanceQuery();
   return useQuery<IExpense[]>([EXPENSES_KEY], async () => {
     const resp = (await strapi.find(EXPENSES_KEY, {
-      populate: ['type'],
+      populate: ['expense-types'],
       filters: {
         cashBalance: cashBalance?.id,
+        status: STATUS_EXPENSE.PENDING,
       },
     })) as unknown as IExpensesResponse;
     return resp.results;

@@ -12,8 +12,6 @@ import { CashBalance } from './CashBalance';
 import { format } from 'date-fns';
 import { formatPrice } from '@/modules/common/libs/utils';
 import useActiveCashBalanceQuery from '../hooks/useActiveCashBalanceQuery';
-import useTicketPendingQuery from '@/modules/recibos/hooks/useTicketPendingQuery';
-import { useAuthState } from '@/modules/common/contexts/AuthContext';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import useInitCashMutation from '../hooks/useInitCashMutation';
@@ -30,11 +28,6 @@ export default function CashBalanceRender() {
     isSuccess,
     cashIsActive,
   } = useActiveCashBalanceQuery();
-
-  const ticketPendingQuery = useTicketPendingQuery();
-  const ticketPending = ticketPendingQuery.data || [];
-
-  const { isOwner } = useAuthState();
 
   const { handleChange, value } = useFormControl(0);
 
@@ -61,29 +54,6 @@ export default function CashBalanceRender() {
   return (
     <PageLayout>
       <h1 className="text-2xl">Balance de caja</h1>
-      <RenderIf condition={isOwner}>
-        <RenderIf condition={ticketPending.length > 0}>
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-warning m-1">
-              <p>
-                Hay{' '}
-                <span className="badge-error badge p-3">
-                  {ticketPending.length}
-                </span>{' '}
-                pendientes en espera
-              </p>
-            </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[10] p-5 shadow bg-neutral rounded-box md:w-[45vw] h-[45vh] md:h-[65vh] overflow-x-scroll "
-            >
-              {ticketPending.map((ticket) => (
-                <CancelTicketPending key={ticket.id} ticket={ticket} />
-              ))}
-            </ul>
-          </div>
-        </RenderIf>
-      </RenderIf>
       {isMobile ? (
         <div className="w-full">
           <section className="flex">
