@@ -1,9 +1,16 @@
 import findACashById from '@/modules/caja/hooks/findActiveCashBalance';
 import { ICashBalance } from '@/modules/caja/interfaces/ICashBalance';
-import { IExpense, IExpensesResponse } from '@/modules/caja/interfaces/IExpense';
+import {
+  IExpense,
+  IExpensesResponse,
+} from '@/modules/caja/interfaces/IExpense';
 import { EXPENSES_KEY, TICKETS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
-import { ITicket, ITicketResponse, TICKET_STATUS } from '@/modules/recibos/interfaces/ITicket';
+import {
+  ITicket,
+  ITicketResponse,
+  TICKET_STATUS,
+} from '@/modules/recibos/interfaces/ITicket';
 
 interface IResponse {
   tickets: ITicket[];
@@ -35,13 +42,13 @@ export default async function findCashOptionsById(
     'order.promoItems.selectedVariants.product',
     'order.store',
     'store',
-  ]
+  ];
 
   const ticketResponse = (await strapi.find(TICKETS_KEY, {
     populate,
     filters: {
       cashBalance: cashId,
-      status: TICKET_STATUS.PAID
+      status: TICKET_STATUS.PAID,
     },
     // @ts-ignore
     pageSize: 10000,
@@ -51,7 +58,7 @@ export default async function findCashOptionsById(
     populate,
     filters: {
       cashBalance: cashId,
-      status: TICKET_STATUS.REFUNDED
+      status: TICKET_STATUS.REFUNDED,
     },
     // @ts-ignore
     pageSize: 10000,
@@ -68,6 +75,6 @@ export default async function findCashOptionsById(
     tickets: ticketResponse.results,
     cashBalance: cashBalance!,
     refundedTickets: refundedResponse.results,
-    expenses: expensesResponse.results
+    expenses: expensesResponse.results,
   };
 }

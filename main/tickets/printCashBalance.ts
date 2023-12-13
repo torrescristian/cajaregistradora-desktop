@@ -25,24 +25,29 @@ interface IProps {
 }
 
 function getPaymentText(payments: IPayment[]) {
-    if (payments.length > 1) {
-      return 'Mix.';
-    }
-    const payment = payments[0];
+  if (payments.length > 1) {
+    return 'Mix.';
+  }
+  const payment = payments[0];
 
-    switch (payment.type) {
-      case PAYMENT_TYPE.CASH:
-        return 'Efec.';
-      case PAYMENT_TYPE.CREDIT:
-        return 'Cred.';
-      case PAYMENT_TYPE.DEBIT:
-        return 'Deb.';
-      default:
-        return '';
-    }
+  switch (payment.type) {
+    case PAYMENT_TYPE.CASH:
+      return 'Efec.';
+    case PAYMENT_TYPE.CREDIT:
+      return 'Cred.';
+    case PAYMENT_TYPE.DEBIT:
+      return 'Deb.';
+    default:
+      return '';
+  }
 }
 
-export default function printCashBalance({ cashBalance, tickets, refundedTickets, expenses }: IProps) {
+export default function printCashBalance({
+  cashBalance,
+  tickets,
+  refundedTickets,
+  expenses,
+}: IProps) {
   try {
     if (!tickets[0].order?.id) {
       console.log('There is not Order ID');
@@ -89,29 +94,29 @@ export default function printCashBalance({ cashBalance, tickets, refundedTickets
           .align(ALIGN.LT)
           .text(`${parseDateToTime(ticket.createdAt)} - ID ${ticket.order.id}`)
           .align(ALIGN.RT)
-          .text(`Pago ${getPaymentText(ticket.payments)} ${formatPrice(ticket.totalPrice)}`);
+          .text(
+            `Pago ${getPaymentText(ticket.payments)} ${formatPrice(
+              ticket.totalPrice,
+            )}`,
+          );
       }
 
       if (refundedTickets.length) {
-        printer
-          .drawLine()
-          .align(ALIGN.LT)
-          .text('Reembolsos')
+        printer.drawLine().align(ALIGN.LT).text('Reembolsos');
 
         for (const ticket of refundedTickets) {
           printer
             .align(ALIGN.LT)
-            .text(`${parseDateToTime(ticket.createdAt)} - ID ${ticket.order.id}`)
+            .text(
+              `${parseDateToTime(ticket.createdAt)} - ID ${ticket.order.id}`,
+            )
             .align(ALIGN.RT)
             .text(`${formatPrice(ticket.totalPrice)}`);
         }
       }
 
       if (expenses.length) {
-        printer
-          .drawLine()
-          .align(ALIGN.LT)
-          .text('Gastos')
+        printer.drawLine().align(ALIGN.LT).text('Gastos');
 
         for (const expense of expenses) {
           printer

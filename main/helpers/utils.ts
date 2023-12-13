@@ -28,7 +28,10 @@ export const parseDateToTime = (date?: Date | string) => {
   if (!date) return null;
 
   const dateObj = typeof date === 'string' ? new Date(date) : date;
-  return `${dateObj.getHours()}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
+  return `${dateObj.getHours()}:${dateObj
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}`;
 };
 
 export const discountToString = (discount: IDiscount) => {
