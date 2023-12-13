@@ -1,26 +1,35 @@
 import { useState } from 'react';
 import TabButton from './TabButton';
-interface IProps {
-  children: (createMode: boolean) => void;
-  name: string;
+interface ITab {
+  label: string;
+  component: React.ReactNode;
 }
 
-export default function CreateListTabs({ children, name }: IProps) {
-  const [createMode, setCreateMode] = useState(false);
+interface IProps {
+  tabs: ITab[];
+}
+export default function CreateListTabs({ tabs }: IProps) {
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+
+  const handleTabClick = (index: number) => {
+    setActiveTabIndex(index);
+  };
 
   return (
     <section className="flex flex-col sm:mt-2 mt-20 gap-5">
       <section className="flex flex-row justify-center w-full">
-        <TabButton isActive={!createMode} onClick={() => setCreateMode(false)}>
-          Listar {name}
-        </TabButton>
-        <TabButton isActive={createMode} onClick={() => setCreateMode(true)}>
-          {name}
-        </TabButton>
+        {tabs.map((tab, index) => (
+          <TabButton
+            key={index}
+            isActive={index === activeTabIndex}
+            onClick={() => handleTabClick(index)}
+          >
+            {tab.label}
+          </TabButton>
+        ))}
       </section>
       <section className="flex flex-col w-full gap-5">
-        {/* @ts-ignore */}
-        {children(createMode)}
+        {tabs[activeTabIndex].component}
       </section>
     </section>
   );

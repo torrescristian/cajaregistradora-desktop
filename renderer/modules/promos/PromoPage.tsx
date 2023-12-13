@@ -4,6 +4,7 @@ import { CreatePromo } from './components/CreatePromo';
 import usePromoQuery from '@/modules/promos/hooks/usePromoQuery';
 import useIsMobile from '../reabastecer/hooks/useIsMobile';
 import { CreatePromoMobile } from './components/CreatePromoMobile';
+import CategoriesPage from '../categorias/CategoriesPage';
 
 export default function PromoPage() {
   const promoQuery = usePromoQuery();
@@ -14,24 +15,26 @@ export default function PromoPage() {
     return null;
   }
   return (
-    <CreateListTabs name="promo">
-      {(createMode: boolean) =>
-        createMode ? (
-          isMobile ? (
-            <CreatePromoMobile />
-          ) : (
-            <CreatePromo />
-          )
-        ) : (
-          <RenderPromos
-            promosItems={promos.map((promo) => ({
-              promo,
-              selectedVariants: [],
-            }))}
-            editButton
-          />
-        )
-      }
-    </CreateListTabs>
+    <CreateListTabs
+      tabs={[
+        {
+          label: 'Crear promo',
+          component: isMobile ? <CreatePromoMobile /> : <CreatePromo />,
+        },
+        {
+          label: 'Promos',
+          component: (
+            <RenderPromos
+              promosItems={promos.map((promo) => ({
+                promo,
+                selectedVariants: [],
+              }))}
+              editButton
+            />
+          ),
+        },
+        { label: 'Crear categoria', component: <CategoriesPage /> },
+      ]}
+    ></CreateListTabs>
   );
 }

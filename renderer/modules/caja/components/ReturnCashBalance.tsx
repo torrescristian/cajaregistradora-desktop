@@ -5,6 +5,7 @@ import { IExpense } from '../interfaces/IExpense';
 import Loader from '@/modules/common/components/Loader';
 import useCreateExpenseMutation from '../hooks/useCreateExpenseMutation';
 import { useForm } from 'react-hook-form';
+import useExpensesTypeQuery from '../hooks/useExpenseTypesQuery';
 
 export default function ReturnCashBalance() {
   const {
@@ -17,6 +18,9 @@ export default function ReturnCashBalance() {
   const expensesQuery = useExpensesQuery();
   const createExpenseMutation = useCreateExpenseMutation();
 
+  const expenseTypesQuery = useExpensesTypeQuery();
+  const expenseTypes = expenseTypesQuery.data || [];
+
   if (expensesQuery.isLoading) return <Loader />;
   const data = expensesQuery.data?.map(
     (expense) =>
@@ -26,6 +30,8 @@ export default function ReturnCashBalance() {
         reason: expense.reason,
         createdAt: expense.createdAt,
         cashBalance: expense.cashBalance,
+        status: expense.status,
+        type: expense.type,
       }) as IExpense,
   );
 
@@ -45,14 +51,26 @@ export default function ReturnCashBalance() {
           columnMode
           className="text-center"
         >
-          <input className="input input-bordered" {...register('amount')} />
+          <input
+            className="input input-bordered"
+            type="number"
+            {...register('amount')}
+          />
         </FieldLabel>
         <FieldLabel title="Motivo:" columnMode className="text-center">
           <input className="input input-bordered" {...register('reason')} />
         </FieldLabel>
-        <button className="btn btn-primary w-max" type="submit">
-          Retirar
-        </button>
+        <FieldLabel title="Categorias:" columnMode className="text-center">
+          <select className="select select-primary" {...register('type.id')}>
+            <option>Selecciona una opción</option>
+            {expenseTypes.map((expenseType) => (
+              <option key={expenseType.id} value={expenseType.id}>
+                {expenseType.name}
+              </option>
+            ))}
+          </select>
+        </FieldLabel>
+        <button className="btn btn-primary">Confirmar</button>
       </form>
 
       <ExpensesTable data={data!} />

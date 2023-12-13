@@ -5,7 +5,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { DeleteTicketModal } from './DeleteTicketModal';
 import { MoreInfoModal } from './MoreInfoModal';
 
-function statusTranslate(ticketStatus: TICKET_STATUS) {
+export function statusTranslate(ticketStatus: TICKET_STATUS) {
   switch (ticketStatus) {
     case TICKET_STATUS.PAID:
       return 'Pagado';
