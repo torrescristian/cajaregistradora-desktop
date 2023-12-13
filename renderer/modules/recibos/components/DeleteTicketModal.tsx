@@ -92,6 +92,14 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
                     ? 'Reembolsar en Efectivo'
                     : 'Notificar reembolso de efectivo'}
                 </button>
+                <button
+                  className="btn text-red-500 btn-link no-underline"
+                  onClick={handleConfirmCancelTicket('other')}
+                >
+                  {isOwner
+                    ? 'Reembolsar otras formas de pago'
+                    : 'Notificar reembolso en otras formas de pago'}
+                </button>
                 <button className="btn" onClick={(e) => ref.current?.close()}>
                   Mantener
                 </button>
