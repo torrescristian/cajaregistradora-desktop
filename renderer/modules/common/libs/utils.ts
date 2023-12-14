@@ -71,8 +71,7 @@ export const getUrlFromImage = (image: any) => {
 
 export const getStrapiUrl = () => {
   return (
-    process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-    'https://control.cajaregistradora.app'
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://api.cajaregistradora.app'
   );
 };
 

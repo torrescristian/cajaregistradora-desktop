@@ -1,9 +1,5 @@
 import { EXPENSES_KEY } from '@/modules/common/consts';
-import {
-  IExpense,
-  IExpensesResponse,
-  STATUS_EXPENSE,
-} from '../interfaces/IExpense';
+import { IExpense, IExpensesResponse } from '../interfaces/IExpense';
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 import useActiveCashBalanceQuery from './useActiveCashBalanceQuery';
