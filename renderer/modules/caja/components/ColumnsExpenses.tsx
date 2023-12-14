@@ -33,7 +33,7 @@ export const columnsDefExp = [
     header: 'Motivo',
   },
   {
-    accessorFn: (row: IExpense) => row.type.name,
+    accessorFn: (row: IExpense) => row.type.name!,
     header: 'Tipo',
   },
   {
