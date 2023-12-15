@@ -1,16 +1,14 @@
+import useExpensesTypeQuery from '@/modules/caja/hooks/useExpenseTypesQuery';
+import { IExpense } from '@/modules/caja/interfaces/IExpense';
 import FieldLabel from '@/modules/common/components/FieldLabel';
-import ExpensesTable from './CashExpensesTable';
-import useExpensesQuery from '../hooks/useCashBalanceExpensesQuery';
-import { IExpense } from '../interfaces/IExpense';
 import Loader from '@/modules/common/components/Loader';
-import useCreateExpenseMutation from '../hooks/useCreateCashBalanceExpenseMutation';
 import { useForm } from 'react-hook-form';
-import useExpensesTypeQuery from '../hooks/useExpenseTypesQuery';
-import useCreateCashBalanceExpenseMutation from '../hooks/useCreateCashBalanceExpenseMutation';
-import useCashBalanceExpensesQuery from '../hooks/useCashBalanceExpensesQuery';
-import CashExpensesTable from './CashExpensesTable';
+import useCreateExpenseNoBalanceMutation from '../hooks/useCreateExpenseNoBalanceMutation';
+import useExpensesQuery from '../hooks/useExpensesQuery';
+import ExpensesTable from './ExpensesTable';
+import { useState } from 'react';
 
-export default function ReturnCashBalance() {
+export default function ExpenseView() {
   const {
     register,
     reset,
@@ -18,36 +16,53 @@ export default function ReturnCashBalance() {
     handleSubmit,
   } = useForm<IExpense>();
 
-  const cashBalanceExpensesQuery = useCashBalanceExpensesQuery();
-  const createCashBalanceExpenseMutation =
-    useCreateCashBalanceExpenseMutation();
+  const [page, setPage] = useState(1);
+  const expensesQuery = useExpensesQuery({ page });
+  const expenses = expensesQuery.data?.expenses || [];
+  const totalPages = expensesQuery.data?.totalPages || 1;
+  const createExpenseMutation = useCreateExpenseNoBalanceMutation();
 
   const expenseTypesQuery = useExpensesTypeQuery();
   const expenseTypes = expenseTypesQuery.data || [];
 
-  if (cashBalanceExpensesQuery.isLoading) return <Loader />;
-  const data = cashBalanceExpensesQuery.data?.map(
+  if (expensesQuery.isLoading) return <Loader />;
+  const data = expenses.map(
     (expense) =>
       ({
         id: expense.id,
         amount: expense.amount,
         reason: expense.reason,
         createdAt: expense.createdAt,
-        cashBalance: expense.cashBalance,
         status: expense.status,
         type: expense.type,
       }) as IExpense,
   );
 
   const handleSubmitCreateExpense = (data: IExpense) => {
-    createCashBalanceExpenseMutation.mutate(data);
+    createExpenseMutation.mutate(data);
     reset();
+  };
+
+  const onNextPage = () => {
+    setPage((p: number) => {
+      if (p >= totalPages) {
+        return p;
+      }
+      return p + 1;
+    });
+  };
+
+  const onPreviousPage = () => {
+    if (page <= 1) {
+      return;
+    }
+    setPage(page - 1);
   };
 
   return (
     <section className="w-full flex flex-col justify-center gap-10">
       <form
-        className="w-full flex flex-row p-5 items-end gap-5"
+        className="w-full flex flex-row p-5 justify-center items-end gap-5"
         onSubmit={handleSubmit(handleSubmitCreateExpense)}
       >
         <FieldLabel
@@ -77,7 +92,13 @@ export default function ReturnCashBalance() {
         <button className="btn btn-primary">Confirmar</button>
       </form>
 
-      <CashExpensesTable data={data!} />
+      <ExpensesTable
+        totalPages={totalPages}
+        data={data!}
+        onNextPage={onNextPage}
+        onPreviousPage={onPreviousPage}
+        page={page}
+      />
     </section>
   );
 }

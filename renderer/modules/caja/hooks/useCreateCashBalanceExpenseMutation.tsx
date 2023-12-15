@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { ICashBalance } from '../interfaces/ICashBalance';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
 
-export default function useCreateExpenseMutation() {
+export default function useCreateCashBalanceExpenseMutation() {
   const { cashBalance } = useActiveCashBalanceQuery();
   const { isOwner } = useAuthState();
   const queryClient = useQueryClient();

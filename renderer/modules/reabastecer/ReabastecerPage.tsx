@@ -38,9 +38,7 @@ export default function ReabastecerPage() {
       </div>
       <section className="flex w-full justify-center ">
         {productsQuery.isLoading && <Loader />}
-        {productsQuery.isError && (
-          <ErrorMessage>{productsQuery.error}</ErrorMessage>
-        )}
+        {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
         {!productsQuery.isLoading && !productsQuery.isError && (
           <VariantUpdateTable tableInstance={tableInstance} />
         )}
