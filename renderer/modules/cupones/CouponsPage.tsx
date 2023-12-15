@@ -13,7 +13,7 @@ export default function CouponsPage() {
   const isMobile = useIsMobile();
 
   if (couponQuery.isLoading) return <Loader />;
-  const data = couponQuery?.data!.map(
+  const data = couponQuery?.data?.map(
     (coupon) =>
       ({
         id: coupon.id,
@@ -45,7 +45,7 @@ export default function CouponsPage() {
                 <Coupon key={coupon.id} coupon={coupon} />
               ))
             ) : (
-              <CouponTable coupon={data} />
+              <CouponTable coupon={data!} />
             ),
           },
         ]}

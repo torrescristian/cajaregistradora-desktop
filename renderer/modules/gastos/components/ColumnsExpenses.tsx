@@ -1,24 +1,14 @@
 import { createColumnHelper } from '@tanstack/table-core';
-import { IExpense, STATUS_EXPENSE } from '../interfaces/IExpense';
+
 import { format } from 'date-fns';
 import { formatPrice } from '@/modules/common/libs/utils';
-
-export function statusTranslateExpenses(expenseStatus: STATUS_EXPENSE) {
-  switch (expenseStatus) {
-    case STATUS_EXPENSE.APPROVED:
-      return 'Aprobado';
-    case STATUS_EXPENSE.REJECTED:
-      return 'Reembolsado';
-    case STATUS_EXPENSE.PENDING:
-      return 'Pendiente';
-    default:
-      return '';
-  }
-}
+import { IExpense } from '@/modules/caja/interfaces/IExpense';
+import { TrashIcon } from '@heroicons/react/24/solid';
+import ButtonCancelExpense from './ButtonCancelExpense';
 
 const columnHelper = createColumnHelper<IExpense>();
 
-export const columnsDefCashExp = [
+export const columnsDefExp = [
   {
     accessorFn: (row: IExpense) => row.id,
     header: 'Referencia de pago',
@@ -37,11 +27,11 @@ export const columnsDefCashExp = [
     header: 'Tipo',
   },
   {
-    accessorFn: (row: IExpense) => statusTranslateExpenses(row.status),
-    header: 'Estado',
-  },
-  {
     accessorFn: (row: IExpense) => formatPrice(row.amount),
     header: 'Monto',
   },
+  columnHelper.display({
+    header: 'Eliminar',
+    cell: (info) => <ButtonCancelExpense expense={info.row.original} />,
+  }),
 ];

@@ -4,15 +4,15 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { IExpense } from '../interfaces/IExpense';
-import { columnsDefExp } from './ColumnsExpenses';
+import { columnsDefCashExp } from './ColumnsExpenses';
 
 interface IProps {
   data: IExpense[];
 }
 
-export default function ExpensesTable({ data }: IProps) {
+export default function CashExpensesTable({ data }: IProps) {
   const tableInstanceExpenses = useReactTable({
-    columns: columnsDefExp,
+    columns: columnsDefCashExp,
     data: data,
     getCoreRowModel: getCoreRowModel(),
   });

@@ -8,7 +8,10 @@ import {
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { PRODUCTS_KEY } from '@/modules/common/consts';
-import { IVariant } from '@/modules/common/interfaces/IVariants';
+import {
+  IVariant,
+  STATUS_VARIANTS,
+} from '@/modules/common/interfaces/IVariants';
 const parseProductFacade = (product: IProduct): IProduct => {
   const { name, id, isService, variants, image, default_variant, store, type } =
     product;
@@ -87,10 +90,6 @@ export default function useProductsQuery({
           ],
           page,
           pageSize,
-        };
-
-        options.filters = {
-          status: PRODUCT_STATUS.ENABLED,
         };
 
         if (selectedProductType) {

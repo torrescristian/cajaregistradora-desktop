@@ -6,7 +6,10 @@ import SearchInput, {
   useSearchProps,
 } from '@/modules/common/components/SearchInput';
 import ProductItem from '@/modules/products/components/ProductItem';
-import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
+import {
+  IVariantPromo,
+  STATUS_VARIANTS,
+} from '@/modules/common/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import useFormControl from '@/modules/common/hooks/useFormControl';
@@ -46,6 +49,7 @@ export default function CategoriesPage() {
         product: props.product,
         price: props.variant.price,
         stock_per_variant: props.variant.stock_per_variant,
+        status: STATUS_VARIANTS.ENABLED,
       },
     ]);
   };
