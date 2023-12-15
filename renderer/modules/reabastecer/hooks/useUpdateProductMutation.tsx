@@ -7,7 +7,7 @@ export default function useUpdateProductMutation() {
   const queryClient = useQueryClient();
 
   return useMutation(async (product: Partial<IProductPayload>) => {
-    const response = strapi.update(PRODUCTS_KEY, product.id!, product);
+    const response = await strapi.update(PRODUCTS_KEY, product.id!, product);
 
     queryClient.invalidateQueries([PRODUCTS_KEY]);
     return response;

@@ -4,7 +4,7 @@ import {
   getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { columnDefProduct } from '@/modules/reabastecer/components/columnsProducts';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 

@@ -13,26 +13,16 @@ import NoMobileVersion from '../common/components/NoMobileVersion';
 
 export default function ReabastecerPage() {
   const searchProps = useSearchProps();
-  const [activePage, setActivePage] = useState(1);
-  const [pageSize, setPageSize] = useState<number>(50);
 
   const productsQuery = useProductsQuery({
     query: searchProps.query,
-    page: activePage,
-    pageSize,
+    page: 1,
+    pageSize: 50,
   });
   const products = productsQuery.products || [];
-  const totalPages = productsQuery.pagination || [];
   const tableInstance = useVariantUpdateTableProps({
     products,
   });
-
-  const handleChangeVisibilityProduct = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    e.preventDefault();
-    setPageSize(Number(e.target.value));
-  };
 
   return (
     <PageLayout>
@@ -45,17 +35,12 @@ export default function ReabastecerPage() {
             .getSelectedRowModel()
             .flatRows.map((e) => e.original)}
         />
-        {/* <select onChange={handleChangeVisibilityProduct} value={pageSize} className="select select-bordered">
-          <option value={10}>Cantidad de productos visibles</option>
-          <option value={15}>15</option>
-          <option value={25}>25</option>
-          <option value={50}>50</option>
-          <option value={100}>100</option>
-        </select> */}
       </div>
       <section className="flex w-full justify-center ">
         {productsQuery.isLoading && <Loader />}
-        {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
+        {productsQuery.isError && (
+          <ErrorMessage>{productsQuery.error}</ErrorMessage>
+        )}
         {!productsQuery.isLoading && !productsQuery.isError && (
           <VariantUpdateTable tableInstance={tableInstance} />
         )}

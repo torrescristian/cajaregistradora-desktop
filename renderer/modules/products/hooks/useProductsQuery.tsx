@@ -6,7 +6,7 @@ import {
   PRODUCT_STATUS,
 } from '@/modules/products/interfaces/IProduct';
 import { useRouter } from 'next/router';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { PRODUCTS_KEY } from '@/modules/common/consts';
 import { IVariant } from '@/modules/common/interfaces/IVariants';
 const parseProductFacade = (product: IProduct): IProduct => {
@@ -70,9 +70,8 @@ export default function useProductsQuery({
     total: 10,
   };
 
-  const queryClient = useQueryClient();
   const { data, isLoading, isError, isSuccess, error } = useQuery<IProps>(
-    [query, selectedProductType, page, pageSize],
+    [PRODUCTS_KEY, query, selectedProductType, page, pageSize],
     async () => {
       try {
         let options: any = {
@@ -132,7 +131,6 @@ export default function useProductsQuery({
           };
         }
 
-        queryClient.invalidateQueries([PRODUCTS_KEY]);
         return {
           pagination: res.pagination,
           products: res.results.map(parseProductFacade),
