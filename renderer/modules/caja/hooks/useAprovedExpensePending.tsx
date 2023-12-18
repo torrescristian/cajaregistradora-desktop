@@ -9,7 +9,7 @@ interface IProps {
   expense: IExpense;
 }
 
-export default function useCancelExpensePending() {
+export default function useAprovedExpensePending() {
   const { cashBalance } = useActiveCashBalanceQuery();
   const queryClient = useQueryClient();
   return useMutation(async ({ expense }: IProps) => {

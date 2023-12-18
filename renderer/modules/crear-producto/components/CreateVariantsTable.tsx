@@ -1,4 +1,7 @@
-import { IVariantPayload } from '@/modules/common/interfaces/IVariants';
+import {
+  IVariantPayload,
+  STATUS_VARIANTS,
+} from '@/modules/common/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 
@@ -65,6 +68,7 @@ export default function CreateVariantsTable({
       stock_per_variant: 0,
       product: 0,
       minimum_stock: 0,
+      status: STATUS_VARIANTS.ENABLED,
     });
     setVariants(newVariants);
   };
@@ -123,13 +127,13 @@ export default function CreateVariantsTable({
                 </td>
                 <td>
                   {hasStockControl ? (
+                    'Sin control de stock'
+                  ) : (
                     <input
                       className="input input-bordered w-32"
                       value={stock_per_variant}
                       onChange={handleChangeVariantStock(index)}
                     />
-                  ) : (
-                    'Sin control de stock'
                   )}
                 </td>
                 <RenderIf condition={!hasStockControl}>

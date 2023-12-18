@@ -4,7 +4,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { IExpense } from '../interfaces/IExpense';
-import { columnDefTickPend } from './columnsTicketsPending';
 import { columnDefExpPend } from './columnsExpensePending';
 
 interface IProps {

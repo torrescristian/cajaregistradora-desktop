@@ -1,17 +1,16 @@
-import { useRef } from 'react';
-import useAprovedExpensePending from '../hooks/useAprovedExpensePending';
-import { TrashIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { formatPrice } from '@/modules/common/libs/utils';
 import { IExpense } from '../interfaces/IExpense';
 import { DataItem } from '@/modules/common/components/DataItem';
-import { formatPrice } from '@/modules/common/libs/utils';
-import useRejectdExpensePending from '../hooks/useRejectedExpensePending copy';
+import { CheckIcon } from '@heroicons/react/24/solid';
+import { useRef } from 'react';
+import useAprovedExpensePending from '../hooks/useAprovedExpensePending';
 
 interface IProps {
   expense: IExpense;
 }
 
-export default function CancelExpensePending({ expense }: IProps) {
-  const rejectdExpensePending = useRejectdExpensePending();
+export default function AprovExpenseModal({ expense }: IProps) {
+  const aprovedExpensePending = useAprovedExpensePending();
 
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -26,14 +25,17 @@ export default function CancelExpensePending({ expense }: IProps) {
   };
   const handleCancelExpensePending = (e: React.FormEvent) => {
     e.preventDefault(); // Evitar la recarga de la página
-    rejectdExpensePending.mutate({ expense });
+    aprovedExpensePending.mutate({ expense });
     ref.current?.close();
   };
 
   return (
     <section className="w-full flex justify-center">
-      <button className="btn btn-error " onClick={handleOpenModal}>
-        <XMarkIcon className="w-5 h-5" /> Rechazar
+      <button
+        className="btn btn-success text-neutral-content"
+        onClick={handleOpenModal}
+      >
+        <CheckIcon className="w-5 h-5" /> Aprobar
       </button>
       <dialog ref={ref} className="w-min">
         <form
@@ -43,7 +45,7 @@ export default function CancelExpensePending({ expense }: IProps) {
         >
           <DataItem
             defaultValue=""
-            label="Rechazar ticket número:"
+            label="Aprobar Ticket número:"
             value={expense.id}
           />{' '}
           <DataItem
@@ -59,7 +61,7 @@ export default function CancelExpensePending({ expense }: IProps) {
             onClick={handleCloseModal}
           >
             {' '}
-            Cerrar sin Cancelar
+            Cerrar sin confirmar
           </button>
         </form>
       </dialog>
