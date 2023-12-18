@@ -27,15 +27,16 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
-      type: product?.type.id!,
       image: product?.image || '',
       isService: product?.isService || false,
     },
   });
 
   const productTypesQuery = useProductTypeQuery();
-  const productTypes = productTypesQuery.data;
-  const [productType, setProductType] = useState<IProductType>();
+  const productTypes = productTypesQuery.data || [];
+  const [productType, setProductType] = useState<IProductType | null>(
+    productTypes[0],
+  );
   const [hasStockControl, setHasStockControl] = useState(true);
   const [variants, setVariants] = useState<IVariantPayload[]>([]);
   const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
@@ -77,6 +78,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
     setHasStockControl(true);
     setVariants([]);
     reset();
+    setValue('type', productType?.id!);
   };
 
   const { name, type } = getValues();

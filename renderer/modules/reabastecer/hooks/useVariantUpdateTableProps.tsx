@@ -1,5 +1,6 @@
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import {
+  ColumnSort,
   getCoreRowModel,
   getFilteredRowModel,
   useReactTable,
@@ -19,6 +20,7 @@ export const useVariantUpdateTableProps = ({ products }: IProps) => {
       (p) => p.variants?.map((v) => ({ ...v, product: p }) as IVariantExpanded),
     );
   }, [products, products?.length]);
+  const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [data, setData] = useState([...variants]);
 
   const [rowSelected, setRowSelected] = useState({});
@@ -45,7 +47,9 @@ export const useVariantUpdateTableProps = ({ products }: IProps) => {
     },
     state: {
       rowSelection: rowSelected,
+      sorting,
     },
+    onSortingChange: setSorting,
     onRowSelectionChange: setRowSelected,
     enableRowSelection: true,
   });

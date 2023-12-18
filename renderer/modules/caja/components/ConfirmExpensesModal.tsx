@@ -8,7 +8,7 @@ import { ITicket } from '@/modules/recibos/interfaces/ITicket';
 import useExpensesTypeQuery from '../hooks/useExpenseTypesQuery';
 import useExpensesPendingQuery from '../hooks/useExpensesPendingQuery';
 import ExpensesPendingTable from './ExpensesPendingTable';
-import { IExpense, STATUS_EXPENSE } from '../interfaces/IExpense';
+import { IExpense } from '../interfaces/IExpense';
 
 export default function ConfirmExpensesModal() {
   const ticketPendingQuery = useTicketPendingQuery();
@@ -46,14 +46,14 @@ export default function ConfirmExpensesModal() {
   const { isOwner } = useAuthState();
 
   return (
-    <div>
+    <div className="flex flex-col w-full p-5 gap-10">
       <RenderIf condition={isOwner}>
         <RenderIf condition={ticketPending.length > 0}>
-          <p>Tickets Pendientes</p>
+          <p className="text-xl text-center divider">Devoluciones Pendientes</p>
           <TicketPendingTable tickets={dataTicket!} />
         </RenderIf>
         <RenderIf condition={expensePending.length > 0}>
-          <p>Expensas Pendientes</p>
+          <p className="text-xl text-center divider">Gastos Pendientes</p>
           <ExpensesPendingTable data={dataExpenses!} />
         </RenderIf>
       </RenderIf>

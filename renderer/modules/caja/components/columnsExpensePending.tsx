@@ -1,11 +1,9 @@
-import { ITicket } from '@/modules/recibos/interfaces/ITicket';
 import { createColumnHelper } from '@tanstack/react-table';
-import { CancelTicketPending } from './CancelTicketPending';
 import { formatPrice } from '@/modules/common/libs/utils';
-import { statusTranslate } from '@/modules/recibos/components/columns';
 import { IExpense } from '../interfaces/IExpense';
 import { statusTranslateExpenses } from './ColumnsExpenses';
 import CancelExpensePending from './CancelExpensePending';
+import AprovExpenseModal from './AprovExpenseModal';
 
 const columnHelper = createColumnHelper<IExpense>();
 
@@ -31,7 +29,12 @@ export const columnDefExpPend = [
     header: 'Categoria',
   },
   columnHelper.display({
-    cell: (info) => <CancelExpensePending expense={info.row.original} />,
-    id: 'Aprobar expensa',
+    cell: (info) => (
+      <div className="flex flex-row w-full gap-4">
+        <AprovExpenseModal expense={info.row.original} />
+        <CancelExpensePending expense={info.row.original} />
+      </div>
+    ),
+    header: 'Opciones',
   }),
 ];

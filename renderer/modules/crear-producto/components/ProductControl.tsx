@@ -78,7 +78,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
                 value={productType?.id!}
                 onChange={handleChangeProductType}
                 className="select select-bordered"
-                defaultValue={0}
               >
                 <option value={0}>Seleccione un menu</option>
                 {productTypes?.map((type) => (

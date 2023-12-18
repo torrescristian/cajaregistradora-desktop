@@ -10,9 +10,13 @@ import ErrorMessage from '@/modules/common/components/ErrorMessage';
 import { useVariantUpdateTableProps } from '@/modules/reabastecer/hooks/useVariantUpdateTableProps';
 import VariantUpdateTable from './components/VariantUpdateTable';
 import NoMobileVersion from '../common/components/NoMobileVersion';
+import useVariantsQuery from './hooks/useVariantsQuery';
 
 export default function ReabastecerPage() {
   const searchProps = useSearchProps();
+
+  const variantsQuery = useVariantsQuery();
+  const variants = variantsQuery.data || [];
 
   const productsQuery = useProductsQuery({
     query: searchProps.query,

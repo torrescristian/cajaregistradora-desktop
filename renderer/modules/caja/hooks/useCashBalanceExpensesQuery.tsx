@@ -6,7 +6,7 @@ import useActiveCashBalanceQuery from './useActiveCashBalanceQuery';
 
 export default function useCashBalanceExpensesQuery() {
   const { cashBalance } = useActiveCashBalanceQuery();
-  return useQuery<IExpense[]>([EXPENSES_KEY], async () => {
+  return useQuery<IExpense[]>([EXPENSES_KEY, cashBalance?.id!], async () => {
     const resp = (await strapi.find(EXPENSES_KEY, {
       populate: ['type'],
       filters: {
