@@ -81,7 +81,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
                   onClick={handleConfirmCancelTicket('other')}
                 >
                   {isOwner
-                    ? 'Reembolsar otras formas de pago'
+                    ? 'Reembolsar en otras formas de pago'
                     : 'Notificar reembolso en otras formas de pago'}
                 </button>
                 <button
@@ -89,7 +89,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
                   onClick={handleConfirmCancelTicket('cash')}
                 >
                   {isOwner
-                    ? 'Reembolsar Efectivo'
+                    ? 'Reembolsar en Efectivo'
                     : 'Notificar reembolso de efectivo'}
                 </button>
                 <button className="btn" onClick={(e) => ref.current?.close()}>

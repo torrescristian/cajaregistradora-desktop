@@ -1,9 +1,12 @@
-import { IVariantPayload } from '@/modules/common/interfaces/IVariants';
+import {
+  IVariantPayload,
+  STATUS_VARIANTS,
+} from '@/modules/common/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 
 interface IProps {
-  isService: boolean;
+  hasStockControl: boolean;
   setVariants: (variants: IVariantPayload[]) => void;
   variants: IVariantPayload[];
   onChange: (defaultVariantIndex: number) => void;
@@ -11,7 +14,7 @@ interface IProps {
 }
 
 export default function CreateVariantsTable({
-  isService,
+  hasStockControl,
   variants,
   setVariants,
   onChange,
@@ -65,6 +68,7 @@ export default function CreateVariantsTable({
       stock_per_variant: 0,
       product: 0,
       minimum_stock: 0,
+      status: STATUS_VARIANTS.ENABLED,
     });
     setVariants(newVariants);
   };
@@ -86,8 +90,8 @@ export default function CreateVariantsTable({
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
-            <RenderIf condition={isService}>{''}</RenderIf>
-            <RenderIf condition={!isService}>
+            <RenderIf condition={hasStockControl}>{''}</RenderIf>
+            <RenderIf condition={!hasStockControl}>
               <th>Alerta de stock faltante</th>
             </RenderIf>
           </tr>
@@ -122,7 +126,7 @@ export default function CreateVariantsTable({
                   />
                 </td>
                 <td>
-                  {isService ? (
+                  {hasStockControl ? (
                     'Sin control de stock'
                   ) : (
                     <input
@@ -132,7 +136,7 @@ export default function CreateVariantsTable({
                     />
                   )}
                 </td>
-                <RenderIf condition={!isService}>
+                <RenderIf condition={!hasStockControl}>
                   <td>
                     <input
                       className="input input-bordered w-32"

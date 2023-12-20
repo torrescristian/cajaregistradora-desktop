@@ -48,6 +48,10 @@ export function range(end: number) {
   return Array.from({ length: end }, (_, i) => i);
 }
 
+export function longRange(start: number, end: number) {
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}
+
 interface ICalcDiscount {
   price: number;
   discountAmount: number | string;
@@ -71,8 +75,7 @@ export const getUrlFromImage = (image: any) => {
 
 export const getStrapiUrl = () => {
   return (
-    process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-    'https://control.cajaregistradora.app'
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://api.cajaregistradora.app'
   );
 };
 

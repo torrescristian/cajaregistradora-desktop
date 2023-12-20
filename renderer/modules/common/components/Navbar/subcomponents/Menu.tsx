@@ -2,12 +2,11 @@ import { useAuthState } from '@/modules/common/contexts/AuthContext';
 import { ISubMenuProps } from '@/modules/common/interfaces/INavbar';
 import NavButton from './NavButton';
 import { PhoneIcon } from '@heroicons/react/24/solid';
-import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { ChangeTheme } from '../ChangeTheme';
+import { useModalStore } from '@/modules/common/contexts/useModalStore';
 
 const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
-  const isMobile = useIsMobile();
 
   return (
     <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-text-base-content ">
@@ -44,9 +43,8 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
               <NavButton className="w-full" href="/admin/promo">
                 Promos
               </NavButton>
-
-              <NavButton className="w-full" href="/categorias">
-                Categorias
+              <NavButton className="w-full" href="/admin/gastos">
+                Gastos
               </NavButton>
             </>
           ) : null}

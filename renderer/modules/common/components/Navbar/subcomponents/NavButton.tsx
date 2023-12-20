@@ -1,3 +1,4 @@
+import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import { mergeClasses } from '@/modules/common/libs/utils';
 import { useRouter } from 'next/router';
 
@@ -10,12 +11,14 @@ export interface ILinkProps {
 
 const NavButton = ({ href, children, className, onClick }: ILinkProps) => {
   const router = useRouter();
+  const { closeModal } = useModalStore();
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     if (onClick) {
       onClick(e);
+      closeModal();
       return;
     }
 

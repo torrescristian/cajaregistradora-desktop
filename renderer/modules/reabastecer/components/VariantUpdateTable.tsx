@@ -16,6 +16,10 @@ function VariantUpdateTable({ tableInstance }: IProps) {
             {headers.map(({ id: headerId, column, getContext }) => (
               <th key={headerId}>
                 {flexRender(column.columnDef.header, getContext())}
+                {{
+                  asc: ' ↑',
+                  desc: ' ↓',
+                }[column.getIsSorted() as string] || ''}
               </th>
             ))}
           </tr>

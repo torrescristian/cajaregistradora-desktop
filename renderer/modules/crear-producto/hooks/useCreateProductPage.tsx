@@ -27,16 +27,17 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
-      type: product?.type.id!,
       image: product?.image || '',
       isService: product?.isService || false,
     },
   });
 
   const productTypesQuery = useProductTypeQuery();
-  const productTypes = productTypesQuery.data;
-  const [productType, setProductType] = useState<IProductType>();
-  const [isService, setIsService] = useState(false);
+  const productTypes = productTypesQuery.data || [];
+  const [productType, setProductType] = useState<IProductType | null>(
+    productTypes[0],
+  );
+  const [hasStockControl, setHasStockControl] = useState(true);
   const [variants, setVariants] = useState<IVariantPayload[]>([]);
   const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
   const createProductAndVariantMutation = useCreateProductAndVariantMutation();
@@ -51,8 +52,8 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
 
   const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.checked;
-    setIsService(newValue);
-    setValue('isService', newValue);
+    setHasStockControl(newValue);
+    setValue('isService', !newValue);
   };
 
   const handleClickSubmit = (data: IProductPayload) => {
@@ -74,9 +75,10 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
   };
 
   const clearForm = () => {
-    setIsService(false);
+    setHasStockControl(true);
     setVariants([]);
     reset();
+    setValue('type', productType?.id!);
   };
 
   const { name, type } = getValues();
@@ -101,7 +103,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
     productType,
     handleChangeProductType,
     productTypes,
-    isService,
+    hasStockControl,
     handleChangeIsService,
     variants,
     setVariants,

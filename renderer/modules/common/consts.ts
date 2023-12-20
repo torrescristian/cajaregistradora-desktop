@@ -17,3 +17,9 @@ export const CLIENTS_KEY = 'clients';
 export const CATEGORIES_KEY = 'categories';
 
 export const NOTIFICATIONS_KEY = 'notifications';
+
+export const EXPENSES_KEY = 'expenses';
+
+export const EXPENSES_TYPE_KEY = 'expense-types';
+
+export const CASH_BALANCE_KEY = 'cash-balances';

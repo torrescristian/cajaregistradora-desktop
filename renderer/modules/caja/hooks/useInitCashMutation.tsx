@@ -1,7 +1,8 @@
 import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getCashBalanceKey } from './useActiveCashBalanceQuery';
+
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
+import { CASH_BALANCE_KEY } from '@/modules/common/consts';
 
 interface IProps {
   initialCashAmount: number;
@@ -13,7 +14,7 @@ export default function useInitCashMutation() {
 
   return useMutation(async ({ initialCashAmount }: IProps) => {
     console.log({ userData });
-    const res = await strapi.create(getCashBalanceKey(), {
+    const res = await strapi.create(CASH_BALANCE_KEY, {
       completed_at: null,
       initialCashAmount,
       newCashAmount: 0,
@@ -21,7 +22,7 @@ export default function useInitCashMutation() {
       tickets: [],
     });
 
-    queryClient.invalidateQueries([getCashBalanceKey()]);
+    queryClient.invalidateQueries([CASH_BALANCE_KEY]);
 
     return res;
   });

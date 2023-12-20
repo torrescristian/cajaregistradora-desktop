@@ -7,8 +7,7 @@ import {
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
-
-export const getCashBalanceKey = () => 'cash-balances';
+import { CASH_BALANCE_KEY } from '@/modules/common/consts';
 
 interface IProps {
   cashBalance: ICashBalanceExpanded;
@@ -19,12 +18,12 @@ export default function useActiveCashBalanceQuery() {
   const router = useRouter();
   const { userData } = useAuthState();
   const { data, isLoading, isError, isSuccess } = useQuery<IProps | null>(
-    [getCashBalanceKey(), userData?.id],
+    [CASH_BALANCE_KEY, userData?.id],
     async () => {
       try {
         const today = new Date();
 
-        const res = (await strapi.find(getCashBalanceKey(), {
+        const res = (await strapi.find(CASH_BALANCE_KEY, {
           filters: {
             seller: userData!.id,
             $or: [

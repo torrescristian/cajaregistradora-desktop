@@ -44,10 +44,7 @@ export const CreateProductTypeMenuModal = () => {
   };
   return (
     <section>
-      <button className="btn btn-primary" onClick={handleOpenModalProductType}>
-        Crear Menu
-      </button>
-      <dialog ref={ref} className="bg-base-100 modal-box p-3 ">
+      <div className="bg-base-100 modal-box p-3 ">
         <EmojiSelector
           selectedEmoji={selectedEmoji!}
           setSelectedEmoji={setSelectedEmoji}
@@ -77,7 +74,7 @@ export const CreateProductTypeMenuModal = () => {
             </button>
           </div>
         </form>
-      </dialog>
+      </div>
     </section>
   );
 };

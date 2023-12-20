@@ -1,9 +1,13 @@
-import { IVariantPayload } from '@/modules/common/interfaces/IVariants';
+import {
+  IVariantPayload,
+  STATUS_VARIANTS,
+} from '@/modules/common/interfaces/IVariants';
 import { IStrapiSingleResponse } from '@/modules/common/interfaces/utils';
 import { STOCK_PER_VARIANTS_KEY, VARIANTS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { ST } from 'next/dist/shared/lib/utils';
 
 export interface IUseCreateVariantMutationProps {
   name: string;
@@ -39,6 +43,7 @@ export default function useCreateVariantMutation() {
           product,
           stock_per_variant: stockPerVariant.data.id,
           minimum_stock: minimum_stock,
+          status: STATUS_VARIANTS.ENABLED,
         };
 
         const res = (await strapi.create(
