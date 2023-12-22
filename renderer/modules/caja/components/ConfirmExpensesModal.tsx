@@ -18,7 +18,7 @@ export default function ConfirmExpensesModal() {
   const expensePending = expensesPendingQuery.data || [];
 
   if (ticketPendingQuery.isLoading) return <Loader />;
-  const dataTicket = ticketPendingQuery.data?.map(
+  const dataTicket = (ticketPendingQuery.data || [])?.map(
     (ticket) =>
       ({
         id: ticket.id,
@@ -31,7 +31,7 @@ export default function ConfirmExpensesModal() {
       }) as ITicket,
   );
   if (expensesPendingQuery.isLoading) return <Loader />;
-  const dataExpenses = expensesPendingQuery.data?.map(
+  const dataExpenses = (expensesPendingQuery.data || [])?.map(
     (expense) =>
       ({
         id: expense.id,

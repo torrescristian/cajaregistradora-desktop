@@ -13,7 +13,7 @@ interface IProps {
 export default function ExpensesPendingTable({ data }: IProps) {
   const tableInstanceExpenses = useReactTable({
     columns: columnDefExpPend,
-    data: data,
+    data: data || [],
     getCoreRowModel: getCoreRowModel(),
   });
 

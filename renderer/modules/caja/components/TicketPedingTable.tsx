@@ -13,7 +13,7 @@ interface IProps {
 export default function TicketPendingTable({ tickets }: IProps) {
   const tableInstanse = useReactTable({
     columns: columnDefTickPend,
-    data: tickets,
+    data: tickets || [],
     getCoreRowModel: getCoreRowModel(),
   });
   return (
