@@ -55,7 +55,12 @@ export const columnsDef = [
   }),
   columnHelper.display({
     header: 'Reimprimir',
-    cell: (props) => <PrintInvoiceButton ticketId={props.row.original.ticket.id!} orderId={props.row.original.ticket.order.id!} />,
+    cell: (props) => (
+      <PrintInvoiceButton
+        ticketId={props.row.original.ticket.id!}
+        orderId={props.row.original.ticket.order.id!}
+      />
+    ),
   }),
   columnHelper.display({
     header: 'Reembolsar',
