@@ -4,6 +4,7 @@ import { IColumnTicket } from '../interfaces/IColumnTicket';
 import { createColumnHelper } from '@tanstack/react-table';
 import { DeleteTicketModal } from './DeleteTicketModal';
 import { MoreInfoModal } from './MoreInfoModal';
+import PrintInvoiceButton from './PrintInvoiceButton';
 
 export function statusTranslate(ticketStatus: TICKET_STATUS) {
   switch (ticketStatus) {
@@ -51,6 +52,15 @@ export const columnsDef = [
   columnHelper.display({
     header: 'Detalles',
     cell: (props) => <MoreInfoModal ticket={props.row.original.ticket} />,
+  }),
+  columnHelper.display({
+    header: 'Reimprimir',
+    cell: (props) => (
+      <PrintInvoiceButton
+        ticketId={props.row.original.ticket.id!}
+        orderId={props.row.original.ticket.order.id!}
+      />
+    ),
   }),
   columnHelper.display({
     header: 'Reembolsar',

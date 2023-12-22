@@ -100,6 +100,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
                     Solicitar reembolso
                   </button>
                 )}
+
                 <button className="btn" onClick={(e) => ref.current?.close()}>
                   Mantener
                 </button>
