@@ -10,6 +10,7 @@ import Payments from '@/modules/ordenes/components/Payments';
 import CustomToastContainer from '@/modules/common/components/CustomToastContainer';
 import useConfirmOrder from '../hooks/useConfirmOrder';
 import { IPromoItem } from '../interfaces/ICart';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   updateMode?: boolean;
@@ -120,12 +121,11 @@ export const ConfirmOrderMobile = ({
             Finalizar venta
           </button>
         )}
-        <button
+        <ButtonClose
+          label="Cancelar"
           className="btn btn-link text-error"
           onClick={() => closeModal()}
-        >
-          Cancelar
-        </button>
+        />
       </div>
     </section>
   );

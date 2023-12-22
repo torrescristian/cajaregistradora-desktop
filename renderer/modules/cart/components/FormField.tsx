@@ -43,7 +43,7 @@ const FormField = ({
       </label>
       {/* @ts-ignore */}
       {errors?.[formKey] && (
-        <p className="alert bg-red-500 p-4 text-text-base-content">
+        <p className="alert bg-red-500 p-4 text-base-content">
           {/* @ts-ignore */}
           {errors?.[formKey]?.message}
         </p>

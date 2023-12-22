@@ -5,29 +5,26 @@ import {
   getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { columnDefProduct } from '@/modules/reabastecer/components/columnsProducts';
-import { IProduct } from '@/modules/products/interfaces/IProduct';
 
 interface IProps {
-  products?: IProduct[];
+  variants: IVariantExpanded[];
 }
 
-export const useVariantUpdateTableProps = ({ products }: IProps) => {
-  const variants = useMemo(() => {
-    if (!products?.length) return [];
-    return products?.flatMap(
-      (p) => p.variants?.map((v) => ({ ...v, product: p }) as IVariantExpanded),
-    );
-  }, [products, products?.length]);
+export const useVariantUpdateTableProps = ({ variants }: IProps) => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
-  const [data, setData] = useState([...variants]);
+  const [data, setData] = useState(variants);
+
+  useEffect(() => {
+    setData(variants);
+  }, [variants]);
 
   const [rowSelected, setRowSelected] = useState({});
 
   const tableInstance = useReactTable({
     columns: columnDefProduct,
-    data: variants,
+    data,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     meta: {

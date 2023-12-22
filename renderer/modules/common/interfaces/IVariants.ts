@@ -26,3 +26,4 @@ export type IVariantPromo = IVariant<IStockPerVariant, IProduct>;
 export type IVariantPayload = IVariant<number>;
 export type IVariantResponse = IResponsePage<IVariant>;
 export type IVariantExpanded = IVariant<IStockPerVariant, IProduct>;
+export type IVariantExpandedResponse = IResponsePage<IVariantExpanded>;

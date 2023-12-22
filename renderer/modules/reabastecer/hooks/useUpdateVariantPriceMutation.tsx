@@ -6,7 +6,7 @@ import { PRODUCTS_KEY, VARIANTS_KEY } from '@/modules/common/consts';
 
 export interface IProps {
   newPrice: number;
-  variant: Pick<IVariant, 'price' | 'id'>;
+  variant: Pick<IVariant, 'price' | 'id' | 'name'>;
 }
 
 export default function useUpdateVariantPriceMutation() {
@@ -30,7 +30,7 @@ export default function useUpdateVariantPriceMutation() {
     const res = await strapi.update(VARIANTS_KEY, variant.id!, {
       price: newPrice,
     });
-    toast.success('Precio actualizado correctamente');
+    toast.success(`Precio de ${variant.name} actualizado correctamente`);
     await queryClient.invalidateQueries([PRODUCTS_KEY]);
     await queryClient.invalidateQueries([VARIANTS_KEY]);
     return res;

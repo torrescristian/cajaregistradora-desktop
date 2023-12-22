@@ -3,7 +3,7 @@ import { IProduct } from '@/modules/products/interfaces/IProduct';
 import strapi from '@/modules/common/libs/strapi';
 import React from 'react';
 import Loader from '@/modules/common/components/Loader';
-import { getStrapiUrl } from '@/modules/common/libs/utils';
+import { getStrapiUrl, getUrlFromImage } from '@/modules/common/libs/utils';
 
 interface IProps {
   product?: IProduct;
@@ -32,7 +32,7 @@ const ImageControl = ({ product }: IProps) => {
 
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-col items-center">
-      <img src={product?.image || 'default.png'} alt="" className="w-min" />
+      <img src={getUrlFromImage(product?.image)} alt="" className="w-min" />
       {updateProductMutation.isLoading ? (
         <Loader />
       ) : (

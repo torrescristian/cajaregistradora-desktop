@@ -4,10 +4,8 @@ import { useRef } from 'react';
 import ProductRow from './ProductRow';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import { Card } from '@/modules/common/components/Card';
-import FieldLabel from '@/modules/common/components/FieldLabel';
-import { ProductTypeMenu } from './ProductTypeMenu';
-import { RenderIf } from '@/modules/common/components/RenderIf';
 import { NewVariant } from './NewVariant';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   product: IProduct;
@@ -37,12 +35,7 @@ export const ProductModal = ({ product, variant }: IProps) => {
           <NewVariant product={product} />
         </Card>
         <div className="w-full flex pt-10 justify-end">
-          <button
-            className="btn btn-link text-error"
-            onClick={() => ref.current?.close()}
-          >
-            Cancelar
-          </button>
+          <ButtonClose label="Cerrar" onClick={() => ref.current?.close()} />
         </div>
       </dialog>
     </section>

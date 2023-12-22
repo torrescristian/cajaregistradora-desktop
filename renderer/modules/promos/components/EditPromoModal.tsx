@@ -20,6 +20,7 @@ import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import useUpdatePromo from '@/modules/promos/hooks/useUpdatePromo';
 import { toast } from 'react-toastify';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   promo: IPromo;
@@ -223,12 +224,12 @@ export const EditPromoModal = ({ promo }: IProps) => {
             />
           </div>
           <div className="flex flex-row w-full p-5 justify-end gap-5">
-            <button
+            <ButtonClose
+              label="Cerrar"
               className="btn btn-error text-neutral-content"
               onClick={() => ref.current?.close()}
-            >
-              Cerrar
-            </button>
+            />
+
             <button
               className="btn btn-success text-neutral-content"
               onClick={handleSubmitUpdatePromo}

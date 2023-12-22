@@ -91,7 +91,7 @@ export const CreateTicketFormMobile = ({
           <div className="flex flex-col gap-5">
             <div className="flex flex-row justify-end gap-3">
               <button
-                className="btn btn-secondary text-text-base-content"
+                className="btn btn-secondary text-base-content"
                 onClick={handleToggleEdit}
               >
                 <PencilIcon className="w-full h-6 " />
@@ -99,7 +99,7 @@ export const CreateTicketFormMobile = ({
 
               <button
                 disabled={cancelOrderMutation.isLoading}
-                className="btn btn-error text-text-base-content"
+                className="btn btn-error text-base-content"
                 onClick={handleCancelOrder}
               >
                 <TrashIcon className="w-full h-6 " />
@@ -110,18 +110,18 @@ export const CreateTicketFormMobile = ({
             <datalist className="flex flex-col gap-4">
               <p className="flex flex-row items-center gap-3 ">
                 {' '}
-                <CalendarDaysIcon className="w-5 inline text-text-base-content" />{' '}
+                <CalendarDaysIcon className="w-5 inline text-base-content" />{' '}
                 {parseDateToArgentinianFormat(order.createdAt)}
               </p>
               {order.address ? (
                 <p className="flex flex-row items-center gap-3 ">
-                  <MapPinIcon className="w-5 inline text-text-base-content" />{' '}
+                  <MapPinIcon className="w-5 inline text-base-content" />{' '}
                   {order.address}
                 </p>
               ) : null}
               {order.client?.phone_number ? (
                 <p className="flex flex-row items-center gap-3">
-                  <DevicePhoneMobileIcon className="w-5 inline  text-text-base-content" />{' '}
+                  <DevicePhoneMobileIcon className="w-5 inline  text-base-content" />{' '}
                   {order.client?.phone_number}
                 </p>
               ) : null}
@@ -203,7 +203,7 @@ export const CreateTicketFormMobile = ({
               <button
                 type="submit"
                 disabled={createTicketMutation.isLoading || updateMode}
-                className="btn btn-success disabled:btn-disabled text-text-base-content"
+                className="btn btn-success disabled:btn-disabled text-base-content"
               >
                 {createTicketMutation.isLoading ? (
                   <Loader />

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import EmojiSelector from './EmojiSelector';
 import useCreateProductType from '@/modules/cupones/hooks/useCreateProductType';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 export const CreateProductTypeMenuModal = () => {
   const {
@@ -69,9 +70,11 @@ export const CreateProductTypeMenuModal = () => {
             <button className="btn btn-primary w-min" type="submit">
               Crear
             </button>
-            <button className="btn text-error btn-link" onClick={handleClose}>
-              Cancelar
-            </button>
+            <ButtonClose
+              label="Cancelar"
+              className="btn text-error btn-link"
+              onClick={handleClose}
+            />
           </div>
         </form>
       </div>

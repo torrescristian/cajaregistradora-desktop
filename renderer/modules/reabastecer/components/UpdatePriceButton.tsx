@@ -3,21 +3,19 @@ import useUpdateVariantPriceMutation from '@/modules/reabastecer/hooks/useUpdate
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { TrashIcon } from '@heroicons/react/24/solid';
-import useCancelVariantMutation from '../hooks/useCancelVariantMutation';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   variants: IVariantExpanded[];
 }
 
-export const ButtomUpdatePrice = ({ variants }: IProps) => {
+export const UpdatePriceButton = ({ variants }: IProps) => {
   const ref = useRef<HTMLDialogElement>(null);
   const [fixedPrice, setFixedPrice] = useState<number | null>(null);
   const [percentage, setPercentage] = useState<number | null>(null);
   const [variantPrice, setVariantPrice] = useState<number | null>(null);
 
   const updateVariantPriceMutation = useUpdateVariantPriceMutation();
-  const cancelVariantMutation = useCancelVariantMutation();
 
   const handleFixedPriceChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -73,18 +71,10 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
         });
       }
 
-      toast.success('Precio actualizado 🤩');
       ref.current?.close();
     } catch (error) {
       toast.error('Ocurrio un error al actualizar los precios. 😔');
     }
-  };
-
-  const handleClickRemoveVariants = (e: React.MouseEvent) => {
-    e.preventDefault();
-    variants.map((variant) => {
-      cancelVariantMutation.mutate(variant.id!);
-    });
   };
 
   return (
@@ -142,23 +132,14 @@ export const ButtomUpdatePrice = ({ variants }: IProps) => {
               />
             </label>
           </FieldLabel>
-          {/* <button
-            onClick={handleClickRemoveVariants}
-            className="flex flex-row whitespace-nowrap text-error btn btn-ghost gap-3 w-fit"
-          >
-            <TrashIcon className="w-5 h-5" />
-            <p>Eliminar Variantes</p>
-          </button> */}
-
           <div className="flex flex-row w-full gap-5 justify-between">
-            <button
-              className="btn btn-error btn-ghost text-neutral-content"
+            <ButtonClose
+              label="Cancelar"
+              className="btn btn-error btn-ghost text-error"
               onClick={handleCloseModal}
-            >
-              Cancelar
-            </button>
+            />
             <button
-              className="btn btn-success text-text-base-content"
+              className="btn btn-success text-base-content"
               onClick={handleClickUpdate}
             >
               Actualizar

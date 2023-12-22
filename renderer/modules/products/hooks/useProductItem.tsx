@@ -14,22 +14,22 @@ interface IProps {
 
 const useProductItem = (props: IProps) => {
   const [selectedVariant, setSelectedVariant] = useState(
-    props.selectedVariant || props.product.default_variant,
+    props.selectedVariant || props.product?.default_variant,
   );
 
-  const isService = !!props.product.isService;
+  const isService = !!props.product?.isService;
   const { cartItemQuantity, addProduct, removeCartItem, removeProduct } =
     useCartStore((state) => ({
       addProduct: state.addProduct,
       removeCartItem: state.removeCartItem,
       removeProduct: state.removeProduct,
-      cartItemQuantity: getCartItemQuantityByVariantId(selectedVariant.id!)(
+      cartItemQuantity: getCartItemQuantityByVariantId(selectedVariant?.id!)(
         state,
       ),
     }));
 
   const handleChangeVariant = (e: any) => {
-    props.product.variants.map((variant) => {
+    props.product?.variants.map((variant) => {
       if (variant.name === e.target.value) {
         setSelectedVariant(variant);
       }
