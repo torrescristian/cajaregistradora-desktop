@@ -9,7 +9,7 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
 
   return (
-    <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-text-base-content ">
+    <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
       {isLoggedIn && (
         <ul>
           <ul>
@@ -46,6 +46,9 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
               <NavButton className="w-full" href="/admin/gastos">
                 Gastos
               </NavButton>
+              {/*               <NavButton className="w-full" href="/admin/analitica">
+                Analitica
+              </NavButton> */}
             </>
           ) : null}
 

@@ -10,7 +10,7 @@ export const CashBalanceActivateMobile = ({ cashBalance }: IProps) => {
   return (
     <section className="flex flex-col w-full items-center">
       <div className="flex flex-col gap-3 items-start w-full shadow-2xl p-5 border-2">
-        <h2 className="font-bold text-2xl text-text-base-content">
+        <h2 className="font-bold text-2xl text-base-content">
           Caja activa #{cashBalance?.id}
         </h2>
         <DataItem

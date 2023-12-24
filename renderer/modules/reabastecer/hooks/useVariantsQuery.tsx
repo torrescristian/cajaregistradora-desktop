@@ -1,15 +1,30 @@
 import { VARIANTS_KEY } from '@/modules/common/consts';
 import {
-  IVariant,
-  IVariantResponse,
+  IVariantExpanded,
+  IVariantExpandedResponse,
   STATUS_VARIANTS,
 } from '@/modules/common/interfaces/IVariants';
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 
-export default function useVariantsQuery() {
-  return useQuery<IVariant[]>([VARIANTS_KEY], async () => {
-    const res = (await strapi.find(VARIANTS_KEY, {
+interface IProps {
+  page: number;
+  query?: string;
+  setTotalPages?: (totalPages: number) => void;
+}
+
+interface IResponse {
+  variants: IVariantExpanded[];
+  totalPages: number;
+}
+
+export default function useVariantsQuery({
+  page,
+  query,
+  setTotalPages,
+}: IProps) {
+  return useQuery<IResponse>([VARIANTS_KEY, page, query], async () => {
+    let options: any = {
       populate: [
         'product',
         'product.image',
@@ -20,10 +35,40 @@ export default function useVariantsQuery() {
         'stock_per_variant',
         'categories',
       ],
+      page,
       filters: {
         status: STATUS_VARIANTS.ENABLED,
       },
-    })) as unknown as IVariantResponse;
-    return res.results;
+    };
+
+    if (query) {
+      options.filters = {
+        ...options.filters,
+        $or: [
+          {
+            name: {
+              $containsi: query,
+            },
+          },
+          {
+            product: {
+              name: {
+                $containsi: query,
+              },
+            },
+          },
+        ],
+      };
+    }
+
+    const res = (await strapi.find(
+      VARIANTS_KEY,
+      options,
+    )) as unknown as IVariantExpandedResponse;
+    setTotalPages?.(res.pagination.pageCount!);
+    return {
+      variants: res.results,
+      totalPages: res.pagination.pageCount!,
+    };
   });
 }

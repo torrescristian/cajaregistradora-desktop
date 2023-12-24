@@ -6,6 +6,10 @@ import TicketTable from './components/TicketTable';
 import Loader from '../common/components/Loader';
 import PageLayout from '../common/components/PageLayout';
 import NoMobileVersion from '../common/components/NoMobileVersion';
+import {
+  ButtonPagination,
+  useButtonPagination,
+} from '../reabastecer/components/ButtonPagination';
 
 export default function RecibosPage() {
   function getLabelByPaymentsType(payments: IPayment[]) {
@@ -25,7 +29,11 @@ export default function RecibosPage() {
     }
   }
 
-  const ticketQuery = useTicketQuery();
+  const paginationControls = useButtonPagination();
+  const ticketQuery = useTicketQuery({
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
+  });
   if (ticketQuery.isLoading)
     return (
       <PageLayout>
@@ -39,7 +47,7 @@ export default function RecibosPage() {
       </PageLayout>
     );
 
-  const data = ticketQuery.data.map(
+  const data = ticketQuery.data.tickets.map(
     (ticket) =>
       ({
         client: ticket.order?.client?.name,
@@ -58,6 +66,7 @@ export default function RecibosPage() {
     <PageLayout className="gap-5 justify-center p-5  sm:mt-2 mt-20 overflow-x-scroll ">
       <NoMobileVersion />
       <TicketTable data={data} />
+      <ButtonPagination {...paginationControls} />
     </PageLayout>
   );
 }

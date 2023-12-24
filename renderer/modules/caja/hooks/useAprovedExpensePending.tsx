@@ -10,7 +10,6 @@ interface IProps {
 }
 
 export default function useAprovedExpensePending() {
-  const { cashBalance } = useActiveCashBalanceQuery();
   const queryClient = useQueryClient();
   return useMutation(async ({ expense }: IProps) => {
     try {
@@ -19,10 +18,10 @@ export default function useAprovedExpensePending() {
       });
       const returnMoney = await strapi.update(
         CASH_BALANCE_KEY,
-        cashBalance?.id!,
+        expense.cashBalance?.id!,
         {
           newCashAmount: Math.max(
-            cashBalance!.newCashAmount - expense.amount,
+            expense.cashBalance!.newCashAmount - expense.amount,
             0,
           ),
         },

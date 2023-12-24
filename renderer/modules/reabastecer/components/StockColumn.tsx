@@ -9,8 +9,7 @@ interface IProps {
 }
 
 export const StockColumn = ({ getValue, row, column, table }: IProps) => {
-  const initialValue = getValue();
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(getValue());
 
   const updateStockPerVariantMutation = useUpdateStockPerVariantMutation();
 

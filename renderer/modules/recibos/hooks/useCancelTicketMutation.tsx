@@ -43,17 +43,17 @@ export default function useCancelTicketMutation() {
           ? TICKET_STATUS.REFUNDED
           : TICKET_STATUS.WAITING_FOR_REFUND,
       });
-      const returnMoney = await strapi.update(
-        CASH_BALANCE_KEY,
-        cashBalance.id!,
-        {
+
+      let returnMoney: any;
+      if (isOwner) {
+        returnMoney = await strapi.update(CASH_BALANCE_KEY, cashBalance.id!, {
           newCashAmount:
             returnType === 'cash'
               ? Math.max(cashBalance.newCashAmount - amountTicket, 0)
               : cashBalance.newCashAmount,
           totalAmount: Math.max(cashBalance.totalAmount - amountTicket, 0),
-        } as Partial<ICashBalance>,
-      );
+        } as Partial<ICashBalance>);
+      }
       queryClient.invalidateQueries([TICKETS_KEY]);
       queryClient.invalidateQueries([ORDERS_KEY]);
       return [cancelOrderResult, updateTicketResult, returnMoney];

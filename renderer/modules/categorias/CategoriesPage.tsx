@@ -140,7 +140,7 @@ export default function CategoriesPage() {
             </RenderIf>
           </div>
           <SubmitButton
-            className="btn btn-success text-text-base-content w-80 self-end"
+            className="btn btn-success text-base-content w-80 self-end"
             mutation={createCategoryMutation}
             disabled={!name || !newVariantSelected.length}
           >

@@ -11,6 +11,7 @@ import { PencilIcon, PhoneIcon, TrashIcon } from '@heroicons/react/24/solid';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreateClientMutation from '../hooks/useCreateClientMutation';
 import useUpdateClientMutation from '../hooks/useUpdateClientMutation';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   onSelect: (client: IClient | null) => void;
@@ -142,9 +143,11 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
               )}
             </div>
             <div className="modal-action">
-              <button className="btn btn-link" onClick={handleClose}>
-                Cerrar
-              </button>
+              <ButtonClose
+                label="Cerrar"
+                className="btn btn-link"
+                onClick={handleClose}
+              />
             </div>
           </section>
         </form>

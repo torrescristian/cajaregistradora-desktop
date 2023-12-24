@@ -130,11 +130,11 @@ export default function CashBalanceRender() {
                   >
                     <p>👤Vendedor: {todayCashBalance.seller.username}</p>
                     <p className="whitespace-nowrap">
-                      💰Monto de caja inicial:{' '}
+                      💰Caja inicial:{' '}
                       {formatPrice(todayCashBalance.initialCashAmount)}
                     </p>
                     <p className="whitespace-nowrap">
-                      💸Total de la caja:{' '}
+                      💸Efectivo total:{' '}
                       {formatPrice(todayCashBalance.totalAmount)}
                     </p>
                     <p className="whitespace-nowrap">

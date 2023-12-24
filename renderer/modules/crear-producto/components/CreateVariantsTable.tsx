@@ -147,7 +147,7 @@ export default function CreateVariantsTable({
                 </RenderIf>
                 <td>
                   <button
-                    className="btn btn-error text-text-base-content"
+                    className="btn btn-error text-base-content"
                     onClick={handleClickRemoveVariant(index)}
                   >
                     <MinusIcon className="w-5 h-5" />

@@ -6,7 +6,10 @@ import { useForm } from 'react-hook-form';
 import useCreateExpenseNoBalanceMutation from '../hooks/useCreateExpenseNoBalanceMutation';
 import useExpensesQuery from '../hooks/useExpensesQuery';
 import ExpensesTable from './ExpensesTable';
-import { useState } from 'react';
+import {
+  ButtonPagination,
+  useButtonPagination,
+} from '@/modules/reabastecer/components/ButtonPagination';
 
 export default function ExpenseView() {
   const {
@@ -16,10 +19,12 @@ export default function ExpenseView() {
     handleSubmit,
   } = useForm<IExpense>();
 
-  const [page, setPage] = useState(1);
-  const expensesQuery = useExpensesQuery({ page });
+  const paginationControls = useButtonPagination();
+  const expensesQuery = useExpensesQuery({
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
+  });
   const expenses = expensesQuery.data?.expenses || [];
-  const totalPages = expensesQuery.data?.totalPages || 1;
   const createExpenseMutation = useCreateExpenseNoBalanceMutation();
 
   const expenseTypesQuery = useExpensesTypeQuery();
@@ -41,22 +46,6 @@ export default function ExpenseView() {
   const handleSubmitCreateExpense = (data: IExpense) => {
     createExpenseMutation.mutate(data);
     reset();
-  };
-
-  const onNextPage = () => {
-    setPage((p: number) => {
-      if (p >= totalPages) {
-        return p;
-      }
-      return p + 1;
-    });
-  };
-
-  const onPreviousPage = () => {
-    if (page <= 1) {
-      return;
-    }
-    setPage(page - 1);
   };
 
   return (
@@ -92,13 +81,8 @@ export default function ExpenseView() {
         <button className="btn btn-primary">Confirmar</button>
       </form>
 
-      <ExpensesTable
-        totalPages={totalPages}
-        data={data!}
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
-        page={page}
-      />
+      <ExpensesTable data={data!} />
+      <ButtonPagination {...paginationControls} />
     </section>
   );
 }

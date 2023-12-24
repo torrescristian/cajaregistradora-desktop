@@ -26,6 +26,6 @@ export const columnDefTickPend = [
         ticket={info.row.original}
       />
     ),
-    header: 'Cancelar ticket',
+    header: 'Procesar',
   }),
 ];

@@ -52,7 +52,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
           <ReceiptRefundIcon
             className={twMerge(
               'h-5',
-              disabled ? 'text-text-base-content' : 'text-white',
+              disabled ? 'text-base-content' : 'text-white',
             )}
           />
         )}
@@ -75,31 +75,32 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
                 label="Total a devolver:"
                 value={formatPrice(ticket.totalPrice)}
               />
+
               <div className="modal-action gap-5 flex flex-col">
-                <button
-                  className="btn btn-error text-info-content whitespace-nowrap"
-                  onClick={handleConfirmCancelTicket('other')}
-                >
-                  {isOwner
-                    ? 'Reembolsar en otras formas de pago'
-                    : 'Notificar reembolso en otras formas de pago'}
-                </button>
-                <button
-                  className="btn text-red-500 btn-link no-underline"
-                  onClick={handleConfirmCancelTicket('cash')}
-                >
-                  {isOwner
-                    ? 'Reembolsar en Efectivo'
-                    : 'Notificar reembolso de efectivo'}
-                </button>
-                <button
-                  className="btn text-red-500 btn-link no-underline"
-                  onClick={handleConfirmCancelTicket('other')}
-                >
-                  {isOwner
-                    ? 'Reembolsar otras formas de pago'
-                    : 'Notificar reembolso en otras formas de pago'}
-                </button>
+                <RenderIf condition={isOwner}>
+                  <button
+                    className="btn btn-error text-info-content whitespace-nowrap"
+                    onClick={handleConfirmCancelTicket('other')}
+                  >
+                    Reembolsar en otras formas de pago
+                  </button>
+                </RenderIf>
+                {isOwner ? (
+                  <button
+                    className="btn text-red-500 btn-link no-underline"
+                    onClick={handleConfirmCancelTicket('cash')}
+                  >
+                    Reembolsar en efectivo
+                  </button>
+                ) : (
+                  <button
+                    className="btn text-neutral-content btn-error no-underline"
+                    onClick={handleConfirmCancelTicket('other')}
+                  >
+                    Solicitar reembolso
+                  </button>
+                )}
+
                 <button className="btn" onClick={(e) => ref.current?.close()}>
                   Mantener
                 </button>
