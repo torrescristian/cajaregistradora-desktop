@@ -38,16 +38,12 @@ export default function printCommand(order: IOrder) {
       }
 
       // open & set printer
-      printer.drawLine();
       printer
-        .text(FONT_SIZE_BIG)
+        .drawLine()
+        .align(ALIGN.LT)
+        .text(FONT_SIZE_SMALL)
         .text(`Pedido # ${order.id!}`)
-        .text(FONT_SIZE_NORMAL);
-
-      // store, client and order data
-      printer
-        .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`)
-        .drawLine();
+        .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`);
 
       // aditional details
       if (order.additionalDetails) {
@@ -99,7 +95,7 @@ export default function printCommand(order: IOrder) {
         return acc.concat(curr);
       }, [] as IItem[]);
 
-      printer.text(FONT_SIZE_BIG);
+      printer.text(FONT_SIZE_NORMAL);
 
       // order items
       for (const item of items) {
@@ -110,10 +106,9 @@ export default function printCommand(order: IOrder) {
           .text(`- ${item.variantName}`);
       }
 
-      printer.text(FONT_SIZE_NORMAL);
       // total amount & status
       printer
-        .drawLine()
+        .text(FONT_SIZE_SMALL)
         .align('LT')
         .text(
           `Pago: ${
@@ -124,7 +119,7 @@ export default function printCommand(order: IOrder) {
         .text(FONT_SIZE_SMALL);
 
       // close printer
-      printer.cut().close();
+      printer.close();
     });
   } catch (error) {
     if (error.includes('Can not find printer')) {
