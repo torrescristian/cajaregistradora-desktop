@@ -3,13 +3,14 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
 import { TICKET_STATUS } from '@/modules/recibos/interfaces/ITicket';
 import { formatPrice } from '@/modules/common/libs/utils';
-import { useFormControl } from '@/modules/common/hooks/useFormControl';
 
 import { IColumnTicket } from '../interfaces/IColumnTicket';
 import { createColumnHelper } from '@tanstack/react-table';
 import { DeleteTicketModal } from './DeleteTicketModal';
 import { MoreInfoModal } from './MoreInfoModal';
 import PrintInvoiceButton from './PrintInvoiceButton';
+import { IProduct } from '@/modules/products/interfaces/IProduct';
+import { ProductList } from './ProductList';
 
 export function statusTranslate(ticketStatus: TICKET_STATUS) {
   switch (ticketStatus) {
@@ -22,33 +23,6 @@ export function statusTranslate(ticketStatus: TICKET_STATUS) {
     default:
       return '';
   }
-}
-
-function ProductList({ products }: { products: IProduct[] }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleChangeOpen = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <div className="collapse bg-base-200">
-      <input type="checkbox" value={isOpen} onChange={handleChangeOpen} />
-      <div className="collapse-title flex flex-row items-center gap-3">
-        {isOpen ? (
-          <ChevronUpIcon className="w-5 h-5" />
-        ) : (
-          <ChevronDownIcon className="w-5 h-5" />
-        )}{' '}
-        Ver productos
-      </div>
-      <ul className="collapse-content">
-        {products.map((p: IProduct) => (
-          <li>{p.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
 }
 
 const customPriceFormat = (value: any) =>
@@ -81,7 +55,11 @@ export const columnsDef = [
     header: 'Productos',
     cell: (props) => (
       <ProductList
-        products={props.row.original.ticket.order.items.map((t) => t.product)}
+        products={
+          props.row.original.ticket.order.items.map(
+            (t) => t.product,
+          ) as IProduct[]
+        }
       />
     ),
   }),

@@ -9,6 +9,7 @@ import RenderPromos from '@/modules/promos/components/RenderPromo';
 import Pagination from '@/modules/common/components/Pagination';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
+import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
 interface IProps {
   updateMode?: boolean;
@@ -25,10 +26,8 @@ export const ProductsMobile = ({
 }: IProps) => {
   const isMobile = useIsMobile();
   const {
-    handleNextPage,
     handleSelectPage,
     products,
-    productsQuery,
     promoItems,
     promoQuery,
     promos,
@@ -36,6 +35,7 @@ export const ProductsMobile = ({
     selectedProductType,
     setShowPromo,
     showPromo,
+    paginationControls,
     totalPages,
   } = useProductsProps();
 
@@ -109,11 +109,7 @@ export const ProductsMobile = ({
         </RenderIf>
       </div>
       <RenderIf condition={!showPromo}>
-        <Pagination
-          pagination={totalPages!}
-          onClick={handleNextPage}
-          isLoading={productsQuery.isLoading}
-        />
+        <ButtonPagination {...paginationControls} />
       </RenderIf>
     </section>
   );

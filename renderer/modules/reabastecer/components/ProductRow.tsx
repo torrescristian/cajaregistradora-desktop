@@ -6,9 +6,13 @@ import useUpdateProductMutation from '@/modules/reabastecer/hooks/useUpdateProdu
 import ImageControl from '@/modules/reabastecer/components/ImageControl';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import useUpdateVariantMutation from '@/modules/reabastecer/hooks/useUpdateVariantMutation';
-import { UpdateProductButton } from '@/modules/cart/components/ProductItem.styles';
+import {
+  RemoveProductButton,
+  UpdateProductButton,
+} from '@/modules/cart/components/ProductItem.styles';
 import { toast } from 'react-toastify';
 import RemoveVariantModal from './RemoveVariantModal';
+import RemoveProductItemModal from './RemoveProductItemModal';
 
 interface IProps {
   product: IProduct;

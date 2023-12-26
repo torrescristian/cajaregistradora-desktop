@@ -7,8 +7,6 @@ import {
 import { IExpense } from '../interfaces/IExpense';
 import { columnsDefCashExp } from './ColumnsExpenses';
 import { useState } from 'react';
-import { twMerge } from 'tailwind-merge';
-import { longRange } from '@/modules/common/libs/utils';
 
 interface IProps {
   data: IExpense[];

@@ -6,7 +6,13 @@ export default function useReturnStock() {
   const updateStockPerVariantMutation = useUpdateStockPerVariantMutation();
   return useMutation(async (cartItems: ICartItem[]) => {
     return cartItems.map(async (item: ICartItem) => {
-      const { quantity, selectedVariant } = item;
+      const { quantity, selectedVariant, product } = item;
+
+      if (product.isService || !selectedVariant.stock_per_variant) {
+        console.log({ item });
+        return null;
+      }
+
       const stock = selectedVariant.stock_per_variant?.stock!;
       const newStock = stock + quantity;
       await updateStockPerVariantMutation.mutateAsync({

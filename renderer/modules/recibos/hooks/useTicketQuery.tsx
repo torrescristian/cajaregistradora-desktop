@@ -28,6 +28,7 @@ export default function useTicketQuery({ page, setTotalPages }: IProps) {
         'order.promoItems',
         'order.promoItems.promo',
         'cashBalance',
+        'cashBalance.refunds',
       ],
       /*@ts-ignore*/
       page,

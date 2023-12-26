@@ -10,7 +10,8 @@ export default function RemoveProductItemModal({ productId }: IProps) {
   const ref = useRef<HTMLDialogElement>(null);
 
   const cancelProductMutation = useCancelProductMutation();
-  const handleRemoveProduct = () => {
+  const handleRemoveProduct = (e: React.MouseEvent) => {
+    e.preventDefault();
     cancelProductMutation.mutate(productId);
   };
   return (
