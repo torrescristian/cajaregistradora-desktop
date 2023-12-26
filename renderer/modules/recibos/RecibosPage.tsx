@@ -1,6 +1,9 @@
 import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import useTicketQuery from './hooks/useTicketQuery';
-import { parseDateToArgentinianFormat } from '@/modules/common/libs/utils';
+import {
+  getLabelByPaymentsType,
+  parseDateToArgentinianFormat,
+} from '@/modules/common/libs/utils';
 import { IColumnTicket } from './interfaces/IColumnTicket';
 import TicketTable from './components/TicketTable';
 import Loader from '../common/components/Loader';
@@ -12,23 +15,6 @@ import {
 } from '../reabastecer/components/ButtonPagination';
 
 export default function RecibosPage() {
-  function getLabelByPaymentsType(payments: IPayment[]) {
-    if (payments.length > 1) {
-      return 'Mixto';
-    }
-    const payment = payments[0];
-    switch (payment.type) {
-      case PAYMENT_TYPE.CASH:
-        return 'Efectivo';
-      case PAYMENT_TYPE.CREDIT:
-        return 'Crédito';
-      case PAYMENT_TYPE.DEBIT:
-        return 'Débito';
-      default:
-        return '';
-    }
-  }
-
   const paginationControls = useButtonPagination();
   const ticketQuery = useTicketQuery({
     page: paginationControls.page,

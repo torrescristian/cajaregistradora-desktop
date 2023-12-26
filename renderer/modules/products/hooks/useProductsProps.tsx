@@ -7,9 +7,11 @@ import {
   getPromoItems,
   useCartStore,
 } from '@/modules/cart/contexts/useCartStore';
+import { useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
 export const useProductsProps = () => {
   const searchProps = useSearchProps();
+  const paginationControls = useButtonPagination();
 
   const [showPromo, setShowPromo] = useState(false);
   const [activePage, setActivePage] = useState(1);
@@ -26,8 +28,9 @@ export const useProductsProps = () => {
   const productsQuery = useProductsQuery({
     query: searchProps.query,
     selectedProductType: selectedProductType?.id,
-    page: activePage,
+    page: paginationControls.page,
     showPromo,
+    setTotalPages: paginationControls.setTotalPages,
   });
 
   const products = productsQuery.products as IProduct[];
@@ -52,5 +55,6 @@ export const useProductsProps = () => {
     selectedProductType,
     promoItems,
     totalPages,
+    paginationControls,
   };
 };

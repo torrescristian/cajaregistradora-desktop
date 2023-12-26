@@ -25,7 +25,7 @@ export interface IProduct<
   status: PRODUCT_STATUS;
 }
 
-export type IProductPage = IResponsePage<IProduct<IVariant>>;
+export type IProductPage = IResponsePage<IProduct>;
 export interface IProductUpdate {
   data: Partial<IProduct>;
 }

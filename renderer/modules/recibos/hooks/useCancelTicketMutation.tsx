@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import useCancelOrderMutation from '../../ordenes/hooks/useCancelOrderMutation';
-import { TICKET_STATUS } from '@/modules/recibos/interfaces/ITicket';
+import {
+  PAYMENT_TYPE,
+  TICKET_STATUS,
+} from '@/modules/recibos/interfaces/ITicket';
 import strapi from '@/modules/common/libs/strapi';
 import * as yup from 'yup';
 
@@ -52,6 +55,19 @@ export default function useCancelTicketMutation() {
               ? Math.max(cashBalance.newCashAmount - amountTicket, 0)
               : cashBalance.newCashAmount,
           totalAmount: Math.max(cashBalance.totalAmount - amountTicket, 0),
+          refunds: [
+            ...cashBalance.refunds,
+            {
+              ticket: ticketId,
+              payment: {
+                amount: amountTicket,
+                type:
+                  returnType === 'cash'
+                    ? PAYMENT_TYPE.CASH
+                    : PAYMENT_TYPE.DEBIT,
+              },
+            },
+          ],
         } as Partial<ICashBalance>);
       }
       queryClient.invalidateQueries([TICKETS_KEY]);

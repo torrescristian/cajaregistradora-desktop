@@ -1,4 +1,4 @@
-import { ITicket } from '@/modules/recibos/interfaces/ITicket';
+import { IPayment, ITicket } from '@/modules/recibos/interfaces/ITicket';
 import IUser from '../../common/interfaces/IUser';
 import { IResponsePage } from '@/modules/common/interfaces/utils';
 export interface ICashBalance<
@@ -13,6 +13,12 @@ export interface ICashBalance<
   seller: USER;
   tickets: TICKET[];
   totalAmount: number;
+  refunds: IRefund[];
+}
+
+export interface IRefund<TICKET = ITicket> {
+  ticket: TICKET;
+  payment: IPayment;
 }
 
 export type ICashBalanceExpanded = ICashBalance<ITicket>;

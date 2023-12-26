@@ -37,7 +37,21 @@ export default function useActiveCashBalanceQuery() {
               },
             ],
           },
-          populate: ['cash-balances', 'seller', 'ticket', 'order'],
+          populate: [
+            'cash-balances',
+            'seller',
+            'ticket',
+            'tickets.order',
+            'tickets.order.items.product',
+            'tickets.order.items.product.type',
+            'tickets.payments',
+            'tickets.order.items.selectedVariant',
+            'tickets.order.coupon',
+            'tickets.order.discount.amount',
+            'tickets.order.promoItems',
+            'tickets.promoItems.promo',
+            'tickets.order.items.product.variants',
+          ],
         })) as unknown as ICashBalancePage;
 
         if (!res) return null;
