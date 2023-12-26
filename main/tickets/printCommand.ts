@@ -119,7 +119,7 @@ export default function printCommand(order: IOrder) {
         .text(FONT_SIZE_SMALL);
 
       // close printer
-      printer.close();
+      printer.cut().close();
     });
   } catch (error) {
     if (error.includes('Can not find printer')) {
