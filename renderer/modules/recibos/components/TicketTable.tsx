@@ -5,10 +5,7 @@ import {
   ColumnSort,
 } from '@tanstack/react-table';
 import { columnsDef } from './columns';
-import { twMerge } from 'tailwind-merge';
-import { longRange } from '@/modules/common/libs/utils';
 import { useState } from 'react';
-import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
 interface IProps {
   data: any[];

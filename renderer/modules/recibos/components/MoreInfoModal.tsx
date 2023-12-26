@@ -28,8 +28,8 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
           <dl className="flex flex-col gap-5 ">
             <div className="divider">
               <DataItem
-                label="Ticket #"
-                value={String(ticket.id)}
+                label="Recibo #"
+                value={String(ticket.order.id)}
                 defaultValue=""
               />
             </div>

@@ -1,5 +1,10 @@
+import React, { useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
+
 import { TICKET_STATUS } from '@/modules/recibos/interfaces/ITicket';
 import { formatPrice } from '@/modules/common/libs/utils';
+import { useFormControl } from '@/modules/common/hooks/useFormControl';
+
 import { IColumnTicket } from '../interfaces/IColumnTicket';
 import { createColumnHelper } from '@tanstack/react-table';
 import { DeleteTicketModal } from './DeleteTicketModal';
@@ -19,6 +24,33 @@ export function statusTranslate(ticketStatus: TICKET_STATUS) {
   }
 }
 
+function ProductList({ products }: { products: IProduct[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleChangeOpen = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className="collapse bg-base-200">
+      <input type="checkbox" value={isOpen} onChange={handleChangeOpen} />
+      <div className="collapse-title flex flex-row items-center gap-3">
+        {isOpen ? (
+          <ChevronUpIcon className="w-5 h-5" />
+        ) : (
+          <ChevronDownIcon className="w-5 h-5" />
+        )}{' '}
+        Ver productos
+      </div>
+      <ul className="collapse-content">
+        {products.map((p: IProduct) => (
+          <li>{p.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 const customPriceFormat = (value: any) =>
   Number(value) === 0 ? '-' : `${formatPrice(value)}`;
 
@@ -26,20 +58,16 @@ const columnHelper = createColumnHelper<IColumnTicket>();
 
 export const columnsDef = [
   {
-    accessorFn: (col: IColumnTicket) => col.ticket.order.id,
-    header: 'Nro de orden',
+    accessorFn: (col: IColumnTicket) => `#${col.ticket.order.id}`,
+    header: 'Recibo',
+  },
+  {
+    accessorFn: (col: IColumnTicket) => `#${col.ticket.cashBalance.id}`,
+    header: 'Caja',
   },
   {
     accessorKey: 'date',
     header: 'Fecha',
-  },
-  {
-    accessorFn: (row: any) => `${statusTranslate(row.state)}`,
-    header: 'Estado',
-  },
-  {
-    accessorFn: (col: IColumnTicket) => col.client || '-',
-    header: 'Cliente',
   },
   {
     accessorFn: (col: IColumnTicket) => customPriceFormat(col.totalPrice),
@@ -49,6 +77,14 @@ export const columnsDef = [
     accessorFn: (col: IColumnTicket) => col.paymentType,
     header: 'Método de pago',
   },
+  columnHelper.display({
+    header: 'Productos',
+    cell: (props) => (
+      <ProductList
+        products={props.row.original.ticket.order.items.map((t) => t.product)}
+      />
+    ),
+  }),
   columnHelper.display({
     header: 'Detalles',
     cell: (props) => <MoreInfoModal ticket={props.row.original.ticket} />,
