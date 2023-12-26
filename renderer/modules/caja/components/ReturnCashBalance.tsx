@@ -9,6 +9,11 @@ import useExpensesTypeQuery from '../hooks/useExpenseTypesQuery';
 import useCreateCashBalanceExpenseMutation from '../hooks/useCreateCashBalanceExpenseMutation';
 import useCashBalanceExpensesQuery from '../hooks/useCashBalanceExpensesQuery';
 import CashExpensesTable from './CashExpensesTable';
+import { useState } from 'react';
+import {
+  ButtonPagination,
+  useButtonPagination,
+} from '@/modules/reabastecer/components/ButtonPagination';
 
 export default function ReturnCashBalance() {
   const {
@@ -17,16 +22,21 @@ export default function ReturnCashBalance() {
     formState: { errors },
     handleSubmit,
   } = useForm<IExpense>();
+  const paginationControls = useButtonPagination();
 
-  const cashBalanceExpensesQuery = useCashBalanceExpensesQuery();
+  const cashBalanceExpensesQuery = useCashBalanceExpensesQuery({
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
+  });
   const createCashBalanceExpenseMutation =
     useCreateCashBalanceExpenseMutation();
 
+  const totalPages = cashBalanceExpensesQuery.data?.totalPages || 1;
   const expenseTypesQuery = useExpensesTypeQuery();
   const expenseTypes = expenseTypesQuery.data || [];
 
   if (cashBalanceExpensesQuery.isLoading) return <Loader />;
-  const data = cashBalanceExpensesQuery.data?.map(
+  const data = cashBalanceExpensesQuery.data?.expenses.map(
     (expense) =>
       ({
         id: expense.id,
@@ -78,6 +88,7 @@ export default function ReturnCashBalance() {
       </form>
 
       <CashExpensesTable data={data!} />
+      <ButtonPagination {...paginationControls} />
     </section>
   );
 }

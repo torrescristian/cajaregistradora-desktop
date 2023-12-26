@@ -14,17 +14,17 @@ function OrderItem({ item, updateMode }: IProps) {
 
   return (
     <div
-      key={item.product!.id}
+      key={item.product?.id}
       className={twMerge(
         'flex flex-row whitespace-nowrap gap-2 ',
         updateMode ? 'justify-end items-center ' : 'justify-start items-end',
       )}
     >
-      <p className="text-2xl">{item.product!.type.emoji}</p>
+      <p className="text-2xl">{item.product?.type.emoji}</p>
       <p>{item.quantity} -</p>
       <p>
         {' '}
-        {item.product!.name} - {item.selectedVariant!.name}
+        {item.product?.name} - {item.selectedVariant?.name}
       </p>
       {updateMode ? <RemoveProductButton onClick={handleClickRemove} /> : null}
     </div>

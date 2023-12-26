@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import useCancelVariantMutation from '../hooks/useCancelVariantMutation';
 import { TrashIcon } from '@heroicons/react/24/solid';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   variantId: number;
@@ -46,9 +47,11 @@ export default function RemoveVariantModal({ variantId }: IProps) {
             <button className="btn btn-error" onClick={handleRemoveVariant}>
               Eliminar
             </button>
-            <button className="btn btn-outline" onClick={handleCloseModal}>
-              Cancelar
-            </button>
+            <ButtonClose
+              label="Cerrar"
+              className="btn btn-outline"
+              onClick={handleCloseModal}
+            />
           </div>
         </div>
       </dialog>

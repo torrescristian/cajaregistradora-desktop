@@ -7,14 +7,33 @@ import {
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 
-export default function useExpensesPendingQuery() {
-  return useQuery<IExpense[]>([EXPENSES_KEY], async () => {
+interface IProps {
+  page: number;
+  setTotalPages?: (totalPages: number) => void;
+}
+
+interface IResponse {
+  expenses: IExpense[];
+  totalPages: number;
+}
+
+export default function useExpensesPendingQuery({
+  page,
+  setTotalPages,
+}: IProps) {
+  return useQuery<IResponse>([EXPENSES_KEY, page], async () => {
     const resp = (await strapi.find(EXPENSES_KEY, {
-      populate: ['type'],
+      populate: ['type', 'cashBalance'],
       filters: {
         status: STATUS_EXPENSE.PENDING,
       },
+      /*@ts-ignore*/
+      page,
     })) as unknown as IExpensesResponse;
-    return resp.results;
+    setTotalPages?.(resp.pagination.pageCount!);
+    return {
+      expenses: resp.results,
+      totalPages: resp.pagination.pageCount!,
+    };
   });
 }

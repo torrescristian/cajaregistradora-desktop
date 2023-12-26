@@ -13,11 +13,13 @@ export const DataItem = ({
 }) => {
   return (
     <p className={twMerge('flex flex-col sm:flex-row gap-2', className)}>
-      <dt className="text-text-base-content sm:whitespace-nowrap">{label}</dt>
+      <dt className="text-base-content opacity-60 sm:whitespace-nowrap">
+        {label}
+      </dt>
       {value ? (
         <dd>{value}</dd>
       ) : (
-        <dd className="text-text-base-content">{defaultValue}</dd>
+        <dd className="text-base-content">{defaultValue}</dd>
       )}
     </p>
   );

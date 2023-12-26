@@ -18,6 +18,7 @@ import useInitCashMutation from '../hooks/useInitCashMutation';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import { ICashBalance, ICashBalanceExpanded } from '../interfaces/ICashBalance';
 import PageLayout from '@/modules/common/components/PageLayout';
+import { PrinterIcon } from '@heroicons/react/24/solid';
 
 export default function CashBalanceRender() {
   const {
@@ -129,11 +130,11 @@ export default function CashBalanceRender() {
                   >
                     <p>👤Vendedor: {todayCashBalance.seller.username}</p>
                     <p className="whitespace-nowrap">
-                      💰Monto de caja inicial:{' '}
+                      💰Caja inicial:{' '}
                       {formatPrice(todayCashBalance.initialCashAmount)}
                     </p>
                     <p className="whitespace-nowrap">
-                      💸Total de la caja:{' '}
+                      💸Efectivo total:{' '}
                       {formatPrice(todayCashBalance.totalAmount)}
                     </p>
                     <p className="whitespace-nowrap">
@@ -143,9 +144,9 @@ export default function CashBalanceRender() {
                     </p>
                     <button
                       onClick={handleClickReprint(todayCashBalance)}
-                      className="btn btn-secondary"
+                      className="btn btn-secondary gap-3"
                     >
-                      Reimprimir Ticket
+                      <PrinterIcon className="w-5 h-5" /> Reimprimir
                     </button>
                   </div>
                 ))}

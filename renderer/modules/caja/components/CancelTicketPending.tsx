@@ -1,3 +1,4 @@
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { formatPrice } from '@/modules/common/libs/utils';
 import useCancelTicketMutation from '@/modules/recibos/hooks/useCancelTicketMutation';
@@ -44,9 +45,9 @@ export const CancelTicketPending = ({ ticket }: IProps) => {
     };
 
   return (
-    <section className="w-full flex justify-center">
-      <button className="btn btn-error " onClick={handleOpenModal}>
-        <TrashIcon className="w-5 h-5" />
+    <section className="w-full flex justify-start">
+      <button className="btn btn-primary " onClick={handleOpenModal}>
+        Procesar
       </button>
       <dialog ref={ref} className="w-min">
         <form
@@ -76,13 +77,11 @@ export const CancelTicketPending = ({ ticket }: IProps) => {
           >
             Cancelar y Reembolsar con Otro Medio de Pago
           </button>
-          <button
+          <ButtonClose
+            label="Cerrar sin Cancelar"
             className="btn btn-error btn-link text-secondary-focus"
             onClick={handleCloseModal}
-          >
-            {' '}
-            Cerrar sin Cancelar
-          </button>
+          />
         </form>
       </dialog>
     </section>

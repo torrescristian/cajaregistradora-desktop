@@ -1,10 +1,10 @@
 import { useRef } from 'react';
-import useAprovedExpensePending from '../hooks/useAprovedExpensePending';
-import { TrashIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import { IExpense } from '../interfaces/IExpense';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { formatPrice } from '@/modules/common/libs/utils';
-import useRejectdExpensePending from '../hooks/useRejectedExpensePending copy';
+import useRejectdExpensePending from '../hooks/useRejectedExpensePending';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   expense: IExpense;
@@ -54,13 +54,11 @@ export default function CancelExpensePending({ expense }: IProps) {
           <button className="btn btn-primary" type="submit">
             Confirmar
           </button>
-          <button
+          <ButtonClose
+            label="Cerrar sin Cancelar"
             className="btn btn-error btn-link text-secondary-focus"
             onClick={handleCloseModal}
-          >
-            {' '}
-            Cerrar sin Cancelar
-          </button>
+          />
         </form>
       </dialog>
     </section>

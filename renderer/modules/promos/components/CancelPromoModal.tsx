@@ -1,3 +1,4 @@
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import useCancelPromoMutation from '@/modules/promos/hooks/useCancelPromoMutation';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import React, { useRef } from 'react';
@@ -36,12 +37,11 @@ export const CancelPromoModal = ({ promoId }: IProps) => {
             >
               Eliminar
             </button>
-            <button
+            <ButtonClose
+              label="Cancelar"
               className="btn btn-primary"
               onClick={() => ref.current?.close()}
-            >
-              Cancelar
-            </button>
+            />
           </div>
         </div>
       </dialog>
