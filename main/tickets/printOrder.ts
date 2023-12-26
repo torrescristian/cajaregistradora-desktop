@@ -6,12 +6,7 @@ import {
   formatPrice,
   parseDateToArgentinianFormat,
 } from '../helpers/utils';
-import {
-  ALIGN,
-  FONT_SIZE_NORMAL,
-  FONT_SIZE_SMALL,
-  FONT_SIZE_BIG,
-} from '../helpers/const';
+import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL } from '../helpers/const';
 import { ITicket } from '../interfaces/ITicket';
 
 export default function printOrder(ticket: ITicket) {
@@ -46,20 +41,10 @@ export default function printOrder(ticket: ITicket) {
       // open & set printer4
       printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.app');
       printer
-        .text(FONT_SIZE_BIG)
+        .align(ALIGN.LT)
         .text(`Pedido # ${order.id!}`)
-        .text(FONT_SIZE_NORMAL);
-
-      // store, client and order data
-      printer.text(FONT_SIZE_NORMAL).align(ALIGN.LT).text(order.store.name);
-
-      if (order.client?.name) {
-        printer.text(`Cliente: ${order.client.name}`);
-      }
-
-      printer
-        .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`)
-        .drawLine();
+        .text(order.store.name)
+        .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`);
 
       // aditional details
       if (order.additionalDetails) {
@@ -83,7 +68,7 @@ export default function printOrder(ticket: ITicket) {
       // promo items
 
       for (const { promo, selectedVariants } of order.promoItems) {
-        printer.newLine().align('LT').println(`PROMO: ${promo.name}`);
+        printer.align('LT').println(`PROMO: ${promo.name}`);
 
         for (const variant of selectedVariants) {
           printer.println(`- ${variant.product.name} - ${variant.name}`);
@@ -92,29 +77,28 @@ export default function printOrder(ticket: ITicket) {
         printer.align('RT').println(formatPrice(promo.price));
       }
 
-      printer.text(FONT_SIZE_NORMAL);
-      // total amount & status
-      printer.text(FONT_SIZE_NORMAL);
       // total amount & status
       printer
         .align(ALIGN.RT)
+        .text(FONT_SIZE_NORMAL)
         .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
 
       if (ticket.couponDiscount) {
         printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
-        printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
-      } else {
+        if (ticket.order.discount?.amount) {
+          printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
+        }
+      } else if (ticket.order.discount?.amount) {
         printer.text(`Descuento: ${discountToString(order.discount)}`);
       }
       printer
         .text(`Total: ${formatPrice(ticket.totalPrice)}`)
-        .drawLine()
         .align(ALIGN.CT)
         .text(FONT_SIZE_SMALL)
         .text('Sin validez fiscal');
 
       // close printer
-      printer.cut().close();
+      printer.close();
     });
   } catch (error) {
     console.log(error);

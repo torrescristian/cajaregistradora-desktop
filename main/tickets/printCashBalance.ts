@@ -24,13 +24,8 @@ interface IProps {
   expenses: IExpense[];
 }
 
-function getPaymentText(payments: IPayment[]) {
-  if (payments.length > 1) {
-    return 'Mix.';
-  }
-  const payment = payments[0];
-
-  switch (payment.type) {
+function getPaymentText(paymentType: PAYMENT_TYPE) {
+  switch (paymentType) {
     case PAYMENT_TYPE.CASH:
       return 'Efec.';
     case PAYMENT_TYPE.CREDIT:
@@ -93,12 +88,15 @@ export default function printCashBalance({
         printer
           .align(ALIGN.LT)
           .text(`${parseDateToTime(ticket.createdAt)} - ID ${ticket.order.id}`)
-          .align(ALIGN.RT)
-          .text(
-            `Pago ${getPaymentText(ticket.payments)} ${formatPrice(
-              ticket.totalPrice,
+          .align(ALIGN.RT);
+
+        for (const payment of ticket.payments) {
+          printer.text(
+            `Pago ${getPaymentText(payment.type)} ${formatPrice(
+              Number(payment.amount),
             )}`,
           );
+        }
       }
 
       if (refundedTickets.length) {

@@ -19,7 +19,7 @@ const CajaRegistradoraApp: React.FC = () => {
   const router = useRouter();
 
   return (
-    <section className="flex flex-col gap-5 justify-center items-center">
+    <section className="flex flex-col gap-5 justify-center items-start px-[20vw]">
       <div className="w-full flex flex-col items-end gap-3">
         <h1 className="text-lg">Caja Registradora</h1>
         <span className="italic">Tu aliado en las ventas</span>
