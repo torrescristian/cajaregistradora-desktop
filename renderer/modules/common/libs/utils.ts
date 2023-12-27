@@ -1,5 +1,9 @@
 import { ICartItem, IPromoItem } from '@/modules/cart/interfaces/ICart';
-import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
+import {
+  DISCOUNT_TYPE,
+  IOrder,
+  ORDER_STATUS,
+} from '@/modules/ordenes/interfaces/IOrder';
 import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { twMerge } from 'tailwind-merge';
 

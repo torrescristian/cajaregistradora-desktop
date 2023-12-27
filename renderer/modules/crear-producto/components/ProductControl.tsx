@@ -48,6 +48,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
               />
             </FieldLabel>
             {product?.type.name!}
+
             <FieldLabel
               columnMode
               title="Imagen:"
@@ -86,6 +87,12 @@ const ProductControl = ({ controlType, product }: IProps) => {
                   </option>
                 ))}
               </select>
+            </FieldLabel>
+            <FieldLabel columnMode title="Descripción del producto:">
+              <textarea
+                className="textarea textarea-bordered textarea-secondary"
+                {...register('description')}
+              />
             </FieldLabel>
           </div>
         </div>

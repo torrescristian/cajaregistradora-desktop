@@ -31,7 +31,7 @@ const ProductControlMobile = ({ controlType, product }: IProps) => {
     <section>
       <form
         onSubmit={handleSubmitWrapper}
-        className="flex flex-col gap-5 border-2 w-full items-start border-slate-500 shadow-2xl"
+        className="flex flex-col gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
       >
         <section className="flex flex-col gap-5">
           <FieldLabel
@@ -60,6 +60,17 @@ const ProductControlMobile = ({ controlType, product }: IProps) => {
                 </option>
               ))}
             </select>
+          </FieldLabel>
+
+          <FieldLabel
+            columnMode
+            className="p-3 text-center"
+            title="Descripción del producto:"
+          >
+            <textarea
+              className="textarea textarea-bordered textarea-secondary"
+              {...register('description', { required: true })}
+            />
           </FieldLabel>
 
           <FieldLabel

@@ -5,14 +5,24 @@ import { RenderIf } from '@/modules/common/components/RenderIf';
 import { Card } from '@/modules/common/components/Card';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { CreateTicketFormMobile } from '../../common/components/Mobile/CreateTicketFormMobile';
+import OrderTable from './OrderTable';
+import { OrderContext } from '../context/UpdateOrderContext';
+import { useContext } from 'react';
 interface IProps {
   order: IOrder;
   updateMode?: boolean;
   onSubmit: (order: IOrder) => void;
   closeUpdateMode: () => void;
+  ordersTable?: IOrder[];
 }
 
-function Order({ order, updateMode, onSubmit, closeUpdateMode }: IProps) {
+function Order({
+  order,
+  updateMode,
+  onSubmit,
+  closeUpdateMode,
+  ordersTable,
+}: IProps) {
   const createMode = !updateMode;
   const isMobile = useIsMobile();
   const handleToggleEdit = () => {
@@ -20,26 +30,28 @@ function Order({ order, updateMode, onSubmit, closeUpdateMode }: IProps) {
   };
 
   return (
-    <Card>
-      <RenderIf condition={createMode}>
-        {isMobile ? (
-          <CreateTicketFormMobile
+    <OrderContext.Provider value={{ handleToggleEdit }}>
+      <Card>
+        <RenderIf condition={createMode}>
+          {isMobile ? (
+            <CreateTicketFormMobile
+              order={order}
+              handleToggleEdit={handleToggleEdit}
+            />
+          ) : (
+            <OrderTable orders={ordersTable!} />
+          )}
+        </RenderIf>
+        <RenderIf condition={updateMode}>
+          <UpdateOrder
             order={order}
-            handleToggleEdit={handleToggleEdit}
+            updateMode
+            onSubmit={handleToggleEdit}
+            closeUpdateMode={closeUpdateMode}
           />
-        ) : (
-          <CreateTicketForm order={order} handleToggleEdit={handleToggleEdit} />
-        )}
-      </RenderIf>
-      <RenderIf condition={updateMode}>
-        <UpdateOrder
-          order={order}
-          updateMode
-          onSubmit={handleToggleEdit}
-          closeUpdateMode={closeUpdateMode}
-        />
-      </RenderIf>
-    </Card>
+        </RenderIf>
+      </Card>
+    </OrderContext.Provider>
   );
 }
 

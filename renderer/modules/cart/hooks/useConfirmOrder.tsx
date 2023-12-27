@@ -96,19 +96,18 @@ export default function useConfirmOrder({
 
   const clearForm = () => {};
   const createOrder = async () => {
-    // const { orderResponse } = await orderMutation.mutateAsync({
-    //   items,
-    //   totalPrice: newTotalPrice,
-    //   additionalDetails,
-    //   clientId,
-    //   subtotalPrice,
-    //   discount: { amount: Number(discountAmount!), type: discountType! },
-    //   coupon,
-    //   promoItems: promoItems!,
-    // });
-    // await printOrder(orderResponse.data.id);
-    // await printCommand(orderResponse.data.id);
-    // closeModal();
+    const { orderResponse } = await orderMutation.mutateAsync({
+      items,
+      totalPrice: newTotalPrice,
+      additionalDetails,
+      clientId,
+      subtotalPrice,
+      discount: { amount: Number(discountAmount!), type: discountType! },
+      coupon,
+      promoItems: promoItems!,
+    });
+    await printCommand(orderResponse.data.id);
+    closeModal();
   };
 
   const updateOrder = () => {

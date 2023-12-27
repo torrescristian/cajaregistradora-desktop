@@ -1,5 +1,4 @@
 import {
-  calcDiscount,
   formatPrice,
   parseDateToArgentinianFormat,
 } from '@/modules/common/libs/utils';
@@ -14,41 +13,20 @@ import {
 } from '@heroicons/react/24/solid';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import {
-  DISCOUNT_TYPE,
-  IDiscount,
-  IOrder,
-} from '@/modules/ordenes/interfaces/IOrder';
-import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
-import { useForm } from 'react-hook-form';
-import OrderItem from './OrderItem';
+import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import Loader from '@/modules/common/components/Loader';
-import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
-import useCancelOrderMutation from '@/modules/ordenes/hooks/useCancelOrderMutation';
-import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
-import { useState } from 'react';
 import ValidateCoupon from './ValidateCoupon';
-import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HighlightedText from '@/modules/common/components/HighlightedText';
-import usePrintService from '@/modules/common/hooks/usePrintService';
 import Payments from './Payments';
-import { IPromoItem } from '@/modules/cart/interfaces/ICart';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 import useCreateTicketForm from '../hooks/useCreateTicketForm';
+import OrderItem from './OrderItem';
 
 interface IProps {
   order: IOrder;
   updateMode?: boolean;
   handleToggleEdit: () => void;
-}
-interface IFormControl {
-  additionalDetails: string;
-  totalPrice: number;
-  discountAmount: number;
-  discountType: DISCOUNT_TYPE;
-  promoItems: IPromoItem[];
 }
 
 export const CreateTicketForm = ({

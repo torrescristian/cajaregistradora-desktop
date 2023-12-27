@@ -42,6 +42,7 @@ export const ConfirmOrderMobile = ({
     handleCreateTicket,
     handleDeletePayment,
     handleSubmit,
+    handleClickConfirmOrder,
 
     newTotalPrice,
     orderMutation,
@@ -114,12 +115,17 @@ export const ConfirmOrderMobile = ({
           </button>
         ) : null}
         {updateMode ? null : (
-          <button
-            className="btn btn-secondary w-full"
-            onClick={handleCreateTicket}
-          >
-            Finalizar venta
-          </button>
+          <div className="w-full flex flex-col">
+            <button className="btn btn-success" onClick={handleSubmit}>
+              Crear Orden
+            </button>
+            <button
+              className="btn btn-secondary w-full"
+              onClick={handleCreateTicket}
+            >
+              Finalizar venta
+            </button>
+          </div>
         )}
         <ButtonClose
           label="Cancelar"

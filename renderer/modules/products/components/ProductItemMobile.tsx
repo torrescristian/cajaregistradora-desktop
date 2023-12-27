@@ -9,6 +9,10 @@ import {
   RemoveProductButton,
 } from '@/modules/cart/components/ProductItem.styles';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
+import {
+  InformationCircleIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/24/solid';
 
 interface IProps {
   product: IProduct;
@@ -28,8 +32,11 @@ export const ProductItemMobile = ({ product, onClick }: IProps) => {
   return (
     <div className="flex flex-col w-full mt-3 border-2 p-5">
       <HighlightedText>{product.name}</HighlightedText>
-      <div className="flex flex-row w-full gap-3 items-center">
-        <img src={product.image} className="w-32" />
+
+      <div className="flex flex-row w-full gap-3 justify-between">
+        <div className="tooltip w-96" data-tip={product.description}>
+          <img src={product.image} className="w-32" />
+        </div>
         <div className="flex flex-col w-full items-end">
           <RenderIf condition={product.variants.length}>
             <Selector
