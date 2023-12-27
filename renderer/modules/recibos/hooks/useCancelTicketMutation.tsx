@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import useCancelOrderMutation from '../../ordenes/hooks/useCancelOrderMutation';
-import { TICKET_STATUS } from '@/modules/recibos/interfaces/ITicket';
+import {
+  PAYMENT_TYPE,
+  TICKET_STATUS,
+} from '@/modules/recibos/interfaces/ITicket';
 import strapi from '@/modules/common/libs/strapi';
 import * as yup from 'yup';
 
@@ -43,17 +46,30 @@ export default function useCancelTicketMutation() {
           ? TICKET_STATUS.REFUNDED
           : TICKET_STATUS.WAITING_FOR_REFUND,
       });
-      const returnMoney = await strapi.update(
-        CASH_BALANCE_KEY,
-        cashBalance.id!,
-        {
+
+      let returnMoney: any;
+      if (isOwner) {
+        returnMoney = await strapi.update(CASH_BALANCE_KEY, cashBalance.id!, {
           newCashAmount:
             returnType === 'cash'
               ? Math.max(cashBalance.newCashAmount - amountTicket, 0)
               : cashBalance.newCashAmount,
           totalAmount: Math.max(cashBalance.totalAmount - amountTicket, 0),
-        } as Partial<ICashBalance>,
-      );
+          refunds: [
+            ...cashBalance.refunds,
+            {
+              ticket: ticketId,
+              payment: {
+                amount: amountTicket,
+                type:
+                  returnType === 'cash'
+                    ? PAYMENT_TYPE.CASH
+                    : PAYMENT_TYPE.DEBIT,
+              },
+            },
+          ],
+        } as Partial<ICashBalance>);
+      }
       queryClient.invalidateQueries([TICKETS_KEY]);
       queryClient.invalidateQueries([ORDERS_KEY]);
       return [cancelOrderResult, updateTicketResult, returnMoney];

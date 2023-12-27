@@ -7,8 +7,18 @@ import {
 } from '@/modules/recibos/interfaces/ITicket';
 import { TICKETS_KEY } from '@/modules/common/consts';
 
-export default function useTicketPendingQuery() {
-  return useQuery<ITicket[]>([TICKETS_KEY], async () => {
+interface IProps {
+  page: number;
+  setTotalPages?: (totalPages: number) => void;
+}
+
+interface IResponse {
+  tickets: ITicket[];
+  totalPages: number;
+}
+
+export default function useTicketPendingQuery({ page, setTotalPages }: IProps) {
+  return useQuery<IResponse>([TICKETS_KEY, page], async () => {
     const ticketResponse = (await strapi.find(TICKETS_KEY, {
       populate: [
         'order',
@@ -26,7 +36,13 @@ export default function useTicketPendingQuery() {
       filters: {
         status: TICKET_STATUS.WAITING_FOR_REFUND,
       },
+      /*@ts-ignore */
+      page,
     })) as unknown as ITicketResponse;
-    return ticketResponse.results;
+    setTotalPages?.(ticketResponse.pagination.pageCount!);
+    return {
+      tickets: ticketResponse.results,
+      totalPages: ticketResponse.pagination.pageCount!,
+    };
   });
 }

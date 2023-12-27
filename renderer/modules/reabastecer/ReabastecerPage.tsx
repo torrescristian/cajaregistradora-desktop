@@ -1,31 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchInput, {
   useSearchProps,
 } from '@/modules/common/components/SearchInput';
-import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import PageLayout from '@/modules/common/components/PageLayout';
-import { ButtomUpdatePrice } from '@/modules/reabastecer/components/ButtomUpdatePrice';
+import { UpdatePriceButton } from '@/modules/reabastecer/components/UpdatePriceButton';
 import Loader from '@/modules/common/components/Loader';
 import ErrorMessage from '@/modules/common/components/ErrorMessage';
 import { useVariantUpdateTableProps } from '@/modules/reabastecer/hooks/useVariantUpdateTableProps';
-import VariantUpdateTable from './components/VariantUpdateTable';
+import UpdateVariantTable from './components/UpdateVariantTable';
 import NoMobileVersion from '../common/components/NoMobileVersion';
 import useVariantsQuery from './hooks/useVariantsQuery';
+import {
+  useButtonPagination,
+  ButtonPagination,
+} from './components/ButtonPagination';
 
 export default function ReabastecerPage() {
+  const paginationControls = useButtonPagination();
   const searchProps = useSearchProps();
-
-  const variantsQuery = useVariantsQuery();
-  const variants = variantsQuery.data || [];
-
-  const productsQuery = useProductsQuery({
+  const variantsQuery = useVariantsQuery({
     query: searchProps.query,
-    page: 1,
-    pageSize: 50,
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
   });
-  const products = productsQuery.products || [];
+
+  const variants = variantsQuery.data?.variants || [];
+
   const tableInstance = useVariantUpdateTableProps({
-    products,
+    variants,
   });
 
   return (
@@ -34,18 +36,19 @@ export default function ReabastecerPage() {
       <NoMobileVersion />
       <div className="flex flex-row justify-between gap-10 w-full">
         <SearchInput {...searchProps} />
-        <ButtomUpdatePrice
+        <UpdatePriceButton
           variants={tableInstance
             .getSelectedRowModel()
             .flatRows.map((e) => e.original)}
         />
       </div>
-      <section className="flex w-full justify-center ">
-        {productsQuery.isLoading && <Loader />}
-        {productsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
-        {!productsQuery.isLoading && !productsQuery.isError && (
-          <VariantUpdateTable tableInstance={tableInstance} />
+      <section className="flex flex-col gap-10 w-full justify-center ">
+        {variantsQuery.isLoading && <Loader />}
+        {variantsQuery.isError && <ErrorMessage>Error</ErrorMessage>}
+        {!variantsQuery.isLoading && !variantsQuery.isError && (
+          <UpdateVariantTable tableInstance={tableInstance} />
         )}
+        <ButtonPagination {...paginationControls} />
       </section>
     </PageLayout>
   );

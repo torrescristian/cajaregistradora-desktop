@@ -7,13 +7,21 @@ import useIsMobile from '../reabastecer/hooks/useIsMobile';
 import { CreateCouponMobile } from './components/CreateCouponMobile';
 import CouponTable from './components/CouponTable';
 import { ICoupon } from './interfaces/ICoupon';
+import {
+  ButtonPagination,
+  useButtonPagination,
+} from '../reabastecer/components/ButtonPagination';
 
 export default function CouponsPage() {
-  const couponQuery = useCouponsQuery();
+  const paginationControls = useButtonPagination();
+  const couponQuery = useCouponsQuery({
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
+  });
   const isMobile = useIsMobile();
 
   if (couponQuery.isLoading) return <Loader />;
-  const data = couponQuery?.data?.map(
+  const data = couponQuery?.data?.coupons.map(
     (coupon) =>
       ({
         id: coupon.id,
@@ -41,11 +49,14 @@ export default function CouponsPage() {
           {
             label: 'Cupones',
             component: isMobile ? (
-              couponQuery.data?.map((coupon) => (
+              couponQuery.data?.coupons.map((coupon) => (
                 <Coupon key={coupon.id} coupon={coupon} />
               ))
             ) : (
-              <CouponTable coupon={data!} />
+              <div>
+                <CouponTable coupon={data!} />
+                <ButtonPagination {...paginationControls} />
+              </div>
             ),
           },
         ]}

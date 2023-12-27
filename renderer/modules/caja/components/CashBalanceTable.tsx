@@ -1,32 +1,36 @@
-import { flexRender } from '@tanstack/react-table';
-import { useVariantUpdateTableProps } from '@/modules/reabastecer/hooks/useVariantUpdateTableProps';
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { ICashBalance, ICashBalanceExpanded } from '../interfaces/ICashBalance';
+import { columnDefCashBalance } from './columnsCashBalanceHistory';
 
 interface IProps {
-  tableInstance?: ReturnType<typeof useVariantUpdateTableProps>;
+  cashBalance: ICashBalanceExpanded[];
 }
 
-function VariantUpdateTable({ tableInstance }: IProps) {
-  if (!tableInstance) return null;
-
+export default function CashBalanceTable({ cashBalance }: IProps) {
+  const tableInstanceCashBalance = useReactTable({
+    columns: columnDefCashBalance,
+    data: cashBalance,
+    getCoreRowModel: getCoreRowModel(),
+  });
   return (
-    <table className="table table-zebra">
+    <table className="table table-zebra-zebra w-full">
       <thead>
-        {tableInstance!.getHeaderGroups().map(({ id, headers }) => (
+        {tableInstanceCashBalance.getHeaderGroups().map(({ id, headers }) => (
           <tr key={id}>
             {headers.map(({ id: headerId, column, getContext }) => (
               <th key={headerId}>
                 {flexRender(column.columnDef.header, getContext())}
-                {{
-                  asc: ' ↑',
-                  desc: ' ↓',
-                }[column.getIsSorted() as string] || ''}
               </th>
             ))}
           </tr>
         ))}
       </thead>
       <tbody>
-        {tableInstance!.getRowModel().rows.map((rowEl) => {
+        {tableInstanceCashBalance.getRowModel().rows.map((rowEl) => {
           return (
             <tr key={rowEl.id}>
               {rowEl.getVisibleCells().map((cellEl) => {
@@ -46,4 +50,3 @@ function VariantUpdateTable({ tableInstance }: IProps) {
     </table>
   );
 }
-export default VariantUpdateTable;

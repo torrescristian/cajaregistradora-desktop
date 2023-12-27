@@ -23,7 +23,7 @@ const CartPromo = ({ promosItems }: IProps) => {
           <div className="flex flex-row items-center gap-4">
             <p className="text-xl">{promo.name}</p>
             <button
-              className="btn btn-error text-text-base-content"
+              className="btn btn-error text-base-content"
               onClick={handleClickPromoRemove(index)}
             >
               <TrashIcon className="w-5 h-5" />

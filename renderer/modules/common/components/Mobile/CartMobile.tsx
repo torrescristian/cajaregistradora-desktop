@@ -16,6 +16,7 @@ import CartItemMobile from './CartItemMobile';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import { ConfirmOrderMobile } from '../../../cart/components/ConfirmOrderMobile';
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import { ButtonClose } from '../ButtonClose';
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-col w-full gap-5 justify-between ">
@@ -88,8 +89,7 @@ const CartMobile = ({
               className="btn btn-ghost"
               onClick={() => closeModal()}
             >
-              <XMarkIcon className="text-error" width={20} />
-              Cerrar
+              <ButtonClose label="cerrar" />
             </label>
             <RenderIf condition={items.length || promosItems.length}>
               <button

@@ -4,6 +4,7 @@ import { DataItem } from '@/modules/common/components/DataItem';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import useAprovedExpensePending from '../hooks/useAprovedExpensePending';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   expense: IExpense;
@@ -56,13 +57,11 @@ export default function AprovExpenseModal({ expense }: IProps) {
           <button className="btn btn-primary" type="submit">
             Confirmar
           </button>
-          <button
+          <ButtonClose
+            label="Cerrar sin confirmar"
             className="btn btn-error btn-link text-secondary-focus"
             onClick={handleCloseModal}
-          >
-            {' '}
-            Cerrar sin confirmar
-          </button>
+          />
         </form>
       </dialog>
     </section>

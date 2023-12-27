@@ -8,6 +8,7 @@ import RenderPromos from '@/modules/promos/components/RenderPromo';
 
 import Pagination from '@/modules/common/components/Pagination';
 import { useProductsProps } from '../hooks/useProductsProps';
+import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
 const Navigation = ({ children }: IComponent) => (
   <section className="flex w-full justify-center items-center flex-col sm:flex-row gap-5">
@@ -28,6 +29,7 @@ const Products = () => {
     selectedProductType,
     setShowPromo,
     totalPages,
+    paginationControls,
   } = useProductsProps();
 
   if (promoQuery.isLoading) {
@@ -63,11 +65,7 @@ const Products = () => {
           />
         </RenderIf>
       </section>
-      <Pagination
-        pagination={totalPages!}
-        onClick={handleNextPage}
-        isLoading={productsQuery.isLoading}
-      />
+      <ButtonPagination {...paginationControls} />
     </section>
   );
 };

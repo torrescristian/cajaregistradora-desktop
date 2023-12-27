@@ -7,25 +7,13 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { columnsDefExp } from './ColumnsExpenses';
-import { longRange, range } from '@/modules/common/libs/utils';
-import { twMerge } from 'tailwind-merge';
 import { useState } from 'react';
 
 interface IProps {
   data: IExpense[];
-  onNextPage: () => void;
-  onPreviousPage: () => void;
-  page: number;
-  totalPages: number;
 }
 
-export default function ExpensesTable({
-  data,
-  totalPages,
-  onNextPage,
-  onPreviousPage,
-  page,
-}: IProps) {
+export default function ExpensesTable({ data }: IProps) {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
 
   const tableInstanceExpenses = useReactTable({
@@ -38,8 +26,6 @@ export default function ExpensesTable({
     },
     onSortingChange: setSorting,
   });
-
-  const totalPagesRange = longRange(1, totalPages);
 
   return (
     <section className="flex flex-col items-center justify-center w-full">
@@ -78,24 +64,6 @@ export default function ExpensesTable({
           })}
         </tbody>
       </table>
-      <div className="flex flex-row w-full items-center  justify-center gap-5">
-        <button className="btn btn-secondary" onClick={onPreviousPage}>
-          Anterior
-        </button>
-        {totalPagesRange.map((pageNumber) => (
-          <button
-            className={twMerge(
-              pageNumber === page ? 'btn-disabled' : null,
-              'join-item btn',
-            )}
-          >
-            {pageNumber}
-          </button>
-        ))}
-        <button className="btn btn-secondary" onClick={onNextPage}>
-          Siguiente
-        </button>
-      </div>
     </section>
   );
 }

@@ -48,13 +48,13 @@ const parseProductFacade = (product: IProduct): IProduct => {
 interface IProductsQueryProps {
   query: string;
   selectedProductType?: number;
-  page?: number;
   showPromo?: boolean;
-  pageSize?: number;
+  page?: number;
+  setTotalPages?: (totalPages: number) => void;
 }
 
 interface IProps {
-  pagination: IProductPage['pagination'];
+  totalPages: number;
   products: IProduct[];
 }
 
@@ -62,7 +62,7 @@ export default function useProductsQuery({
   query,
   selectedProductType,
   page,
-  pageSize,
+  setTotalPages,
 }: IProductsQueryProps) {
   const router = useRouter();
 
@@ -74,8 +74,8 @@ export default function useProductsQuery({
   };
 
   const { data, isLoading, isError, isSuccess, error } = useQuery<IProps>(
-    [PRODUCTS_KEY, query, selectedProductType, page, pageSize],
-    async () => {
+    [PRODUCTS_KEY, query, selectedProductType, page],
+    async (): Promise<IProps> => {
       try {
         let options: any = {
           populate: [
@@ -88,8 +88,8 @@ export default function useProductsQuery({
             'type',
             'promo',
           ],
+          /*@ts-ignore*/
           page,
-          pageSize,
         };
 
         if (selectedProductType) {
@@ -125,13 +125,14 @@ export default function useProductsQuery({
 
         if (!res) {
           return {
-            pagination: defaultPagination,
+            totalPages: defaultPagination.total,
             products: [],
           };
         }
 
+        setTotalPages?.(res.pagination.pageCount!);
         return {
-          pagination: res.pagination,
+          totalPages: res.pagination.pageCount!,
           products: res.results.map(parseProductFacade),
         };
       } catch (e: any) {
@@ -139,12 +140,12 @@ export default function useProductsQuery({
         if ([401, 403].includes(getErrorMessage(e).status)) {
           router.push('/');
           return {
-            pagination: defaultPagination,
+            totalPages: defaultPagination.total,
             products: [],
           };
         }
         return {
-          pagination: defaultPagination,
+          totalPages: defaultPagination.total,
           products: [],
         };
       }
@@ -156,7 +157,7 @@ export default function useProductsQuery({
     isLoading,
     isError,
     isSuccess,
-    pagination: data?.pagination,
+    pagination: data?.totalPages,
     error,
   };
 }

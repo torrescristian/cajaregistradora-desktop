@@ -1,34 +1,18 @@
-import {
-  ColumnSort,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
-import { IExpense } from '../interfaces/IExpense';
-import { columnsDefCashExp } from './ColumnsExpenses';
-import { useState } from 'react';
+import { flexRender } from '@tanstack/react-table';
+import { useVariantUpdateTableProps } from '@/modules/reabastecer/hooks/useVariantUpdateTableProps';
 
 interface IProps {
-  data: IExpense[];
+  tableInstance?: ReturnType<typeof useVariantUpdateTableProps>;
 }
 
-export default function CashExpensesTable({ data }: IProps) {
-  const [sorting, setSorting] = useState<ColumnSort[]>([]);
-  const tableInstanceExpenses = useReactTable({
-    columns: columnsDefCashExp,
-    data: data,
-    getCoreRowModel: getCoreRowModel(),
-    state: {
-      sorting,
-    },
-    onSortingChange: setSorting,
-  });
+function UpdateVariantTable({ tableInstance }: IProps) {
+  if (!tableInstance) return null;
 
   return (
-    <section>
-      <table className="table table-zebra-zebra">
+    <div className="w-full flex flex-col items-center gap-10 ">
+      <table className="table table-zebra">
         <thead>
-          {tableInstanceExpenses.getHeaderGroups().map(({ id, headers }) => (
+          {tableInstance!.getHeaderGroups().map(({ id, headers }) => (
             <tr key={id}>
               {headers.map(({ id: headerId, column, getContext }) => (
                 <th key={headerId}>
@@ -39,7 +23,7 @@ export default function CashExpensesTable({ data }: IProps) {
           ))}
         </thead>
         <tbody>
-          {tableInstanceExpenses.getRowModel().rows.map((rowEl) => {
+          {tableInstance!.getRowModel().rows.map((rowEl) => {
             return (
               <tr key={rowEl.id}>
                 {rowEl.getVisibleCells().map((cellEl) => {
@@ -57,6 +41,7 @@ export default function CashExpensesTable({ data }: IProps) {
           })}
         </tbody>
       </table>
-    </section>
+    </div>
   );
 }
+export default UpdateVariantTable;

@@ -4,7 +4,7 @@ import { useDebounce } from 'use-debounce';
 export const useSearchProps = () => {
   const [search, setQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
-  const [query] = useDebounce(search, 500);
+  const [query] = useDebounce(search, 1000);
 
   // handlers
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) =>

@@ -10,34 +10,34 @@ export const CashBalanceActivate = ({ cashBalance }: IProps) => {
   return (
     <section className="flex flex-col">
       <div className="flex flex-col sm:items-end gap-3 w-min shadow-2xl p-3 md:p-10 border-2">
-        <h2 className="font-bold text-2xl text-text-base-content">
+        <h2 className="font-bold text-2xl self-start text-base-content">
           Caja activa #{cashBalance?.id}
         </h2>
         <DataItem
           label="Vendedor: "
           value={cashBalance?.seller.username}
           defaultValue="Caja sin identificar"
-          className="text-2xl"
+          className="text-2xl  justify-between w-full"
         />
         <DataItem
-          label="Efectivo inicial en caja:"
+          label="Caja inicial:"
           value={formatPrice(cashBalance?.initialCashAmount!)}
           defaultValue="Monto inicial: $0.00"
-          className="text-2xl"
+          className="text-2xl  justify-between w-full"
         />
         <DataItem
-          label="Efectivo actual esperado:"
+          label="Efectivo total:"
           value={formatPrice(
             cashBalance?.newCashAmount! + cashBalance?.initialCashAmount!,
           )}
           defaultValue="$0.00"
-          className="text-2xl"
+          className="text-2xl  justify-between w-full"
         />
         <DataItem
-          label="Ventas totales:"
+          label="Caja total:"
           value={formatPrice(cashBalance?.totalAmount!)}
           defaultValue="$0.00"
-          className="text-2xl"
+          className="text-2xl justify-between w-full"
         />
       </div>
     </section>

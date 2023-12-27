@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "caja-registradora",
+  "name": "CajaRegistradora",
   "description": "My application description",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
   "main": "app/background.js",
   "scripts": {

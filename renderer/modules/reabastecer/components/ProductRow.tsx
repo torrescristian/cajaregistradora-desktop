@@ -4,14 +4,15 @@ import { IProduct } from '@/modules/products/interfaces/IProduct';
 import { useForm } from 'react-hook-form';
 import useUpdateProductMutation from '@/modules/reabastecer/hooks/useUpdateProductMutation';
 import ImageControl from '@/modules/reabastecer/components/ImageControl';
-import { Card } from '@/modules/common/components/Card';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import useUpdateVariantMutation from '@/modules/reabastecer/hooks/useUpdateVariantMutation';
-import RemoveProductItemModal from '@/modules/reabastecer/components/RemoveProductItemModal';
-import { TrashIcon } from '@heroicons/react/24/solid';
-import { UpdateProductButton } from '@/modules/cart/components/ProductItem.styles';
+import {
+  RemoveProductButton,
+  UpdateProductButton,
+} from '@/modules/cart/components/ProductItem.styles';
 import { toast } from 'react-toastify';
 import RemoveVariantModal from './RemoveVariantModal';
+import RemoveProductItemModal from './RemoveProductItemModal';
 
 interface IProps {
   product: IProduct;

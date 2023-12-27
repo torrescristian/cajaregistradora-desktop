@@ -1,5 +1,4 @@
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import { CancelTicketPending } from './CancelTicketPending';
 import Loader from '@/modules/common/components/Loader';
 import { CashBalanceActivateMobile } from '@/modules/common/components/Mobile/CashBalanceActiveMobile';
 import {
@@ -9,15 +8,12 @@ import {
 import { CloseCashBalance } from './CloseCashBalance';
 import { CashBalanceActivate } from './CashBalanceActive';
 import { CashBalance } from './CashBalance';
-import { format } from 'date-fns';
-import { formatPrice } from '@/modules/common/libs/utils';
 import useActiveCashBalanceQuery from '../hooks/useActiveCashBalanceQuery';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import useInitCashMutation from '../hooks/useInitCashMutation';
-import usePrintService from '@/modules/common/hooks/usePrintService';
-import { ICashBalance, ICashBalanceExpanded } from '../interfaces/ICashBalance';
 import PageLayout from '@/modules/common/components/PageLayout';
+import CashBalanceHistory from './CashBalanceHistory';
 
 export default function CashBalanceRender() {
   const {
@@ -40,16 +36,6 @@ export default function CashBalanceRender() {
       initialCashAmount: Number(value),
     });
   };
-
-  const { printCash } = usePrintService();
-
-  const handleClickReprint =
-    (cashBalance: ICashBalance | ICashBalanceExpanded) =>
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-
-      printCash(cashBalance.id!);
-    };
 
   return (
     <PageLayout>
@@ -85,7 +71,7 @@ export default function CashBalanceRender() {
           </section>
         </div>
       ) : (
-        <div>
+        <div className="w-full flex flex-col gap-10 p-5">
           <section>
             <ul className="flex flex-col items-center gap-5">
               <section className="flex">
@@ -118,40 +104,15 @@ export default function CashBalanceRender() {
             </ul>
           </section>
 
-          <RenderIf condition={todayCashBalances.length}>
-            <section className="w-full flex flex-col gap-5">
-              <p className="text-2xl text-center">Cajas del dia</p>
-              <div className="flex flex-row w-full gap-5 flex-wrap">
-                {todayCashBalances.map((todayCashBalance) => (
-                  <div
-                    key={todayCashBalance.id!}
-                    className="flex flex-col w-max p-5 border-2"
-                  >
-                    <p>👤Vendedor: {todayCashBalance.seller.username}</p>
-                    <p className="whitespace-nowrap">
-                      💰Monto de caja inicial:{' '}
-                      {formatPrice(todayCashBalance.initialCashAmount)}
-                    </p>
-                    <p className="whitespace-nowrap">
-                      💸Total de la caja:{' '}
-                      {formatPrice(todayCashBalance.totalAmount)}
-                    </p>
-                    <p className="whitespace-nowrap">
-                      ⏰La Caja cerro a las -{' '}
-                      {format(new Date(todayCashBalance.completedAt), 'HH:mm')}
-                      Hs
-                    </p>
-                    <button
-                      onClick={handleClickReprint(todayCashBalance)}
-                      className="btn btn-secondary"
-                    >
-                      Reimprimir Ticket
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </RenderIf>
+          <CashBalanceHistory />
+
+          {/*   <RenderIf condition={true}>
+            <p className="text-center text-xl font-bold">
+              Transacciones de la caja
+            </p>
+            <CashBalanceTable cashBalance={todayCashBalances} />
+            <ButtonPagination {...paginationControls} />
+          </RenderIf> */}
         </div>
       )}
     </PageLayout>

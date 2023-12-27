@@ -13,9 +13,10 @@ interface IProps {
 export default function TicketPendingTable({ tickets }: IProps) {
   const tableInstanse = useReactTable({
     columns: columnDefTickPend,
-    data: tickets,
+    data: tickets || [],
     getCoreRowModel: getCoreRowModel(),
   });
+
   return (
     <div className="w-full flex flex-col p-5">
       <table className="table w-full table-zebra">

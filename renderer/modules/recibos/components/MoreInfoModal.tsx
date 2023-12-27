@@ -7,6 +7,7 @@ import { formatPrice } from '@/modules/common/libs/utils';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IMoreInfoModal {
   ticket: ITicket;
@@ -27,8 +28,8 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
           <dl className="flex flex-col gap-5 ">
             <div className="divider">
               <DataItem
-                label="Ticket #"
-                value={String(ticket.id)}
+                label="Recibo #"
+                value={String(ticket.order.id)}
                 defaultValue=""
               />
             </div>
@@ -53,9 +54,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
                 value={ticket.order.additionalDetails}
               />
             </RenderIf>
-            <Divider className="text-text-base-content">
-              Metodos de pago
-            </Divider>
+            <Divider className="text-base-content">Metodos de pago</Divider>
             <DataItem
               label="Subtotal:"
               value={formatPrice(ticket.order.subtotalPrice)}
@@ -88,19 +87,19 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             ))}
           </dl>
           <RenderIf condition={ticket.order.items.length > 0}>
-            <div className="divider text-text-base-content">Productos</div>
+            <div className="divider text-base-content">Productos</div>
             <div className="flex flex-col p-5 overflow-y-scroll">
               {ticket.order.items.map((item) => (
                 <OrderItem
                   updateMode={false}
-                  key={item.product!.id}
+                  key={item.product?.id}
                   item={item}
                 />
               ))}
             </div>
           </RenderIf>
           <RenderIf condition={ticket.order.promoItems.length > 0}>
-            <div className="divider text-text-base-content">Promos</div>
+            <div className="divider text-base-content">Promos</div>
             {ticket.order.promoItems.map(({ promo }) => (
               <div key={promo.id!} className="flex p-4">
                 <p>{promo.name}</p>
@@ -108,7 +107,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             ))}
           </RenderIf>
           <div className="modal-action">
-            <button className="btn">Cerrar</button>
+            <ButtonClose label="Cerrar" />
           </div>
         </form>
       </dialog>
