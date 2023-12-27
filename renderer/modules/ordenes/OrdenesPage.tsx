@@ -4,6 +4,7 @@ import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
 import Loader from '@/modules/common/components/Loader';
 import Order from './components/Order';
+import OrderTable from './components/OrderTable';
 
 const Wrapper = ({ children }: IComponent) => (
   <section className="flex flex-col items-start mt-20 p-5 sm:mt-2 gap-2">
@@ -16,6 +17,7 @@ export default function OrdenesPage() {
   const [orderToUpdate, setOrderToUpdate] = useState<IOrder | null>(null);
   const updateMode = !!orderToUpdate;
   const orderQuery = useOrderQuery();
+  const orders = orderQuery.data || [];
 
   const closeUpdateMode = () => {
     setOrderToUpdate(null);
@@ -46,13 +48,14 @@ export default function OrdenesPage() {
 
   return (
     <Wrapper>
-      <section className="w-full sm:flex-row flex-col flex gap-5 overflow-y-scroll sm:overflow-x-scroll">
+      <section className="w-full ">
         {orderQuery.data.map((order) => (
           <Order
             key={order.id}
             order={order}
             onSubmit={(order) => setOrderToUpdate(order)}
             closeUpdateMode={closeUpdateMode}
+            ordersTable={orders}
           />
         ))}
       </section>

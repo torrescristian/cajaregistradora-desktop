@@ -22,6 +22,7 @@ export interface IProduct<
   type: PRODUCT_TYPE;
   updatedAt?: string;
   createdAt?: string;
+  description: string;
   status: PRODUCT_STATUS;
 }
 
