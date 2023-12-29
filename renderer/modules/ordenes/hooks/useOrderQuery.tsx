@@ -7,8 +7,18 @@ import { ORDERS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 
-export default function useOrderQuery() {
-  return useQuery<IOrder[]>([ORDERS_KEY], async () => {
+interface IProps {
+  page: number;
+  setTotalPages: (totalPages: number) => void;
+}
+
+interface IResponse {
+  orders: IOrder[];
+  totalPages: number;
+}
+
+export default function useOrderQuery({ page, setTotalPages }: IProps) {
+  return useQuery<IResponse>([ORDERS_KEY, page], async () => {
     const orderResponse = (await strapi.find(ORDERS_KEY, {
       filters: {
         status: ORDER_STATUS.PENDING,
@@ -30,7 +40,13 @@ export default function useOrderQuery() {
         'promoItems.selectedVariants.product',
         'promoItems.selectedVariants.product.type',
       ],
+      /*@ts-ignore*/
+      page,
     })) as unknown as IOrderResponse;
-    return orderResponse.results;
+    setTotalPages(orderResponse.pagination.pageCount!);
+    return {
+      orders: orderResponse.results,
+      totalPages: orderResponse.pagination.pageCount!,
+    };
   });
 }

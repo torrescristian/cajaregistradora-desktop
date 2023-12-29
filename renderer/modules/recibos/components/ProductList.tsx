@@ -1,8 +1,17 @@
+import { IPromoItem } from '@/modules/cart/interfaces/ICart';
+import { RenderIf } from '@/modules/common/components/RenderIf';
+import { IOrderItem } from '@/modules/ordenes/interfaces/IOrder';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
+import { IPromo } from '@/modules/promos/interfaces/IPromo';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 
-export function ProductList({ products }: { products: IProduct[] }) {
+interface IProps {
+  items: IOrderItem[];
+  promos?: IPromoItem[];
+}
+
+export function ProductList({ items, promos }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChangeOpen = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,11 +34,29 @@ export function ProductList({ products }: { products: IProduct[] }) {
         Ver productos
       </div>
       <ul className="collapse-content">
-        {products?.map((p: IProduct) => (
-          <li key={p?.id!}>
-            {p?.type?.emoji} {p?.name}
+        {items?.map((i, index) => (
+          <li key={index}>
+            <p>
+              {i.product?.type?.emoji} {i.product?.name}
+            </p>
+            <p className="text-end">
+              {i.quantity} &times; {i.selectedVariant?.name}
+            </p>
           </li>
         ))}
+        <RenderIf condition={promos?.length}>
+          <div className="divider">Promos</div>
+          {promos?.map(({ promo }, index) => (
+            <li key={index}>
+              <p>{promo.name}</p>
+              {promo.variants?.map(({ variant }) => (
+                <p>
+                  {variant.product?.name} {variant.name}
+                </p>
+              ))}
+            </li>
+          ))}
+        </RenderIf>
       </ul>
     </div>
   );

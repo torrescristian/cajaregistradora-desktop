@@ -51,12 +51,15 @@ export default function Navbar() {
             <WifiStatus />
 
             <div className="flex flex-row">
-              {/*              <NavButton
+              <NavButton className="" href="/pedidos">
+                Pedidos
+              </NavButton>
+              <NavButton
                 className="w-min whitespace-nowrap text-secondary-focus"
                 href="/ordenes"
               >
                 Ordenes pendientes
-              </NavButton> */}
+              </NavButton>
             </div>
             <label
               htmlFor="menu-drawer"

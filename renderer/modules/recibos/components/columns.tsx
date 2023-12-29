@@ -55,11 +55,8 @@ export const columnsDef = [
     header: 'Productos',
     cell: (props) => (
       <ProductList
-        products={
-          props.row.original.ticket.order.items.map(
-            (t) => t.product,
-          ) as IProduct[]
-        }
+        items={props.row.original.ticket.order.items}
+        promos={props.row.original.ticket.order.promoItems}
       />
     ),
   }),

@@ -47,7 +47,6 @@ export const CreateTicketFormMobile = ({
     handleClickAddPaymentMethod,
     handleCouponDiscountAmount,
     handleDeletePayment,
-    handleSubmit,
     handleSubmitCreateTicket,
     handleToggleAccordion,
     isCheckedAcordion,
@@ -57,10 +56,7 @@ export const CreateTicketFormMobile = ({
   } = useCreateTicketForm({ order });
 
   return (
-    <form
-      className="flex w-fullflex-col"
-      onSubmit={handleSubmit(handleSubmitCreateTicket)}
-    >
+    <div className="flex w-full flex-col">
       <div className="collapse bg-base-200">
         <input
           type="checkbox"
@@ -201,7 +197,7 @@ export const CreateTicketFormMobile = ({
                 payments={payments}
               />
               <button
-                type="submit"
+                onClick={handleSubmitCreateTicket}
                 disabled={createTicketMutation.isLoading || updateMode}
                 className="btn btn-success disabled:btn-disabled text-base-content"
               >
@@ -215,6 +211,6 @@ export const CreateTicketFormMobile = ({
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
