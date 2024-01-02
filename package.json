@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "CajaRegistradora",
+  "name": "caja-registradora",
   "description": "My application description",
   "version": "0.4.0",
   "author": "Cristian T. Torres <crisitantomastorres@gmail.com>",
@@ -16,7 +16,8 @@
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "cypress open"
   },
   "dependencies": {
     "@emoji-mart/data": "1.1.2",
@@ -62,6 +63,7 @@
     "@types/react-dom": "18.0.11",
     "@types/socket.io": "3.0.2",
     "@types/yup": "0.32.0",
+    "cypress": "13.3.0",
     "eslint": "8.45.0",
     "husky": "8.0.3",
     "lint-staged": "13.2.3",

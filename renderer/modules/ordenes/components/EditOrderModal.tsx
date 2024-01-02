@@ -1,23 +1,13 @@
 import { PencilIcon } from '@heroicons/react/24/solid';
-import useCreateTicketForm from '../hooks/useCreateTicketForm';
-import { IOrder } from '../interfaces/IOrder';
-import React, { useContext, useRef } from 'react';
-import e from 'express';
-import { OrderContext } from '../context/UpdateOrderContext';
+import React, { useContext } from 'react';
+import { OrderContext } from '../context/OrderContext';
 
-interface IProps {
-  order: IOrder;
-}
-
-export const EditOrderModal = ({ order }: IProps) => {
+export const EditOrderModal = () => {
   const { handleToggleEdit } = useContext(OrderContext);
-
-  const ref = useRef<HTMLDialogElement>(null);
-
   return (
     <div className="w-full flex">
       <button
-        className="btn btn-secondary text-base-content"
+        className="btn btn-outline text-base-content"
         onClick={handleToggleEdit}
       >
         <PencilIcon className="w-5 h-5 " />

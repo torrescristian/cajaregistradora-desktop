@@ -3,23 +3,26 @@ import { ISubMenuProps } from '@/modules/common/interfaces/INavbar';
 import NavButton from './NavButton';
 import { PhoneIcon } from '@heroicons/react/24/solid';
 import { ChangeTheme } from '../ChangeTheme';
-import { useModalStore } from '@/modules/common/contexts/useModalStore';
+import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 
 const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
+  const isMobile = useIsMobile();
 
   return (
     <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
       {isLoggedIn && (
         <ul>
-          <ul>
-            <NavButton className="w-full" href="/pedidos">
-              Pedidos
-            </NavButton>
-            <NavButton className="w-full" href="/ordenes">
-              Ordenes pendientes
-            </NavButton>
-          </ul>
+          {isMobile ? (
+            <ul>
+              <NavButton className="w-full" href="/pedidos">
+                Pedidos
+              </NavButton>
+              <NavButton className="w-full" href="/ordenes">
+                Ordenes pendientes
+              </NavButton>
+            </ul>
+          ) : null}
           <NavButton className="w-full" href="/recibos">
             Recibos
           </NavButton>

@@ -1,13 +1,8 @@
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
-import { CreateTicketForm } from './CreateTicketForm';
 import { UpdateOrder } from './UpdateOrder';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { Card } from '@/modules/common/components/Card';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
-import { CreateTicketFormMobile } from '../../common/components/Mobile/CreateTicketFormMobile';
-import OrderTable from './OrderTable';
-import { OrderContext } from '../context/UpdateOrderContext';
-import { useContext } from 'react';
 interface IProps {
   order: IOrder;
   updateMode?: boolean;
@@ -30,28 +25,17 @@ function Order({
   };
 
   return (
-    <OrderContext.Provider value={{ handleToggleEdit }}>
-      <Card>
-        <RenderIf condition={createMode}>
-          {isMobile ? (
-            <CreateTicketFormMobile
-              order={order}
-              handleToggleEdit={handleToggleEdit}
-            />
-          ) : (
-            <OrderTable orders={ordersTable!} />
-          )}
-        </RenderIf>
-        <RenderIf condition={updateMode}>
-          <UpdateOrder
-            order={order}
-            updateMode
-            onSubmit={handleToggleEdit}
-            closeUpdateMode={closeUpdateMode}
-          />
-        </RenderIf>
-      </Card>
-    </OrderContext.Provider>
+    <Card>
+      <RenderIf condition={createMode}></RenderIf>
+      <RenderIf condition={updateMode}>
+        <UpdateOrder
+          order={order}
+          updateMode
+          onSubmit={handleToggleEdit}
+          closeUpdateMode={closeUpdateMode}
+        />
+      </RenderIf>
+    </Card>
   );
 }
 

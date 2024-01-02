@@ -5,17 +5,43 @@ import {
 } from '@tanstack/react-table';
 import { IOrder } from '../interfaces/IOrder';
 import { columnDefOrder } from './columnOrder';
+import FormRow from './FormRow';
+import { useStore } from 'zustand';
+import {
+  getInitCart,
+  useCartStore,
+} from '@/modules/cart/contexts/useCartStore';
+import {
+  adaptCartItemToOrderItem,
+  adaptOrderItemToCartItem,
+} from '../utils/utils';
 
 interface IProps {
   orders: IOrder[];
+  setOrderToUpdate: (order: IOrder) => void;
 }
 
-export default function OrderTable({ orders }: IProps) {
+export default function OrderTable({ orders, setOrderToUpdate }: IProps) {
   const tableInstanceOrder = useReactTable({
     columns: columnDefOrder,
     data: orders,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const initCart = useCartStore(getInitCart);
+
+  const handleSubmitEditOrder = (order: IOrder) => {
+    setOrderToUpdate(order);
+    initCart({
+      additionalDetails: order.additionalDetails,
+      subtotalPrice: order.subtotalPrice,
+      totalPrice: order.totalPrice,
+      cartItems: order.items.map(adaptOrderItemToCartItem),
+      promoItems: order.promoItems,
+      discountAmount: order.discount?.amount,
+      discountType: order.discount?.type,
+    });
+  };
 
   return (
     <div>
@@ -34,7 +60,11 @@ export default function OrderTable({ orders }: IProps) {
         <tbody>
           {tableInstanceOrder.getRowModel().rows.map((rowEl) => {
             return (
-              <tr key={rowEl.id}>
+              <FormRow
+                onSubmit={handleSubmitEditOrder}
+                order={rowEl.original}
+                key={rowEl.id}
+              >
                 {rowEl.getVisibleCells().map((cellEl) => {
                   return (
                     <td key={cellEl.id}>
@@ -45,7 +75,7 @@ export default function OrderTable({ orders }: IProps) {
                     </td>
                   );
                 })}
-              </tr>
+              </FormRow>
             );
           })}
         </tbody>

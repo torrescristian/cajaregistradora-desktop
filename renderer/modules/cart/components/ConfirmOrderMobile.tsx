@@ -37,17 +37,13 @@ export const ConfirmOrderMobile = ({
     handleChangeAdditionalsDetails,
     handleChangePayment,
     handleClickAddPaymentMethod,
-
     handleCouponDiscountAmount,
     handleCreateTicket,
     handleDeletePayment,
     handleSubmit,
-    handleClickConfirmOrder,
-
     newTotalPrice,
     orderMutation,
     payments,
-
     setDiscountAmount,
     setDiscountType,
     subtotalPrice,
@@ -115,7 +111,7 @@ export const ConfirmOrderMobile = ({
           </button>
         ) : null}
         {updateMode ? null : (
-          <div className="w-full flex flex-col">
+          <div>
             <button className="btn btn-success" onClick={handleSubmit}>
               Crear Orden
             </button>

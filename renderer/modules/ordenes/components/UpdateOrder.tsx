@@ -6,6 +6,7 @@ import Cart from '@/modules/cart/components/Cart';
 import { ICartItem } from '@/modules/cart/interfaces/ICart';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { ProductsMobile } from '@/modules/products/components/ProductsMobile';
+import { adaptOrderItemToCartItem } from '../utils/utils';
 
 interface IProps {
   order: IOrder;
@@ -22,14 +23,6 @@ export const UpdateOrder = ({
 }: IProps) => {
   const setCart = useCartStore(getSetCart);
   const isMobile = useIsMobile();
-
-  const adaptOrderItemToCartItem = (orderItem: IOrderItem): ICartItem => {
-    return {
-      product: orderItem.product!,
-      quantity: orderItem.quantity,
-      selectedVariant: orderItem.selectedVariant!,
-    };
-  };
 
   useEffect(() => {
     setCart({

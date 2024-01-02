@@ -49,6 +49,18 @@ export default function Navbar() {
             <NavbarUser />
             <NotificationsIcon />
             <WifiStatus />
+
+            <div className="flex flex-row">
+              <NavButton className="" href="/pedidos">
+                Pedidos
+              </NavButton>
+              <NavButton
+                className="w-min whitespace-nowrap text-secondary-focus"
+                href="/ordenes"
+              >
+                Ordenes pendientes
+              </NavButton>
+            </div>
             <label
               htmlFor="menu-drawer"
               className="btn btn-secondary  drawer-button"
