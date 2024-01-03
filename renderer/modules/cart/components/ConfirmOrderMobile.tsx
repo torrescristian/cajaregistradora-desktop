@@ -70,8 +70,8 @@ export const ConfirmOrderMobile = ({
       <section className="flex flex-col items-center">
         <div className="flex flex-col gap-5 ">
           <Divider className="mt-10 mb-5">Detalles adicionales</Divider>
-          <textarea
-            className="textarea textarea-bordered"
+          <input
+            className="input input-bordered"
             value={additionalDetails}
             onChange={handleChangeAdditionalsDetails}
           />
@@ -112,11 +112,11 @@ export const ConfirmOrderMobile = ({
         ) : null}
         {updateMode ? null : (
           <div>
-            <button className="btn btn-success" onClick={handleSubmit}>
+            <button className="btn btn-warning btn-outline w-full" onClick={handleSubmit}>
               Crear Orden
             </button>
             <button
-              className="btn btn-secondary w-full"
+              className="btn btn-error btn-outline w-full"
               onClick={handleCreateTicket}
             >
               Finalizar venta

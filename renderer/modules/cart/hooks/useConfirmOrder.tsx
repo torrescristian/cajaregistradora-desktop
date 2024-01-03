@@ -131,7 +131,7 @@ export default function useConfirmOrder({
   };
 
   const handleChangeAdditionalsDetails = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setAdditionalDetails(e.target.value);
   };

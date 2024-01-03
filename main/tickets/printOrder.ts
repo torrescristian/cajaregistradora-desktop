@@ -102,7 +102,7 @@ export default function printOrder(ticket: ITicket) {
         .text('Sin validez fiscal');
 
       // close printer
-      printer.close();
+      printer.cut().close();
     });
   } catch (error) {
     console.log(error);

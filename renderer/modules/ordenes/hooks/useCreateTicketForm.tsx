@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { calcDiscount } from '@/modules/common/libs/utils';
 import usePayments from './usePayments';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
+import usePrintService from '@/modules/common/hooks/usePrintService';
 
 interface IProps {
   order: IOrder;
@@ -43,6 +44,8 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     payments,
   } = usePayments({ newTotalPrice: finalTotalPrice });
 
+  const { printOrder } = usePrintService()
+
   const handleToggleAccordion = () => {
     setIsCheckedAcordion(!isCheckedAcordion);
   };
@@ -72,6 +75,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
         },
       });
 
+      await printOrder(ticketResponse.data.id)
       toast.success('Pagado con exito');
     } catch (error) {
       console.error(error);

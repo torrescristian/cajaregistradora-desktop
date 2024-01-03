@@ -7,7 +7,6 @@ import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { VARIANTS_KEY } from '@/modules/common/consts';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 
 interface IProps {
   variants: IVariantExpanded[];
@@ -18,7 +17,6 @@ export const BatchPriceSection = ({ variants }: IProps) => {
   const [percentage, setPercentage] = useState<number | null>(null);
   const [type, setType] = useState(DISCOUNT_TYPE.FIXED);
   const queryClient = useQueryClient();
-  const route = useRouter();
 
   const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setType(e.target.value as DISCOUNT_TYPE);
@@ -64,7 +62,7 @@ export const BatchPriceSection = ({ variants }: IProps) => {
 
       await Promise.all(promises);
       await queryClient.invalidateQueries([VARIANTS_KEY]);
-      route.refresh();
+      window.location.reload()
     } catch (error) {
       console.log({ error });
       toast.error(
