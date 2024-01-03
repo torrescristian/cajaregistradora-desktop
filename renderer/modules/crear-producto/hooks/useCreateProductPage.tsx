@@ -50,7 +50,9 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
     setValue('type', productType?.id!);
   };
 
-  const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeHasStockControl = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const newValue = e.target.checked;
     setHasStockControl(newValue);
     setValue('isService', !newValue);
@@ -104,7 +106,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
     handleChangeProductType,
     productTypes,
     hasStockControl,
-    handleChangeIsService,
+    handleChangeHasStockControl,
     variants,
     setVariants,
     setDefaultVariantIndex,

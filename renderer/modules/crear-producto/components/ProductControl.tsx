@@ -19,7 +19,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
     handleChangeProductType,
     productTypes,
     hasStockControl,
-    handleChangeIsService,
+    handleChangeHasStockControl,
     variants,
     setVariants,
     setDefaultVariantIndex,
@@ -64,8 +64,8 @@ const ProductControl = ({ controlType, product }: IProps) => {
               <input
                 type="checkbox"
                 className="checkbox checkbox-success"
-                checked={hasStockControl}
-                onChange={handleChangeIsService}
+                value={hasStockControl}
+                onChange={handleChangeHasStockControl}
               />
             </FieldLabel>
           </div>

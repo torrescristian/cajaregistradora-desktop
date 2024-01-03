@@ -7,7 +7,6 @@ import Menu from './subcomponents/Menu';
 import { useModalStore } from '../../contexts/useModalStore';
 import useNavBar from '../../hooks/useNavBar';
 import { NavbarUser } from './subcomponents/NavbarUser';
-import { ChangeTheme } from './ChangeTheme';
 
 export default function Navbar() {
   const { openModal } = useModalStore();
@@ -63,7 +62,7 @@ export default function Navbar() {
             </div>
             <label
               htmlFor="menu-drawer"
-              className="btn btn-secondary  drawer-button"
+              className="btn btn-secondary drawer-button"
               onClick={() =>
                 openModal(
                   <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,
