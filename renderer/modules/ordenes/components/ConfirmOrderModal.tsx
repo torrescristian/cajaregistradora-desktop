@@ -6,8 +6,7 @@ import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeCon
 import { IOrder } from '../interfaces/IOrder';
 import React, { useContext, useRef } from 'react';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
-import {  CheckIcon,
-} from '@heroicons/react/24/solid';
+import { CheckIcon } from '@heroicons/react/24/solid';
 import { OrderContext } from '../context/OrderContext';
 
 interface IProps {

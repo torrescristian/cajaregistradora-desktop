@@ -26,7 +26,6 @@ function Order({
 
   return (
     <Card>
-      <RenderIf condition={createMode}></RenderIf>
       <RenderIf condition={updateMode}>
         <UpdateOrder
           order={order}

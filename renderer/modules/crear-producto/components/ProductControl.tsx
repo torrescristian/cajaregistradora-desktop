@@ -35,54 +35,53 @@ const ProductControl = ({ controlType, product }: IProps) => {
         className="flex flex-col p-5 gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
       >
         <div className="flex flex-col items-center gap-5 w-full">
-            <FieldLabel
-              columnMode
-              title="Nombre:"
-              className="input-group items-center"
+          <FieldLabel
+            columnMode
+            title="Nombre:"
+            className="input-group items-center"
+          >
+            <input
+              type="text"
+              className="input input-bordered input-secondary"
+              {...register('name', { required: true })}
+            />
+          </FieldLabel>
+          <FieldLabel columnMode title="Menu:" className="items-center gap-3 ">
+            <select
+              value={productType?.id!}
+              onChange={handleChangeProductType}
+              className="select select-bordered"
             >
-              <input
-                type="text"
-                className="input input-bordered input-secondary"
-                {...register('name', { required: true })}
-              />
-            </FieldLabel>
-            <FieldLabel
-              columnMode
-              title="Menu:"
-              className="items-center gap-3 "
-            >
-              <select
-                value={productType?.id!}
-                onChange={handleChangeProductType}
-                className="select select-bordered"
-              >
-                <option value={0}>Seleccione un menu</option>
-                {productTypes?.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.emoji} {type.name}
-                  </option>
-                ))}
-              </select>
-            </FieldLabel>
-            <FieldLabel
-              columnMode
-              title="Imagen:"
-              className="input-group items-center"
-            >
-              <input
-                type="file"
-                name="files"
-                className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
-              />
-            </FieldLabel>
-            <FieldLabel title="Control de stock" className="label w-fit gap-3 whitespace-nowrap">
-              <input
-                type="checkbox"
-                className="checkbox checkbox-success "
-                value={String(hasStockControl)}
-                onChange={handleChangeHasStockControl}
-              />
-            </FieldLabel>
+              <option value={0}>Seleccione un menu</option>
+              {productTypes?.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.emoji} {type.name}
+                </option>
+              ))}
+            </select>
+          </FieldLabel>
+          <FieldLabel
+            columnMode
+            title="Imagen:"
+            className="input-group items-center"
+          >
+            <input
+              type="file"
+              name="files"
+              className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+            />
+          </FieldLabel>
+          <FieldLabel
+            title="Control de stock"
+            className="label w-fit gap-3 whitespace-nowrap"
+          >
+            <input
+              type="checkbox"
+              className="checkbox checkbox-success "
+              value={String(hasStockControl)}
+              onChange={handleChangeHasStockControl}
+            />
+          </FieldLabel>
         </div>
 
         <CreateVariantsTable
