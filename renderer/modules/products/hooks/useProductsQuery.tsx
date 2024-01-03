@@ -13,8 +13,17 @@ import {
   STATUS_VARIANTS,
 } from '@/modules/common/interfaces/IVariants';
 const parseProductFacade = (product: IProduct): IProduct => {
-  const { name, id, isService, variants, image, default_variant, store, type } =
-    product;
+  const {
+    name,
+    id,
+    isService,
+    variants,
+    image,
+    default_variant,
+    store,
+    type,
+    description,
+  } = product;
 
   const res = {
     id,
@@ -41,6 +50,7 @@ const parseProductFacade = (product: IProduct): IProduct => {
     store: store,
     type: type,
     status: PRODUCT_STATUS.ENABLED,
+    description: description,
   };
   return res;
 };

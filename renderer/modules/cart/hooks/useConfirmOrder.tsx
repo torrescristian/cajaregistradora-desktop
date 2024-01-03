@@ -29,6 +29,7 @@ import { useModalStore } from '@/modules/common/contexts/useModalStore';
 import { toast } from 'react-toastify';
 import useCreateOrderMutation from './useCreateOrderMutation';
 import usePayments from '@/modules/ordenes/hooks/usePayments';
+import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
 
 interface IProps {
   updateMode?: boolean;
@@ -85,15 +86,6 @@ export default function useConfirmOrder({
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const { closeModal } = useModalStore();
 
-  const adaptCartItemToOrderItem = (cartItem: ICartItem): IOrderItem => {
-    return {
-      product: cartItem.product,
-      quantity: cartItem.quantity,
-      selectedVariant: cartItem.selectedVariant,
-      price: cartItem.selectedVariant.price,
-    };
-  };
-
   const clearForm = () => {};
   const createOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
@@ -106,6 +98,7 @@ export default function useConfirmOrder({
       coupon,
       promoItems: promoItems!,
     });
+    /*      await printOrder(orderResponse.data.id);*/
     await printCommand(orderResponse.data.id);
     closeModal();
   };

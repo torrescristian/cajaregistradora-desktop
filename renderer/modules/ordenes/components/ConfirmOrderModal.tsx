@@ -4,9 +4,10 @@ import Payments from './Payments';
 import ValidateCoupon from './ValidateCoupon';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 import { IOrder } from '../interfaces/IOrder';
-import useConfirmOrder from '@/modules/cart/hooks/useConfirmOrder';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { CheckIcon } from '@heroicons/react/24/solid';
+import { OrderContext } from '../context/OrderContext';
 
 interface IProps {
   order: IOrder;
@@ -14,22 +15,21 @@ interface IProps {
 
 export const ConfirmOrderModal = ({ order }: IProps) => {
   const {
-    additionalDetails,
-    handleChangeAdditionalsDetails,
     setDiscountAmount,
     setDiscountType,
     discountAmount,
     discountType,
     handleCouponDiscountAmount,
-    subtotalPrice,
     coupon,
     payments,
     handleChangePayment,
     handleDeletePayment,
     handleClickAddPaymentMethod,
-    newTotalPrice,
-    handleCreateTicket,
-  } = useConfirmOrder({ order });
+    finalTotalPrice,
+    additionalDetails,
+    handleChangeAdditionalsDetails,
+    handleSubmitCreateTicket,
+  } = useContext(OrderContext);
 
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -44,8 +44,11 @@ export const ConfirmOrderModal = ({ order }: IProps) => {
 
   return (
     <div>
-      <button className="btn btn-primary" onClick={handleOpenModal}>
-        Confirmar Orden
+      <button
+        className="btn btn-success btn-outline text-neutral-content"
+        onClick={handleOpenModal}
+      >
+        <CheckIcon className="w-5 h-5" />
       </button>
       <dialog ref={ref} className="modal-box">
         <div>
@@ -64,11 +67,11 @@ export const ConfirmOrderModal = ({ order }: IProps) => {
             />
             <ValidateCoupon
               onChange={handleCouponDiscountAmount}
-              subtotalPrice={order?.subtotalPrice! || subtotalPrice}
+              subtotalPrice={order?.subtotalPrice!}
               coupon={coupon}
             />
             <Payments
-              newTotalPrice={newTotalPrice}
+              newTotalPrice={finalTotalPrice}
               payments={payments}
               onChange={handleChangePayment}
               onDelete={handleDeletePayment}
@@ -76,12 +79,15 @@ export const ConfirmOrderModal = ({ order }: IProps) => {
             />
             <DataItem
               label="Total:"
-              value={formatPrice(newTotalPrice)}
+              value={formatPrice(finalTotalPrice)}
               defaultValue=""
               className="text-2xl"
             />
           </div>
-          <button className="btn btn-primary" onClick={handleCreateTicket}>
+          <button
+            className="btn btn-primary"
+            onClick={handleSubmitCreateTicket}
+          >
             Confirmar Orden
           </button>
           <ButtonClose label="Cerrar" onClick={handleCloseModal} />

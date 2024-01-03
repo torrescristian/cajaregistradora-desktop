@@ -31,7 +31,7 @@ export const columnDefOrder = [
     cell: (info) => (
       <ProductList
         items={info.row.original.items}
-        promos={info.row.original.promoItems.map((p) => p.promo)}
+        promos={info.row.original.promoItems}
       />
     ),
   }),
@@ -47,9 +47,9 @@ export const columnDefOrder = [
     header: 'Acciones',
     cell: (info) => (
       <div className="w-full">
-        <ConfirmOrderModal order={info.row.original} />
-        <div className="w-full flex flex-row justify-between gap-5">
-          <EditOrderModal order={info.row.original} />
+        <div className="w-full flex flex-row gap-2">
+          <ConfirmOrderModal order={info.row.original} />
+          <EditOrderModal />
           <CancelOrderModal order={info.row.original} />
         </div>
       </div>

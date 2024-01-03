@@ -10,6 +10,7 @@ import { CartDrawer } from './Mobile/CartDrawer';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { useState } from 'react';
 import { useModalStore } from '../contexts/useModalStore';
+import { twMerge } from 'tailwind-merge';
 
 interface IProps {
   children: React.ReactNode;
@@ -20,9 +21,14 @@ export default function GlobalLayout({ children }: IProps) {
   const { isOpen, content: Content, closeModal } = useModalStore();
 
   return (
-    <div className="drawer drawer-end">
+    <div className={'drawer drawer-end'}>
       <CustomToastContainer />
-      <input id="menu-drawer" type="checkbox" className="drawer-toggle" />
+      <input
+        id="menu-drawer"
+        type="checkbox"
+        checked={isOpen}
+        className="drawer-toggle"
+      />
       <div className="drawer-content">
         <section className="p-5">
           <Navbar />
@@ -35,7 +41,6 @@ export default function GlobalLayout({ children }: IProps) {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-
         {Content}
       </div>
     </div>

@@ -11,6 +11,7 @@ import CustomToastContainer from '@/modules/common/components/CustomToastContain
 import useConfirmOrder from '../hooks/useConfirmOrder';
 import { IPromoItem } from '../interfaces/ICart';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { Divider } from './Sale/Sale.styles';
 
 interface IProps {
   updateMode?: boolean;
@@ -37,17 +38,13 @@ export const ConfirmOrderMobile = ({
     handleChangeAdditionalsDetails,
     handleChangePayment,
     handleClickAddPaymentMethod,
-
     handleCouponDiscountAmount,
     handleCreateTicket,
     handleDeletePayment,
     handleSubmit,
-    handleClickConfirmOrder,
-
     newTotalPrice,
     orderMutation,
     payments,
-
     setDiscountAmount,
     setDiscountType,
     subtotalPrice,
@@ -65,15 +62,14 @@ export const ConfirmOrderMobile = ({
 
   return (
     <section className="p-5 bg-base-100 text-base-content ">
+      <ClientForm
+        onSelect={(client) => addClientId(client?.id || null)}
+        defaultClient={order?.client}
+      />
       <CustomToastContainer />
       <section className="flex flex-col items-center">
-        <ClientForm
-          onSelect={(client) => addClientId(client?.id || null)}
-          defaultClient={order?.client}
-        />
-
         <div className="flex flex-col gap-5 ">
-          <label className="label">Detalles adicionales:</label>
+          <Divider className="mt-10 mb-5">Detalles adicionales</Divider>
           <textarea
             className="textarea textarea-bordered"
             value={additionalDetails}
@@ -115,7 +111,7 @@ export const ConfirmOrderMobile = ({
           </button>
         ) : null}
         {updateMode ? null : (
-          <div className="w-full flex flex-col">
+          <div>
             <button className="btn btn-success" onClick={handleSubmit}>
               Crear Orden
             </button>
@@ -128,8 +124,8 @@ export const ConfirmOrderMobile = ({
           </div>
         )}
         <ButtonClose
-          label="Cancelar"
-          className="btn btn-link text-error"
+          label="Cerrar"
+          className="self-right"
           onClick={() => closeModal()}
         />
       </div>

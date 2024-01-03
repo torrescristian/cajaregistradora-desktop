@@ -28,7 +28,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
     defaultValues: {
       name: product?.name || '',
       image: product?.image || '',
-      isService: product?.isService || false,
+      isService: product?.isService || true,
     },
   });
 
@@ -37,7 +37,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
   const [productType, setProductType] = useState<IProductType | null>(
     productTypes[0],
   );
-  const [hasStockControl, setHasStockControl] = useState(true);
+  const [hasStockControl, setHasStockControl] = useState(false);
   const [variants, setVariants] = useState<IVariantPayload[]>([]);
   const [defaultVariantIndex, setDefaultVariantIndex] = useState<number>(0);
   const createProductAndVariantMutation = useCreateProductAndVariantMutation();
@@ -50,7 +50,9 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
     setValue('type', productType?.id!);
   };
 
-  const handleChangeIsService = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeHasStockControl = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const newValue = e.target.checked;
     setHasStockControl(newValue);
     setValue('isService', !newValue);
@@ -104,7 +106,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
     handleChangeProductType,
     productTypes,
     hasStockControl,
-    handleChangeIsService,
+    handleChangeHasStockControl,
     variants,
     setVariants,
     setDefaultVariantIndex,

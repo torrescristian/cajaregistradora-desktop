@@ -39,8 +39,9 @@ const EmojiSelector = ({
         </div>
       )}
       {selectedEmoji && (
-        <p className="text-xl font-bold">
-          Emoji seleccionado : {selectedEmoji}
+        <p className="text-xl">
+          <span className="opacity-60">Emoji seleccionado:</span>{' '}
+          {selectedEmoji}
         </p>
       )}
     </div>

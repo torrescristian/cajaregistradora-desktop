@@ -35,9 +35,9 @@ export const CreateCoupon = () => {
     <Card>
       <form
         onSubmit={handleSubmit(handleSubmitCreateCoupon)}
-        className="flex flex-col p-4 gap-10"
+        className="flex flex-col w-fit p-4 gap-10"
       >
-        <div className="flex flex-row gap-10 w-full justify-between">
+        <div className="flex flex-col gap-10 w-full justify-between">
           <div className="flex flex-col gap-3">
             <FormFieldText
               register={register}
@@ -48,6 +48,7 @@ export const CreateCoupon = () => {
             <FieldLabel columnMode title="Fecha de expiracion:">
               <input
                 type="date"
+                lang="es"
                 {...register('dueDate')}
                 className="w-full input-secondary"
               />

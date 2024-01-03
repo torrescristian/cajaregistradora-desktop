@@ -7,7 +7,6 @@ import Menu from './subcomponents/Menu';
 import { useModalStore } from '../../contexts/useModalStore';
 import useNavBar from '../../hooks/useNavBar';
 import { NavbarUser } from './subcomponents/NavbarUser';
-import { ChangeTheme } from './ChangeTheme';
 
 export default function Navbar() {
   const { openModal } = useModalStore();
@@ -49,9 +48,21 @@ export default function Navbar() {
             <NavbarUser />
             <NotificationsIcon />
             <WifiStatus />
+
+            <div className="flex flex-row">
+              <NavButton className="" href="/pedidos">
+                Pedidos
+              </NavButton>
+              <NavButton
+                className="w-min whitespace-nowrap text-secondary-focus"
+                href="/ordenes"
+              >
+                Ordenes pendientes
+              </NavButton>
+            </div>
             <label
               htmlFor="menu-drawer"
-              className="btn btn-secondary  drawer-button"
+              className="btn btn-secondary drawer-button"
               onClick={() =>
                 openModal(
                   <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,

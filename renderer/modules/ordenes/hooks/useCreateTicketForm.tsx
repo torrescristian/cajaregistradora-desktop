@@ -5,7 +5,6 @@ import useCancelOrderMutation from './useCancelOrderMutation';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
 import { useState } from 'react';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import usePrintService from '@/modules/common/hooks/usePrintService';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { calcDiscount } from '@/modules/common/libs/utils';
@@ -14,21 +13,17 @@ import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 
 interface IProps {
   order: IOrder;
+  onSubmit?: (order: IOrder) => void;
 }
 
-interface IFormControl {
-  additionalDetails: string;
-  totalPrice: number;
-  discountAmount: number | string;
-  discountType: DISCOUNT_TYPE;
-  promoItems: IPromoItem[];
-}
-
-export default function useCreateTicketForm({ order }: IProps) {
+export default function useCreateTicketForm({ order, onSubmit }: IProps) {
   const createTicketMutation = useCreateTicketMutation();
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  const [additionalDetails, setAdditionalDetails] = useState(
+    order.additionalDetails || '',
+  );
 
   const { discountAmount, discountType, setDiscountAmount, setDiscountType } =
     useCalcDiscountType({
@@ -61,19 +56,6 @@ export default function useCreateTicketForm({ order }: IProps) {
     }
   };
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormControl>({
-    defaultValues: {
-      additionalDetails: order.additionalDetails,
-      discountAmount,
-      discountType,
-      totalPrice: order.totalPrice,
-      promoItems: order.promoItems,
-    },
-  });
-
   const handleSubmitCreateTicket = async () => {
     try {
       const { ticketResponse } = await createTicketMutation.mutateAsync({
@@ -82,13 +64,7 @@ export default function useCreateTicketForm({ order }: IProps) {
           totalPrice: finalTotalPrice,
           cashBalance: activeCashBalanceQuery.cashBalance?.id!,
           payments,
-          couponDiscount: order.discount
-            ? calcDiscount({
-                discountAmount,
-                discountType,
-                price: finalTotalPrice,
-              })
-            : couponDiscount,
+          couponDiscount,
         },
         coupon: {
           id: order.coupon?.id || coupon?.id,
@@ -114,7 +90,20 @@ export default function useCreateTicketForm({ order }: IProps) {
     setCoupon(coupon);
   };
 
+  const handleToggleEdit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onSubmit?.(order);
+  };
+  const handleChangeAdditionalsDetails = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setAdditionalDetails(e.target.value);
+  };
+
   return {
+    additionalDetails,
+    setAdditionalDetails,
+    handleChangeAdditionalsDetails,
     setDiscountAmount,
     setDiscountType,
     handleChangePayment,
@@ -122,7 +111,6 @@ export default function useCreateTicketForm({ order }: IProps) {
     handleCouponDiscountAmount,
     handleDeletePayment,
     payments,
-    handleSubmit,
     handleSubmitCreateTicket,
     handleToggleAccordion,
     isCheckedAcordion,
@@ -133,5 +121,6 @@ export default function useCreateTicketForm({ order }: IProps) {
     discountType,
     discountAmount,
     coupon,
+    handleToggleEdit,
   };
 }

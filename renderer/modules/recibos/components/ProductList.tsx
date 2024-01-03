@@ -1,13 +1,12 @@
+import { IPromoItem } from '@/modules/cart/interfaces/ICart';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { IOrderItem } from '@/modules/ordenes/interfaces/IOrder';
-import { IProduct } from '@/modules/products/interfaces/IProduct';
-import { IPromo } from '@/modules/promos/interfaces/IPromo';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 
 interface IProps {
   items: IOrderItem[];
-  promos?: IPromo[];
+  promos?: IPromoItem[];
 }
 
 export function ProductList({ items, promos }: IProps) {
@@ -33,8 +32,8 @@ export function ProductList({ items, promos }: IProps) {
         Ver productos
       </div>
       <ul className="collapse-content">
-        {items?.map((i) => (
-          <li key={i.product?.id}>
+        {items?.map((i, index) => (
+          <li key={index}>
             <p>
               {i.product?.type?.emoji} {i.product?.name}
             </p>
@@ -45,8 +44,8 @@ export function ProductList({ items, promos }: IProps) {
         ))}
         <RenderIf condition={promos?.length}>
           <div className="divider">Promos</div>
-          {promos?.map((promo) => (
-            <li key={promo.id!}>
+          {promos?.map(({ promo }, index) => (
+            <li key={index}>
               <p>{promo.name}</p>
               {promo.variants?.map(({ variant }) => (
                 <p>

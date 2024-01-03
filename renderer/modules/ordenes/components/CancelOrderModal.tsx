@@ -1,17 +1,15 @@
 import { TrashIcon } from '@heroicons/react/24/solid';
-import useCreateTicketForm from '../hooks/useCreateTicketForm';
 import { IOrder } from '../interfaces/IOrder';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
-import { MouseEventHandler, useRef } from 'react';
+import { MouseEventHandler, useContext, useRef } from 'react';
+import { OrderContext } from '../context/OrderContext';
 
 interface IProps {
   order: IOrder;
 }
 
 export const CancelOrderModal = ({ order }: IProps) => {
-  const { cancelOrderMutation, handleCancelOrder } = useCreateTicketForm({
-    order,
-  });
+  const { handleCancelOrder, cancelOrderMutation } = useContext(OrderContext);
   const ref = useRef<HTMLDialogElement>(null);
 
   const handleOpenModal = (e: React.MouseEvent) => {
@@ -27,7 +25,7 @@ export const CancelOrderModal = ({ order }: IProps) => {
     <div className="flex flex-col w-full">
       <button
         disabled={cancelOrderMutation.isLoading}
-        className="btn btn-min btn-error text-base-content"
+        className="btn btn-min btn-error btn-outline text-base-content"
         onClick={handleOpenModal}
       >
         <TrashIcon className="w-5 h-5 " />

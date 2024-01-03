@@ -3,7 +3,7 @@ import SearchInput, {
   useSearchProps,
 } from '@/modules/common/components/SearchInput';
 import PageLayout from '@/modules/common/components/PageLayout';
-import { UpdatePriceButton } from '@/modules/reabastecer/components/UpdatePriceButton';
+import { BatchPriceSection } from '@/modules/reabastecer/components/BatchPriceSection';
 import Loader from '@/modules/common/components/Loader';
 import ErrorMessage from '@/modules/common/components/ErrorMessage';
 import { useVariantUpdateTableProps } from '@/modules/reabastecer/hooks/useVariantUpdateTableProps';
@@ -26,17 +26,15 @@ export default function ReabastecerPage() {
 
   const variants = variantsQuery.data?.variants || [];
 
-  const tableInstance = useVariantUpdateTableProps({
-    variants,
-  });
+  const tableInstance = useVariantUpdateTableProps(variants);
 
   return (
     <PageLayout>
       <h1 className="text-2xl whitespace-nowrap">Reabastecer & Actualizar</h1>
       <NoMobileVersion />
-      <div className="flex flex-row justify-between gap-10 w-full">
-        <SearchInput {...searchProps} />
-        <UpdatePriceButton
+      <div className="flex flex-col items-center gap-10 w-full">
+        <SearchInput {...searchProps} className="w-[70vw]" />
+        <BatchPriceSection
           variants={tableInstance
             .getSelectedRowModel()
             .flatRows.map((e) => e.original)}
