@@ -78,18 +78,22 @@ export default function printOrder(ticket: ITicket) {
       }
 
       // total amount & status
-      printer
-        .align(ALIGN.RT)
-        .text(FONT_SIZE_NORMAL)
-        .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
 
       if (ticket.couponDiscount) {
-        printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
+        printer
+          .align(ALIGN.RT)
+          .text(FONT_SIZE_NORMAL)
+          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
+          .text(`Descuento de cupon: ${ticket.couponDiscount}`);
         if (ticket.order.discount?.amount) {
           printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
         }
       } else if (ticket.order.discount?.amount) {
-        printer.text(`Descuento: ${discountToString(order.discount)}`);
+        printer
+          .align(ALIGN.RT)
+          .text(FONT_SIZE_NORMAL)
+          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
+          .text(`Descuento: ${discountToString(order.discount)}`);
       }
       printer
         .text(`Total: ${formatPrice(ticket.totalPrice)}`)
