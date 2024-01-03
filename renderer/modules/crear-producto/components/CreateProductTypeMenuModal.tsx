@@ -56,7 +56,7 @@ export const CreateProductTypeMenuModal = () => {
           className="flex flex-col p-5 w-full gap-4"
         >
           <FieldLabel
-            title="Nombre del Menu:"
+            title="Título del Menu:"
             className="gap-4 items-center"
             columnMode
           >
@@ -67,14 +67,9 @@ export const CreateProductTypeMenuModal = () => {
             />
           </FieldLabel>
           <div className="flex flex-row justify-around p-5">
-            <button className="btn btn-primary w-min" type="submit">
+            <button className="btn btn-success w-min" type="submit">
               Crear
             </button>
-            <ButtonClose
-              label="Cancelar"
-              className="btn text-error btn-link"
-              onClick={handleClose}
-            />
           </div>
         </form>
       </div>

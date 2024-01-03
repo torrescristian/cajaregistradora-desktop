@@ -1,4 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import { twMerge } from 'tailwind-merge';
 
 interface IProps {
   label: string;
@@ -9,7 +10,7 @@ interface IProps {
 export const ButtonClose = ({ label, onClick, className }: IProps) => {
   return (
     <button
-      className={className ? className : 'btn btn-ghost items-center gap-2'}
+      className={twMerge('btn btn-ghost items-center gap-2', className)}
       onClick={onClick}
     >
       <XMarkIcon className="text-error" width={20} />
