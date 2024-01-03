@@ -64,7 +64,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
               <input
                 type="checkbox"
                 className="checkbox checkbox-success"
-                value={hasStockControl}
+                value={String(hasStockControl)}
                 onChange={handleChangeHasStockControl}
               />
             </FieldLabel>
