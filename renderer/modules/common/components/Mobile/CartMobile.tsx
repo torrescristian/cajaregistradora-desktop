@@ -78,19 +78,15 @@ const CartMobile = ({
           ))}
           <CartPromo promosItems={promosItems} />
         </div>
-        <Card className="flex flex-col items-center md:flex-row text-base-content gap-5 w-full">
-          <p className="text-center">
-            <span className="text-xl">Total:</span> {formatPrice(subtotalPrice)}
-          </p>
-          <div className="flex flex-row justify-between w-full">
-            <label
-              htmlFor="carrito-drawer"
-              aria-label="cerrar sidebar"
-              className="btn btn-ghost"
+        <Card className="flex flex-col items-center text-base-content gap-3 w-full">
+            <p className="flex text-center text-xl gap-5">
+              <span className="opacity-60">Total:</span><span>{formatPrice(subtotalPrice)}</span>
+            </p>
+            <div className='flex flex-row items-center'>
+            <ButtonClose 
               onClick={() => closeModal()}
-            >
-              <ButtonClose label="cerrar" />
-            </label>
+              
+              label="cerrar" />
             <RenderIf condition={items.length || promosItems.length}>
               <button
                 className="btn btn-primary"
@@ -109,12 +105,7 @@ const CartMobile = ({
                 Pasar Orden
               </button>
             </RenderIf>
-            <RenderIf condition={!items.length && !promosItems.length}>
-              <section className="bg-info text-primary-content p-4 w-full">
-                No hay productos en el carrito
-              </section>
-            </RenderIf>
-          </div>
+            </div>
         </Card>
       </ProductContainer>
     </Layout>

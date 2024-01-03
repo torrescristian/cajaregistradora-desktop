@@ -34,8 +34,7 @@ const ProductControl = ({ controlType, product }: IProps) => {
         onSubmit={handleSubmitWrapper}
         className="flex flex-col p-5 gap-5 border-2 w-full items-center border-slate-500 shadow-2xl"
       >
-        <div className="flex flex-row justify-between gap-10 w-full">
-          <div className="flex flex-col items-start gap-4">
+        <div className="flex flex-col items-center gap-5 w-full">
             <FieldLabel
               columnMode
               title="Nombre:"
@@ -47,29 +46,6 @@ const ProductControl = ({ controlType, product }: IProps) => {
                 {...register('name', { required: true })}
               />
             </FieldLabel>
-            {product?.type.name!}
-
-            <FieldLabel
-              columnMode
-              title="Imagen:"
-              className="input-group items-center"
-            >
-              <input
-                type="file"
-                name="files"
-                className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
-              />
-            </FieldLabel>
-            <FieldLabel title="Control de stock" className="label w-fit gap-3">
-              <input
-                type="checkbox"
-                className="checkbox checkbox-success"
-                value={String(hasStockControl)}
-                onChange={handleChangeHasStockControl}
-              />
-            </FieldLabel>
-          </div>
-          <div className="flex flex-col items-center gap-10">
             <FieldLabel
               columnMode
               title="Menu:"
@@ -88,13 +64,25 @@ const ProductControl = ({ controlType, product }: IProps) => {
                 ))}
               </select>
             </FieldLabel>
-            <FieldLabel columnMode title="Descripción del producto:">
-              <textarea
-                className="textarea textarea-bordered textarea-secondary"
-                {...register('description')}
+            <FieldLabel
+              columnMode
+              title="Imagen:"
+              className="input-group items-center"
+            >
+              <input
+                type="file"
+                name="files"
+                className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
               />
             </FieldLabel>
-          </div>
+            <FieldLabel title="Control de stock" className="label w-fit gap-3 whitespace-nowrap">
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+                value={String(hasStockControl)}
+                onChange={handleChangeHasStockControl}
+              />
+            </FieldLabel>
         </div>
 
         <CreateVariantsTable

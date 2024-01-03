@@ -8,11 +8,7 @@ import {
 import { useState, useEffect } from 'react';
 import { columnDefProduct } from '@/modules/reabastecer/components/columnsProducts';
 
-interface IProps {
-  variants: IVariantExpanded[];
-}
-
-export const useVariantUpdateTableProps = ({ variants }: IProps) => {
+export const useVariantUpdateTableProps = (variants: IVariantExpanded[]) => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [data, setData] = useState(variants);
 
