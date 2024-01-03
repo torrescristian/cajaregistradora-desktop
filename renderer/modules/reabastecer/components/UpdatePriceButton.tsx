@@ -4,7 +4,11 @@ import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
-
+import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
+import { RenderIf } from '@/modules/common/components/RenderIf';
+import { VARIANTS_KEY } from '@/modules/common/consts';
+import { useQueryClient } from '@tanstack/react-query';
+import { PRODUCTS_KEY } from '@/modules/common/consts';
 interface IProps {
   variants: IVariantExpanded[];
 }
@@ -13,7 +17,12 @@ export const UpdatePriceButton = ({ variants }: IProps) => {
   const ref = useRef<HTMLDialogElement>(null);
   const [fixedPrice, setFixedPrice] = useState<number | null>(null);
   const [percentage, setPercentage] = useState<number | null>(null);
-  const [variantPrice, setVariantPrice] = useState<number | null>(null);
+  const [type, setType] = useState(DISCOUNT_TYPE.FIXED);
+  const queryClient = useQueryClient();
+
+  const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setType(e.target.value as DISCOUNT_TYPE);
+  };
 
   const updateVariantPriceMutation = useUpdateVariantPriceMutation();
 
@@ -29,51 +38,43 @@ export const UpdatePriceButton = ({ variants }: IProps) => {
     setPercentage(Number(event.target.value));
   };
 
-  const handleVariantPriceChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setVariantPrice(Number(event.target.value));
-  };
-
   const handleCloseModal = (e: React.MouseEvent) => {
     e.preventDefault();
     ref.current?.close();
   };
 
-  const handleClickUpdate = (e: React.MouseEvent) => {
+  const handleClickUpdate = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log({ variants });
     try {
+      let promises: Promise<any>[] = [];
       if (fixedPrice !== null) {
-        variants.map((variant) => {
-          updateVariantPriceMutation.mutate({
+        const res = variants.map((variant) =>
+          updateVariantPriceMutation.mutateAsync({
             newPrice: variant.price + fixedPrice,
             variant,
-          });
-        });
+          }),
+        );
+        promises = [...promises, ...res];
       }
 
       if (percentage !== null) {
-        variants.map((variant) => {
-          updateVariantPriceMutation.mutate({
+        const res = variants.map((variant) =>
+          updateVariantPriceMutation.mutateAsync({
             newPrice: variant.price + (variant.price * percentage) / 100,
             variant,
-          });
-        });
+          }),
+        );
+        promises = [...promises, ...res];
       }
 
-      if (variantPrice !== null) {
-        variants.forEach((variant) => {
-          updateVariantPriceMutation.mutate({
-            newPrice: variantPrice,
-            variant: variant,
-          });
-        });
-      }
-
+      await Promise.all(promises);
       ref.current?.close();
+      await queryClient.invalidateQueries([VARIANTS_KEY, PRODUCTS_KEY]);
     } catch (error) {
-      toast.error('Ocurrio un error al actualizar los precios. 😔');
+      console.log({ error });
+      toast.error(
+        'Ocurrio un error al actualizar los precios! Comunicate con nosotros',
+      );
     }
   };
 
@@ -85,30 +86,50 @@ export const UpdatePriceButton = ({ variants }: IProps) => {
       >
         Operaciones en lote
       </button>
-      <dialog ref={ref} className="bg-base-100 p-5 w-[50vw] shadow-lg">
-        <form className="flex flex-col gap-8 items-center  ">
-          <p className="text-xl font-bold ">
-            Actualizar el precio de las variantes seleccionadas
-          </p>
-          <FieldLabel
-            title="Porcentaje"
-            className="items-center gap-3 text-2xl"
-            columnMode
-          >
+      <dialog ref={ref} className="bg-base-100 p-5 shadow-lg">
+        <p className="text-xl font-bold w-80 whitespace-pre-wrap text-center mb-5">
+          Actualizar precios en productos seleccionados
+        </p>
+        <form className="flex flex-col gap-8 items-center">
+          <section className="flex flex-row w-full">
+            <FieldLabel
+              title="Fijo $"
+              className="label w-full border-2 hover:link p-3 border-stone-500"
+            >
+              <input
+                type="radio"
+                name="radio-1"
+                className="radio"
+                onChange={handleChangeType}
+                value={DISCOUNT_TYPE.FIXED}
+                checked={type === DISCOUNT_TYPE.FIXED}
+              />
+            </FieldLabel>
+            <FieldLabel
+              title="Porcentaje %"
+              className="label border-2 whitespace-nowrap hover:link p-3  border-stone-500"
+            >
+              <input
+                type="radio"
+                name="radio-1"
+                value={DISCOUNT_TYPE.PERC}
+                className="radio"
+                onChange={handleChangeType}
+                checked={type === DISCOUNT_TYPE.PERC}
+              />
+            </FieldLabel>
+          </section>
+          <RenderIf condition={type === DISCOUNT_TYPE.PERC}>
             <label className="input-group ">
-              <span>%</span>
               <input
                 type="number"
                 className="input input-bordered"
                 onChange={handlePercentageChange}
               />
+              <span>%</span>
             </label>
-          </FieldLabel>
-          <FieldLabel
-            title="Fijo"
-            className="items-center gap-3 text-2xl"
-            columnMode
-          >
+          </RenderIf>
+          <RenderIf condition={type === DISCOUNT_TYPE.FIXED}>
             <label className="input-group">
               <span>$</span>
               <input
@@ -117,27 +138,9 @@ export const UpdatePriceButton = ({ variants }: IProps) => {
                 onChange={handleFixedPriceChange}
               />
             </label>
-          </FieldLabel>
-          <FieldLabel
-            title="Subir todas las variantes"
-            className="items-center gap-3 text-2xl"
-            columnMode
-          >
-            <label className="input-group">
-              <span>🧺</span>
-              <input
-                type="number"
-                className="input input-bordered"
-                onChange={handleVariantPriceChange}
-              />
-            </label>
-          </FieldLabel>
-          <div className="flex flex-row w-full gap-5 justify-between">
-            <ButtonClose
-              label="Cancelar"
-              className="btn btn-error btn-ghost text-error"
-              onClick={handleCloseModal}
-            />
+          </RenderIf>
+          <div className="flex flex-row">
+            <ButtonClose label="Cerrar" onClick={handleCloseModal} />
             <button
               className="btn btn-success text-base-content"
               onClick={handleClickUpdate}

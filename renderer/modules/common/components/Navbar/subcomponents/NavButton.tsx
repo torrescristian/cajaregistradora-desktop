@@ -18,12 +18,12 @@ const NavButton = ({ href, children, className, onClick }: ILinkProps) => {
 
     if (onClick) {
       onClick(e);
-      closeModal();
       return;
     }
 
     if (!href) return;
 
+    closeModal();
     router.push(href);
   };
 

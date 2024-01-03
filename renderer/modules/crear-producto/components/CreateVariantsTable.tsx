@@ -90,8 +90,7 @@ export default function CreateVariantsTable({
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
-            <RenderIf condition={hasStockControl}>{''}</RenderIf>
-            <RenderIf condition={!hasStockControl}>
+            <RenderIf condition={hasStockControl}>
               <th>Alerta de stock faltante</th>
             </RenderIf>
           </tr>
@@ -127,16 +126,16 @@ export default function CreateVariantsTable({
                 </td>
                 <td>
                   {hasStockControl ? (
-                    'Sin control de stock'
-                  ) : (
                     <input
                       className="input input-bordered w-32"
                       value={stock_per_variant}
                       onChange={handleChangeVariantStock(index)}
                     />
+                  ) : (
+                    'Sin control de stock'
                   )}
                 </td>
-                <RenderIf condition={!hasStockControl}>
+                <RenderIf condition={hasStockControl}>
                   <td>
                     <input
                       className="input input-bordered w-32"

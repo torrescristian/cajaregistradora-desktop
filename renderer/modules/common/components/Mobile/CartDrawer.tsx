@@ -16,13 +16,16 @@ export const CartDrawer = ({
   closeUpdateMode,
 }: IProps) => {
   const { isOpen } = useModalStore();
+
   return (
     <div className="drawer-side">
-      <label
-        htmlFor="carrito-drawer"
-        aria-label="cerrar sidebar"
-        className={isOpen ? 'drawer-overlay' : ''}
-      ></label>
+      {isOpen ? (
+        <label
+          htmlFor="carrito-drawer"
+          aria-label="cerrar sidebar"
+          className={'drawer-overlay'}
+        ></label>
+      ) : null}
       <ul className="bg-base-100">
         <CartMobile
           updateMode={updateMode}

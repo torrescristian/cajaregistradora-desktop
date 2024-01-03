@@ -18,7 +18,7 @@ const ProductControlMobile = ({ controlType, product }: IProps) => {
     handleChangeProductType,
     productTypes,
     hasStockControl,
-    handleChangeIsService,
+    handleChangeHasStockControl,
     variants,
     setVariants,
     setDefaultVariantIndex,
@@ -79,7 +79,7 @@ const ProductControlMobile = ({ controlType, product }: IProps) => {
             type="checkbox"
             className="checkbox checkbox-success"
             checked={hasStockControl}
-            onChange={handleChangeIsService}
+            onChange={handleChangeHasStockControl}
           />
         </FieldLabel>
         <CreateVariantsTable
