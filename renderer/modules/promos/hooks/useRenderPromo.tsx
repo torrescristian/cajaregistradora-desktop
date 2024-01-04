@@ -74,6 +74,11 @@ export default function useRenderPromo() {
     ref.current?.close();
   };
 
+  const handleCloseModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    ref.current?.close();
+  };
+
   return {
     createIndex,
     handleClickAddPromo,
@@ -82,5 +87,6 @@ export default function useRenderPromo() {
     ref,
     selectedPromo,
     selectors,
+    handleCloseModal,
   };
 }

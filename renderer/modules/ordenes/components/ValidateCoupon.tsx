@@ -6,6 +6,7 @@ import { RenderIf } from '@/modules/common/components/RenderIf';
 import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import SuccessMessage from './SuccessMessage';
+import useValidateCoupon from '../hooks/useValidateCoupon';
 
 interface IProps {
   subtotalPrice: number;
@@ -20,55 +21,8 @@ interface IProps {
 }
 
 const ValidateCoupon = ({ subtotalPrice, onChange, coupon }: IProps) => {
-  const [code, setCode] = useState(coupon?.code || '');
-  const [error, setError] = useState('');
-
-  const [couponDiscount, setCouponDiscount] = useState(0);
-
-  const [query] = useDebounce(code, 500);
-
-  const couponByCodeQuery = useCouponByCodeQuery(query);
-
-  const calcDiscount = () => {
-    const { discount, maxAmount } = couponByCodeQuery.data!;
-    if (discount?.type === DISCOUNT_TYPE.FIXED) {
-      setCouponDiscount(discount?.amount);
-      return;
-    }
-    if (discount?.type === DISCOUNT_TYPE.PERC) {
-      const discountAmount = (discount?.amount / 100) * subtotalPrice;
-      setCouponDiscount(Math.min(discountAmount, maxAmount));
-      console.log({ discountAmount, discount, subtotalPrice });
-      return;
-    }
-  };
-  useEffect(() => {
-    setCouponDiscount(0);
-    if (!couponByCodeQuery.isSuccess) {
-      return;
-    }
-    if (!couponByCodeQuery.data) {
-      setError('No existe el Cupón');
-      return;
-    }
-    if (couponByCodeQuery.data.availableUses === 0) {
-      setError('Este cupón ya se encuentra usado');
-      return;
-    }
-    if (Number(new Date(couponByCodeQuery.data.dueDate!)) < Date.now()) {
-      setError('Este cupón ya expiro');
-      return;
-    }
-    setError('');
-    calcDiscount();
-  }, [couponByCodeQuery.data]);
-
-  useEffect(() => {
-    onChange({ couponDiscount, coupon: couponByCodeQuery.data! });
-  }, [couponDiscount]);
-  const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCode(e.target.value);
-  };
+  const { code, handleChangeCode, error, query, couponByCodeQuery } =
+    useValidateCoupon({ subtotalPrice, onChange, coupon: coupon! });
 
   return (
     <section>

@@ -7,6 +7,7 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import { EditPromoModal } from './EditPromoModal';
 import { CancelPromoModal } from './CancelPromoModal';
 import { IPromoItem } from '@/modules/cart/interfaces/ICart';
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
   promosItems: IPromoItem[];
@@ -28,6 +29,7 @@ export default function RenderPromos({
     ref,
     selectedPromo,
     selectors,
+    handleCloseModal,
   } = useRenderPromo();
 
   return (
@@ -107,14 +109,17 @@ export default function RenderPromos({
 
             <div className="modal-action">
               <form method="dialog">
+                <ButtonClose
+                  label="Cerrar"
+                  className="text-error"
+                  onClick={handleCloseModal}
+                />
                 <button
                   className="btn btn-success"
                   onClick={handleClickConfirmVariants}
                 >
                   Confirmar
                 </button>
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn">Close</button>
               </form>
             </div>
           </div>

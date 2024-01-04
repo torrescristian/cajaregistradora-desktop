@@ -1,3 +1,4 @@
+import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import useCancelProductMutation from '@/modules/reabastecer/hooks/useCancelProductMutation';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
@@ -35,12 +36,10 @@ export default function RemoveProductItemModal({ productId }: IProps) {
             <button className="btn btn-error" onClick={handleRemoveProduct}>
               Eliminar
             </button>
-            <button
-              className="btn btn-outline"
+            <ButtonClose
+              label="Cancelar"
               onClick={() => ref.current?.close()}
-            >
-              Cancelar
-            </button>
+            />
           </div>
         </div>
       </dialog>

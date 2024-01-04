@@ -90,6 +90,7 @@ export default function useCreateTicketMutation() {
       couponRestPromise,
     ]);
 
+    queryClient.invalidateQueries([COUPONS_KEY]);
     queryClient.invalidateQueries([ORDERS_KEY]);
     queryClient.invalidateQueries([TICKETS_KEY]);
     queryClient.invalidateQueries([CASH_BALANCE_KEY]);

@@ -158,14 +158,14 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
           />
           <section className="flex flex-row w-full justify-between">
             <div className="modal-action">
+              <ButtonClose label="Cerrar" onClick={handleCloseCreateDialog} />
+            </div>
+            <div className="modal-action">
               {updateMode ? (
                 <button className="btn">Actualizar cliente</button>
               ) : (
                 <button className="btn">Crear cliente</button>
               )}
-            </div>
-            <div className="modal-action">
-              <ButtonClose label="Cerrar" onClick={handleCloseCreateDialog} />
             </div>
           </section>
         </form>

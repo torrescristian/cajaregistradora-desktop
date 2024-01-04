@@ -84,13 +84,13 @@ export const ConfirmOrderModal = ({ order }: IProps) => {
               className="text-2xl"
             />
           </div>
+          <ButtonClose label="Cerrar" onClick={handleCloseModal} />
           <button
             className="btn btn-primary"
             onClick={handleSubmitCreateTicket}
           >
             Confirmar Orden
           </button>
-          <ButtonClose label="Cerrar" onClick={handleCloseModal} />
         </div>
       </dialog>
     </div>
