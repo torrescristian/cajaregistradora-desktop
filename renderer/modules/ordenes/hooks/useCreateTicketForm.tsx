@@ -44,7 +44,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     payments,
   } = usePayments({ newTotalPrice: finalTotalPrice });
 
-  const { printOrder } = usePrintService()
+  const { printOrder } = usePrintService();
 
   const handleToggleAccordion = () => {
     setIsCheckedAcordion(!isCheckedAcordion);
@@ -75,7 +75,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
         },
       });
 
-      await printOrder(ticketResponse.data.id)
+      await printOrder(ticketResponse.data.id);
       toast.success('Pagado con exito');
     } catch (error) {
       console.error(error);

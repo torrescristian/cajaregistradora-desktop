@@ -62,7 +62,7 @@ export const BatchPriceSection = ({ variants }: IProps) => {
 
       await Promise.all(promises);
       await queryClient.invalidateQueries([VARIANTS_KEY]);
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.log({ error });
       toast.error(

@@ -112,7 +112,10 @@ export const ConfirmOrderMobile = ({
         ) : null}
         {updateMode ? null : (
           <div>
-            <button className="btn btn-warning btn-outline w-full" onClick={handleSubmit}>
+            <button
+              className="btn btn-warning btn-outline w-full"
+              onClick={handleSubmit}
+            >
               Crear Orden
             </button>
             <button
