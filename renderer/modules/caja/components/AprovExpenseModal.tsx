@@ -54,14 +54,14 @@ export default function AprovExpenseModal({ expense }: IProps) {
             label="Total a Reembolsar:"
             value={formatPrice(expense.amount)}
           />
-          <button className="btn btn-primary" type="submit">
-            Confirmar
-          </button>
           <ButtonClose
             label="Cerrar sin confirmar"
             className="btn btn-error btn-link text-secondary-focus"
             onClick={handleCloseModal}
           />
+          <button className="btn btn-primary" type="submit">
+            Confirmar
+          </button>
         </form>
       </dialog>
     </section>

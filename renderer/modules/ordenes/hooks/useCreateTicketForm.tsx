@@ -11,6 +11,7 @@ import { calcDiscount } from '@/modules/common/libs/utils';
 import usePayments from './usePayments';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 import usePrintService from '@/modules/common/hooks/usePrintService';
+import useValidateCoupon from './useValidateCoupon';
 
 interface IProps {
   order: IOrder;
@@ -31,8 +32,12 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
       discountAmount: order.discount?.amount,
       discountType: order.discount?.type,
     });
-  const finalTotalPrice =
-    order.totalPrice - couponDiscount - Number(discountAmount);
+  const finalTotalPrice = calcDiscount({
+    price: order.totalPrice,
+    discountAmount: Number(discountAmount),
+    discountType,
+  });
+  /* order.totalPrice - couponDiscount - Number(discountAmount); */
 
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
@@ -44,7 +49,22 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     payments,
   } = usePayments({ newTotalPrice: finalTotalPrice });
 
+  const { handleClearInputCode } = useValidateCoupon({
+    coupon: order.coupon!,
+    subtotalPrice: finalTotalPrice,
+  });
+
   const { printOrder } = usePrintService();
+
+  const handleClearForm = () => {
+    setAdditionalDetails('');
+    setDiscountAmount(0);
+    setDiscountType(DISCOUNT_TYPE.FIXED);
+    setCouponDiscount(0);
+    setCoupon(undefined);
+    setIsCheckedAcordion(false);
+    handleClearInputCode();
+  };
 
   const handleToggleAccordion = () => {
     setIsCheckedAcordion(!isCheckedAcordion);
@@ -76,6 +96,8 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
       });
 
       await printOrder(ticketResponse.data.id);
+      handleClearForm();
+      window.location.reload();
       toast.success('Pagado con exito');
     } catch (error) {
       console.error(error);

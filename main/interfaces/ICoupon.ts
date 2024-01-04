@@ -1,4 +1,4 @@
-import { IProductType } from '@/interfaces/IProduct';
+import { IProductType } from '@/modules/products/interfaces/IProduct';
 import { IDiscount } from './IOrder';
 import { IProduct } from './IProduct';
 import { IVariant } from './IVariants';

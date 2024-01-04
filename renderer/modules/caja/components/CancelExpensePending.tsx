@@ -51,14 +51,14 @@ export default function CancelExpensePending({ expense }: IProps) {
             label="Total a Reembolsar:"
             value={formatPrice(expense.amount)}
           />
-          <button className="btn btn-primary" type="submit">
-            Confirmar
-          </button>
           <ButtonClose
             label="Cerrar sin Cancelar"
             className="btn btn-error btn-link text-secondary-focus"
             onClick={handleCloseModal}
           />
+          <button className="btn btn-primary" type="submit">
+            Confirmar
+          </button>
         </form>
       </dialog>
     </section>
