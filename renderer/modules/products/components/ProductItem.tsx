@@ -1,7 +1,6 @@
 import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
 import useProductItem from '@/modules/products/hooks/useProductItem';
-import { formatPrice } from '@/modules/common/libs/utils';
-import { useState } from 'react';
+import { formatPrice, getUrlFromImage } from '@/modules/common/libs/utils';
 import { Card } from '@/modules/common/components/Card';
 import { Selector } from '@/modules/common/components/Selector';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
@@ -32,7 +31,6 @@ const ProductItem = ({ product, onClick }: IProps) => {
       <section className="flex flex-1 items-center w-72 text-primary-content">
         <div className="flex flex-col w-full gap-5 justify-between">
           <HighlightedText>{product.name}</HighlightedText>
-
           <div className="flex flex-row h-32 items-center">
             <img src={product.image} className="w-1/2 h-36" />
             <div className="flex flex-col items-center justify-around w-1/2 ">

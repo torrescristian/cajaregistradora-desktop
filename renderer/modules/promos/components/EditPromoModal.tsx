@@ -21,6 +21,10 @@ import useFormControl from '@/modules/common/hooks/useFormControl';
 import useUpdatePromo from '@/modules/promos/hooks/useUpdatePromo';
 import { toast } from 'react-toastify';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import {
+  ButtonPagination,
+  useButtonPagination,
+} from '@/modules/reabastecer/components/ButtonPagination';
 
 interface IProps {
   promo: IPromo;
@@ -28,6 +32,7 @@ interface IProps {
 
 export const EditPromoModal = ({ promo }: IProps) => {
   const ref = useRef<HTMLDialogElement>(null);
+  const paginationControls = useButtonPagination();
 
   const categoryQuery = useCategoryQuery();
   const categories = categoryQuery.data;
@@ -39,6 +44,8 @@ export const EditPromoModal = ({ promo }: IProps) => {
   const productsQuery = useProductsQuery({
     query: searchProps.query,
     selectedProductType: selectedProductType?.id!,
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
   });
   const products = productsQuery.products as IProduct[];
 
@@ -216,6 +223,7 @@ export const EditPromoModal = ({ promo }: IProps) => {
                 />
               ))}
             </div>
+            <ButtonPagination {...paginationControls} />
           </div>
           <div className="flex flex-col gap-5">
             <CardVariantList

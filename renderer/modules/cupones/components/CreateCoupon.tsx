@@ -9,6 +9,7 @@ import { Card } from '@/modules/common/components/Card';
 import Loader from '@/modules/common/components/Loader';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreateCoupon from '../hooks/useCreateCoupon';
+import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
 export const CreateCoupon = () => {
   const {
@@ -29,6 +30,7 @@ export const CreateCoupon = () => {
     setDiscountAmount,
     setDiscountType,
     showProductList,
+    paginationControls,
   } = useCreateCoupon();
 
   return (
@@ -100,6 +102,7 @@ export const CreateCoupon = () => {
                   />
                 ))}
               </div>
+              <ButtonPagination {...paginationControls} />
             </RenderIf>
             <RenderIf condition={selectedVariant}>
               <div className="flex flex-col p-3 border-2 gap-5 items-center">

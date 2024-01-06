@@ -9,6 +9,7 @@ import { IDiscount } from '@/modules/ordenes/interfaces/IOrder';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 import { toast } from 'react-toastify';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
+import { useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
 export default function useCreateCoupon() {
   const {
@@ -23,6 +24,7 @@ export default function useCreateCoupon() {
       availableUses: 1,
     },
   });
+  const paginationControls = useButtonPagination();
 
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType>();
@@ -30,6 +32,8 @@ export default function useCreateCoupon() {
   const productsQuery = useProductsQuery({
     query: searchProps.query,
     selectedProductType: selectedProductType?.id,
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
   });
 
   const products = productsQuery.products as IProduct[];
@@ -109,5 +113,6 @@ export default function useCreateCoupon() {
     handleCheckProduct,
     setDiscountAmount,
     setDiscountType,
+    paginationControls,
   };
 }
