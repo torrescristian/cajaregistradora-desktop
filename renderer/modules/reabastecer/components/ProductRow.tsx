@@ -13,6 +13,7 @@ import {
 import { toast } from 'react-toastify';
 import RemoveVariantModal from './RemoveVariantModal';
 import RemoveProductItemModal from './RemoveProductItemModal';
+import ChangeIsService from './ChangeIsService';
 
 interface IProps {
   product: IProduct;
@@ -94,6 +95,7 @@ const ProductRow = ({ product, variant }: IProps) => {
         <div className="divider">Mas opciónes</div>
         <div className="flex flex-col w-full items-center">
           <RemoveVariantModal variantId={variant.id!} />
+          <ChangeIsService product={product} />
         </div>
         <div className="divider">Imagen</div>
       </form>

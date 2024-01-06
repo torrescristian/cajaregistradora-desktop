@@ -13,8 +13,10 @@ import {
 import { ICategoryExpanded } from '@/modules/categorias/interfaces/ICategory';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
+import { useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
 export default function useCreatePromo() {
+  const paginationControls = useButtonPagination();
   const categoryQuery = useCategoryQuery();
   const createPromoMutation = useCreatePromoMutation();
   const [selectedProductType, setSelectedProductType] =
@@ -22,6 +24,8 @@ export default function useCreatePromo() {
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
     selectedProductType: selectedProductType?.id!,
   });
   const products = productsQuery.products as IProduct[];
@@ -167,5 +171,6 @@ export default function useCreatePromo() {
     selectedVariantList,
     setSelectedVariantList,
     createPromoMutation,
+    paginationControls,
   };
 }

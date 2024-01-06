@@ -23,12 +23,12 @@ const Products = () => {
     handleSelectPage,
     products,
     showPromo,
-    productsQuery,
     promoQuery,
     searchProps,
     selectedProductType,
     setShowPromo,
     totalPages,
+    productsQuery,
     paginationControls,
   } = useProductsProps();
 
