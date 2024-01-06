@@ -17,7 +17,10 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import { toast } from 'react-toastify';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
-import { ButtonPagination, useButtonPagination } from '../reabastecer/components/ButtonPagination';
+import {
+  ButtonPagination,
+  useButtonPagination,
+} from '../reabastecer/components/ButtonPagination';
 
 export default function CategoriesPage() {
   const paginationControls = useButtonPagination();

@@ -21,7 +21,10 @@ import useFormControl from '@/modules/common/hooks/useFormControl';
 import useUpdatePromo from '@/modules/promos/hooks/useUpdatePromo';
 import { toast } from 'react-toastify';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
-import { ButtonPagination, useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import {
+  ButtonPagination,
+  useButtonPagination,
+} from '@/modules/reabastecer/components/ButtonPagination';
 
 interface IProps {
   promo: IPromo;

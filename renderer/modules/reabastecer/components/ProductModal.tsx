@@ -21,24 +21,28 @@ export const ProductModal = ({ product, variant }: IProps) => {
   };
 
   return (
-      <section className="w-full flex justify-center">
-        <button
-          className="btn btn-secondary btn-square"
-          onClick={() => handleClickMoreInfo()}
-        >
-          <EllipsisHorizontalIcon className="w-8 h-8" />
-        </button>
-        <dialog ref={ref} className="bg-base-100 modal-box p-15 w-[40vw]" >          
-          <Card >
-            <div>
-              <ProductRow product={product} key={product.id} variant={variant} />
-            </div>
-            <NewVariant product={product} />
-          </Card>
-          <div className="w-full flex pt-10 justify-end">
-            <ButtonClose label="Cerrar" className='btn btn-error' onClick={() => ref.current?.close()} />
+    <section className="w-full flex justify-center">
+      <button
+        className="btn btn-secondary btn-square"
+        onClick={() => handleClickMoreInfo()}
+      >
+        <EllipsisHorizontalIcon className="w-8 h-8" />
+      </button>
+      <dialog ref={ref} className="bg-base-100 modal-box p-15 w-[40vw]">
+        <Card>
+          <div>
+            <ProductRow product={product} key={product.id} variant={variant} />
           </div>
-        </dialog>
-      </section>
+          <NewVariant product={product} />
+        </Card>
+        <div className="w-full flex pt-10 justify-end">
+          <ButtonClose
+            label="Cerrar"
+            className="btn btn-error"
+            onClick={() => ref.current?.close()}
+          />
+        </div>
+      </dialog>
+    </section>
   );
 };

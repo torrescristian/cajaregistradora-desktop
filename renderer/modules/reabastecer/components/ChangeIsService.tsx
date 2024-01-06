@@ -40,16 +40,19 @@ export default function ChangeIsService({ product }: IProps) {
         onClick={handleOpenModal}
       >
         <PencilIcon className="w-5 h-5" />
-        {!product.isService ? 'Activar control de Stock' : 'Desactivar control de Stock'}
+        {!product.isService
+          ? 'Activar control de Stock'
+          : 'Desactivar control de Stock'}
       </button>
-      <dialog className='border-2 border-white' ref={ref}>
+      <dialog className="border-2 border-white" ref={ref}>
         <div className="w-full flex flex-col gap-10 p-5">
           <p>
             ¿Estás seguro de que deseas convertir{' '}
             <span className="text-xl font-bold link">
               {product.name}{' '}
-              {!product.isService ? 'en Servicio' : 'en un producto con Stock?'} 
-            </span> ?   
+              {!product.isService ? 'en Servicio' : 'en un producto con Stock?'}
+            </span>{' '}
+            ?
           </p>
           <div className="w-full flex flex-row justify-end gap-5 ">
             <ButtonClose label="Cerrar" onClick={handleCloseModal} />

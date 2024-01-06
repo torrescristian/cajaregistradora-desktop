@@ -10,7 +10,9 @@ export const useButtonPagination = () => {
     (p: number) => (e: React.MouseEvent) => {
       e.preventDefault();
       setPage(p);
-    }, []);
+    },
+    [],
+  );
 
   const onNextPage = useCallback(
     (e: React.MouseEvent) => {
