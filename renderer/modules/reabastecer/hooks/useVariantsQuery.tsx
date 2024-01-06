@@ -32,6 +32,7 @@ export default function useVariantsQuery({
         'product.default_variant.stock_per_variant',
         'product.type',
         'product.promo',
+        'product.variants',
         'stock_per_variant',
         'categories',
       ],

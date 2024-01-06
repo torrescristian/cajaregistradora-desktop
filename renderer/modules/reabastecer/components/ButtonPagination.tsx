@@ -6,7 +6,11 @@ export const useButtonPagination = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const onChangePage = useCallback((p: number) => () => setPage(p), []);
+  const onChangePage = useCallback(
+    (p: number) => (e: React.MouseEvent) => {
+      e.preventDefault();
+      setPage(p);
+    }, []);
 
   const onNextPage = useCallback(
     (e: React.MouseEvent) => {
@@ -36,7 +40,7 @@ interface IProps {
   onPreviousPage: (e: React.MouseEvent) => void;
   page: number;
   totalPages: number;
-  onChangePage: (page: number) => () => void;
+  onChangePage: (page: number) => (e: React.MouseEvent) => void;
 }
 
 export const ButtonPagination = ({

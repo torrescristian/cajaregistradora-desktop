@@ -3,16 +3,12 @@ import { IProduct } from '../interfaces/IProduct';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { Selector } from '@/modules/common/components/Selector';
 import useProductItem from '../hooks/useProductItem';
-import { formatPrice } from '@/modules/common/libs/utils';
+import { formatPrice, getUrlFromImage } from '@/modules/common/libs/utils';
 import {
   AddProductButton,
   RemoveProductButton,
 } from '@/modules/cart/components/ProductItem.styles';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
-import {
-  InformationCircleIcon,
-  QuestionMarkCircleIcon,
-} from '@heroicons/react/24/solid';
 
 interface IProps {
   product: IProduct;

@@ -17,13 +17,17 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import { toast } from 'react-toastify';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
+import { ButtonPagination, useButtonPagination } from '../reabastecer/components/ButtonPagination';
 
 export default function CategoriesPage() {
+  const paginationControls = useButtonPagination();
   const createCategoryMutation = useCreateCategoryMutation();
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
     query: searchProps.query,
     selectedProductType: 0,
+    page: paginationControls.page,
+    setTotalPages: paginationControls.setTotalPages,
   });
   const products = productsQuery.products as IProduct[];
 
@@ -115,6 +119,7 @@ export default function CategoriesPage() {
                 />
               ))}
             </div>
+            <ButtonPagination {...paginationControls} />
           </div>
           <div className="flex flex-row">
             <RenderIf condition={!newVariantSelected}> </RenderIf>

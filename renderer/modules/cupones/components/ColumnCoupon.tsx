@@ -2,7 +2,6 @@ import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import { ICoupon } from '../interfaces/ICoupon';
 import { format } from 'date-fns';
 import { createColumnHelper } from '@tanstack/table-core';
-import { TrashIcon } from '@heroicons/react/24/solid';
 import CancelCouponButton from './CancelCouponButton';
 
 const columnHelper = createColumnHelper<ICoupon>();
