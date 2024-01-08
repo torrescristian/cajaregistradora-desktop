@@ -100,6 +100,9 @@ export default function useProductsQuery({
           ],
           /*@ts-ignore*/
           page,
+          filters: {
+            status: PRODUCT_STATUS.ENABLED,
+          },
         };
 
         if (selectedProductType) {

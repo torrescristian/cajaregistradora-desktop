@@ -94,7 +94,7 @@ const ProductRow = ({ product, variant }: IProps) => {
         </section>
         <div className="divider">Mas opciónes</div>
         <div className="flex flex-col w-full items-center">
-          <RemoveVariantModal variantId={variant.id!} />
+          <RemoveVariantModal variant={variant} />
           <ChangeIsService product={product} />
         </div>
         <div className="divider">Imagen</div>
