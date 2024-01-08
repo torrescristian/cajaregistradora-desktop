@@ -2,12 +2,16 @@ import { useRef } from 'react';
 import useCancelVariantMutation from '../hooks/useCancelVariantMutation';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import {
+  IVariant,
+  IVariantExpanded,
+} from '@/modules/common/interfaces/IVariants';
 
 interface IProps {
-  variantId: number;
+  variant: IVariantExpanded;
 }
 
-export default function RemoveVariantModal({ variantId }: IProps) {
+export default function RemoveVariantModal({ variant }: IProps) {
   const ref = useRef<HTMLDialogElement>(null);
 
   const handleOpenModal = (e: React.MouseEvent) => {
@@ -22,7 +26,7 @@ export default function RemoveVariantModal({ variantId }: IProps) {
 
   const cancelVariantMutation = useCancelVariantMutation();
   const handleRemoveVariant = () => {
-    cancelVariantMutation.mutate(variantId);
+    cancelVariantMutation.mutate({ variant });
     ref.current?.close();
   };
 
