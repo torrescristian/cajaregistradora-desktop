@@ -1,5 +1,5 @@
 import HighlightedText from '@/modules/common/components/HighlightedText';
-import { IProduct } from '../interfaces/IProduct';
+import { IProduct, PRODUCT_STATUS } from '../interfaces/IProduct';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { Selector } from '@/modules/common/components/Selector';
 import useProductItem from '../hooks/useProductItem';

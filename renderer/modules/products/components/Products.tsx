@@ -48,8 +48,8 @@ const Products = () => {
         />
       </Navigation>
       <section className="flex flex-row gap-5 m-5 p-2 overflow-x-scroll w-full">
-        {productsQuery.isLoading && <Loader />}
-        {productsQuery.isError && <p>Error</p>}
+        {promoQuery.isLoading && <Loader />}
+        {promoQuery.isError && <p>Error</p>}
         <RenderIf condition={!showPromo}>
           {products.map((product) => (
             <ProductItem key={product.id} product={product} />
