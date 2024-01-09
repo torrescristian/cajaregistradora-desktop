@@ -10,6 +10,7 @@ import {
   ButtonPagination,
   useButtonPagination,
 } from '@/modules/reabastecer/components/ButtonPagination';
+import { useState } from 'react';
 
 export default function ExpenseView() {
   const {
@@ -18,6 +19,8 @@ export default function ExpenseView() {
     formState: { errors },
     handleSubmit,
   } = useForm<IExpense>();
+
+  const [discountCashBalance, setDiscountCashBalance] = useState(true);
 
   const paginationControls = useButtonPagination();
   const expensesQuery = useExpensesQuery({
@@ -43,8 +46,15 @@ export default function ExpenseView() {
       }) as IExpense,
   );
 
+  const handleChangeDiscountCashBalance = () => {
+    setDiscountCashBalance(!discountCashBalance);
+  };
+
   const handleSubmitCreateExpense = (data: IExpense) => {
-    createExpenseMutation.mutate(data);
+    createExpenseMutation.mutate({
+      expense: data,
+      discountCashBalance,
+    });
     reset();
   };
 
@@ -77,6 +87,18 @@ export default function ExpenseView() {
               </option>
             ))}
           </select>
+        </FieldLabel>
+        <FieldLabel
+          title="¿Descontar de la caja?"
+          className="gap-5 items-center"
+        >
+          <input
+            className="checkbox checkbox-secondary"
+            value={String(discountCashBalance)}
+            type="checkbox"
+            onChange={handleChangeDiscountCashBalance}
+            checked={discountCashBalance}
+          />
         </FieldLabel>
         <button className="btn btn-primary">Confirmar</button>
       </form>
