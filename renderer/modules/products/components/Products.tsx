@@ -5,8 +5,6 @@ import Loader from '@/modules/common/components/Loader';
 import ProductTypes from './ProductTypes';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import RenderPromos from '@/modules/promos/components/RenderPromo';
-
-import Pagination from '@/modules/common/components/Pagination';
 import { useProductsProps } from '../hooks/useProductsProps';
 import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 
@@ -19,7 +17,6 @@ const Navigation = ({ children }: IComponent) => (
 const Products = () => {
   const {
     promos,
-    handleNextPage,
     handleSelectPage,
     products,
     showPromo,
@@ -27,7 +24,6 @@ const Products = () => {
     searchProps,
     selectedProductType,
     setShowPromo,
-    totalPages,
     productsQuery,
     paginationControls,
   } = useProductsProps();
@@ -48,8 +44,8 @@ const Products = () => {
         />
       </Navigation>
       <section className="flex flex-row gap-5 m-5 p-2 overflow-x-scroll w-full">
-        {promoQuery.isLoading && <Loader />}
-        {promoQuery.isError && <p>Error</p>}
+        {productsQuery.isLoading && <Loader />}
+        {productsQuery.isError && <p>Error</p>}
         <RenderIf condition={!showPromo}>
           {products.map((product) => (
             <ProductItem key={product.id} product={product} />

@@ -35,10 +35,16 @@ export const columnsDef = [
     accessorFn: (col: IColumnTicket) => `#${col.ticket.order.id}`,
     header: 'Recibo',
   },
-  {
-    accessorFn: (col: IColumnTicket) => `#${col.ticket.cashBalance.id}`,
+
+  columnHelper.display({
     header: 'Caja',
-  },
+    cell: (col) =>
+      col.row.original.ticket.cashBalance?.id ? (
+        `#${col.row.original.ticket.cashBalance?.id}`
+      ) : (
+        <span className="badge-error badge badge-lg">Error</span>
+      ),
+  }),
   {
     accessorKey: 'date',
     header: 'Fecha',

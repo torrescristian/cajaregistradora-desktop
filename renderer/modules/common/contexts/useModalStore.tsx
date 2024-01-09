@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import OutsideAlerter from '../components/OutsideAlerter';
 interface IState {
   isOpen: boolean;
   content: any | null;

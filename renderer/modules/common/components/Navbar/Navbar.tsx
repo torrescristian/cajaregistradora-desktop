@@ -60,6 +60,7 @@ export default function Navbar() {
                 Ordenes pendientes
               </NavButton>
             </div>
+
             <label
               htmlFor="menu-drawer"
               className="btn btn-secondary drawer-button"
