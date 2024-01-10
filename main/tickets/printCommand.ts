@@ -47,7 +47,7 @@ export default function printCommand(order: IOrder) {
 
       // aditional details
       if (order.additionalDetails) {
-        printer.newLine().println(`# ${order.additionalDetails}`);
+        printer.println(`# ${order.additionalDetails}`);
       }
 
       interface IItem {

@@ -16,8 +16,7 @@
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux",
-    "prepare": "husky install",
-    "test": "cypress open"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emoji-mart/data": "1.1.2",

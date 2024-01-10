@@ -72,7 +72,7 @@ export default function useConfirmOrder({
     payments,
   } = usePayments({ newTotalPrice });
 
-  const { printOrder, printCommand } = usePrintService();
+  const { printInvoice, printCommand } = usePrintService();
 
   const ref = useRef<HTMLDialogElement>(null);
   const orderMutation = useCreateOrderMutation();
@@ -171,7 +171,7 @@ export default function useConfirmOrder({
       promoItems: promoItems!,
     });
 
-    const { orderResponse: updatedOrderResponse, ticketResponse } =
+    const { ticketResponse } =
       await createTicketMutation.mutateAsync({
         ticket: {
           order: orderResponse.data.id,
@@ -187,8 +187,7 @@ export default function useConfirmOrder({
       });
 
     closeModal();
-    await printOrder(ticketResponse.data.id);
-    await printCommand(updatedOrderResponse.data.id);
+    await printInvoice(ticketResponse.data.id);
   };
   const handleClickConfirmOrder = () => {
     ref.current?.showModal();

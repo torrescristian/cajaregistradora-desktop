@@ -83,7 +83,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
           },
         ],
         subtotalPrice,
-        totalPrice: state.discountAmount
+        totalPrice: state.discountAmount && state.discountType
           ? calcDiscount({
               discountAmount: state.discountAmount!,
               discountType: state.discountType!,
@@ -110,7 +110,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
         return {
           cartItems: newCartItems,
           subtotalPrice,
-          totalPrice: state.discountAmount
+          totalPrice: state.discountAmount && state.discountType
             ? calcDiscount({
                 discountAmount: state.discountAmount!,
                 discountType: state.discountType!,
@@ -129,7 +129,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
           },
         ],
         subtotalPrice,
-        totalPrice: state.discountAmount
+        totalPrice: state.discountAmount && state.discountType
           ? calcDiscount({
               discountAmount: state.discountAmount!,
               discountType: state.discountType!,
@@ -147,7 +147,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
       return {
         promoItems: state.promoItems.filter((promo, idx) => idx !== index),
         subtotalPrice,
-        totalPrice: state.discountAmount
+        totalPrice: state.discountAmount && state.discountType
           ? calcDiscount({
               discountAmount: state.discountAmount!,
               discountType: state.discountType!,
@@ -174,7 +174,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
               item.selectedVariant.id! !== selectedVariant.id!,
           ),
           subtotalPrice,
-          totalPrice: state.discountAmount
+          totalPrice: state.discountAmount && state.discountType
             ? calcDiscount({
                 discountAmount: state.discountAmount!,
                 discountType: state.discountType!,
@@ -195,7 +195,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
             return item;
           }),
           subtotalPrice,
-          totalPrice: state.discountAmount
+          totalPrice: state.discountAmount && state.discountType
             ? calcDiscount({
                 discountAmount: state.discountAmount!,
                 discountType: state.discountType!,
@@ -225,7 +225,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
           (item: ICartItem) => item.selectedVariant.id! !== selectedVariant.id!,
         ),
         subtotalPrice: fixPrice(Math.max(subtotalPrice, 0)),
-        totalPrice: state.discountAmount
+        totalPrice: state.discountAmount && state.discountType
           ? calcDiscount({
               discountAmount: state.discountAmount!,
               discountType: state.discountType!,

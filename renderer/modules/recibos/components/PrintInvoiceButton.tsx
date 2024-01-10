@@ -8,12 +8,12 @@ interface IProps {
 }
 
 export default function PrintInvoiceButton({ ticketId, orderId }: IProps) {
-  const { printOrder, printCommand } = usePrintService();
+  const { printInvoice, printCommand } = usePrintService();
 
   const handlePrint = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    await printOrder(ticketId);
+    await printInvoice(ticketId);
     await printCommand(orderId);
   };
 

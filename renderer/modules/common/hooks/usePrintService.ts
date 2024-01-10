@@ -7,7 +7,6 @@ import findCashOptionsById from '@/modules/recibos/services/findTicketsByCashId'
 const SOCKET_LOCALHOST = 'http://localhost:4000';
 
 enum EVENT_TYPE {
-  PRINT_ORDER = 'print:order',
   PRINT_INVOICE = 'print:invoice',
   PRINT_COMMAND = 'print:command',
   PRINT_CASH = 'print:cash',
@@ -27,10 +26,10 @@ export default function usePrintService() {
   const _emit = (event: EVENT_TYPE, props: any) =>
     socket.emit(event, JSON.stringify(props));
 
-  const printOrder = async (ticketId: number) => {
+  const printInvoice = async (ticketId: number) => {
     const ticket = await findTicketById(ticketId);
 
-    _emit(EVENT_TYPE.PRINT_ORDER, ticket);
+    _emit(EVENT_TYPE.PRINT_INVOICE, ticket);
   };
 
   const printCash = async (cashId: number) => {
@@ -38,14 +37,6 @@ export default function usePrintService() {
 
     _emit(EVENT_TYPE.PRINT_CASH, options);
   };
-
-  // const printInvoice = async (ticketId: number) => {
-  //   const ticket = await findTicketById(ticketId);
-
-  //   console.log(ticket);
-
-  //   _emit(EVENT_TYPE.PRINT_INVOICE, ticket);
-  // };
 
   const printCommand = async (orderId: number) => {
     const order = await findOrderById(orderId);
@@ -55,7 +46,7 @@ export default function usePrintService() {
 
   return {
     printCommand,
-    printOrder,
+    printInvoice,
     printCash,
   };
 }

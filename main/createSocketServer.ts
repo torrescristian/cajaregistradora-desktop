@@ -1,7 +1,6 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
-import printOrder from './tickets/printOrder';
 import printCommand from './tickets/printCommand';
 import printInvoice from './tickets/printInvoice';
 import printCashBalance from './tickets/printCashBalance';
@@ -19,8 +18,8 @@ export default function createSocketServer(app) {
         console.log({ reason });
       });
 
-      socket.on('print:order', (props) => {
-        printOrder(JSON.parse(props));
+      socket.on('print:invoice', (props) => {
+        printInvoice(JSON.parse(props));
       });
 
       socket.on('print:command', (props) => {
@@ -31,9 +30,6 @@ export default function createSocketServer(app) {
         printCashBalance(JSON.parse(props));
       });
 
-      // socket.on('print:invoice', (props) => {
-      //   printInvoice(JSON.parse(props));
-      // });
     } catch (error) {
       console.log(error);
     }
