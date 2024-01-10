@@ -48,7 +48,7 @@ export const ActionButton = ({
 }: IComponent & IActionButton) => (
   <button
     className={mergeClasses(
-      'btn-md btn z-10 flex flex-row shadow-lg text-white btn-success w-min',
+      'btn-md btn flex flex-row shadow-lg text-white btn-success w-min',
       className,
       disabled ? 'btn-disabled' : 'btn-success',
     )}

@@ -5,12 +5,13 @@ import CashBalanceRender from './components/CashBalanceRender';
 import ReturnCashBalance from './components/ReturnCashBalance';
 import ConfirmExpensesModal from './components/ConfirmExpensesModal';
 import { useAuthState } from '../common/contexts/AuthContext';
+import CashBalanceHistory from './components/CashBalanceHistory';
 
 export default function CajaPage() {
   const { isOwner } = useAuthState();
   const tabs = [
     { label: 'Caja', component: <CashBalanceRender /> },
-    { label: 'Retiro de fondos', component: <ReturnCashBalance /> },
+    { label: 'Cajas del dia', component: <CashBalanceHistory /> },
   ];
   if (isOwner) {
     tabs.push({
