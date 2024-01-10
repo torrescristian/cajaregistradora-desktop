@@ -10,6 +10,8 @@ import Pagination from '@/modules/common/components/Pagination';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import { CreateTicketFormMobile } from '@/modules/common/components/Mobile/CreateTicketFormMobile';
+import QuickOrders from '@/modules/pedidos/components/QuickOrders';
 
 interface IProps {
   updateMode?: boolean;
@@ -51,66 +53,74 @@ export const ProductsMobile = ({
           </button>
         </div>
       </RenderIf>
-      <div
-        className={
-          'flex flex-row items-center justify-between p-3 gap-5 bg-base-100 sticky top-24 md:z-0 z-30 md:top-0'
-        }
-      >
-        {isMobile ? (
-          <div>
-            <ProductTypes
-              setShowPromo={setShowPromo}
-              showPromo={showPromo}
-              onSelect={handleSelectPage}
-              selectedProductType={selectedProductType?.id!}
-            />
-            <SearchInput {...searchProps} />
-            <CartIconMobile
-              updateMode={updateMode}
-              order={order}
-              onSubmit={onSubmit}
-              promoItems={promoItems}
-              closeUpdateMode={closeUpdateMode!}
-            />
+      <div className="w-full flex flex-row justify-between gap-5 ">
+        <div className="flex flex-col w-full gap-5">
+          <div
+            className={
+              'flex flex-row items-center justify-between p-3 gap-5 bg-base-100 sticky top-24 md:z-0 z-30 md:top-0'
+            }
+          >
+            {isMobile ? (
+              <div>
+                <ProductTypes
+                  setShowPromo={setShowPromo}
+                  showPromo={showPromo}
+                  onSelect={handleSelectPage}
+                  selectedProductType={selectedProductType?.id!}
+                />
+                <SearchInput {...searchProps} />
+                <CartIconMobile
+                  updateMode={updateMode}
+                  order={order}
+                  onSubmit={onSubmit}
+                  promoItems={promoItems}
+                  closeUpdateMode={closeUpdateMode!}
+                />
+              </div>
+            ) : (
+              <>
+                <SearchInput {...searchProps} />
+                <ProductTypes
+                  setShowPromo={setShowPromo}
+                  showPromo={showPromo}
+                  onSelect={handleSelectPage}
+                  selectedProductType={selectedProductType?.id!}
+                />
+                <CartIconMobile
+                  updateMode={updateMode}
+                  order={order}
+                  promoItems={promoItems}
+                  onSubmit={onSubmit}
+                  closeUpdateMode={closeUpdateMode!}
+                />
+              </>
+            )}
           </div>
-        ) : (
-          <>
-            <SearchInput {...searchProps} />
-            <ProductTypes
-              setShowPromo={setShowPromo}
-              showPromo={showPromo}
-              onSelect={handleSelectPage}
-              selectedProductType={selectedProductType?.id!}
-            />
-            <CartIconMobile
-              updateMode={updateMode}
-              order={order}
-              promoItems={promoItems}
-              onSubmit={onSubmit}
-              closeUpdateMode={closeUpdateMode!}
-            />
-          </>
-        )}
+          <div className="sm:grid-cols-2 sm:grid xl:grid-cols-3 sm:justify-start sm:flex-wrap gap-5">
+            <RenderIf condition={!showPromo}>
+              {products.map((product) => (
+                <ProductItemMobile key={product.id} product={product} />
+              ))}
+            </RenderIf>
+            <RenderIf condition={showPromo}>
+              <RenderPromos
+                promosItems={promos!.map((promo) => ({
+                  promo,
+                  selectedVariants: [],
+                }))}
+                salesMode
+              />
+            </RenderIf>
+          </div>
+          <RenderIf condition={!showPromo}>
+            <ButtonPagination {...paginationControls} />
+          </RenderIf>
+        </div>
+
+        <div className="flex flex-col w-min items-end">
+          <QuickOrders />
+        </div>
       </div>
-      <div className="sm:grid-cols-2 sm:grid xl:grid-cols-4 sm:justify-center sm:flex-wrap gap-5">
-        <RenderIf condition={!showPromo}>
-          {products.map((product) => (
-            <ProductItemMobile key={product.id} product={product} />
-          ))}
-        </RenderIf>
-        <RenderIf condition={showPromo}>
-          <RenderPromos
-            promosItems={promos!.map((promo) => ({
-              promo,
-              selectedVariants: [],
-            }))}
-            salesMode
-          />
-        </RenderIf>
-      </div>
-      <RenderIf condition={!showPromo}>
-        <ButtonPagination {...paginationControls} />
-      </RenderIf>
     </section>
   );
 };
