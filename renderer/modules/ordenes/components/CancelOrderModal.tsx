@@ -1,8 +1,9 @@
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { IOrder } from '../interfaces/IOrder';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
-import { MouseEventHandler, useContext, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { OrderContext } from '../context/OrderContext';
+import useConfirmOrder from '@/modules/cart/hooks/useConfirmOrder';
 
 interface IProps {
   order: IOrder;
@@ -22,7 +23,7 @@ export const CancelOrderModal = ({ order }: IProps) => {
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col">
       <button
         disabled={cancelOrderMutation.isLoading}
         className="btn btn-min btn-error btn-outline text-base-content"

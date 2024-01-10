@@ -1,6 +1,5 @@
 import { DataItem } from '@/modules/common/components/DataItem';
 import { formatPrice } from '@/modules/common/libs/utils';
-import Payments from './Payments';
 import ValidateCoupon from './ValidateCoupon';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 import { IOrder } from '../interfaces/IOrder';
@@ -8,28 +7,52 @@ import React, { useContext, useRef } from 'react';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import { OrderContext } from '../context/OrderContext';
+import Payments from './Payments';
+import useCreateTicketForm from '../hooks/useCreateTicketForm';
 
 interface IProps {
   order: IOrder;
 }
 
 export const ConfirmOrderModal = ({ order }: IProps) => {
+  /*   const {
+      setDiscountAmount,
+      setDiscountType,
+      discountAmount,
+      discountType,
+      handleCouponDiscountAmount,
+      coupon,
+      payments,
+      handleChangePayment,
+      handleDeletePayment,
+      handleClickAddPaymentMethod,
+      finalTotalPrice,
+      additionalDetails,
+      handleChangeAdditionalsDetails,
+      handleSubmitCreateTicket,
+    } = useContext(OrderContext); */
   const {
-    setDiscountAmount,
-    setDiscountType,
+    cancelOrderMutation,
+    coupon,
+    createTicketMutation,
     discountAmount,
     discountType,
-    handleCouponDiscountAmount,
-    coupon,
-    payments,
-    handleChangePayment,
-    handleDeletePayment,
-    handleClickAddPaymentMethod,
     finalTotalPrice,
+    handleCancelOrder,
+    handleChangePayment,
+    handleClickAddPaymentMethod,
+    handleCouponDiscountAmount,
+    handleDeletePayment,
+    handleSubmitCreateTicket,
+    handleToggleAccordion,
+    isCheckedAcordion,
+    payments,
     additionalDetails,
     handleChangeAdditionalsDetails,
-    handleSubmitCreateTicket,
-  } = useContext(OrderContext);
+    setAdditionalDetails,
+    setDiscountAmount,
+    setDiscountType,
+  } = useCreateTicketForm({ order });
 
   const ref = useRef<HTMLDialogElement>(null);
 

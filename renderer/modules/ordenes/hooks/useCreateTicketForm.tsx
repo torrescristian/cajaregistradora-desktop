@@ -77,6 +77,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     } catch (e) {
       toast.error('No se pudo cancelar la orden');
     }
+    window.location.reload();
   };
 
   const handleSubmitCreateTicket = async () => {
