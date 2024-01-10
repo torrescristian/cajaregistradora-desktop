@@ -4,12 +4,14 @@ interface IProps {
   className?: string;
   children: React.ReactNode;
   columnMode?: boolean;
+  classNameTitle?: string;
 }
 export default function FieldLabel({
   children,
   title,
   className,
   columnMode,
+  classNameTitle,
 }: IProps) {
   return (
     <label
@@ -19,7 +21,9 @@ export default function FieldLabel({
         className,
       )}
     >
-      <span className="text-base-content">{title}</span>
+      <span className={twMerge('text-base-content', classNameTitle)}>
+        {title}
+      </span>
       {children}
     </label>
   );

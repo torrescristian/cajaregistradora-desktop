@@ -36,7 +36,7 @@ export const CartIconMobile = ({
           </span>
           <label
             htmlFor="menu-drawer"
-            className="drawer-button btn btn-primary"
+            className="drawer-button btn btn-primary z-50"
             onClick={() =>
               openModal(
                 <CartDrawer
@@ -52,10 +52,10 @@ export const CartIconMobile = ({
           </label>
         </div>
       ) : (
-        <div>
+        <div className="">
           <label
             htmlFor="menu-drawer"
-            className="drawer-button btn btn-disabled btn-primary"
+            className="drawer-button btn btn-disabled btn-primary z-50"
             onClick={() =>
               openModal(
                 <CartDrawer

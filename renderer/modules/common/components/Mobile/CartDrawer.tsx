@@ -1,6 +1,7 @@
 import CartMobile from '@/modules/common/components/Mobile/CartMobile';
 import { useModalStore } from '../../contexts/useModalStore';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
+import OutsideAlerter from '../OutsideAlerter';
 
 interface IProps {
   updateMode?: boolean;
@@ -15,17 +16,10 @@ export const CartDrawer = ({
   updateMode,
   closeUpdateMode,
 }: IProps) => {
-  const { isOpen } = useModalStore();
+  const { isOpen, closeModal } = useModalStore();
 
   return (
-    <div className="drawer-side">
-      {isOpen ? (
-        <label
-          htmlFor="carrito-drawer"
-          aria-label="cerrar sidebar"
-          className={'drawer-overlay'}
-        ></label>
-      ) : null}
+    <OutsideAlerter callback={closeModal}>
       <ul className="bg-base-100">
         <CartMobile
           updateMode={updateMode}
@@ -34,6 +28,6 @@ export const CartDrawer = ({
           onSubmit={onSubmit}
         />
       </ul>
-    </div>
+    </OutsideAlerter>
   );
 };

@@ -13,7 +13,6 @@ import useFormControl from '@/modules/common/hooks/useFormControl';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import useInitCashMutation from '../hooks/useInitCashMutation';
 import PageLayout from '@/modules/common/components/PageLayout';
-import CashBalanceHistory from './CashBalanceHistory';
 
 export default function CashBalanceRender() {
   const {
@@ -71,8 +70,8 @@ export default function CashBalanceRender() {
           </section>
         </div>
       ) : (
-        <div className="w-full flex flex-col gap-10 p-5">
-          <section>
+        <div className="w-full flex flex-row gap-10 p-5">
+          <div className="text-primary-content">
             <ul className="flex flex-col items-center gap-5">
               <section className="flex">
                 {isError && <p>Error</p>}
@@ -102,17 +101,7 @@ export default function CashBalanceRender() {
                 </RenderIf>
               </section>
             </ul>
-          </section>
-
-          <CashBalanceHistory />
-
-          {/*   <RenderIf condition={true}>
-            <p className="text-center text-xl font-bold">
-              Transacciones de la caja
-            </p>
-            <CashBalanceTable cashBalance={todayCashBalances} />
-            <ButtonPagination {...paginationControls} />
-          </RenderIf> */}
+          </div>
         </div>
       )}
     </PageLayout>

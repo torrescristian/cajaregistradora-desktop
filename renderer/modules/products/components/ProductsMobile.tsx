@@ -53,11 +53,11 @@ export const ProductsMobile = ({
       </RenderIf>
       <div
         className={
-          'flex flex-row items-center justify-between p-3 gap-5 bg-base-100 sticky top-24 z-30 md:top-0'
+          'flex flex-row items-center justify-between p-3 gap-5 bg-base-100 sticky top-24 md:z-0 z-30 md:top-0'
         }
       >
         {isMobile ? (
-          <>
+          <div>
             <ProductTypes
               setShowPromo={setShowPromo}
               showPromo={showPromo}
@@ -72,7 +72,7 @@ export const ProductsMobile = ({
               promoItems={promoItems}
               closeUpdateMode={closeUpdateMode!}
             />
-          </>
+          </div>
         ) : (
           <>
             <SearchInput {...searchProps} />

@@ -91,6 +91,7 @@ export default function ExpenseView() {
         <FieldLabel
           title="¿Descontar de la caja?"
           className="gap-5 items-center"
+          classNameTitle="w-1/2"
         >
           <input
             className="checkbox checkbox-secondary"
