@@ -54,7 +54,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     subtotalPrice: finalTotalPrice,
   });
 
-  const { printOrder } = usePrintService();
+  const { printInvoice } = usePrintService();
 
   const handleClearForm = () => {
     setAdditionalDetails('');
@@ -95,7 +95,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
         },
       });
 
-      await printOrder(ticketResponse.data.id);
+      await printInvoice(ticketResponse.data.id);
       handleClearForm();
       window.location.reload();
       toast.success('Pagado con exito');

@@ -11,6 +11,7 @@ import {
   useButtonPagination,
 } from '@/modules/reabastecer/components/ButtonPagination';
 import { useState } from 'react';
+import useCreateCashBalanceExpenseMutation from '@/modules/caja/hooks/useCreateCashBalanceExpenseMutation';
 
 export default function ExpenseView() {
   const {
@@ -28,8 +29,7 @@ export default function ExpenseView() {
     setTotalPages: paginationControls.setTotalPages,
   });
   const expenses = expensesQuery.data?.expenses || [];
-  const createExpenseMutation = useCreateExpenseNoBalanceMutation();
-
+  const createExpenseMutation = useCreateCashBalanceExpenseMutation();
   const expenseTypesQuery = useExpensesTypeQuery();
   const expenseTypes = expenseTypesQuery.data || [];
 
@@ -50,11 +50,8 @@ export default function ExpenseView() {
     setDiscountCashBalance(!discountCashBalance);
   };
 
-  const handleSubmitCreateExpense = (data: IExpense) => {
-    createExpenseMutation.mutate({
-      expense: data,
-      discountCashBalance,
-    });
+  const handleSubmitCreateExpense = async (data: IExpense) => {
+    await createExpenseMutation.mutateAsync(data);
     reset();
   };
 

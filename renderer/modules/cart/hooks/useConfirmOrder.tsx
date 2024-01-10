@@ -98,7 +98,6 @@ export default function useConfirmOrder({
       coupon,
       promoItems: promoItems!,
     });
-    /*      await printOrder(orderResponse.data.id);*/
     await printCommand(orderResponse.data.id);
     closeModal();
   };
@@ -171,22 +170,24 @@ export default function useConfirmOrder({
       promoItems: promoItems!,
     });
 
-    const { ticketResponse } = await createTicketMutation.mutateAsync({
-      ticket: {
-        order: orderResponse.data.id,
-        totalPrice: newTotalPrice,
-        cashBalance: activeCashBalanceQuery.cashBalance?.id!,
-        payments,
-        couponDiscount,
-      },
-      coupon: {
-        id: coupon?.id,
-        availableUses: coupon?.availableUses!,
-      },
-    });
+    const { orderResponse: updatedOrderResponse, ticketResponse } =
+      await createTicketMutation.mutateAsync({
+        ticket: {
+          order: orderResponse.data.id,
+          totalPrice: newTotalPrice,
+          cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+          payments,
+          couponDiscount,
+        },
+        coupon: {
+          id: coupon?.id,
+          availableUses: coupon?.availableUses!,
+        },
+      });
 
     closeModal();
     await printInvoice(ticketResponse.data.id);
+    await printCommand(updatedOrderResponse.data.id);
   };
   const handleClickConfirmOrder = () => {
     ref.current?.showModal();

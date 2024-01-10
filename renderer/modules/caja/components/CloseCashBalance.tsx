@@ -1,13 +1,14 @@
-import useCancelCashBalanceMutation from '@/modules/caja/hooks/useCancelCashBalanceMutation';
+import useCloseCashBalanceMutation from '@/modules/caja/hooks/useCloseCashBalanceMutation';
 import useExpensesPendingQuery from '../hooks/useExpensesPendingQuery';
 import useTicketPendingQuery from '@/modules/recibos/hooks/useTicketPendingQuery';
+import Loader from '@/modules/common/components/Loader';
 
 interface IProps {
   cashBalanceId: number;
 }
 
 export const CloseCashBalance = ({ cashBalanceId }: IProps) => {
-  const cancelCashBalanceMutation = useCancelCashBalanceMutation();
+  const cancelCashBalanceMutation = useCloseCashBalanceMutation();
 
   const expensePendingQuery = useExpensesPendingQuery({ page: 1 });
   const expensePending = expensePendingQuery.data?.expenses || [];
@@ -22,10 +23,13 @@ export const CloseCashBalance = ({ cashBalanceId }: IProps) => {
     <button
       className="btn flex w-fit bg-red-500 text-base-content hover:bg-red-600"
       onClick={handleCancelCashBalance}
-      disabled={expensePending.length > 0 || ticketPending.length > 0}
+      disabled={
+        expensePending.length > 0 ||
+        ticketPending.length > 0 ||
+        cancelCashBalanceMutation.isLoading
+      }
     >
-      Cerrar caja
+      {cancelCashBalanceMutation.isLoading ? <Loader /> : 'Cerrar caja'}
     </button>
   );
-  //TODO:create confirm modal
 };

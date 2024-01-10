@@ -101,8 +101,10 @@ export default function printCommand(order: IOrder) {
       for (const item of items) {
         printer
           .align(ALIGN.LT)
+          .text(FONT_SIZE_NORMAL)
           .text(`(${item.quantity}) ${item.productName}`)
           .align(ALIGN.RT)
+          .text(FONT_SIZE_BIG)
           .text(`- ${item.variantName}`);
       }
 

@@ -16,7 +16,7 @@ export const columnDefCashBalanceToday = [
     header: '👤 Vendedor',
   },
   {
-    accessorFn: (row: ICashBalance) => formatPrice(row.totalAmount),
+    accessorFn: (row: ICashBalance) => formatPrice(row.totalAmount || 0),
     header: '💸 Efectivo total',
   },
   {

@@ -9,7 +9,7 @@ import {
 } from '@/modules/common/consts';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 
-export default function useCancelCashBalanceMutation() {
+export default function useCloseCashBalanceMutation() {
   const queryClient = useQueryClient();
   const { printCash } = usePrintService();
 

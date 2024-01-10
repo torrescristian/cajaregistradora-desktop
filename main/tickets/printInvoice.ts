@@ -9,7 +9,7 @@ import {
 import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL } from '../helpers/const';
 import { ITicket } from '../interfaces/ITicket';
 
-export default function printOrder(ticket: ITicket) {
+export default function printInvoice(ticket: ITicket) {
   try {
     const { order } = ticket;
 
