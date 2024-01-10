@@ -29,7 +29,6 @@ export default function createSocketServer(app) {
       socket.on('print:cash', (props) => {
         printCashBalance(JSON.parse(props));
       });
-
     } catch (error) {
       console.log(error);
     }

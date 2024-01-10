@@ -171,20 +171,19 @@ export default function useConfirmOrder({
       promoItems: promoItems!,
     });
 
-    const { ticketResponse } =
-      await createTicketMutation.mutateAsync({
-        ticket: {
-          order: orderResponse.data.id,
-          totalPrice: newTotalPrice,
-          cashBalance: activeCashBalanceQuery.cashBalance?.id!,
-          payments,
-          couponDiscount,
-        },
-        coupon: {
-          id: coupon?.id,
-          availableUses: coupon?.availableUses!,
-        },
-      });
+    const { ticketResponse } = await createTicketMutation.mutateAsync({
+      ticket: {
+        order: orderResponse.data.id,
+        totalPrice: newTotalPrice,
+        cashBalance: activeCashBalanceQuery.cashBalance?.id!,
+        payments,
+        couponDiscount,
+      },
+      coupon: {
+        id: coupon?.id,
+        availableUses: coupon?.availableUses!,
+      },
+    });
 
     closeModal();
     await printInvoice(ticketResponse.data.id);
