@@ -80,10 +80,11 @@ export default function printCashBalance({
       printer
         .text(`Fecha: ${parseDateToArgentinianFormat(firstTicket.createdAt)}`)
         .drawLine();
-        // store, client and order data
-        
-        printer.align(ALIGN.LT)
-        .text(`Caja Inicial: ${formatPrice(cashBalance.initialCashAmount)}`)
+      // store, client and order data
+
+      printer
+        .align(ALIGN.LT)
+        .text(`Caja Inicial: ${formatPrice(cashBalance.initialCashAmount)}`);
       // order items
       for (const ticket of tickets) {
         printer
