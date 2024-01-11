@@ -94,6 +94,10 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
           id: order.coupon?.id || coupon?.id,
           availableUses: order.coupon?.availableUses || coupon?.availableUses!,
         },
+        discount: {
+          amount: Number(discountAmount),
+          type: discountType,
+        }
       });
 
       await printInvoice(ticketResponse.data.id);

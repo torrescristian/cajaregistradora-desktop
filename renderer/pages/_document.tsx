@@ -6,12 +6,12 @@ export default function Document() {
       <Head>
         <meta
           name="title"
-          content="Cyberfront.dev | Software desde Traslasierra"
+          content="CajaRegistradora.com.ar"
         />
         <link rel="icon" href="/images/logo.png" />
         <meta
           name="description"
-          content="Páginas, E-Commerce, Sistemas desde Villa Dolores, Córdoba, Argentina"
+          content="Tu aliado en las ventas!"
         />
         <meta name="robots" content="index, follow" />
         <meta httpEquiv="content-language" content="es" />
