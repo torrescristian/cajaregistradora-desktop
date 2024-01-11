@@ -7,7 +7,11 @@ import {
 import strapi from '@/modules/common/libs/strapi';
 import { TicketPayloadSchema } from '@/schemas/TicketSchema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { IDiscount, IOrder, ORDER_STATUS } from '@/modules/ordenes/interfaces/IOrder';
+import {
+  IDiscount,
+  IOrder,
+  ORDER_STATUS,
+} from '@/modules/ordenes/interfaces/IOrder';
 import useActiveCashBalanceQuery from '../../caja/hooks/useActiveCashBalanceQuery';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import { IStrapiSingleResponse } from '@/modules/common/interfaces/utils';
@@ -23,7 +27,7 @@ type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 interface IProps {
   ticket: ICreateTicketMutation;
   coupon?: Pick<ICoupon, 'id' | 'availableUses'>;
-  discount: IDiscount
+  discount: IDiscount;
 }
 
 export default function useCreateTicketMutation() {
