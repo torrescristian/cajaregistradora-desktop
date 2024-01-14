@@ -56,7 +56,7 @@ export const ButtonPagination = ({
 
   return (
     <div className="flex flex-row w-full items-center  justify-center gap-5">
-      <button className="btn btn-secondary" onClick={onPreviousPage}>
+      <button className="btn btn-neutral" onClick={onPreviousPage}>
         Anterior
       </button>
       {totalPagesRange.map((pageNumber) => (
@@ -71,7 +71,7 @@ export const ButtonPagination = ({
           {pageNumber}
         </button>
       ))}
-      <button className="btn btn-secondary" onClick={onNextPage}>
+      <button className="btn btn-neutral" onClick={onNextPage}>
         Siguiente
       </button>
     </div>

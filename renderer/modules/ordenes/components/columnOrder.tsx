@@ -49,7 +49,7 @@ export const columnDefOrder = [
       <div className="w-full">
         <div className="w-full flex flex-row gap-2">
           <ConfirmOrderModal order={info.row.original} />
-          <EditOrderModal />
+          <EditOrderModal order={info.row.original} />
           <CancelOrderModal order={info.row.original} />
         </div>
       </div>

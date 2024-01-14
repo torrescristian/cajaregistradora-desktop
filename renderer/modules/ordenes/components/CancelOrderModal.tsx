@@ -3,14 +3,18 @@ import { IOrder } from '../interfaces/IOrder';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import { useContext, useRef } from 'react';
 import { OrderContext } from '../context/OrderContext';
-import useConfirmOrder from '@/modules/cart/hooks/useConfirmOrder';
+import useCreateTicketForm from '../hooks/useCreateTicketForm';
 
 interface IProps {
   order: IOrder;
 }
 
 export const CancelOrderModal = ({ order }: IProps) => {
-  const { handleCancelOrder, cancelOrderMutation } = useContext(OrderContext);
+  /*  const { handleCancelOrder, cancelOrderMutation } = useContext(OrderContext); */
+  const { cancelOrderMutation, handleCancelOrder } = useCreateTicketForm({
+    order,
+  });
+
   const ref = useRef<HTMLDialogElement>(null);
 
   const handleOpenModal = (e: React.MouseEvent) => {

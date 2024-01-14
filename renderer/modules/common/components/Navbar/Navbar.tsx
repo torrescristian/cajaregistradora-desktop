@@ -29,7 +29,7 @@ export default function Navbar() {
             <div className="flex flex-row">
               <label
                 htmlFor="menu-drawer"
-                className="btn btn-secondary w-full drawer-button flex flex-row flex-nowrap"
+                className="btn btn-neutral w-full drawer-button flex flex-row flex-nowrap"
                 onClick={() =>
                   openModal(
                     <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,

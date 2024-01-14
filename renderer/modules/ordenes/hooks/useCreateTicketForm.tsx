@@ -32,12 +32,12 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
       discountAmount: order.discount?.amount,
       discountType: order.discount?.type,
     });
-  const finalTotalPrice = calcDiscount({
-    price: order.totalPrice,
-    discountAmount: Number(discountAmount),
-    discountType,
-  });
-  /* order.totalPrice - couponDiscount - Number(discountAmount); */
+  const finalTotalPrice =
+    calcDiscount({
+      price: order.subtotalPrice,
+      discountAmount: Number(discountAmount),
+      discountType,
+    }) - couponDiscount;
 
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);

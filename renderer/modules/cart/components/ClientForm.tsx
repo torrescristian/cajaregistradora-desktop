@@ -251,7 +251,7 @@ export default function ClientForm({ onSelect, defaultClient }: IProps) {
             <UserIcon className="w-4 h-4 opacity-60" />{' '}
             <p className="opacity-60">Consumidor Final</p>
             <button
-              className="btn btn-secondary"
+              className="btn btn-neutral"
               onClick={() => selectClientDialogRef.current?.showModal()}
             >
               Seccionar Cliente

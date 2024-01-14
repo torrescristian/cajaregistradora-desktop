@@ -87,7 +87,7 @@ export const CreateTicketFormMobile = ({
           <div className="flex flex-col gap-5">
             <div className="flex flex-row justify-end gap-3">
               <button
-                className="btn btn-secondary text-base-content"
+                className="btn btn-neutral text-base-content"
                 onClick={handleToggleEdit}
               >
                 <PencilIcon className="w-full h-6 " />
