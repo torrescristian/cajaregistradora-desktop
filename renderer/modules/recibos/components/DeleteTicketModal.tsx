@@ -35,6 +35,7 @@ export const DeleteTicketModal = ({ ticket }: IDeleteTicketModalProps) => {
         });
         toast.success('Reembolsado con exito');
       } catch (error) {
+        console.log({ error });
         toast.error(`No se logro reembolsar`);
       }
     };

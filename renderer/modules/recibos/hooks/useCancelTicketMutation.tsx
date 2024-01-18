@@ -56,7 +56,7 @@ export default function useCancelTicketMutation() {
               : cashBalance.newCashAmount,
           totalAmount: Math.max(cashBalance.totalAmount - amountTicket, 0),
           refunds: [
-            ...cashBalance.refunds,
+            ...(cashBalance.refunds || []),
             {
               ticket: ticketId,
               payment: {

@@ -4,15 +4,9 @@ export default function Document() {
   return (
     <Html lang="en" data-theme="business">
       <Head>
-        <meta
-          name="title"
-          content="Cyberfront.dev | Software desde Traslasierra"
-        />
+        <meta name="title" content="CajaRegistradora.com.ar" />
         <link rel="icon" href="/images/logo.png" />
-        <meta
-          name="description"
-          content="Páginas, E-Commerce, Sistemas desde Villa Dolores, Córdoba, Argentina"
-        />
+        <meta name="description" content="Tu aliado en las ventas!" />
         <meta name="robots" content="index, follow" />
         <meta httpEquiv="content-language" content="es" />
       </Head>

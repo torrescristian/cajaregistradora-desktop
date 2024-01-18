@@ -29,6 +29,11 @@ const fixPrice = (price: number) => Math.round(price * 100) / 100;
 type ICartStore = ICartState & {
   initCart: (cartPayload: ICartState) => void;
   addProduct: ({ product, selectedVariant }: IAddProductProps) => void;
+  setProductQuantity: ({
+    product,
+    selectedVariant,
+    quantity,
+  }: IAddProductProps & { quantity: number }) => void;
   removeProduct: ({ product, selectedVariant }: IAddProductProps) => void;
   removeCartItem: ({ product, selectedVariant }: IAddProductProps) => void;
   clearCart: () => void;
@@ -139,6 +144,50 @@ export const useCartStore = create<ICartStore>()((set) => ({
                 price: subtotalPrice,
               })
             : subtotalPrice,
+      };
+    });
+  },
+  setProductQuantity: ({
+    product,
+    selectedVariant,
+    quantity,
+  }: IAddProductProps & { quantity: number }) => {
+    set((state): Partial<ICartStore> => {
+      const itemIndex = state.cartItems.findIndex(
+        (item) => item.selectedVariant.id! === selectedVariant.id!,
+      );
+
+      const subtotalPrice = fixPrice(
+        state.subtotalPrice + selectedVariant.price * quantity,
+      );
+
+      let cartItems: ICartItem[];
+
+      if (itemIndex >= 0) {
+        cartItems = structuredClone(state.cartItems);
+        const cartItem = state.cartItems[itemIndex];
+        cartItem.quantity = quantity;
+      } else {
+        cartItems = [
+          ...state.cartItems,
+          {
+            product: product,
+            quantity,
+            selectedVariant: selectedVariant,
+          },
+        ];
+      }
+
+      return {
+        cartItems,
+        subtotalPrice,
+        totalPrice: state.discountAmount
+          ? calcDiscount({
+              discountAmount: state.discountAmount!,
+              discountType: state.discountType!,
+              price: subtotalPrice,
+            })
+          : subtotalPrice,
       };
     });
   },
@@ -255,7 +304,6 @@ export const useCartStore = create<ICartStore>()((set) => ({
       reset: true,
     }),
   addClientId: (clientId: number | null) => set({ clientId }),
-
   setAdditionalDetails: (additionalDetails: string) =>
     set({ additionalDetails }),
   setDiscountType: (discountType: DISCOUNT_TYPE) =>
@@ -303,10 +351,11 @@ export const getSetAdditionalDetails = (state: ICartStore) =>
 export const getSetDiscountType = (state: ICartStore) => state.setDiscountType;
 export const getSetDiscountAmount = (state: ICartStore) =>
   state.setDiscountAmount;
-
 export const getDiscountType = (state: ICartStore) => state.discountType;
 export const getDiscountAmount = (state: ICartStore) => state.discountAmount;
 export const getPromoItems = (state: ICartStore) => state.promoItems;
 export const getAddPromo = (state: ICartStore) => state.addPromo;
 export const getRemovePromo = (state: ICartStore) => state.removePromo;
 export const getInitCart = (state: ICartStore) => state.initCart;
+export const getSetProductQuantity = (state: ICartStore) =>
+  state.setProductQuantity;

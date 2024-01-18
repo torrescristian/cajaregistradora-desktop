@@ -7,7 +7,11 @@ import {
 import strapi from '@/modules/common/libs/strapi';
 import { TicketPayloadSchema } from '@/schemas/TicketSchema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { IOrder, ORDER_STATUS } from '@/modules/ordenes/interfaces/IOrder';
+import {
+  IDiscount,
+  IOrder,
+  ORDER_STATUS,
+} from '@/modules/ordenes/interfaces/IOrder';
 import useActiveCashBalanceQuery from '../../caja/hooks/useActiveCashBalanceQuery';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import { IStrapiSingleResponse } from '@/modules/common/interfaces/utils';
@@ -23,6 +27,7 @@ type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 interface IProps {
   ticket: ICreateTicketMutation;
   coupon?: Pick<ICoupon, 'id' | 'availableUses'>;
+  discount: IDiscount;
 }
 
 export default function useCreateTicketMutation() {
@@ -46,7 +51,7 @@ export default function useCreateTicketMutation() {
     return Number(cashBalance.newCashAmount) + Number(cashPayment.amount);
   }
 
-  return useMutation(async ({ ticket, coupon }: IProps) => {
+  return useMutation(async ({ ticket, coupon, discount }: IProps) => {
     await TicketPayloadSchema().validate(ticket);
     const sum = ticket.payments.reduce(
       (acc, curr) => acc + Number(curr.amount),
@@ -66,7 +71,8 @@ export default function useCreateTicketMutation() {
     const orderResPromise = strapi.update(ORDERS_KEY, ticket.order, {
       status: ORDER_STATUS.PAID,
       coupon: coupon?.id,
-    });
+      discount,
+    } as Partial<IOrder>);
     let couponRestPromise;
     if (coupon?.id) {
       couponRestPromise = strapi.update(COUPONS_KEY, coupon.id, {
