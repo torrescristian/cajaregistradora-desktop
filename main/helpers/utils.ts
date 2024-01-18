@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { DISCOUNT_TYPE, IDiscount } from '../interfaces/IOrder';
 
 export const formatPrice = (price: number) => {
@@ -7,6 +8,16 @@ export const formatPrice = (price: number) => {
     style: 'currency',
     currency: 'USD',
   });
+};
+
+export const removeHourToDate = (date: string) => {
+  if (!date) return '';
+
+  const res = format(new Date(date), 'yyyy-mm-dd');
+
+  console.log({ res });
+
+  return res;
 };
 
 export const parseDateToArgentinianFormat = (date?: Date | string) => {

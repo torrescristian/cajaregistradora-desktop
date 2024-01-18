@@ -2,7 +2,6 @@ import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
 
 import {
-  discountToString,
   formatPrice,
   parseDateToArgentinianFormat,
   parseDateToTime,
@@ -13,7 +12,7 @@ import {
   FONT_SIZE_SMALL,
   FONT_SIZE_BIG,
 } from '../helpers/const';
-import { IPayment, ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
+import { ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
 import { ICashBalance } from '../interfaces/ICashBalance';
 import { IExpense } from '../interfaces/IExpense';
 
@@ -71,7 +70,7 @@ export default function printCashBalance({
       console.log({ error });
       if (error) throw new Error(error);
 
-      // open & set printer4
+      // open & set printer
       printer
         .text(FONT_SIZE_BIG)
         .text(firstTicket.store.name)
@@ -130,7 +129,8 @@ export default function printCashBalance({
       printer
         .drawLine()
         .align(ALIGN.LT)
-        .text(`Total Bruto: ${formatPrice(cashBalance.totalAmount)}`)
+        .text(`Caja Inicial: ${formatPrice(cashBalance.initialCashAmount)}`)
+        .text(`Caja Final: ${formatPrice(cashBalance.totalAmount)}`)
         .text(`Total Efectivo: ${formatPrice(cashBalance.newCashAmount)}`);
 
       printer.align(ALIGN.CT).text(FONT_SIZE_SMALL).text('Sin validez fiscal');

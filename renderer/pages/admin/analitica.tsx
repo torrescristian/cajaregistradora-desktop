@@ -1,3 +1,5 @@
+import AnaliticaPage from '@/modules/analitica/AnaliticaPage';
+
 export default function Analitica() {
-  return <p>Pronto</p>;
+  return <AnaliticaPage />;
 }
