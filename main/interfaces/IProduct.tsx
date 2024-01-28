@@ -18,6 +18,17 @@ export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant[]> {
   type: string;
   updatedAt?: string;
   createdAt?: string;
+  measureUnit?: unitType;
+}
+
+export enum unitType {
+  UNIT = 'UNIT',
+  KILOGRAM = 'KILOGRAM',
+  METER = 'METER',
+  LITER = 'LITER',
+  PACKAGE = 'PACKAGE',
+  DOZEN = 'DOZEN',
+  GRAM = 'GRAM',
 }
 
 export type IProductPage = IResponsePage<IProduct<IVariant>>;

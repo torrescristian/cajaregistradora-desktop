@@ -91,7 +91,9 @@ export default function QuickOrders() {
           </div>
         </div>
       ))}
-      <ButtonPagination {...paginationControls} />
+      <RenderIf condition={orders.length > 10}>
+        <ButtonPagination {...paginationControls} />
+      </RenderIf>
     </section>
   );
 }

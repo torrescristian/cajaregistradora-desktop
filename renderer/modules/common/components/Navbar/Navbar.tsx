@@ -29,7 +29,7 @@ export default function Navbar() {
             <div className="flex flex-row">
               <label
                 htmlFor="menu-drawer"
-                className="btn btn-neutral w-full drawer-button flex flex-row flex-nowrap"
+                className="btn  w-full drawer-button flex flex-row flex-nowrap"
                 onClick={() =>
                   openModal(
                     <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,
@@ -63,7 +63,7 @@ export default function Navbar() {
 
             <label
               htmlFor="menu-drawer"
-              className="btn btn-secondary drawer-button"
+              className="btn btn-primary drawer-button"
               onClick={() =>
                 openModal(
                   <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,

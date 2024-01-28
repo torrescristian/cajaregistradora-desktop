@@ -37,7 +37,7 @@ export default function usePayments({ newTotalPrice }: IProps) {
         ...ps,
         {
           uuid: crypto.randomUUID(),
-          type: PAYMENT_TYPE.CREDIT,
+          type: PAYMENT_TYPE.DEBIT,
           amount: newTotalPrice!,
         },
       ]);
