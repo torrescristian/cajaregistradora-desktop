@@ -1,19 +1,15 @@
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import { formatPrice } from '@/modules/common/libs/utils';
 import { CancelOrderModal } from '@/modules/ordenes/components/CancelOrderModal';
 import { ConfirmOrderModal } from '@/modules/ordenes/components/ConfirmOrderModal';
 import useOrderQuery from '@/modules/ordenes/hooks/useOrderQuery';
-import { IOrder, IOrderPayload } from '@/modules/ordenes/interfaces/IOrder';
+import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import {
   ButtonPagination,
   useButtonPagination,
 } from '@/modules/reabastecer/components/ButtonPagination';
-import {
-  ChevronDoubleLeftIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import QuickOrderInfoModal from './QuickOrderInfoModal';
+import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
 
 export default function QuickOrders() {
   const paginationControls = useButtonPagination();
@@ -22,11 +18,15 @@ export default function QuickOrders() {
     setTotalPages: paginationControls.setTotalPages,
   });
   const orders = orderQuery.data?.orders || [];
-  const [accordion, setAccordion] = useState(false);
+  const [accordion, setAccordion] = useState(true);
 
   const handleChangeAccordion = () => {
     setAccordion(!accordion);
   };
+
+  if (!orders?.length) {
+    return null;
+  }
 
   return (
     <section className="flex flex-col w-full gap-5">
@@ -38,18 +38,15 @@ export default function QuickOrders() {
             name="my-accordion-3"
           />
           <div className="collapse-title text-xl font-medium">
-            <p>
-              Orden #{order.id}{' '}
-              <span className="badge badge-info text-neutral-focus">
-                Pendiente
-              </span>
-            </p>
+            <div className="w-ful flex flex-row items-center">
+              <p className="whitespace-nowrap">Orden #{order.id} </p>
+            </div>
           </div>
           <div className="collapse-content">
             <div className="w-full flex flex-col gap-5">
-              <div className="w-full flex flex-col gap-3 p-3 overflow-y-scroll h-56 ">
+              <div className="w-full flex flex-col gap-3 p-3 ">
                 <RenderIf condition={order.items.length}>
-                  <div className="divider">Productos</div>
+                  <Divider>Productos</Divider>
                   {order.items.map((item, index) => (
                     <div
                       className=" w-full gap-5 justify-between whitespace-nowrap"
@@ -57,23 +54,19 @@ export default function QuickOrders() {
                     >
                       <p>
                         {item.product?.type.emoji} {item.product?.name} -{' '}
-                        {item.selectedVariant.name} &times;{item.quantity} -{' '}
-                        {formatPrice(item.price)}
+                        {item.selectedVariant.name}
                       </p>
                     </div>
                   ))}
                 </RenderIf>
                 <RenderIf condition={order.promoItems.length}>
-                  <div className="divider">Promos</div>
+                  <Divider>Promo</Divider>
                   {order.promoItems.map((itemProm, index) => (
                     <div
                       className=" w-full gap-5 justify-end whitespace-nowrap"
                       key={index}
                     >
-                      <p>
-                        {itemProm.promo.name} -{' '}
-                        {formatPrice(itemProm.promo.price)}
-                      </p>
+                      <p>{itemProm.promo.name}</p>
                       {itemProm.selectedVariants?.map((v, index) => (
                         <div
                           key={index}
@@ -89,20 +82,18 @@ export default function QuickOrders() {
                   ))}
                 </RenderIf>
               </div>
-              <div className="w-full flex flex-row items-center justify-evenly ">
-                <ConfirmOrderModal order={order} />
-                <p className="text-center font-bold">
-                  {' '}
-                  {formatPrice(order.totalPrice)}
-                </p>
-                <CancelOrderModal order={order} />
-                <QuickOrderInfoModal order={order} />
-              </div>
+            </div>
+            <div className="w-full flex flex-row items-center justify-evenly ">
+              <ConfirmOrderModal order={order} />
+              <QuickOrderInfoModal order={order} />
+              <CancelOrderModal order={order} />
             </div>
           </div>
         </div>
       ))}
-      <ButtonPagination {...paginationControls} />
+      <RenderIf condition={orders.length > 10}>
+        <ButtonPagination {...paginationControls} />
+      </RenderIf>
     </section>
   );
 }

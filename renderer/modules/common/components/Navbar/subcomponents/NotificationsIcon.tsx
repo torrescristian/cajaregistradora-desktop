@@ -21,14 +21,14 @@ export const NotificationsIcon = () => {
         <div className="dropdown dropdown-end">
           {newNotifications?.length ? (
             <label tabIndex={0} className="btn btn-ghost m-1">
-              <BellAlertIcon className="w-6 h-6" />
+              <BellAlertIcon className="w-6 h-6 text-neutral-content" />
               <span className="indicator-item badge badge-error">
                 {newNotifications?.length}
               </span>
             </label>
           ) : (
-            <label className="bg-transparent btn-disabled btn">
-              <BellAlertIcon className="w-6 h-6" />
+            <label className=" btn-disabled btn">
+              <BellAlertIcon className="w-6 h-6 text-neutral-content" />
             </label>
           )}
           <ul

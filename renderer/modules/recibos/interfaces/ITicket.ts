@@ -10,7 +10,6 @@ export interface IPayment {
 
 export enum PAYMENT_TYPE {
   CASH = 'CASH',
-  CREDIT = 'CREDIT',
   DEBIT = 'DEBIT',
 }
 

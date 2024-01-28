@@ -18,15 +18,21 @@ const useProductItem = (props: IProps) => {
   );
 
   const isService = !!props.product?.isService;
-  const { cartItemQuantity, addProduct, removeCartItem, removeProduct } =
-    useCartStore((state) => ({
-      addProduct: state.addProduct,
-      removeCartItem: state.removeCartItem,
-      removeProduct: state.removeProduct,
-      cartItemQuantity: getCartItemQuantityByVariantId(selectedVariant?.id!)(
-        state,
-      ),
-    }));
+  const {
+    cartItemQuantity,
+    addProduct,
+    removeCartItem,
+    removeProduct,
+    setProductQuantity,
+  } = useCartStore((state) => ({
+    addProduct: state.addProduct,
+    removeCartItem: state.removeCartItem,
+    removeProduct: state.removeProduct,
+    cartItemQuantity: getCartItemQuantityByVariantId(selectedVariant?.id!)(
+      state,
+    ),
+    setProductQuantity: state.setProductQuantity,
+  }));
 
   const handleChangeVariant = (e: any) => {
     props.product?.variants.map((variant) => {
@@ -53,6 +59,10 @@ const useProductItem = (props: IProps) => {
     handleClickAdd();
   };
 
+  const setItemQuantity = (quantity: number) => {
+    setProductQuantity({ product: props.product, selectedVariant, quantity });
+  };
+
   const handleClickAdd = () => {
     addProduct({ product: props.product, selectedVariant });
   };
@@ -67,6 +77,7 @@ const useProductItem = (props: IProps) => {
 
   return {
     cartItemQuantity,
+    setItemQuantity,
     handleClickAdd,
     handleClickRemove,
     handleClickClear,

@@ -23,7 +23,7 @@ export const ProductModal = ({ product, variant }: IProps) => {
   return (
     <section className="w-full flex justify-center">
       <button
-        className="btn btn-secondary btn-square"
+        className="btn btn-neutral btn-square"
         onClick={() => handleClickMoreInfo()}
       >
         <EllipsisHorizontalIcon className="w-8 h-8" />

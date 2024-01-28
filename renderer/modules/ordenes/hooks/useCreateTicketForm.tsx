@@ -12,13 +12,24 @@ import usePayments from './usePayments';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import useValidateCoupon from './useValidateCoupon';
+import {
+  getInitCart,
+  useCartStore,
+} from '@/modules/cart/contexts/useCartStore';
+import { adaptOrderItemToCartItem } from '../utils/utils';
+import { UpdateOrder } from '../components/UpdateOrder';
 
 interface IProps {
   order: IOrder;
   onSubmit?: (order: IOrder) => void;
+  setOrderToUpdate?: (order: IOrder) => void;
 }
 
-export default function useCreateTicketForm({ order, onSubmit }: IProps) {
+export default function useCreateTicketForm({
+  order,
+  onSubmit,
+  setOrderToUpdate,
+}: IProps) {
   const createTicketMutation = useCreateTicketMutation();
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
@@ -32,12 +43,12 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
       discountAmount: order.discount?.amount,
       discountType: order.discount?.type,
     });
-  const finalTotalPrice = calcDiscount({
-    price: order.totalPrice,
-    discountAmount: Number(discountAmount),
-    discountType,
-  });
-  /* order.totalPrice - couponDiscount - Number(discountAmount); */
+  const finalTotalPrice =
+    calcDiscount({
+      price: order.subtotalPrice,
+      discountAmount: Number(discountAmount),
+      discountType,
+    }) - couponDiscount;
 
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
@@ -55,6 +66,8 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
   });
 
   const { printInvoice } = usePrintService();
+
+  const initCart = useCartStore(getInitCart);
 
   const handleClearForm = () => {
     setAdditionalDetails('');
@@ -80,6 +93,18 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     window.location.reload();
   };
 
+  const handleSubmitEditOrder = (order: IOrder) => {
+    setOrderToUpdate!(order);
+    initCart({
+      additionalDetails: order.additionalDetails,
+      subtotalPrice: order.subtotalPrice,
+      totalPrice: order.totalPrice,
+      cartItems: order.items.map(adaptOrderItemToCartItem),
+      promoItems: order.promoItems,
+      discountAmount: order.discount?.amount,
+      discountType: order.discount?.type,
+    });
+  };
   const handleSubmitCreateTicket = async () => {
     try {
       const { ticketResponse } = await createTicketMutation.mutateAsync({
@@ -153,5 +178,6 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     discountAmount,
     coupon,
     handleToggleEdit,
+    handleSubmitEditOrder,
   };
 }
