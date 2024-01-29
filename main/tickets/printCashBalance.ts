@@ -2,7 +2,6 @@ import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
 
 import {
-  discountToString,
   formatPrice,
   parseDateToArgentinianFormat,
   parseDateToTime,
@@ -11,9 +10,8 @@ import {
   ALIGN,
   FONT_SIZE_NORMAL,
   FONT_SIZE_SMALL,
-  FONT_SIZE_BIG,
 } from '../helpers/const';
-import { IPayment, ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
+import { ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
 import { ICashBalance } from '../interfaces/ICashBalance';
 import { IExpense } from '../interfaces/IExpense';
 
@@ -43,6 +41,7 @@ export default function printCashBalance({
   refundedTickets,
   expenses,
 }: IProps) {
+  console.log(JSON.stringify(tickets, null, 2))
   try {
     if (!tickets[0].order?.id) {
       console.log('There is not Order ID');
@@ -71,11 +70,11 @@ export default function printCashBalance({
       console.log({ error });
       if (error) throw new Error(error);
 
-      // open & set printer4
+      // open & set printer
       printer
-        .text(FONT_SIZE_BIG)
+        .text(FONT_SIZE_NORMAL)
         .text(firstTicket.store.name)
-        .text(FONT_SIZE_NORMAL);
+        
 
       printer
         .text(`Fecha: ${parseDateToArgentinianFormat(firstTicket.createdAt)}`)
@@ -84,6 +83,7 @@ export default function printCashBalance({
 
       printer.text(FONT_SIZE_NORMAL);
       // order items
+
       for (const ticket of tickets) {
         printer
           .align(ALIGN.LT)
@@ -125,11 +125,72 @@ export default function printCashBalance({
         }
       }
 
+
+      const totalByType = tickets.reduce((acc, ticket) => {
+        ticket.order.items.forEach((item) => {
+          const productTypeName = item.product.type.name;
+          const price = item.selectedVariant.price * item.quantity;
+
+          ticket.payments.forEach((payment) => {
+            const paymentType = payment.type;
+
+            if (!acc[productTypeName]) {
+              acc[productTypeName] = {};
+            }
+
+            if (!acc[productTypeName][paymentType]) {
+              acc[productTypeName][paymentType] = 0;
+            }
+
+            acc[productTypeName][paymentType] += price;
+          });
+        });
+
+        return acc;
+      }, {});
+
+      // Iterate over product types and payment types
+      printer
+        .align(ALIGN.LT)
+        .text('Ganancias por Categoria')
+        .drawLine()
+
+
+      for (const type in totalByType) {
+        printer
+          .align(ALIGN.LT)
+          .text(type)
+          .align(ALIGN.RT);
+
+        const totalsByPaymentType = totalByType[type];
+        for (const paymentType in totalsByPaymentType) {
+          const totalAmount = totalsByPaymentType[paymentType];
+          if (paymentType === PAYMENT_TYPE.CASH) {
+            printer.text(`Efectivo: ${formatPrice(totalAmount)}`);
+          }
+          if (paymentType === PAYMENT_TYPE.DEBIT) {
+            printer.text(`Debito: ${formatPrice(totalAmount)}`);
+          }
+          if (paymentType === PAYMENT_TYPE.CREDIT) {
+            printer.text(`Credito: ${formatPrice(totalAmount)}`);
+          }
+        }
+      }
+
       printer
         .drawLine()
+        .align(ALIGN.RT)
+        .text(`Caja Inicial (C.I): ${formatPrice(cashBalance.initialCashAmount)}`)
         .align(ALIGN.LT)
-        .text(`Total Bruto: ${formatPrice(cashBalance.totalAmount)}`)
-        .text(`Total Efectivo: ${formatPrice(cashBalance.newCashAmount)}`);
+        .text(`Caja Efectivo (C.I-Gastos)`)
+        .align(ALIGN.RT)
+        .text(formatPrice(cashBalance.newCashAmount))
+        .text(
+          `Caja Virtual: ${formatPrice(
+            cashBalance.totalAmount - cashBalance.newCashAmount - expenses.reduce((acc, curr) => acc + curr.amount,0),
+          )}`,
+        )
+        .text(`Total: ${formatPrice(cashBalance.totalAmount)}`);
 
       printer.align(ALIGN.CT).text(FONT_SIZE_SMALL).text('Sin validez fiscal');
 

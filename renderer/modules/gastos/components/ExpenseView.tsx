@@ -3,13 +3,13 @@ import { IExpense } from '@/modules/caja/interfaces/IExpense';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import Loader from '@/modules/common/components/Loader';
 import { useForm } from 'react-hook-form';
-import useCreateExpenseNoBalanceMutation from '../hooks/useCreateExpenseNoBalanceMutation';
 import useExpensesQuery from '../hooks/useExpensesQuery';
 import ExpensesTable from './ExpensesTable';
 import {
   ButtonPagination,
   useButtonPagination,
 } from '@/modules/reabastecer/components/ButtonPagination';
+import useCreateCashBalanceExpenseMutation from '@/modules/caja/hooks/useCreateCashBalanceExpenseMutation';
 
 export default function ExpenseView() {
   const {
@@ -25,7 +25,7 @@ export default function ExpenseView() {
     setTotalPages: paginationControls.setTotalPages,
   });
   const expenses = expensesQuery.data?.expenses || [];
-  const createExpenseMutation = useCreateExpenseNoBalanceMutation();
+  const createExpenseMutation = useCreateCashBalanceExpenseMutation();
 
   const expenseTypesQuery = useExpensesTypeQuery();
   const expenseTypes = expenseTypesQuery.data || [];
@@ -44,7 +44,9 @@ export default function ExpenseView() {
   );
 
   const handleSubmitCreateExpense = (data: IExpense) => {
-    createExpenseMutation.mutate(data);
+    createExpenseMutation.mutate({
+      ...data,
+    });
     reset();
   };
 

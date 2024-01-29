@@ -1,3 +1,4 @@
+import { IProductType } from '@/modules/products/interfaces/IProduct';
 import { IVariant } from './IVariants';
 import { IResponsePage } from './utils';
 
@@ -15,7 +16,7 @@ export interface IProduct<DEFAULT_VARIANT = IVariant, VARIANTS = IVariant[]> {
   isService: boolean;
   default_variant: DEFAULT_VARIANT;
   image: string;
-  type: string;
+  type: IProductType;
   updatedAt?: string;
   createdAt?: string;
 }
