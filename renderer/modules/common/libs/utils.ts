@@ -20,6 +20,16 @@ export const formatPrice = (price: number) => {
   });
 };
 
+export const removeHourToDate = (date: Date) => {
+  if (!date) return '';
+
+  return new Date(date).toLocaleDateString('es-AR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+};
+
 export const getErrorMessage = (error: any) => {
   return error?.error?.message || error?.error || error;
 };
