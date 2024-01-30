@@ -28,8 +28,10 @@ function getPaymentText(paymentType: PAYMENT_TYPE) {
   switch (paymentType) {
     case PAYMENT_TYPE.CASH:
       return 'Efec.';
+    case PAYMENT_TYPE.CREDIT:
+      return 'Cred.';
     case PAYMENT_TYPE.DEBIT:
-      return 'Elec.';
+      return 'Deb.';
     default:
       return '';
   }

@@ -39,7 +39,7 @@ export default function ProductTypes({
       {isMobile ? (
         <RenderIf condition={productTypes?.length}>
           <div className="dropdown z-[1]">
-            <label tabIndex={0} className="btn btn-neutral  m-1">
+            <label tabIndex={0} className="btn btn-secondary  m-1">
               <FunnelIcon className="w-5 h-5 text-secondary-content" />
             </label>
             <div
@@ -47,14 +47,14 @@ export default function ProductTypes({
               className="dropdown-content flex flex-col p-2 bg-neutral overflow-y-scroll h-[40vh] shadow rounded-box w-64"
             >
               <TabButton
-                className="btn-neutral"
+                className="btn-secondary"
                 isActive={selectedProductType === null}
                 onClick={handleSelect(null)}
               >
                 <span>Todos</span>
               </TabButton>
               <TabButton
-                className="btn-neutral"
+                className="btn-secondary"
                 isActive={showPromo}
                 onClick={handleClickPromo}
               >
@@ -78,14 +78,14 @@ export default function ProductTypes({
       ) : (
         <>
           <TabButton
-            className="btn-neutral"
+            className="btn-secondary"
             isActive={selectedProductType === null}
             onClick={handleSelect(null)}
           >
             <span>Todos</span>
           </TabButton>
           <TabButton
-            className="btn-neutral"
+            className="btn-secondary"
             isActive={showPromo}
             onClick={handleClickPromo}
           >
@@ -109,7 +109,7 @@ export default function ProductTypes({
             <div className="dropdown">
               <label
                 tabIndex={0}
-                className="btn flex-nowrap gap-3 btn-neutral m-1"
+                className="btn flex-nowrap gap-3 btn-secondary m-1"
               >
                 <FunnelIcon className="w-5 h-5" /> Filtrar
               </label>

@@ -17,7 +17,6 @@ export default function GlobalLayout({ children }: IProps) {
         type="checkbox"
         checked={isOpen}
         className="drawer-toggle"
-        defaultChecked
       />
 
       <div className="drawer-content">

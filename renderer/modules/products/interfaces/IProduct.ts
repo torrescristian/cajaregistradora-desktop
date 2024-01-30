@@ -7,16 +7,6 @@ export interface IAditionalPrice {
   amount: number;
 }
 
-export enum MEASURE_UNIT {
-  UNIT = 'UNIT',
-  KILOGRAM = 'KILOGRAM',
-  METER = 'METER',
-  LITER = 'LITER',
-  PACKAGE = 'PACKAGE',
-  DOZEN = 'DOZEN',
-  GRAM = 'GRAM',
-}
-
 export interface IProduct<
   DEFAULT_VARIANT = IVariant,
   VARIANTS = IVariant[],
@@ -34,7 +24,6 @@ export interface IProduct<
   createdAt?: string;
   description: string;
   status: PRODUCT_STATUS;
-  measureUnit: MEASURE_UNIT;
 }
 
 export type IProductPage = IResponsePage<IProduct>;
