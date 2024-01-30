@@ -20,7 +20,7 @@ export default function ReprintTicketModal({ cashBalance }: IProps) {
   return (
     <button
       onClick={handleClickReprint(cashBalance)}
-      className="btn btn-neutral gap-3"
+      className="btn btn-secondary gap-3"
     >
       <PrinterIcon className="w-5 h-5" /> Reimprimir
     </button>

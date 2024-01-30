@@ -28,7 +28,7 @@ const EmojiSelector = ({
   return (
     <div className="w-full flex flex-col gap-5 items-center">
       <button
-        className="btn btn-neutral w-min whitespace-nowrap"
+        className="btn btn-secondary w-min whitespace-nowrap"
         onClick={toggleEmojiPicker}
       >
         Seleccionar Emoji 😀

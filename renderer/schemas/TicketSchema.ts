@@ -19,7 +19,11 @@ const TicketSchema = (order: any = OrderSchema()) =>
             amount: yup.number().required(),
             type: yup
               .string()
-              .oneOf([PAYMENT_TYPE.CASH, PAYMENT_TYPE.DEBIT])
+              .oneOf([
+                PAYMENT_TYPE.CASH,
+                PAYMENT_TYPE.CREDIT,
+                PAYMENT_TYPE.DEBIT,
+              ])
               .required(),
           }),
         )

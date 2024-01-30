@@ -2,8 +2,7 @@ import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { Selector } from '@/modules/common/components/Selector';
 import { ChevronDoubleDownIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { paymentTypesAndLabels } from '@/modules/recibos/utils/utils';
-import { useState } from 'react';
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import { useMemo } from 'react';
 
 interface IProps {
   onChange: (payment: IPayment) => void;
@@ -11,7 +10,6 @@ interface IProps {
   onDelete: (uuid: string) => void;
   payment: IPayment;
   newTotalPrice?: number;
-  paymentMix?: boolean;
 }
 
 export const Payment = ({
@@ -19,7 +17,6 @@ export const Payment = ({
   onNewPayment,
   onDelete,
   payment,
-  paymentMix,
   newTotalPrice,
 }: IProps) => {
   const handleSelectType = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -60,16 +57,14 @@ export const Payment = ({
             value: type,
           }))}
         />
-        {paymentMix ? (
-          <input
-            onChange={handleChangeAmount}
-            value={payment.amount}
-            placeholder="0.00"
-            className="input input-bordered text-base-content w-28 sm:w-36 "
-          />
-        ) : null}
+        <input
+          onChange={handleChangeAmount}
+          value={payment.amount}
+          placeholder="0.00"
+          className="input input-bordered text-base-content w-28 sm:w-36 "
+        />
       </div>
-      {/*    <div className="flex flex-row gap-2 w-full justify-end">
+      <div className="flex flex-row gap-2 w-full justify-end">
         <button
           className="btn btn-primary btn-square"
           onClick={handleNewPayment}
@@ -82,7 +77,7 @@ export const Payment = ({
         >
           <TrashIcon className="w-4 h-4" />
         </button>
-      </div> */}
+      </div>
     </section>
   );
 };

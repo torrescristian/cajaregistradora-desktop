@@ -15,19 +15,41 @@ interface IProps {
 }
 
 export const ConfirmOrderModal = ({ order }: IProps) => {
+  /*   const {
+      setDiscountAmount,
+      setDiscountType,
+      discountAmount,
+      discountType,
+      handleCouponDiscountAmount,
+      coupon,
+      payments,
+      handleChangePayment,
+      handleDeletePayment,
+      handleClickAddPaymentMethod,
+      finalTotalPrice,
+      additionalDetails,
+      handleChangeAdditionalsDetails,
+      handleSubmitCreateTicket,
+    } = useContext(OrderContext); */
   const {
+    cancelOrderMutation,
     coupon,
+    createTicketMutation,
     discountAmount,
     discountType,
     finalTotalPrice,
+    handleCancelOrder,
     handleChangePayment,
     handleClickAddPaymentMethod,
     handleCouponDiscountAmount,
     handleDeletePayment,
     handleSubmitCreateTicket,
+    handleToggleAccordion,
+    isCheckedAcordion,
     payments,
     additionalDetails,
     handleChangeAdditionalsDetails,
+    setAdditionalDetails,
     setDiscountAmount,
     setDiscountType,
   } = useCreateTicketForm({ order });

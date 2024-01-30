@@ -7,7 +7,7 @@
   "main": "app/background.js",
   "scripts": {
     "start": "next ./renderer",
-    "dev": "nextron",
+    "dev": "nextron .",
     "build:web": "next renderer",
     "build": "yarn build:nextron",
     "build:nextron": "nextron build",
@@ -17,7 +17,8 @@
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "cypress open"
   },
   "dependencies": {
     "@emoji-mart/data": "1.1.2",
@@ -28,6 +29,7 @@
     "@tanstack/react-table": "8.10.6",
     "autoprefixer": "10.4.14",
     "cookie": "0.5.0",
+    "daisyui": "^4.5.0",
     "date-fns": "2.30.0",
     "deep-equal": "2.2.0",
     "electron-serve": "1.1.0",
@@ -69,7 +71,6 @@
     "@types/react-dom": "18.0.11",
     "@types/socket.io": "3.0.2",
     "@types/yup": "0.32.0",
-    "daisyui": "^3.9.4",
     "electron": "21.3.3",
     "electron-builder": "23.6.0",
     "eslint": "8.45.0",

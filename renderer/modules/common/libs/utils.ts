@@ -123,8 +123,10 @@ export function getLabelByPaymentsType(payments: IPayment[]) {
   switch (payment.type) {
     case PAYMENT_TYPE.CASH:
       return 'Efectivo';
+    case PAYMENT_TYPE.CREDIT:
+      return 'Crédito';
     case PAYMENT_TYPE.DEBIT:
-      return 'Electronico';
+      return 'Débito';
     default:
       return '';
   }
@@ -134,8 +136,10 @@ export function getPaymentsType(payment: IPayment) {
   switch (payment.type) {
     case PAYMENT_TYPE.CASH:
       return 'Efectivo';
+    case PAYMENT_TYPE.CREDIT:
+      return 'Crédito';
     case PAYMENT_TYPE.DEBIT:
-      return 'Electronico';
+      return 'Débito';
     default:
       return '';
   }

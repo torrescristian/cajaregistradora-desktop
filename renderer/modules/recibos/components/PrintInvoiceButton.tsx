@@ -18,7 +18,7 @@ export default function PrintInvoiceButton({ ticketId, orderId }: IProps) {
   };
 
   return (
-    <button onClick={handlePrint} className="btn btn-neutral">
+    <button onClick={handlePrint} className="btn btn-secondary">
       <PrinterIcon className="w-5 h-5" />
     </button>
   );

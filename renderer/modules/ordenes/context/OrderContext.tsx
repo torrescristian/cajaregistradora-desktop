@@ -32,5 +32,4 @@ export const OrderContext = createContext<OrderContextProps>({
   additionalDetails: '',
   handleChangeAdditionalsDetails: () => {},
   setAdditionalDetails: () => {},
-  handleSubmitEditOrder: () => {},
 });

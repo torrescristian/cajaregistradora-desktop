@@ -32,16 +32,14 @@ export default function usePayments({ newTotalPrice }: IProps) {
   };
 
   const handleClickAddPaymentMethod = () => {
-    if (payments.length < 2) {
-      setPayments((ps) => [
-        ...ps,
-        {
-          uuid: crypto.randomUUID(),
-          type: PAYMENT_TYPE.DEBIT,
-          amount: newTotalPrice!,
-        },
-      ]);
-    }
+    setPayments((ps) => [
+      ...ps,
+      {
+        uuid: crypto.randomUUID(),
+        type: PAYMENT_TYPE.CREDIT,
+        amount: 0,
+      },
+    ]);
   };
 
   return {
@@ -49,6 +47,5 @@ export default function usePayments({ newTotalPrice }: IProps) {
     handleDeletePayment,
     handleClickAddPaymentMethod,
     payments,
-    setPayments,
   };
 }
