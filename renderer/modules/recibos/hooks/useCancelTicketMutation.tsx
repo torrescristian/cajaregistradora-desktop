@@ -54,6 +54,10 @@ export default function useCancelTicketMutation() {
             returnType === 'cash'
               ? Math.max(cashBalance.newCashAmount - amountTicket, 0)
               : cashBalance.newCashAmount,
+          digitalCashAmount:
+            returnType !== 'cash'
+              ? Math.max(cashBalance.digitalCashAmount - amountTicket, 0)
+              : cashBalance.digitalCashAmount,
           totalAmount: Math.max(cashBalance.totalAmount - amountTicket, 0),
           refunds: [
             ...(cashBalance.refunds || []),

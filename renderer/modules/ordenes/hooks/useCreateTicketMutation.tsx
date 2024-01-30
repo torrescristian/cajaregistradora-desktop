@@ -50,6 +50,22 @@ export default function useCreateTicketMutation() {
     return Number(cashBalance.newCashAmount) + Number(cashPayment.amount);
   }
 
+  function calcDigitalCashAmount(ticket: ICreateTicketMutation) {
+    if (!cashBalance) {
+      throw new Error('Cash balance is not active');
+    }
+
+    const cashPayment = ticket.payments.find((payment) =>
+      [PAYMENT_TYPE.DEBIT, PAYMENT_TYPE.CREDIT].includes(payment.type),
+    );
+
+    if (!cashPayment) {
+      return cashBalance.digitalCashAmount;
+    }
+
+    return Number(cashBalance.digitalCashAmount) + Number(cashPayment.amount);
+  }
+
   return useMutation(async ({ ticket, coupon, discount }: IProps) => {
     await TicketPayloadSchema().validate(ticket);
     const sum = ticket.payments.reduce(
@@ -84,6 +100,7 @@ export default function useCreateTicketMutation() {
       cashBalance?.id!,
       {
         totalAmount: cashBalance?.totalAmount! + ticket.totalPrice,
+        digitalCashAmount: calcDigitalCashAmount(ticket),
         newCashAmount: calcNewCashAmount(ticket),
       },
     );

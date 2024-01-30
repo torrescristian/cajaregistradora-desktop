@@ -1,3 +1,4 @@
+import { RenderIf } from '@/modules/common/components/RenderIf';
 import { longRange } from '@/modules/common/libs/utils';
 import { useState, useCallback, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -6,13 +7,7 @@ export const useButtonPagination = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const onChangePage = useCallback(
-    (p: number) => (e: React.MouseEvent) => {
-      e.preventDefault();
-      setPage(p);
-    },
-    [],
-  );
+  const onChangePage = useCallback((p: number) => () => setPage(p), []);
 
   const onNextPage = useCallback(
     (e: React.MouseEvent) => {
@@ -42,7 +37,7 @@ interface IProps {
   onPreviousPage: (e: React.MouseEvent) => void;
   page: number;
   totalPages: number;
-  onChangePage: (page: number) => (e: React.MouseEvent) => void;
+  onChangePage: (page: number) => () => void;
 }
 
 export const ButtonPagination = ({
@@ -53,24 +48,49 @@ export const ButtonPagination = ({
   onChangePage,
 }: IProps) => {
   const totalPagesRange = useMemo(() => longRange(1, totalPages), [totalPages]);
+  const split = totalPagesRange.length > 10;
+  const pages = totalPagesRange.slice(Math.max(page - 5, 0), page + 5);
 
   return (
     <div className="flex flex-row w-full items-center  justify-center gap-5">
       <button className="btn btn-secondary" onClick={onPreviousPage}>
         Anterior
       </button>
-      {totalPagesRange.map((pageNumber) => (
-        <button
-          key={pageNumber}
-          className={twMerge(
-            pageNumber === page ? 'btn-disabled' : null,
-            'join-item btn',
-          )}
-          onClick={onChangePage(pageNumber)}
-        >
-          {pageNumber}
-        </button>
-      ))}
+      <RenderIf condition={split}>
+        <RenderIf condition={pages[0] > 1}>
+          <button className="join-item btn btn-disabled">...</button>
+        </RenderIf>
+        {pages.map((pageNumber) => (
+          <button
+            key={pageNumber}
+            className={twMerge(
+              pageNumber === page ? 'btn-disabled' : null,
+              'join-item btn',
+            )}
+            onClick={onChangePage(pageNumber)}
+          >
+            {pageNumber}
+          </button>
+        ))}
+        <RenderIf condition={pages[pages.length - 1] > page}>
+          <button className="join-item btn btn-disabled">...</button>
+        </RenderIf>
+      </RenderIf>
+      <RenderIf condition={!split}>
+        {totalPagesRange.map((pageNumber) => (
+          <button
+            key={pageNumber}
+            className={twMerge(
+              pageNumber === page ? 'btn-disabled' : null,
+              'join-item btn',
+            )}
+            onClick={onChangePage(pageNumber)}
+          >
+            {pageNumber}
+          </button>
+        ))}
+      </RenderIf>
+
       <button className="btn btn-secondary" onClick={onNextPage}>
         Siguiente
       </button>

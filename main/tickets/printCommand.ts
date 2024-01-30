@@ -1,16 +1,7 @@
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
-import {
-  discountToString,
-  formatPrice,
-  parseDateToArgentinianFormat,
-} from '../helpers/utils';
-import {
-  ALIGN,
-  FONT_SIZE_NORMAL,
-  FONT_SIZE_SMALL,
-  FONT_SIZE_BIG,
-} from '../helpers/const';
+import { parseDateToArgentinianFormat } from '../helpers/utils';
+import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL } from '../helpers/const';
 import { IOrder, ORDER_STATUS } from '../interfaces/IOrder';
 
 export default function printCommand(order: IOrder) {
@@ -47,7 +38,7 @@ export default function printCommand(order: IOrder) {
 
       // aditional details
       if (order.additionalDetails) {
-        printer.println(`# ${order.additionalDetails}`);
+        printer.newLine().println(`# ${order.additionalDetails}`);
       }
 
       interface IItem {
@@ -101,10 +92,10 @@ export default function printCommand(order: IOrder) {
       for (const item of items) {
         printer
           .align(ALIGN.LT)
-          .text(FONT_SIZE_NORMAL)
+          .text(FONT_SIZE_SMALL)
           .text(`(${item.quantity}) ${item.productName}`)
           .align(ALIGN.RT)
-          .text(FONT_SIZE_BIG)
+          .text(FONT_SIZE_NORMAL)
           .text(`- ${item.variantName}`);
       }
 

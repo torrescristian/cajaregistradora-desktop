@@ -32,6 +32,7 @@ export default async function findCashOptionsById(
     'order.client',
     'order.items.product',
     'order.items.product.image',
+    'order.items.product.type',
     'order.discount',
     'order.payments',
     'order.items.selectedVariant',

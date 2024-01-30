@@ -3,7 +3,6 @@ import { IExpense } from '@/modules/caja/interfaces/IExpense';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import Loader from '@/modules/common/components/Loader';
 import { useForm } from 'react-hook-form';
-import useCreateExpenseNoBalanceMutation from '../hooks/useCreateExpenseNoBalanceMutation';
 import useExpensesQuery from '../hooks/useExpensesQuery';
 import ExpensesTable from './ExpensesTable';
 import {

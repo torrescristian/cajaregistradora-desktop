@@ -20,6 +20,7 @@ export default function useInitCashMutation() {
       newCashAmount: 0,
       seller: userData!.id,
       tickets: [],
+      digitalCashAmount: 0,
     });
 
     queryClient.invalidateQueries([CASH_BALANCE_KEY]);
