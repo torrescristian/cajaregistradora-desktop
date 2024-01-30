@@ -32,8 +32,7 @@ interface IProps {
 
 export default function useCreateTicketMutation() {
   const queryClient = useQueryClient();
-  const { cashBalance, isLoading, isError, isSuccess, cashIsActive } =
-    useActiveCashBalanceQuery();
+  const { cashBalance } = useActiveCashBalanceQuery();
 
   function calcNewCashAmount(ticket: ICreateTicketMutation) {
     if (!cashBalance) {

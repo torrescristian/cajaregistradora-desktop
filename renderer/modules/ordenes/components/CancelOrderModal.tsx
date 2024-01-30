@@ -3,7 +3,6 @@ import { IOrder } from '../interfaces/IOrder';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import { useContext, useRef } from 'react';
 import { OrderContext } from '../context/OrderContext';
-import useConfirmOrder from '@/modules/cart/hooks/useConfirmOrder';
 
 interface IProps {
   order: IOrder;

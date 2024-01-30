@@ -7,7 +7,7 @@ interface IProps {
   children: React.ReactNode;
 }
 export default function GlobalLayout({ children }: IProps) {
-  const { isOpen, content: Content } = useModalStore();
+  const { isOpen, content: Content, closeModal } = useModalStore();
 
   return (
     <div className={'drawer drawer-end'}>
@@ -30,6 +30,7 @@ export default function GlobalLayout({ children }: IProps) {
           htmlFor="menu-drawer"
           aria-label="close sidebar"
           className="drawer-overlay"
+          onClick={closeModal}
         ></label>
         {Content}
       </div>

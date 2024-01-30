@@ -6,15 +6,11 @@ import {
 import { IOrder } from '../interfaces/IOrder';
 import { columnDefOrder } from './columnOrder';
 import FormRow from './FormRow';
-import { useStore } from 'zustand';
 import {
   getInitCart,
   useCartStore,
 } from '@/modules/cart/contexts/useCartStore';
-import {
-  adaptCartItemToOrderItem,
-  adaptOrderItemToCartItem,
-} from '../utils/utils';
+import { adaptOrderItemToCartItem } from '../utils/utils';
 
 interface IProps {
   orders: IOrder[];

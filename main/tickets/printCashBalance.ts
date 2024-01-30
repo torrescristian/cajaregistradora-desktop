@@ -2,7 +2,6 @@ import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
 
 import {
-  discountToString,
   formatPrice,
   parseDateToArgentinianFormat,
   parseDateToTime,
@@ -13,7 +12,7 @@ import {
   FONT_SIZE_SMALL,
   FONT_SIZE_BIG,
 } from '../helpers/const';
-import { IPayment, ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
+import { ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
 import { ICashBalance } from '../interfaces/ICashBalance';
 import { IExpense } from '../interfaces/IExpense';
 

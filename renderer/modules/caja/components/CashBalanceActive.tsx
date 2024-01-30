@@ -1,7 +1,6 @@
 import { ICashBalanceExpanded } from '@/modules/caja/interfaces/ICashBalance';
 import { formatPrice } from '@/modules/common/libs/utils';
 import { DataItem } from '@/modules/common/components/DataItem';
-import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
 
 interface IProps {
   cashBalance: ICashBalanceExpanded | null;

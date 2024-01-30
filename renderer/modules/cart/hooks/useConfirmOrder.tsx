@@ -2,7 +2,6 @@ import {
   DISCOUNT_TYPE,
   IDiscount,
   IOrder,
-  IOrderItem,
 } from '@/modules/ordenes/interfaces/IOrder';
 import {
   getAdditionalDetails,
@@ -21,7 +20,7 @@ import { ICartItem, IPromoItem } from '../interfaces/ICart';
 import { useMemo, useRef, useState } from 'react';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import usePrintService from '@/modules/common/hooks/usePrintService';
-import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
+import { formatPrice } from '@/modules/common/libs/utils';
 import useUpdateOrderMutation from './useUpdateOrderMutation';
 import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
@@ -182,6 +181,10 @@ export default function useConfirmOrder({
         coupon: {
           id: coupon?.id,
           availableUses: coupon?.availableUses!,
+        },
+        discount: orderResponse.data.attributes?.discount || {
+          amount: Number(discountAmount!),
+          type: discountType!,
         },
       });
 

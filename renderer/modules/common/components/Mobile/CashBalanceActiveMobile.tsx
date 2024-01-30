@@ -20,13 +20,13 @@ export const CashBalanceActivateMobile = ({ cashBalance }: IProps) => {
           className="text-2xl"
         />
         <DataItem
-          label="Efectivo inicial en caja:"
+          label="Caja Inicial:"
           value={formatPrice(cashBalance?.initialCashAmount!)}
           defaultValue="Monto inicial: $0.00"
           className="text-2xl"
         />
         <DataItem
-          label="Efectivo actual esperado:"
+          label="Caja Efectivo:"
           value={formatPrice(
             cashBalance?.newCashAmount! + cashBalance?.initialCashAmount!,
           )}
@@ -34,7 +34,13 @@ export const CashBalanceActivateMobile = ({ cashBalance }: IProps) => {
           className="text-2xl"
         />
         <DataItem
-          label="Ventas totales:"
+          label="Caja Virtual:"
+          value={formatPrice(cashBalance?.digitalCashAmount || 0)}
+          defaultValue="$0.00"
+          className="text-2xl"
+        />
+        <DataItem
+          label="Caja Total:"
           value={formatPrice(cashBalance?.totalAmount!)}
           defaultValue="$0.00"
           className="text-2xl"

@@ -6,11 +6,9 @@ import { CartIconMobile } from '@/modules/common/components/Mobile/CartIconMobil
 import ProductTypes from './ProductTypes';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import RenderPromos from '@/modules/promos/components/RenderPromo';
-import Pagination from '@/modules/common/components/Pagination';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
-import { CreateTicketFormMobile } from '@/modules/common/components/Mobile/CreateTicketFormMobile';
 import QuickOrders from '@/modules/pedidos/components/QuickOrders';
 
 interface IProps {

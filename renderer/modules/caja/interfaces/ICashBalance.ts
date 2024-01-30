@@ -6,14 +6,15 @@ export interface ICashBalance<
   USER = IUser,
   COMPLETED_AT = Date,
 > {
-  id?: number;
   completedAt: COMPLETED_AT;
+  digitalCashAmount: number;
+  id?: number;
   initialCashAmount: number;
   newCashAmount: number;
+  refunds: IRefund[];
   seller: USER;
   tickets: TICKET[];
   totalAmount: number;
-  refunds: IRefund[];
 }
 
 export interface IRefund<TICKET = ITicket> {

@@ -1,7 +1,6 @@
 import { IResponsePage } from '@/modules/common/interfaces/utils';
 import { ICashBalance } from './ICashBalance';
 import IStore from '@/modules/common/interfaces/IStore';
-import { type } from 'os';
 
 export interface IExpense<CASH_BALANCE = ICashBalance> {
   id?: number;

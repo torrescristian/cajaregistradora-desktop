@@ -3,7 +3,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ICashBalance, ICashBalanceExpanded } from '../interfaces/ICashBalance';
+import { ICashBalanceExpanded } from '../interfaces/ICashBalance';
 import { columnDefCashBalance } from './columnsCashBalanceHistory';
 
 interface IProps {

@@ -6,9 +6,17 @@ interface IProps {
   children: any;
   order: IOrder;
   onSubmit: (order: IOrder) => void;
+  className?: string;
+  disableRow?: boolean;
 }
 
-export default function FormRow({ children, order, onSubmit }: IProps) {
+export default function FormRow({
+  children,
+  order,
+  onSubmit,
+  className,
+  disableRow,
+}: IProps) {
   const {
     handleChangePayment,
     handleClickAddPaymentMethod,
@@ -56,7 +64,11 @@ export default function FormRow({ children, order, onSubmit }: IProps) {
         setAdditionalDetails,
       }}
     >
-      <tr>{children}</tr>
+      {disableRow ? (
+        <div className={className}>{children}</div>
+      ) : (
+        <tr className={className}>{children}</tr>
+      )}
     </OrderContext.Provider>
   );
 }

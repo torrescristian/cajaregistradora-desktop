@@ -37,7 +37,7 @@ export default function QuickOrderInfoModal({ order }: IProps) {
             ) : (
               <div className="flex flex-row gap-5 whitespace-nowrap">
                 <p>👤 Consumidor final</p>
-                <p>📍 {order.address}</p>
+                {order.address ? <p>📍 {order.address}</p> : null}
               </div>
             )}
           </div>
@@ -47,8 +47,8 @@ export default function QuickOrderInfoModal({ order }: IProps) {
               {order.items.map((item, index) => (
                 <div key={index} className="w-full flex flex-col justify-end">
                   <p className="w-full flex flex-row justify-between whitespace-nowrap">
-                    {item.product?.type.emoji} {item.product?.name} -{' '}
-                    {item.selectedVariant.name} &times;{item.quantity}
+                    {item.quantity} &times; {item.product?.type.emoji}{' '}
+                    {item.product?.name} - {item.selectedVariant.name}
                     <span className="flex flex-row whitespace-nowrap w-full gap-5 justify-end">
                       {formatPrice(item.price)}
                     </span>

@@ -1,5 +1,5 @@
 import { NotificationsIcon } from './subcomponents/NotificationsIcon';
-import { Bars3Icon, ShoppingCartIcon } from '@heroicons/react/24/solid';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 import NavButton from './subcomponents/NavButton';
 import { WifiStatus } from './subcomponents/WifiStatus';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
@@ -50,7 +50,10 @@ export default function Navbar() {
             <WifiStatus />
 
             <div className="flex flex-row">
-              <NavButton className="" href="/pedidos">
+              <NavButton
+                className="w-min whitespace-nowrap text-secondary-focus"
+                href="/pedidos"
+              >
                 Pedidos
               </NavButton>
               <NavButton
