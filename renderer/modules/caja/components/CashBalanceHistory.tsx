@@ -1,12 +1,11 @@
 import { RenderIf } from '@/modules/common/components/RenderIf';
-import { ICashBalance, ICashBalanceExpanded } from '../interfaces/ICashBalance';
+import { ICashBalance } from '../interfaces/ICashBalance';
 import TodayCashBalancesTable from './TodayCashBalancesTable';
 import useCashBalancesQuery from '../hooks/useCashBalancesQuery';
 import {
   ButtonPagination,
   useButtonPagination,
 } from '@/modules/reabastecer/components/ButtonPagination';
-import { twMerge } from 'tailwind-merge';
 
 export default function CashBalanceHistory() {
   const paginationControls = useButtonPagination();
@@ -15,7 +14,7 @@ export default function CashBalanceHistory() {
     setTotalPages: paginationControls.setTotalPages,
   });
 
-  const cashBalanceDay = todayCashBalances.data?.cashBalances.map(
+  const dailyCashBalances = todayCashBalances.data?.cashBalances?.map(
     (cashBalance) =>
       ({
         id: cashBalance.id,
@@ -25,18 +24,21 @@ export default function CashBalanceHistory() {
         totalAmount: cashBalance.totalAmount,
         newCashAmount: cashBalance.newCashAmount,
         refunds: cashBalance.refunds,
+        
       }) as ICashBalance,
-  );
+  ) || [];
+
+  console.log({ dailyCashBalances })
 
   return (
     <div>
-      <RenderIf condition={!todayCashBalances.data?.cashBalances.length}>
+      <RenderIf condition={!dailyCashBalances.length}>
         <p className="text-center text-xl font-bold">No hay cajas</p>
       </RenderIf>
-      <RenderIf condition={todayCashBalances.data?.cashBalances.length}>
+      <RenderIf condition={dailyCashBalances.length}>
         <section className="flex flex-col gap-5 w-full">
           <p className="text-2xl text-center">Cajas del dia</p>
-          <TodayCashBalancesTable cashBalance={cashBalanceDay!} />
+          <TodayCashBalancesTable cashBalances={dailyCashBalances} />
           <ButtonPagination {...paginationControls} />
         </section>
       </RenderIf>

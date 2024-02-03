@@ -12,7 +12,7 @@ export const columnDefCashBalanceToday = [
     header: 'Nro de Caja',
   },
   {
-    accessorFn: (row: ICashBalance) => row.seller.username,
+    accessorFn: (row: ICashBalance) => row.seller?.username || 'ERROR',
     header: '👤 Vendedor',
   },
   {

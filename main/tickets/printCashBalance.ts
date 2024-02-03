@@ -11,7 +11,10 @@ import { ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
 import { ICashBalance } from '../interfaces/ICashBalance';
 import { IExpense } from '../interfaces/IExpense';
 
+interface ITotalByType { [type: string]: { [payment: string]: number } }
+
 interface IProps {
+  totalByType: ITotalByType;
   tickets: ITicket[];
   cashBalance: ICashBalance;
   refundedTickets: ITicket[];
@@ -36,6 +39,7 @@ export default function printCashBalance({
   tickets,
   refundedTickets,
   expenses,
+  totalByType
 }: IProps) {
   console.log(JSON.stringify(tickets, null, 2));
   try {
@@ -118,31 +122,9 @@ export default function printCashBalance({
         }
       }
 
-      const totalByType = tickets.reduce((acc, ticket) => {
-        ticket.order.items.forEach((item) => {
-          const productTypeName = item.product.type.name;
-          const price = item.selectedVariant.price * item.quantity;
-
-          ticket.payments.forEach((payment) => {
-            const paymentType = payment.type;
-
-            if (!acc[productTypeName]) {
-              acc[productTypeName] = {};
-            }
-
-            if (!acc[productTypeName][paymentType]) {
-              acc[productTypeName][paymentType] = 0;
-            }
-
-            acc[productTypeName][paymentType] += price;
-          });
-        });
-
-        return acc;
-      }, {});
 
       // Iterate over product types and payment types
-      printer.align(ALIGN.LT).text('Ganancias por Categoria').drawLine();
+      printer.align(ALIGN.LT).drawLine().text('Ganancias por Categoria');
 
       for (const type in totalByType) {
         printer.align(ALIGN.LT).text(type).align(ALIGN.RT);
@@ -169,16 +151,10 @@ export default function printCashBalance({
           `Caja Inicial (C.I): ${formatPrice(cashBalance.initialCashAmount)}`,
         )
         .align(ALIGN.LT)
-        .text(`Caja Efectivo (C.I-Gastos)`)
+        .text(`Caja Efectivo (+C.I-Gastos)`)
         .align(ALIGN.RT)
         .text(formatPrice(cashBalance.newCashAmount))
-        .text(
-          `Caja Virtual: ${formatPrice(
-            cashBalance.totalAmount -
-              cashBalance.newCashAmount -
-              expenses.reduce((acc, curr) => acc + curr.amount, 0),
-          )}`,
-        )
+        .text(`Caja Virtual: ${formatPrice(cashBalance.digitalCashAmount)}`)
         .text(`Total: ${formatPrice(cashBalance.totalAmount)}`);
 
       printer.align(ALIGN.CT).text(FONT_SIZE_SMALL).text('Sin validez fiscal');

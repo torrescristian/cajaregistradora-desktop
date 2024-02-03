@@ -7,13 +7,13 @@ import { ICashBalance } from '../interfaces/ICashBalance';
 import { columnDefCashBalanceToday } from './columnCashBalanceToday';
 
 interface IProps {
-  cashBalance: ICashBalance[];
+  cashBalances: ICashBalance[];
 }
 
-export default function TodayCashBalancesTabl({ cashBalance }: IProps) {
+export default function TodayCashBalancesTable({ cashBalances }: IProps) {
   const tableInstanceCashBalance = useReactTable({
     columns: columnDefCashBalanceToday,
-    data: cashBalance,
+    data: cashBalances,
     getCoreRowModel: getCoreRowModel(),
   });
 

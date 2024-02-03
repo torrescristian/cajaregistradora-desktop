@@ -72,7 +72,7 @@ export default function useActiveCashBalanceQuery() {
 
   const cashBalance = data?.cashBalance || null;
   const todayCashBalances =
-    data?.todayCashBalances.filter((cashBalance) => cashBalance.completedAt) ||
+    data?.todayCashBalances?.filter((cashBalance) => cashBalance.completedAt) ||
     [];
 
   return {

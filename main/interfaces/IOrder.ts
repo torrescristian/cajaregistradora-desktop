@@ -14,6 +14,7 @@ export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
   product?: PRODUCT;
   selectedVariant: SELECTED_VARIANT;
 }
+
 export type IOrderItemPayload = IOrderItem<number, number>;
 
 export interface IOrder<

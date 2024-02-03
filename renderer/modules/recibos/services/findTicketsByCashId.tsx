@@ -12,7 +12,10 @@ import {
   TICKET_STATUS,
 } from '@/modules/recibos/interfaces/ITicket';
 
+interface ITotalByType { [type: string]: { [payment: string]: number } }
+
 interface IResponse {
+  totalByType: ITotalByType;
   tickets: ITicket[];
   cashBalance: ICashBalance;
   refundedTickets: ITicket[];
@@ -72,7 +75,32 @@ export default async function findCashOptionsById(
     },
   })) as unknown as IExpensesResponse;
 
+
+  const totalByType = ticketResponse.results.reduce((acc, ticket) => {
+    ticket.order.items.forEach((item) => {
+      const productTypeName = item!.product!.type.name;
+      const price = item.selectedVariant.price * item.quantity;
+
+      ticket.payments.forEach((payment) => {
+        const paymentType = payment.type;
+
+        if (!acc[productTypeName]) {
+          acc[productTypeName] = {};
+        }
+
+        if (!acc[productTypeName][paymentType]) {
+          acc[productTypeName][paymentType] = 0;
+        }
+
+        acc[productTypeName][paymentType] += price;
+      });
+    });
+
+    return acc;
+  }, {} as ITotalByType);
+
   return {
+    totalByType,
     tickets: ticketResponse.results,
     cashBalance: cashBalance!,
     refundedTickets: refundedResponse.results,
