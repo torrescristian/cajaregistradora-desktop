@@ -14,21 +14,21 @@ export default function CashBalanceHistory() {
     setTotalPages: paginationControls.setTotalPages,
   });
 
-  const dailyCashBalances = todayCashBalances.data?.cashBalances?.map(
-    (cashBalance) =>
-      ({
-        id: cashBalance.id,
-        seller: cashBalance.seller,
-        initialCashAmount: cashBalance.initialCashAmount,
-        completedAt: cashBalance.completedAt,
-        totalAmount: cashBalance.totalAmount,
-        newCashAmount: cashBalance.newCashAmount,
-        refunds: cashBalance.refunds,
-        
-      }) as ICashBalance,
-  ) || [];
+  const dailyCashBalances =
+    todayCashBalances.data?.cashBalances?.map(
+      (cashBalance) =>
+        ({
+          id: cashBalance.id,
+          seller: cashBalance.seller,
+          initialCashAmount: cashBalance.initialCashAmount,
+          completedAt: cashBalance.completedAt,
+          totalAmount: cashBalance.totalAmount,
+          newCashAmount: cashBalance.newCashAmount,
+          refunds: cashBalance.refunds,
+        }) as ICashBalance,
+    ) || [];
 
-  console.log({ dailyCashBalances })
+  console.log({ dailyCashBalances });
 
   return (
     <div>

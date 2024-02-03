@@ -12,7 +12,9 @@ import {
   TICKET_STATUS,
 } from '@/modules/recibos/interfaces/ITicket';
 
-interface ITotalByType { [type: string]: { [payment: string]: number } }
+interface ITotalByType {
+  [type: string]: { [payment: string]: number };
+}
 
 interface IResponse {
   totalByType: ITotalByType;
@@ -74,7 +76,6 @@ export default async function findCashOptionsById(
       cashBalance: cashBalance?.id,
     },
   })) as unknown as IExpensesResponse;
-
 
   const totalByType = ticketResponse.results.reduce((acc, ticket) => {
     ticket.order.items.forEach((item) => {

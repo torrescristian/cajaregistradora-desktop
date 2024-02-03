@@ -11,7 +11,9 @@ import { ITicket, PAYMENT_TYPE } from '../interfaces/ITicket';
 import { ICashBalance } from '../interfaces/ICashBalance';
 import { IExpense } from '../interfaces/IExpense';
 
-interface ITotalByType { [type: string]: { [payment: string]: number } }
+interface ITotalByType {
+  [type: string]: { [payment: string]: number };
+}
 
 interface IProps {
   totalByType: ITotalByType;
@@ -39,7 +41,7 @@ export default function printCashBalance({
   tickets,
   refundedTickets,
   expenses,
-  totalByType
+  totalByType,
 }: IProps) {
   console.log(JSON.stringify(tickets, null, 2));
   try {
@@ -121,7 +123,6 @@ export default function printCashBalance({
             .text(`${formatPrice(expense.amount)}`);
         }
       }
-
 
       // Iterate over product types and payment types
       printer.align(ALIGN.LT).drawLine().text('Ganancias por Categoria');

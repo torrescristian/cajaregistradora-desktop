@@ -35,7 +35,7 @@ export default function usePrintService() {
   const printCash = async (cashId: number) => {
     const options = await findCashOptionsById(cashId);
 
-    console.table(options)
+    console.table(options);
 
     _emit(EVENT_TYPE.PRINT_CASH, options);
   };
