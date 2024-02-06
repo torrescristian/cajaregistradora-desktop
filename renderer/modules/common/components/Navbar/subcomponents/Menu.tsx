@@ -52,9 +52,9 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                 <NavButton className="w-full" href="/admin/gastos">
                   Gastos
                 </NavButton>
-                {/*               <NavButton className="w-full" href="/admin/analitica">
-                Analitica
-              </NavButton> */}
+                <NavButton className="w-full" href="/admin/analitica">
+                  Analitica
+                </NavButton>
               </>
             ) : null}
 
