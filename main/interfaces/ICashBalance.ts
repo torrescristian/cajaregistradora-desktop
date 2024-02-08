@@ -14,6 +14,7 @@ export interface ICashBalance<
   seller: USER;
   ticket: TICKET;
   totalAmount: number;
+  totalExpense: number;
 }
 
 export type ICashBalanceExpanded = ICashBalance<ITicket>;

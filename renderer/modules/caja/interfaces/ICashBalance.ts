@@ -15,6 +15,8 @@ export interface ICashBalance<
   seller: USER;
   tickets: TICKET[];
   totalAmount: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IRefund<TICKET = ITicket> {
