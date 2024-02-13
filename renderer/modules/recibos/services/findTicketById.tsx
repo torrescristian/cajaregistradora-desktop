@@ -24,6 +24,7 @@ export default async function findTicketById(
       'order.promoItems.selectedVariants',
       'order.promoItems.selectedVariants.product',
       'order.store',
+      'store',
     ],
   })) as unknown as ITicket;
   return ticketResponse;

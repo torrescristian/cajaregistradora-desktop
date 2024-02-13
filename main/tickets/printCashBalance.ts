@@ -131,17 +131,11 @@ export default function printCashBalance({
         printer.align(ALIGN.LT).text(type).align(ALIGN.RT);
 
         const totalsByPaymentType = totalByType[type];
-        for (const paymentType in totalsByPaymentType) {
-          const totalAmount = totalsByPaymentType[paymentType];
-          if (paymentType === PAYMENT_TYPE.CASH) {
-            printer.text(`Efectivo: ${formatPrice(totalAmount)}`);
-          }
-          if (paymentType === PAYMENT_TYPE.DEBIT) {
-            printer.text(`Debito: ${formatPrice(totalAmount)}`);
-          }
-          if (paymentType === PAYMENT_TYPE.CREDIT) {
-            printer.text(`Credito: ${formatPrice(totalAmount)}`);
-          }
+        if (totalsByPaymentType[PAYMENT_TYPE.CASH]) {
+          printer.text(`Efectivo: ${formatPrice(totalsByPaymentType[PAYMENT_TYPE.CASH])}`);
+        }
+        if (totalsByPaymentType[PAYMENT_TYPE.DEBIT] || totalsByPaymentType[PAYMENT_TYPE.CREDIT]) {
+          printer.text(`Virtual: ${formatPrice((totalsByPaymentType[PAYMENT_TYPE.DEBIT] || 0) + (totalsByPaymentType[PAYMENT_TYPE.CREDIT] || 0))}`);
         }
       }
 

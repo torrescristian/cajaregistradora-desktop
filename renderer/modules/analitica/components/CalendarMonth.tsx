@@ -54,6 +54,7 @@ export const CalendarMonth = ({
               </span>
             </RenderIf>
           </p>
+          </RenderIf>
           <CalendarWeek
             handleSelectRange={handleSelectRange}
             totalPages={totalPages}
@@ -64,7 +65,6 @@ export const CalendarMonth = ({
             onPreviousPage={onPreviousPage}
             page={page}
           />
-        </RenderIf>
       </div>
     </div>
   );

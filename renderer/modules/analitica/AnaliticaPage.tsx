@@ -7,8 +7,8 @@ function AnaliticaPage() {
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
   const [bringConfirmed, setBringConfirmed] = useState<boolean>(true);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [filtering, setFiltering] = useState('');
 
   const cashBalancesQuery = useCashBalancesByDateQuery({

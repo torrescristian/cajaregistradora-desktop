@@ -105,6 +105,7 @@ export const CalendarWeek = ({
           </button>
           {totalPagesRange.map((pageNumber) => (
             <button
+              key={pageNumber}
               className={twMerge(
                 pageNumber === page ? 'btn-disabled' : null,
                 'join-item btn',
@@ -124,6 +125,7 @@ export const CalendarWeek = ({
           allowPartialRange
           selectRange
           onChange={handleSelectRange}
+          locale='es'
         />
       </div>
     </section>

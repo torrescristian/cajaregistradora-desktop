@@ -25,7 +25,7 @@ export const columnDefCashBalanceToday = [
   },
   {
     accessorFn: (row: ICashBalance) =>
-      format(new Date(row.completedAt), 'dd/mm/yyyy HH:mm'),
+    row.completedAt ? format(new Date(row.completedAt), 'dd/MM/yyyy HH:mm') : 'Activo',
     header: '📅 Cierre de caja',
   },
   columnsHelper.display({

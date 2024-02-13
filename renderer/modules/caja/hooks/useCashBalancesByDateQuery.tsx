@@ -25,24 +25,26 @@ export default function useCashBalancesByDateQuery({
   setTotalPages,
   endDate,
   startDate,
+  pageSize
 }: IProps) {
   return useQuery<IResponse>(
-    [CASH_BALANCE_KEY, page, startDate, endDate],
+    [CASH_BALANCE_KEY, page, startDate, endDate, pageSize],
     async () => {
-      if (!startDate || !endDate) {
-        return {
-          cashBalances: [],
-          totalPages: 0,
-        };
+      let options: any = {};
+
+      if (startDate && endDate) {
+        options = {
+          filters: {
+            createdAt: {
+              $gte: startOfDay(startDate),
+              $lte: endOfDay(endDate),
+            },
+          },
+        }
       }
 
       const res = (await strapi.find(CASH_BALANCE_KEY, {
-        filters: {
-          createdAt: {
-            $gte: startOfDay(startDate),
-            $lte: endOfDay(endDate),
-          },
-        },
+        ...options,
         populate: [
           'cash-balances',
           'seller',
@@ -59,6 +61,7 @@ export default function useCashBalancesByDateQuery({
         ],
         /*@ts-ignore*/
         page,
+        pageSize,
       })) as unknown as ICashBalancePage;
       setTotalPages?.(res.pagination.pageCount!);
       return {
