@@ -57,7 +57,7 @@ const CajaRegistradoraApp: React.FC = () => {
       <div>
         <Subtitle>🎨 Adaptación a Tu Medida:</Subtitle>
         <Parragraph>
-          Personalización exclusiva. Tu experiencia con CajaRegistradora.app es
+          Personalización exclusiva. Tu experiencia con CajaRegistradora.com.ar es
           única.
         </Parragraph>
       </div>
@@ -71,7 +71,7 @@ const CajaRegistradoraApp: React.FC = () => {
       </div>
 
       {/* <div>
-        <Subtitle>🌟 Descubre CajaRegistradora.app hoy mismo.</Subtitle>
+        <Subtitle>🌟 Descubre CajaRegistradora.com.ar hoy mismo.</Subtitle>
         <div
           className="btn btn-primary"
           onClick={() => window.open('URL_REAL_DE_TU_PAGINA_DE_DEMOSTRACION')}
@@ -81,7 +81,7 @@ const CajaRegistradoraApp: React.FC = () => {
         <p>
           Utiliza el usuario de prueba "lacocina@gmail.com" con la contraseña
           "lacocina123" y experimenta todas las funcionalidades de
-          CajaRegistradora.app.
+          CajaRegistradora.com.ar.
         </p>
       </div> */}
       <WhatsappButton className="fixed bottom-12 w-fit" />

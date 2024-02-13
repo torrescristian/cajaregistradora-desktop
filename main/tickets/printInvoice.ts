@@ -7,9 +7,7 @@ import {
 } from '../helpers/utils';
 import {
   ALIGN,
-  FONT_SIZE_NORMAL,
   FONT_SIZE_SMALL,
-  FONT_SIZE_BIG,
 } from '../helpers/const';
 import { ITicket } from '../interfaces/ITicket';
 
@@ -42,40 +40,67 @@ export default function printInvoice(ticket: ITicket) {
 
       // open & set printer
       printer.drawLine();
-      printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.app');
+      printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.com.ar');
 
       // store, client and order data
       printer
-        .text(FONT_SIZE_BIG)
+        .text(FONT_SIZE_SMALL)
         .text(ticket.store.name)
-        .text(FONT_SIZE_NORMAL);
 
       printer
         .align(ALIGN.LT)
         .text(`Pedido # ${order.id!}`)
         .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`);
 
-      printer.text(FONT_SIZE_NORMAL);
-      // total amount & status
+    // aditional details
+    if (order.additionalDetails) {
+      printer.println(`# ${order.additionalDetails}`);
+    }
 
-      if (ticket.couponDiscount) {
-        printer
-          .align(ALIGN.RT)
-          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
-          .text(`Descuento de cupon: ${ticket.couponDiscount}`)
-          .text(`Otros descuentos: ${discountToString(order.discount)}`);
-      } else {
-        printer
-          .align(ALIGN.RT)
-          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
-          .text(`Descuento: ${discountToString(order.discount)}`);
+    // order items
+    for (const item of order.items) {
+      printer
+        .align(ALIGN.LT)
+        .text(`${item.product.name} - ${item.selectedVariant.name}`)
+        .align(ALIGN.RT)
+        .text(
+          `${formatPrice(item.selectedVariant.price)} x ${
+            item.quantity
+          } = ${formatPrice(item.selectedVariant.price * item.quantity)}`,
+        );
+    }
+
+    // promo items
+
+    for (const { promo, selectedVariants } of order.promoItems) {
+      printer.align('LT').println(`PROMO: ${promo.name}`);
+
+      for (const variant of selectedVariants) {
+        printer.println(`- ${variant.product.name} - ${variant.name}`);
       }
 
+      printer.align('RT').println(formatPrice(promo.price));
+    }
+
+    // total amount & status
+    printer
+      .align(ALIGN.RT)
+      .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
+
+    if (ticket.couponDiscount) {
+      printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
+      if (ticket.order.discount?.amount) {
+        printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
+      }
+    } else if (ticket.order.discount?.amount) {
+      printer.text(`Descuento: ${discountToString(order.discount)}`);
+    }
+
       printer
+        .drawLine()
         .text(`Total: ${formatPrice(ticket.totalPrice)}`)
         .drawLine()
         .align(ALIGN.CT)
-        .text(FONT_SIZE_SMALL)
         .text('Sin validez fiscal');
 
       // close printer

@@ -9,15 +9,7 @@ export const ChangeTheme = () => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
-    document.documentElement.classList.add('transition');
-    setTimeout(() => {
-      document.documentElement.classList.remove('transition');
-    }, 500);
-    return newTheme;
   };
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
 
   return (
     <label className="cursor-pointer grid place-items-center">

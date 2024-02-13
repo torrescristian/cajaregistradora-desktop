@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
-    <Html lang="en" data-theme="business">
+    <Html lang="es" data-theme="business">
       <Head>
         <meta name="title" content="CajaRegistradora.com.ar" />
         <link rel="icon" href="/images/logo.png" />
