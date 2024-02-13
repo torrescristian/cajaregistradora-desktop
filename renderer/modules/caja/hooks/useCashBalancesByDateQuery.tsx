@@ -25,7 +25,7 @@ export default function useCashBalancesByDateQuery({
   setTotalPages,
   endDate,
   startDate,
-  pageSize
+  pageSize,
 }: IProps) {
   return useQuery<IResponse>(
     [CASH_BALANCE_KEY, page, startDate, endDate, pageSize],
@@ -40,7 +40,7 @@ export default function useCashBalancesByDateQuery({
               $lte: endOfDay(endDate),
             },
           },
-        }
+        };
       }
 
       const res = (await strapi.find(CASH_BALANCE_KEY, {

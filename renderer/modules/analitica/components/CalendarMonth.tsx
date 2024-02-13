@@ -54,17 +54,17 @@ export const CalendarMonth = ({
               </span>
             </RenderIf>
           </p>
-          </RenderIf>
-          <CalendarWeek
-            handleSelectRange={handleSelectRange}
-            totalPages={totalPages}
-            filtering={filtering}
-            setFiltering={setFiltering}
-            cashBalances={cashBalances}
-            onNextPage={onNextPage}
-            onPreviousPage={onPreviousPage}
-            page={page}
-          />
+        </RenderIf>
+        <CalendarWeek
+          handleSelectRange={handleSelectRange}
+          totalPages={totalPages}
+          filtering={filtering}
+          setFiltering={setFiltering}
+          cashBalances={cashBalances}
+          onNextPage={onNextPage}
+          onPreviousPage={onPreviousPage}
+          page={page}
+        />
       </div>
     </div>
   );

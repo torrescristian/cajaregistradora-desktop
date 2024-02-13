@@ -132,10 +132,20 @@ export default function printCashBalance({
 
         const totalsByPaymentType = totalByType[type];
         if (totalsByPaymentType[PAYMENT_TYPE.CASH]) {
-          printer.text(`Efectivo: ${formatPrice(totalsByPaymentType[PAYMENT_TYPE.CASH])}`);
+          printer.text(
+            `Efectivo: ${formatPrice(totalsByPaymentType[PAYMENT_TYPE.CASH])}`,
+          );
         }
-        if (totalsByPaymentType[PAYMENT_TYPE.DEBIT] || totalsByPaymentType[PAYMENT_TYPE.CREDIT]) {
-          printer.text(`Virtual: ${formatPrice((totalsByPaymentType[PAYMENT_TYPE.DEBIT] || 0) + (totalsByPaymentType[PAYMENT_TYPE.CREDIT] || 0))}`);
+        if (
+          totalsByPaymentType[PAYMENT_TYPE.DEBIT] ||
+          totalsByPaymentType[PAYMENT_TYPE.CREDIT]
+        ) {
+          printer.text(
+            `Virtual: ${formatPrice(
+              (totalsByPaymentType[PAYMENT_TYPE.DEBIT] || 0) +
+                (totalsByPaymentType[PAYMENT_TYPE.CREDIT] || 0),
+            )}`,
+          );
         }
       }
 

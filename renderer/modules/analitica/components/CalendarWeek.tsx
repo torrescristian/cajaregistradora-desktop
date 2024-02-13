@@ -125,7 +125,7 @@ export const CalendarWeek = ({
           allowPartialRange
           selectRange
           onChange={handleSelectRange}
-          locale='es'
+          locale="es"
         />
       </div>
     </section>
