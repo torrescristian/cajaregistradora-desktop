@@ -57,8 +57,8 @@ const CajaRegistradoraApp: React.FC = () => {
       <div>
         <Subtitle>🎨 Adaptación a Tu Medida:</Subtitle>
         <Parragraph>
-          Personalización exclusiva. Tu experiencia con CajaRegistradora.com.ar es
-          única.
+          Personalización exclusiva. Tu experiencia con CajaRegistradora.com.ar
+          es única.
         </Parragraph>
       </div>
 

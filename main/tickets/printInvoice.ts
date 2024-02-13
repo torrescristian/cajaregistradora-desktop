@@ -5,10 +5,7 @@ import {
   formatPrice,
   parseDateToArgentinianFormat,
 } from '../helpers/utils';
-import {
-  ALIGN,
-  FONT_SIZE_SMALL,
-} from '../helpers/const';
+import { ALIGN, FONT_SIZE_SMALL } from '../helpers/const';
 import { ITicket } from '../interfaces/ITicket';
 
 export default function printInvoice(ticket: ITicket) {
@@ -43,58 +40,56 @@ export default function printInvoice(ticket: ITicket) {
       printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.com.ar');
 
       // store, client and order data
-      printer
-        .text(FONT_SIZE_SMALL)
-        .text(ticket.store.name)
+      printer.text(FONT_SIZE_SMALL).text(ticket.store.name);
 
       printer
         .align(ALIGN.LT)
         .text(`Pedido # ${order.id!}`)
         .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`);
 
-    // aditional details
-    if (order.additionalDetails) {
-      printer.println(`# ${order.additionalDetails}`);
-    }
+      // aditional details
+      if (order.additionalDetails) {
+        printer.println(`# ${order.additionalDetails}`);
+      }
 
-    // order items
-    for (const item of order.items) {
+      // order items
+      for (const item of order.items) {
+        printer
+          .align(ALIGN.LT)
+          .text(`${item.product.name} - ${item.selectedVariant.name}`)
+          .align(ALIGN.RT)
+          .text(
+            `${formatPrice(item.selectedVariant.price)} x ${
+              item.quantity
+            } = ${formatPrice(item.selectedVariant.price * item.quantity)}`,
+          );
+      }
+
+      // promo items
+
+      for (const { promo, selectedVariants } of order.promoItems) {
+        printer.align('LT').println(`PROMO: ${promo.name}`);
+
+        for (const variant of selectedVariants) {
+          printer.println(`- ${variant.product.name} - ${variant.name}`);
+        }
+
+        printer.align('RT').println(formatPrice(promo.price));
+      }
+
+      // total amount & status
       printer
-        .align(ALIGN.LT)
-        .text(`${item.product.name} - ${item.selectedVariant.name}`)
         .align(ALIGN.RT)
-        .text(
-          `${formatPrice(item.selectedVariant.price)} x ${
-            item.quantity
-          } = ${formatPrice(item.selectedVariant.price * item.quantity)}`,
-        );
-    }
+        .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
 
-    // promo items
-
-    for (const { promo, selectedVariants } of order.promoItems) {
-      printer.align('LT').println(`PROMO: ${promo.name}`);
-
-      for (const variant of selectedVariants) {
-        printer.println(`- ${variant.product.name} - ${variant.name}`);
+      if (ticket.couponDiscount) {
+        printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
+        if (ticket.order.discount?.amount) {
+          printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
+        }
+      } else if (ticket.order.discount?.amount) {
+        printer.text(`Descuento: ${discountToString(order.discount)}`);
       }
-
-      printer.align('RT').println(formatPrice(promo.price));
-    }
-
-    // total amount & status
-    printer
-      .align(ALIGN.RT)
-      .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
-
-    if (ticket.couponDiscount) {
-      printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
-      if (ticket.order.discount?.amount) {
-        printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
-      }
-    } else if (ticket.order.discount?.amount) {
-      printer.text(`Descuento: ${discountToString(order.discount)}`);
-    }
 
       printer
         .drawLine()
