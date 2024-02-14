@@ -147,9 +147,9 @@ export function getPaymentsType(payment: IPayment) {
 }
 
 export const discountToString = (discount?: IDiscount): string => {
-  if (!discount) return formatPrice(0);
+  if (!discount) return formatPrice(0)!;
 
   return discount.type === DISCOUNT_TYPE.FIXED
-    ? formatPrice(discount.amount)
+    ? formatPrice(discount.amount)!
     : `${discount.amount}%`;
 };

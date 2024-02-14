@@ -12,6 +12,7 @@ type OrderContextProps = Omit<
 };
 
 export const OrderContext = createContext<OrderContextProps>({
+  additionalDetails: '',
   cancelOrderMutation: (() => {}) as any,
   coupon: [] as any,
   createTicketMutation: (() => {}) as any,
@@ -19,17 +20,13 @@ export const OrderContext = createContext<OrderContextProps>({
   discountType: DISCOUNT_TYPE.FIXED,
   finalTotalPrice: 0,
   handleCancelOrder: (() => {}) as any,
-  handleChangePayment: (newPayment: IPayment) => {},
-  handleClickAddPaymentMethod: () => {},
+  handleChangeAdditionalsDetails: () => {},
   handleCouponDiscountAmount: () => {},
-  handleDeletePayment: () => {},
   handleSubmitCreateTicket: (() => {}) as unknown as any,
+  handleToggleEdit: () => {},
   order: {} as IOrder,
-  payments: [] as IPayment[],
+  setAdditionalDetails: () => {},
   setDiscountAmount: () => {},
   setDiscountType: () => {},
-  handleToggleEdit: () => {},
-  additionalDetails: '',
-  handleChangeAdditionalsDetails: () => {},
-  setAdditionalDetails: () => {},
+  paymentProps: {} as any,
 });
