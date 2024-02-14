@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import IClient from '@/modules/cart/interfaces/IClient';
 import { ORDERS_KEY, CLIENTS_KEY } from '@/modules/common/consts';
 import { ICartItem } from '../interfaces/ICart';
+import { adaptOrderItemToCartItem } from '@/modules/ordenes/utils/utils';
 
 interface IMutateProps {
   order: IOrder<number>;
@@ -21,11 +22,39 @@ export default function useUpdateOrderMutation({ onSuccess }: IProps) {
   return useMutation(
     async ({ order }: IMutateProps) => {
       const resp = [null, null] as [any, any];
-      resp[0] = await strapi.update(ORDERS_KEY, order.id!, order);
+
+      console.log({ order });
+
+      resp[0] = await strapi.update(ORDERS_KEY, order.id!, {
+        ...order,
+        client: order.client || undefined,
+        id: undefined,
+        items: order.items.map((item): IOrderItem<number, number> => {
+          return {
+            product: item.product!.id,
+            quantity: item.quantity,
+            price: item.selectedVariant.price,
+            selectedVariant: item.selectedVariant.id!,
+          };
+        }),
+        subtotalPrice: order.subtotalPrice,
+        totalPrice: order.subtotalPrice,
+      });
       if (order.client) {
         resp[1] = await strapi.update(CLIENTS_KEY, order.client!, {
           address: order.address,
         } as IClient);
+      }
+      // TODO:
+      const excludeServiceItem = (item: IOrderItem): boolean =>
+        !item.product!.isService;
+
+      const itemsToUpdate = order.items
+        .filter(excludeServiceItem)
+        .map(adaptOrderItemToCartItem);
+
+      if (itemsToUpdate.length) {
+        resp[1] = await updateStock(itemsToUpdate);
       }
 
       queryClient.invalidateQueries([CLIENTS_KEY]);
@@ -41,8 +70,10 @@ async function updateStock(items: ICartItem[]) {
 
   const stockPerVariant = (await strapi.find('stock-per-variants', {
     filters: {
-      product: {
-        id: productIds,
+      variant: {
+        product: {
+          id: productIds,
+        },
       },
     },
   })) as unknown as IStockPerVariantPages;

@@ -29,7 +29,7 @@ import { toast } from 'react-toastify';
 import useCreateOrderMutation from './useCreateOrderMutation';
 import usePayments from '@/modules/ordenes/hooks/usePayments';
 import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
-import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 
 interface IProps {
   updateMode?: boolean;
@@ -44,6 +44,7 @@ export default function useConfirmOrder({
   order,
   promoItems,
   updateMode,
+  closeUpdateMode,
 }: IProps) {
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
@@ -66,7 +67,7 @@ export default function useConfirmOrder({
 
   const [coupon, setCoupon] = useState<ICoupon>();
 
-  const paymentProps = usePayments({ totalPrice: newTotalPrice });
+  const paymentProps = usePayments();
 
   const { printInvoice, printCommand } = usePrintService();
 
@@ -85,34 +86,35 @@ export default function useConfirmOrder({
   const clearForm = () => {};
   const createOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
-      items,
-      totalPrice: newTotalPrice,
       additionalDetails,
       clientId,
-      subtotalPrice,
-      discount: { amount: Number(discountAmount!), type: discountType! },
       coupon,
+      discount: { amount: Number(discountAmount!), type: discountType! },
+      items,
       promoItems: promoItems!,
+      subtotalPrice,
+      totalPrice: newTotalPrice,
     });
     await printCommand(orderResponse.data.id);
     closeModal();
   };
 
-  const updateOrder = () => {
-    updateOrderMutation.mutate({
+  const updateOrder = async () => {
+    await updateOrderMutation.mutateAsync({
       order: {
-        id: order!.id!,
-        client: clientId!,
-        totalPrice: newTotalPrice,
         additionalDetails,
-        subtotalPrice,
-        discount: { amount: Number(discountAmount!), type: discountType! },
-        items: items.map(adaptCartItemToOrderItem),
-        status: order!.status,
+        client: clientId!,
         coupon,
+        discount: { amount: Number(discountAmount!), type: discountType! },
+        id: order!.id!,
+        items: items.map(adaptCartItemToOrderItem),
         promoItems: promoItems!,
+        status: order!.status,
+        subtotalPrice,
+        totalPrice: newTotalPrice,
       },
     });
+    closeUpdateMode?.();
   };
 
   const handleSubmit = () => {

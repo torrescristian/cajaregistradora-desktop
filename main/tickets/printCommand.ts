@@ -87,13 +87,12 @@ export default function printCommand(order: IOrder) {
       }, [] as IItem[]);
 
       // order items
+      printer.text(FONT_SIZE_NORMAL);
       for (const item of items) {
         printer
           .align(ALIGN.LT)
-          .text(FONT_SIZE_SMALL)
-          .text(`(${item.quantity}) ${item.productName}`)
+          .text(`${item.quantity} - ${item.productName}`)
           .align(ALIGN.RT)
-          .text(FONT_SIZE_NORMAL)
           .text(`- ${item.variantName}`);
       }
 

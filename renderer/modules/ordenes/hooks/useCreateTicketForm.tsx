@@ -1,4 +1,3 @@
-import { IPromoItem } from '@/modules/cart/interfaces/ICart';
 import { DISCOUNT_TYPE, IOrder } from '../interfaces/IOrder';
 import useCreateTicketMutation from './useCreateTicketMutation';
 import useCancelOrderMutation from './useCancelOrderMutation';
@@ -6,13 +5,12 @@ import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalance
 import { useState } from 'react';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
 import { calcDiscount } from '@/modules/common/libs/utils';
 import usePayments from './usePayments';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import useValidateCoupon from './useValidateCoupon';
-import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 
 interface IProps {
   order: IOrder;
@@ -42,7 +40,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
 
-  const paymentProps = usePayments({ newTotalPrice: finalTotalPrice });
+  const paymentProps = usePayments();
 
   const { handleClearInputCode } = useValidateCoupon({
     coupon: order.coupon!,

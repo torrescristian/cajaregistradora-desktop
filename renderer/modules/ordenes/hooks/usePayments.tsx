@@ -1,10 +1,6 @@
 import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { useState } from 'react';
 
-interface IProps {
-  totalPrice: number;
-}
-
 interface IReturn {
   cashAmount: number;
   creditAmount: number;
@@ -16,7 +12,7 @@ interface IReturn {
   type: PAYMENT_TYPE;
 }
 
-export default function usePayments({ totalPrice }: IProps): IReturn {
+export default function usePayments(): IReturn {
   const [type, setType] = useState(PAYMENT_TYPE.CASH);
   const [cashAmount, setCashAmount] = useState(0);
   const [debitAmount, setDebitAmount] = useState(0);

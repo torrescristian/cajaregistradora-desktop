@@ -3,10 +3,9 @@ import { formatPrice } from '@/modules/common/libs/utils';
 import ValidateCoupon from './ValidateCoupon';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 import { IOrder } from '../interfaces/IOrder';
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import { CheckIcon } from '@heroicons/react/24/solid';
-import { OrderContext } from '../context/OrderContext';
 import Payments from './Payments';
 import useCreateTicketForm from '../hooks/useCreateTicketForm';
 
@@ -16,20 +15,14 @@ interface IProps {
 
 export const ConfirmOrderModal = ({ order }: IProps) => {
   const {
-    cancelOrderMutation,
     coupon,
-    createTicketMutation,
     discountAmount,
     discountType,
     finalTotalPrice,
-    handleCancelOrder,
     handleCouponDiscountAmount,
     handleSubmitCreateTicket,
-    handleToggleAccordion,
-    isCheckedAcordion,
     additionalDetails,
     handleChangeAdditionalsDetails,
-    setAdditionalDetails,
     setDiscountAmount,
     setDiscountType,
     paymentProps,

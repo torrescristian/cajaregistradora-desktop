@@ -78,21 +78,22 @@ export default function printInvoice(ticket: ITicket) {
       }
 
       // total amount & status
-      printer
-        .align(ALIGN.RT)
-        .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`);
+      printer.drawLine().align(ALIGN.RT);
 
       if (ticket.couponDiscount) {
-        printer.text(`Descuento de cupon: ${ticket.couponDiscount}`);
+        printer
+          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
+          .text(`Descuento de cupon: ${ticket.couponDiscount}`);
         if (ticket.order.discount?.amount) {
           printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
         }
       } else if (ticket.order.discount?.amount) {
-        printer.text(`Descuento: ${discountToString(order.discount)}`);
+        printer
+          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
+          .text(`Descuento: ${discountToString(order.discount)}`);
       }
 
       printer
-        .drawLine()
         .text(`Total: ${formatPrice(ticket.totalPrice)}`)
         .drawLine()
         .align(ALIGN.CT)
