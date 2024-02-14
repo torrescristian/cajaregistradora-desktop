@@ -1,51 +1,55 @@
-import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { useState } from 'react';
 
 interface IProps {
-  newTotalPrice: number;
+  totalPrice: number;
 }
 
-export default function usePayments({ newTotalPrice }: IProps) {
-  const [payments, setPayments] = useState<IPayment[]>([
-    {
-      uuid: crypto.randomUUID(),
-      amount: newTotalPrice!,
-      type: PAYMENT_TYPE.CASH,
-    },
-  ]);
+interface IReturn {
+  cashAmount: number;
+  creditAmount: number;
+  debitAmount: number;
+  handleChangePayment: (
+    type: PAYMENT_TYPE,
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeType: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  type: PAYMENT_TYPE;
+}
 
-  const handleChangePayment = (newPayment: IPayment) => {
-    setPayments((ps) =>
-      ps.map((p) => {
-        if (p.uuid === newPayment.uuid) {
-          return newPayment;
+export default function usePayments({ totalPrice }: IProps): IReturn {
+  const [type, setType] = useState(PAYMENT_TYPE.CASH);
+  const [cashAmount, setCashAmount] = useState(0);
+  const [debitAmount, setDebitAmount] = useState(0);
+  const [creditAmount, setCreditAmount] = useState(0);
+
+  const handleChangePayment =
+    (selectedType: PAYMENT_TYPE) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = Number(e.target.value);
+
+      switch (selectedType) {
+        case PAYMENT_TYPE.CASH: {
+          return setCashAmount(value);
         }
-        return p;
-      }),
-    );
-  };
+        case PAYMENT_TYPE.DEBIT: {
+          return setDebitAmount(value);
+        }
+        case PAYMENT_TYPE.CREDIT: {
+          return setCreditAmount(value);
+        }
+      }
+    };
 
-  const handleDeletePayment = (uuid: string) => {
-    if (payments.length <= 1) return;
-
-    setPayments((ps) => ps.filter((p) => p.uuid !== uuid));
-  };
-
-  const handleClickAddPaymentMethod = () => {
-    setPayments((ps) => [
-      ...ps,
-      {
-        uuid: crypto.randomUUID(),
-        type: PAYMENT_TYPE.CREDIT,
-        amount: 0,
-      },
-    ]);
+  const handleChangeType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setType(e.target.value as PAYMENT_TYPE);
   };
 
   return {
+    cashAmount,
+    creditAmount,
+    debitAmount,
     handleChangePayment,
-    handleDeletePayment,
-    handleClickAddPaymentMethod,
-    payments,
+    handleChangeType,
+    type,
   };
 }

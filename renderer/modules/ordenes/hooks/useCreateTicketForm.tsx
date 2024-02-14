@@ -12,6 +12,7 @@ import usePayments from './usePayments';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import useValidateCoupon from './useValidateCoupon';
+import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 
 interface IProps {
   order: IOrder;
@@ -37,17 +38,11 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     discountAmount: Number(discountAmount),
     discountType,
   });
-  /* order.totalPrice - couponDiscount - Number(discountAmount); */
 
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
 
-  const {
-    handleChangePayment,
-    handleClickAddPaymentMethod,
-    handleDeletePayment,
-    payments,
-  } = usePayments({ newTotalPrice: finalTotalPrice });
+  const paymentProps = usePayments({ newTotalPrice: finalTotalPrice });
 
   const { handleClearInputCode } = useValidateCoupon({
     coupon: order.coupon!,
@@ -81,6 +76,31 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
   };
 
   const handleSubmitCreateTicket = async () => {
+    let payments: IPayment[] = [];
+    if (paymentProps.type === PAYMENT_TYPE.MULTIPLE) {
+      payments = [
+        {
+          type: PAYMENT_TYPE.CASH,
+          amount: paymentProps.cashAmount,
+        },
+        {
+          type: PAYMENT_TYPE.CREDIT,
+          amount: paymentProps.creditAmount,
+        },
+        {
+          type: PAYMENT_TYPE.DEBIT,
+          amount: paymentProps.debitAmount,
+        },
+      ].filter(({ amount }) => Boolean(amount));
+    } else {
+      payments = [
+        {
+          type: paymentProps.type,
+          amount: finalTotalPrice,
+        },
+      ];
+    }
+
     try {
       const { ticketResponse } = await createTicketMutation.mutateAsync({
         ticket: {
@@ -137,11 +157,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     handleChangeAdditionalsDetails,
     setDiscountAmount,
     setDiscountType,
-    handleChangePayment,
-    handleClickAddPaymentMethod,
     handleCouponDiscountAmount,
-    handleDeletePayment,
-    payments,
     handleSubmitCreateTicket,
     handleToggleAccordion,
     isCheckedAcordion,
@@ -153,5 +169,6 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
     discountAmount,
     coupon,
     handleToggleEdit,
+    paymentProps,
   };
 }

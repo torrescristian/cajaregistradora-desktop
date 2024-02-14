@@ -1,35 +1,57 @@
-import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
-import { Payment } from './Payment';
-import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
-
-interface IProps {
-  payments: IPayment[];
-  onChange: (payment: IPayment) => void;
-  onNewPayment: () => void;
-  onDelete: (uuid: string) => void;
-  newTotalPrice?: number;
-}
+import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import { Selector } from '@/modules/common/components/Selector';
+import { paymentTypesAndLabels } from '@/modules/recibos/utils/utils';
+import { RenderIf } from '@/modules/common/components/RenderIf';
+import FieldLabel from '@/modules/common/components/FieldLabel';
+import usePayments from '../hooks/usePayments';
 
 export default function Payments({
-  onChange,
-  onNewPayment,
-  onDelete,
-  payments,
-  newTotalPrice,
-}: IProps) {
+  cashAmount,
+  creditAmount,
+  debitAmount,
+  handleChangePayment,
+  handleChangeType,
+  type,
+}: ReturnType<typeof usePayments>) {
   return (
-    <section>
-      <Divider className="text-base-content">Formas de pago</Divider>
-      {payments.map((payment: IPayment) => (
-        <Payment
-          key={payment.uuid}
-          onChange={onChange}
-          onNewPayment={onNewPayment}
-          onDelete={onDelete}
-          payment={payment}
-          newTotalPrice={newTotalPrice!}
+    <section className="flex flex-col text-base-content gap-3">
+      <div className="flex flex-row gap-3 w-full justify-between">
+        <Selector
+          className="w-full flex-1"
+          onChange={handleChangeType}
+          defaultValue={type}
+          values={paymentTypesAndLabels.map(({ label, type }) => ({
+            label,
+            value: type,
+          }))}
         />
-      ))}
+      </div>
+      <RenderIf condition={type === PAYMENT_TYPE.MULTIPLE}>
+        <FieldLabel columnMode title="Efectivo">
+          <input
+            onChange={handleChangePayment(PAYMENT_TYPE.CASH)}
+            value={cashAmount}
+            placeholder="0.00"
+            className="input input-bordered text-base-content w-28 sm:w-36 "
+          />
+        </FieldLabel>
+        <FieldLabel columnMode title="Crédito">
+          <input
+            onChange={handleChangePayment(PAYMENT_TYPE.CREDIT)}
+            value={creditAmount}
+            placeholder="0.00"
+            className="input input-bordered text-base-content w-28 sm:w-36 "
+          />
+        </FieldLabel>
+        <FieldLabel columnMode title="Débito">
+          <input
+            onChange={handleChangePayment(PAYMENT_TYPE.DEBIT)}
+            value={debitAmount}
+            placeholder="0.00"
+            className="input input-bordered text-base-content w-28 sm:w-36 "
+          />
+        </FieldLabel>
+      </RenderIf>
     </section>
   );
 }

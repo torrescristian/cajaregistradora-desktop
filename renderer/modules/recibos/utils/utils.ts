@@ -13,6 +13,10 @@ export const paymentTypesAndLabels = [
     type: PAYMENT_TYPE.DEBIT,
     label: 'Débito',
   },
+  {
+    type: PAYMENT_TYPE.MULTIPLE,
+    label: 'Mixto',
+  },
 ] as const;
 
 export const getLabelByPaymentType = (type: PAYMENT_TYPE) => {

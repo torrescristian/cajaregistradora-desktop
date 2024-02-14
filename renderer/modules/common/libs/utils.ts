@@ -1,6 +1,7 @@
 import { ICartItem, IPromoItem } from '@/modules/cart/interfaces/ICart';
 import {
   DISCOUNT_TYPE,
+  IDiscount,
   IOrder,
   ORDER_STATUS,
 } from '@/modules/ordenes/interfaces/IOrder';
@@ -144,3 +145,11 @@ export function getPaymentsType(payment: IPayment) {
       return '';
   }
 }
+
+export const discountToString = (discount?: IDiscount): string => {
+  if (!discount) return formatPrice(0);
+
+  return discount.type === DISCOUNT_TYPE.FIXED
+    ? formatPrice(discount.amount)
+    : `${discount.amount}%`;
+};

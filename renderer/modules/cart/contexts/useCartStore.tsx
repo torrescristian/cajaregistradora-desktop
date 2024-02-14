@@ -56,7 +56,7 @@ export const useCartStore = create<ICartStore>()((set) => ({
     set({
       cartItems: cartPayload.cartItems,
       subtotalPrice: cartPayload.subtotalPrice,
-      totalPrice: cartPayload.subtotalPrice,
+      totalPrice: cartPayload.totalPrice,
     }),
   setCart: (cartPayload: ISetCart) =>
     set({

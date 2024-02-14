@@ -3,12 +3,11 @@ import OrderItem from '../../ordenes/components/OrderItem';
 import { ITicket } from '@/modules/recibos/interfaces/ITicket';
 import { DataItem } from '@/modules/common/components/DataItem';
 import { getLabelByPaymentType } from '../utils/utils';
-import { formatPrice } from '@/modules/common/libs/utils';
+import { discountToString, formatPrice } from '@/modules/common/libs/utils';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
-
 interface IMoreInfoModal {
   ticket: ITicket;
 }
@@ -74,7 +73,7 @@ export const MoreInfoModal = ({ ticket }: IMoreInfoModal) => {
             <RenderIf condition={ticket.order.discount!}>
               <DataItem
                 label="Otros descuentos:"
-                value={formatPrice(ticket.order.discount?.amount!)}
+                value={discountToString(ticket.order.discount)}
               />
             </RenderIf>
             {ticket.payments.map((payment) => (

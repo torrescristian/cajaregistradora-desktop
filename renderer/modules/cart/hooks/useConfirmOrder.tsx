@@ -20,7 +20,7 @@ import { ICartItem, IPromoItem } from '../interfaces/ICart';
 import { useMemo, useRef, useState } from 'react';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import usePrintService from '@/modules/common/hooks/usePrintService';
-import { formatPrice } from '@/modules/common/libs/utils';
+import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
 import useUpdateOrderMutation from './useUpdateOrderMutation';
 import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
@@ -29,6 +29,7 @@ import { toast } from 'react-toastify';
 import useCreateOrderMutation from './useCreateOrderMutation';
 import usePayments from '@/modules/ordenes/hooks/usePayments';
 import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
+import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 
 interface IProps {
   updateMode?: boolean;
@@ -57,19 +58,15 @@ export default function useConfirmOrder({
   const discountAmount = useCartStore(getDiscountAmount) || '';
   const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
 
-  const newTotalPrice = useMemo(
-    () => (order?.totalPrice || totalPrice) - couponDiscount,
-    [totalPrice, couponDiscount, order?.totalPrice],
-  );
+  const newTotalPrice = calcDiscount({
+    price: order?.totalPrice || totalPrice,
+    discountAmount: couponDiscount,
+    discountType: DISCOUNT_TYPE.FIXED,
+  });
 
   const [coupon, setCoupon] = useState<ICoupon>();
 
-  const {
-    handleChangePayment,
-    handleClickAddPaymentMethod,
-    handleDeletePayment,
-    payments,
-  } = usePayments({ newTotalPrice });
+  const paymentProps = usePayments({ totalPrice: newTotalPrice });
 
   const { printInvoice, printCommand } = usePrintService();
 
@@ -151,12 +148,41 @@ export default function useConfirmOrder({
   };
 
   const handleCreateTicket = async () => {
-    const sum = payments.reduce((acc, curr) => acc + Number(curr.amount), 0);
-    if (sum !== newTotalPrice) {
+    const sum =
+      paymentProps.cashAmount +
+      paymentProps.creditAmount +
+      paymentProps.debitAmount;
+
+    if (paymentProps.type === PAYMENT_TYPE.MULTIPLE && sum !== newTotalPrice) {
       toast.error(
         `Se está cobrando ${formatPrice(sum)} de ${formatPrice(newTotalPrice)}`,
       );
       return;
+    }
+
+    let payments: IPayment[] = [];
+    if (paymentProps.type === PAYMENT_TYPE.MULTIPLE) {
+      payments = [
+        {
+          type: PAYMENT_TYPE.CASH,
+          amount: paymentProps.cashAmount,
+        },
+        {
+          type: PAYMENT_TYPE.CREDIT,
+          amount: paymentProps.creditAmount,
+        },
+        {
+          type: PAYMENT_TYPE.DEBIT,
+          amount: paymentProps.debitAmount,
+        },
+      ].filter(({ amount }) => Boolean(amount));
+    } else {
+      payments = [
+        {
+          type: paymentProps.type,
+          amount: newTotalPrice,
+        },
+      ];
     }
 
     const { orderResponse } = await orderMutation.mutateAsync({
@@ -205,17 +231,14 @@ export default function useConfirmOrder({
     discountType,
     handleChangeAdditionalsDetails,
     handleChangeDiscountType,
-    handleChangePayment,
-    handleClickAddPaymentMethod,
     handleClickConfirmOrder,
     handleCouponDiscountAmount,
     handleCreateTicket,
-    handleDeletePayment,
     handleSubmit,
     items,
     newTotalPrice,
     orderMutation,
-    payments,
+    paymentProps,
     ref,
     setDiscountAmount,
     setDiscountType,

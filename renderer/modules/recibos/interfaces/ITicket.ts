@@ -3,7 +3,6 @@ import { IOrder } from '../../ordenes/interfaces/IOrder';
 import { IResponsePage } from '@/modules/common/interfaces/utils';
 
 export interface IPayment {
-  uuid?: string;
   amount: number | '';
   type: PAYMENT_TYPE;
 }
@@ -12,6 +11,7 @@ export enum PAYMENT_TYPE {
   CASH = 'CASH',
   CREDIT = 'CREDIT',
   DEBIT = 'DEBIT',
+  MULTIPLE = 'MULTIPLE',
 }
 
 export type ITicketResponse = IResponsePage<ITicket>;

@@ -43,16 +43,13 @@ export const CreateTicketFormMobile = ({
     discountType,
     finalTotalPrice,
     handleCancelOrder,
-    handleChangePayment,
-    handleClickAddPaymentMethod,
     handleCouponDiscountAmount,
-    handleDeletePayment,
     handleSubmitCreateTicket,
     handleToggleAccordion,
     isCheckedAcordion,
-    payments,
     setDiscountAmount,
     setDiscountType,
+    paymentProps,
   } = useCreateTicketForm({ order });
 
   return (
@@ -189,13 +186,7 @@ export const CreateTicketFormMobile = ({
                 defaultValue=""
                 className="text-2xl"
               />
-              <Payments
-                newTotalPrice={finalTotalPrice}
-                onChange={handleChangePayment}
-                onDelete={handleDeletePayment}
-                onNewPayment={handleClickAddPaymentMethod}
-                payments={payments}
-              />
+              <Payments {...paymentProps} />
               <button
                 onClick={handleSubmitCreateTicket}
                 disabled={createTicketMutation.isLoading || updateMode}

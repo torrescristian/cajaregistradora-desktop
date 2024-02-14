@@ -15,22 +15,6 @@ interface IProps {
 }
 
 export const ConfirmOrderModal = ({ order }: IProps) => {
-  /*   const {
-      setDiscountAmount,
-      setDiscountType,
-      discountAmount,
-      discountType,
-      handleCouponDiscountAmount,
-      coupon,
-      payments,
-      handleChangePayment,
-      handleDeletePayment,
-      handleClickAddPaymentMethod,
-      finalTotalPrice,
-      additionalDetails,
-      handleChangeAdditionalsDetails,
-      handleSubmitCreateTicket,
-    } = useContext(OrderContext); */
   const {
     cancelOrderMutation,
     coupon,
@@ -39,19 +23,16 @@ export const ConfirmOrderModal = ({ order }: IProps) => {
     discountType,
     finalTotalPrice,
     handleCancelOrder,
-    handleChangePayment,
-    handleClickAddPaymentMethod,
     handleCouponDiscountAmount,
-    handleDeletePayment,
     handleSubmitCreateTicket,
     handleToggleAccordion,
     isCheckedAcordion,
-    payments,
     additionalDetails,
     handleChangeAdditionalsDetails,
     setAdditionalDetails,
     setDiscountAmount,
     setDiscountType,
+    paymentProps,
   } = useCreateTicketForm({ order });
 
   const ref = useRef<HTMLDialogElement>(null);
@@ -93,13 +74,7 @@ export const ConfirmOrderModal = ({ order }: IProps) => {
               subtotalPrice={order?.subtotalPrice!}
               coupon={coupon}
             />
-            <Payments
-              newTotalPrice={finalTotalPrice}
-              payments={payments}
-              onChange={handleChangePayment}
-              onDelete={handleDeletePayment}
-              onNewPayment={handleClickAddPaymentMethod}
-            />
+            <Payments {...paymentProps} />
             <DataItem
               label="Total:"
               value={formatPrice(finalTotalPrice)}

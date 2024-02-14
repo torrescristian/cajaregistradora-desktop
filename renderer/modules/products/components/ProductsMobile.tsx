@@ -115,9 +115,11 @@ export const ProductsMobile = ({
           </RenderIf>
         </div>
 
-        <div className="flex flex-col w-min items-end">
-          <QuickOrders />
-        </div>
+        <RenderIf condition={!updateMode}>
+          <div className="flex flex-col w-min items-end">
+            <QuickOrders />
+          </div>
+        </RenderIf>
       </div>
     </section>
   );

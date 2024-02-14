@@ -36,15 +36,11 @@ export const ConfirmOrderMobile = ({
     discountAmount,
     discountType,
     handleChangeAdditionalsDetails,
-    handleChangePayment,
-    handleClickAddPaymentMethod,
     handleCouponDiscountAmount,
     handleCreateTicket,
-    handleDeletePayment,
     handleSubmit,
-    newTotalPrice,
     orderMutation,
-    payments,
+    paymentProps,
     setDiscountAmount,
     setDiscountType,
     subtotalPrice,
@@ -86,16 +82,10 @@ export const ConfirmOrderMobile = ({
             subtotalPrice={order?.subtotalPrice! || subtotalPrice}
             coupon={coupon}
           />
-          <Payments
-            newTotalPrice={newTotalPrice}
-            payments={payments}
-            onChange={handleChangePayment}
-            onDelete={handleDeletePayment}
-            onNewPayment={handleClickAddPaymentMethod}
-          />
+          <Payments {...paymentProps} />
           <DataItem
             label="Total:"
-            value={formatPrice(newTotalPrice)}
+            value={formatPrice(subtotalPrice)}
             defaultValue=""
             className="text-2xl"
           />
