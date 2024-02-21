@@ -3,7 +3,7 @@ import { CalendarMonth } from './components/CalendarMonth';
 import useCashBalancesByDateQuery from '../caja/hooks/useCashBalancesByDateQuery';
 import FieldLabel from '../common/components/FieldLabel';
 
-function AnaliticaPage() {
+function EstadisticasPage() {
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
   const [bringConfirmed, setBringConfirmed] = useState<boolean>(true);
@@ -109,4 +109,4 @@ function AnaliticaPage() {
     </section>
   );
 }
-export default AnaliticaPage;
+export default EstadisticasPage;

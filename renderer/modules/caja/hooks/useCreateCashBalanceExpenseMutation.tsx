@@ -17,6 +17,7 @@ export default function useCreateCashBalanceExpenseMutation() {
         toast.error('la caja no esta activa');
         throw new Error('la caja no esta activa');
       }
+
       const res = await strapi.create(EXPENSES_KEY, {
         amount: Number(expense.amount),
         reason: expense.reason,
@@ -25,17 +26,14 @@ export default function useCreateCashBalanceExpenseMutation() {
         type: expense.type,
         status: isOwner ? STATUS_EXPENSE.APPROVED : STATUS_EXPENSE.PENDING,
       });
+
       if (isOwner) {
-        const returnMoney = await strapi.update(
-          CASH_BALANCE_KEY,
-          cashBalance.id!,
-          {
-            newCashAmount: Math.max(
-              cashBalance.newCashAmount - expense.amount,
-              0,
-            ),
-          } as Partial<ICashBalance>,
-        );
+        await strapi.update(CASH_BALANCE_KEY, cashBalance.id!, {
+          newCashAmount: Math.max(
+            cashBalance.newCashAmount - expense.amount,
+            0,
+          ),
+        } as Partial<ICashBalance>);
       }
 
       if (!isOwner) {
@@ -48,7 +46,7 @@ export default function useCreateCashBalanceExpenseMutation() {
       queryClient.invalidateQueries([EXPENSES_KEY]);
       return res;
     } catch (e) {
-      toast.error('Error al registrar gasto');
+      toast.error(`Error al registrar gasto: ${e}`);
     }
   });
 }

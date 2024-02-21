@@ -6,3 +6,4 @@ export const CAJA_URL = '/admin/caja';
 export const REABASTECER_URL = '/admin/productos';
 export const CREAR_PRODUCTOS_URL = '/admin/generador-de-productos-y-variantes';
 export const CREAR_CUPONES_URL = '/admin/cupones';
+export const ESTADISTICAS_URL = '/admin/estadisticas';

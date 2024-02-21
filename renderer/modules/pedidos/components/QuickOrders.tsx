@@ -10,7 +10,6 @@ import {
 } from '@/modules/reabastecer/components/ButtonPagination';
 import QuickOrderInfoModal from './QuickOrderInfoModal';
 import FormRow from '@/modules/ordenes/components/FormRow';
-import { EditOrderModal } from '@/modules/ordenes/components/EditOrderModal';
 
 export default function QuickOrders() {
   const paginationControls = useButtonPagination();

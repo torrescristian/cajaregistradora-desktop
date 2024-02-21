@@ -1,4 +1,4 @@
-import CajaPage from '@/modules/caja/CajaPage';
+import CajaPage from '@/modules/caja/components/pages/CajaPage';
 
 const Caja = () => {
   return <CajaPage />;

@@ -1,11 +1,3 @@
-const Small = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-sm font-normal">{children}</span>
-);
-
-const Bold = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-lg font-bold">{children}</span>
-);
-
 interface IProps {
   value: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

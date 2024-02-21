@@ -1,10 +1,10 @@
 import PageLayout from '@/modules/common/components/PageLayout';
-import React from 'react';
-import CreateListTabs from '../common/components/CreateListTabs';
-import CashBalanceRender from './components/CashBalanceRender';
-import ConfirmExpensesModal from './components/ConfirmExpensesModal';
-import { useAuthState } from '../common/contexts/AuthContext';
-import CashBalanceHistory from './components/CashBalanceHistory';
+import { useAuthState } from '@/modules/common/contexts/AuthContext';
+
+import CreateListTabs from '../../../common/components/CreateListTabs';
+import CashBalanceRender from '../organisms/CashBalanceRender';
+import ConfirmExpensesModal from '../ConfirmExpensesModal';
+import CashBalanceHistory from '../CashBalanceHistory';
 
 export default function CajaPage() {
   const { isOwner } = useAuthState();
@@ -12,12 +12,14 @@ export default function CajaPage() {
     { label: 'Caja', component: <CashBalanceRender /> },
     { label: 'Historial', component: <CashBalanceHistory /> },
   ];
+
   if (isOwner) {
     tabs.push({
       label: 'Confirmar pendientes',
       component: <ConfirmExpensesModal />,
     });
   }
+
   return (
     <PageLayout>
       <CreateListTabs tabs={tabs} />

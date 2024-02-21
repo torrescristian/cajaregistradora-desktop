@@ -23,3 +23,14 @@ export const EXPENSES_KEY = 'expenses';
 export const EXPENSES_TYPE_KEY = 'expense-types';
 
 export const CASH_BALANCE_KEY = 'cash-balances';
+
+export const ORDENES_URL = '/ordenes';
+export const RECIBOS_URL = '/recibos';
+export const PEDIDOS_URL = '/pedidos';
+export const CAJA_URL = '/admin/caja';
+export const REABASTECER_URL = '/admin/productos';
+export const CREAR_PRODUCTOS_URL = '/admin/productos/nuevo';
+export const CUPONES_URL = '/admin/cupones';
+export const PROMO_URL = '/admin/promo';
+export const GASTOS_URL = '/admin/gastos';
+export const ESTADISTICAS_URL = '/admin/estadisticas';

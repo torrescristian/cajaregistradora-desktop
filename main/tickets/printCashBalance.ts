@@ -152,15 +152,23 @@ export default function printCashBalance({
       printer
         .drawLine()
         .align(ALIGN.RT)
+        .text(`Ganancia Diaria: ${formatPrice(cashBalance.totalAmount)}`)
+        .text(`Ganancia Virtual: ${formatPrice(cashBalance.digitalCashAmount)}`)
         .text(
-          `Caja Inicial (C.I): ${formatPrice(cashBalance.initialCashAmount)}`,
+          `Caja Inicial (Efvo): ${formatPrice(cashBalance.initialCashAmount)}`,
         )
         .align(ALIGN.LT)
-        .text(`Caja Efectivo (+C.I-Gastos)`)
+        .text(`Caja Final (Efvo)`)
         .align(ALIGN.RT)
         .text(formatPrice(cashBalance.newCashAmount))
-        .text(`Caja Virtual: ${formatPrice(cashBalance.digitalCashAmount)}`)
-        .text(`Total: ${formatPrice(cashBalance.totalAmount)}`);
+        .align(ALIGN.LT)
+        .text(`Caja Final + Virtual`)
+        .align(ALIGN.RT)
+        .text(
+          formatPrice(
+            cashBalance.newCashAmount + cashBalance.digitalCashAmount,
+          ),
+        );
 
       printer.align(ALIGN.CT).text(FONT_SIZE_SMALL).text('Sin validez fiscal');
 

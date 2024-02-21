@@ -27,9 +27,7 @@ export const CashBalanceActivateMobile = ({ cashBalance }: IProps) => {
         />
         <DataItem
           label="Caja Efectivo:"
-          value={formatPrice(
-            cashBalance?.newCashAmount! + cashBalance?.initialCashAmount!,
-          )}
+          value={formatPrice(cashBalance?.newCashAmount)}
           defaultValue="$0.00"
           className="text-2xl"
         />
@@ -40,7 +38,7 @@ export const CashBalanceActivateMobile = ({ cashBalance }: IProps) => {
           className="text-2xl"
         />
         <DataItem
-          label="Caja Total:"
+          label="Ganancia Diaria:"
           value={formatPrice(cashBalance?.totalAmount!)}
           defaultValue="$0.00"
           className="text-2xl"

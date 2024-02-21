@@ -37,7 +37,7 @@ export default function CashBalanceHistory() {
       </RenderIf>
       <RenderIf condition={dailyCashBalances.length}>
         <section className="flex flex-col gap-5 w-full">
-          <p className="text-2xl text-center">Cajas del dia</p>
+          <p className="text-2xl text-center">Historial de Cajas:</p>
           <TodayCashBalancesTable cashBalances={dailyCashBalances} />
           <ButtonPagination {...paginationControls} />
         </section>

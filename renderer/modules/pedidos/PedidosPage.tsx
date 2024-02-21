@@ -2,6 +2,7 @@ import Loader from '@/modules/common/components/Loader';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
 import { ProductsMobile } from '../products/components/ProductsMobile';
 import { useRouter } from 'next/router';
+import { CAJA_URL } from '@/modules/common/consts';
 
 export default function PedidosPage() {
   const { isLoading, cashIsActive } = useActiveCashBalanceQuery();
@@ -20,7 +21,7 @@ export default function PedidosPage() {
         </div>
         <button
           className="btn btn-primary"
-          onClick={() => router.push('/admin/caja')}
+          onClick={() => router.push(CAJA_URL)}
         >
           Ir a Caja
         </button>

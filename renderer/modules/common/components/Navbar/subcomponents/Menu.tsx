@@ -6,6 +6,18 @@ import { ChangeTheme } from '../ChangeTheme';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import OutsideAlerter from '../../OutsideAlerter';
 import { useModalStore } from '@/modules/common/contexts/useModalStore';
+import {
+  CAJA_URL,
+  CREAR_PRODUCTOS_URL,
+  CUPONES_URL,
+  ESTADISTICAS_URL,
+  GASTOS_URL,
+  ORDENES_URL,
+  PEDIDOS_URL,
+  PROMO_URL,
+  REABASTECER_URL,
+  RECIBOS_URL,
+} from '@/modules/common/consts';
 
 const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
@@ -18,42 +30,42 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
           <ul>
             {isMobile ? (
               <ul>
-                <NavButton className="w-full" href="/pedidos">
+                <NavButton className="w-full" href={PEDIDOS_URL}>
                   Pedidos
                 </NavButton>
-                <NavButton className="w-full" href="/ordenes">
+                <NavButton className="w-full" href={ORDENES_URL}>
                   Ordenes pendientes
                 </NavButton>
               </ul>
             ) : null}
-            <NavButton className="w-full" href="/recibos">
+            <NavButton className="w-full" href={RECIBOS_URL}>
               Recibos
             </NavButton>
-            <NavButton className="w-full" href="/admin/caja">
+            <NavButton className="w-full" href={CAJA_URL}>
               Caja
             </NavButton>
             {isOwner ? (
               <>
-                <NavButton className="w-full" href="/admin/reabastecer">
+                <NavButton className="w-full" href={REABASTECER_URL}>
                   Reabastecer
                 </NavButton>
 
-                <NavButton className="w-full" href="/admin/crearProductos">
+                <NavButton className="w-full" href={CREAR_PRODUCTOS_URL}>
                   Crear Producto
                 </NavButton>
 
-                <NavButton className="w-full" href="/admin/cupones">
+                <NavButton className="w-full" href={CUPONES_URL}>
                   Cupones
                 </NavButton>
 
-                <NavButton className="w-full" href="/admin/promo">
+                <NavButton className="w-full" href={PROMO_URL}>
                   Promos
                 </NavButton>
-                <NavButton className="w-full" href="/admin/gastos">
+                <NavButton className="w-full" href={GASTOS_URL}>
                   Gastos
                 </NavButton>
-                <NavButton className="w-full" href="/admin/analitica">
-                  Analitica
+                <NavButton className="w-full" href={ESTADISTICAS_URL}>
+                  Estadisticas
                 </NavButton>
               </>
             ) : null}

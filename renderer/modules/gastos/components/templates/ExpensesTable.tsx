@@ -6,7 +6,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { columnsDefExp } from './ColumnsExpenses';
+import { columnsDefExp } from '../organisms/ColumnsExpenses';
 import { useState } from 'react';
 
 interface IProps {

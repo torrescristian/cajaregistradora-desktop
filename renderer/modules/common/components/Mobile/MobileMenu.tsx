@@ -5,6 +5,7 @@ import { Bars3Icon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { ISubMenuProps } from '@/modules/common/interfaces/INavbar';
 import NavButton from '../Navbar/subcomponents/NavButton';
+import { CAJA_URL, CREAR_PRODUCTOS_URL, REABASTECER_URL } from '../../consts';
 
 const MobileMenu = ({ isLoggedIn, onLogout }: ISubMenuProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,16 +33,13 @@ const MobileMenu = ({ isLoggedIn, onLogout }: ISubMenuProps) => {
               <ul className="flex flex-col">
                 {isOwner && (
                   <>
-                    <NavButton className="w-full" href="/admin/caja">
+                    <NavButton className="w-full" href={CAJA_URL}>
                       Balance de Caja
                     </NavButton>
-                    <NavButton className="w-full" href="/admin/productos">
+                    <NavButton className="w-full" href={REABASTECER_URL}>
                       Reabastecer
                     </NavButton>
-                    <NavButton
-                      className="w-full"
-                      href="/admin/generador-de-productos-y-variantes"
-                    >
+                    <NavButton className="w-full" href={CREAR_PRODUCTOS_URL}>
                       Crear Producto
                     </NavButton>
                   </>

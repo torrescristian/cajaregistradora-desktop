@@ -13,11 +13,10 @@ export default function useInitCashMutation() {
   const { userData } = useAuthState();
 
   return useMutation(async ({ initialCashAmount }: IProps) => {
-    console.log({ userData });
     const res = await strapi.create(CASH_BALANCE_KEY, {
       completed_at: null,
       initialCashAmount,
-      newCashAmount: 0,
+      newCashAmount: initialCashAmount,
       seller: userData!.id,
       tickets: [],
       digitalCashAmount: 0,

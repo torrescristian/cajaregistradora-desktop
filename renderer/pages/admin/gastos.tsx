@@ -1,5 +1,5 @@
-import ExpensesManagment from '@/modules/gastos/ExpensesManagment';
+import ExpensesPage from '@/modules/gastos/components/pages/ExpensesPage';
 
 export default function Gastos() {
-  return <ExpensesManagment />;
+  return <ExpensesPage />;
 }
