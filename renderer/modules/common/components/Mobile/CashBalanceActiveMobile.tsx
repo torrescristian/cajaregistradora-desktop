@@ -27,7 +27,7 @@ export const CashBalanceActivateMobile = ({ cashBalance }: IProps) => {
         />
         <DataItem
           label="Caja Efectivo:"
-          value={formatPrice(cashBalance?.newCashAmount)}
+          value={formatPrice(cashBalance?.newCashAmount || 0)}
           defaultValue="$0.00"
           className="text-2xl"
         />
