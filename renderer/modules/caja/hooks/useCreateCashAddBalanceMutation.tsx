@@ -4,7 +4,7 @@ import {
   STATUS_ADD_BALANCE,
 } from '../interfaces/INewAddBalance';
 import strapi from '@/modules/common/libs/strapi';
-import { CASH_BALANCE_KEY, ADD_BALANCE_KEY } from '@/modules/common/consts';
+import { CASH_BALANCE_KEY, EXPENSES_KEY } from '@/modules/common/consts';
 import useActiveCashBalanceQuery from './useActiveCashBalanceQuery';
 import { toast } from 'react-toastify';
 import { ICashBalance } from '../interfaces/ICashBalance';
@@ -21,7 +21,7 @@ export default function useCreateCashAddBalanceMutation() {
         throw new Error('la caja no esta activa');
       }
 
-      const res = await strapi.create(CASH_BALANCE_KEY, {
+      const res = await strapi.create(EXPENSES_KEY, {
         amount: Number(newAddBalance.amount),
         reason: newAddBalance.reason,
         createdAt: newAddBalance.createdAt,
@@ -40,12 +40,12 @@ export default function useCreateCashAddBalanceMutation() {
 
       if (!isOwner) {
         toast.info('Se enviara a aprobación');
-        queryClient.invalidateQueries([CASH_BALANCE_KEY]);
+        queryClient.invalidateQueries([EXPENSES_KEY]);
         return null;
       }
 
       toast.success('Saldo actualizado');
-      queryClient.invalidateQueries([CASH_BALANCE_KEY]);
+      queryClient.invalidateQueries([EXPENSES_KEY]);
       return res;
     } catch (e) {
       toast.error(`Error al registrar el saldo: ${e}`);
