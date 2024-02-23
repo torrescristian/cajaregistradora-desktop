@@ -34,24 +34,21 @@ export default function useCreateCashAddBalanceMutation() {
 
       if (isOwner) {
         await strapi.update(CASH_BALANCE_KEY, cashBalance.id!, {
-          newCashAmount: Math.max(
-            cashBalance.newCashAmount + newAddBalance.amount,
-            0,
-          ),
+          newCashAmount: cashBalance.newCashAmount + newAddBalance.amount
         } as Partial<ICashBalance>);
       }
 
       if (!isOwner) {
-        toast.info('Se enviara a aprobacion');
+        toast.info('Se enviara a aprobación');
         queryClient.invalidateQueries([CASH_BALANCE_KEY]);
         return null;
       }
 
-      toast.success('Gasto registrado');
+      toast.success('Saldo actualizado');
       queryClient.invalidateQueries([CASH_BALANCE_KEY]);
       return res;
     } catch (e) {
-      toast.error(`Error al registrar gasto: ${e}`);
+      toast.error(`Error al registrar el saldo: ${e}`);
     }
   });
 }
