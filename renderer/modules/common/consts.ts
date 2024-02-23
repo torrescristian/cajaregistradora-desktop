@@ -18,7 +18,7 @@ export const CATEGORIES_KEY = 'categories';
 
 export const NOTIFICATIONS_KEY = 'notifications';
 
-export const ADD_BALANCE_KEY = 'add-balance'
+export const ADD_BALANCE_KEY = 'add-balance';
 
 export const EXPENSES_KEY = 'expenses';
 

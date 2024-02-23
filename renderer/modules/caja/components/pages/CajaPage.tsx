@@ -10,7 +10,7 @@ export default function CajaPage() {
   const { isOwner } = useAuthState();
   const tabs = [
     { label: 'Caja', component: <CashBalanceRender /> },
-    { label: 'Historial', component: <CashBalanceHistory /> },    
+    { label: 'Historial', component: <CashBalanceHistory /> },
   ];
 
   if (isOwner) {

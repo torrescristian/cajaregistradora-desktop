@@ -1,5 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { INewAddBalance, STATUS_ADD_BALANCE } from '../interfaces/INewAddBalance';
+import {
+  INewAddBalance,
+  STATUS_ADD_BALANCE,
+} from '../interfaces/INewAddBalance';
 import strapi from '@/modules/common/libs/strapi';
 import { CASH_BALANCE_KEY, ADD_BALANCE_KEY } from '@/modules/common/consts';
 import useActiveCashBalanceQuery from './useActiveCashBalanceQuery';
@@ -24,7 +27,9 @@ export default function useCreateCashAddBalanceMutation() {
         createdAt: newAddBalance.createdAt,
         cashBalance: cashBalance.id,
         type: newAddBalance.type,
-        status: isOwner ? STATUS_ADD_BALANCE.APPROVED : STATUS_ADD_BALANCE.PENDING,
+        status: isOwner
+          ? STATUS_ADD_BALANCE.APPROVED
+          : STATUS_ADD_BALANCE.PENDING,
       });
 
       if (isOwner) {
