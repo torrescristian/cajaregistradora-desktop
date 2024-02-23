@@ -5,12 +5,14 @@ import CreateListTabs from '../../../common/components/CreateListTabs';
 import CashBalanceRender from '../organisms/CashBalanceRender';
 import ConfirmExpensesModal from '../ConfirmExpensesModal';
 import CashBalanceHistory from '../CashBalanceHistory';
+import AddToBalance from './AddToBalance';
 
 export default function CajaPage() {
   const { isOwner } = useAuthState();
   const tabs = [
     { label: 'Caja', component: <CashBalanceRender /> },
-    { label: 'Historial', component: <CashBalanceHistory /> },
+    { label: 'Añadir', component: <AddToBalance /> },
+    { label: 'Historial', component: <CashBalanceHistory /> },    
   ];
 
   if (isOwner) {
