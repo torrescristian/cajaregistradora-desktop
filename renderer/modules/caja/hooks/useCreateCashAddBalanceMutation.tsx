@@ -34,7 +34,7 @@ export default function useCreateCashAddBalanceMutation() {
 
       if (isOwner) {
         await strapi.update(CASH_BALANCE_KEY, cashBalance.id!, {
-          newCashAmount: cashBalance.newCashAmount + newAddBalance.amount
+          newCashAmount: cashBalance.newCashAmount + newAddBalance.amount,
         } as Partial<ICashBalance>);
       }
 
