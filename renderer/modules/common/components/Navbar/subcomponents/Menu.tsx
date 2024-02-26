@@ -11,7 +11,7 @@ import {
   CREAR_PRODUCTOS_URL,
   CUPONES_URL,
   ESTADISTICAS_URL,
-  ANIADIR_FONDOS_URL,
+  DEPOSITAR_URL,
   GASTOS_URL,
   ORDENES_URL,
   PEDIDOS_URL,
@@ -62,7 +62,7 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                 <NavButton className="w-full" href={PROMO_URL}>
                   Promos
                 </NavButton>
-                <NavButton className="w-full" href={ANIADIR_FONDOS_URL}>
+                <NavButton className="w-full" href={DEPOSITAR_URL}>
                   Añadir Fondos
                 </NavButton>
                 <NavButton className="w-full" href={GASTOS_URL}>

@@ -1,7 +1,6 @@
 import {
   INewAddBalance,
   IAddNewBalanceResponse,
-  STATUS_ADD_BALANCE,
 } from '@/modules/caja/interfaces/INewAddBalance';
 import { EXPENSES_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
@@ -23,9 +22,6 @@ export default function useAddBalancesQuery({ page, setTotalPages }: IProps) {
       populate: ['type'],
       /* @ts-ignore*/
       page,
-      filters: {
-        status: STATUS_ADD_BALANCE.APPROVED || STATUS_ADD_BALANCE.PENDING,
-      },
     })) as unknown as IAddNewBalanceResponse;
     setTotalPages?.(resp.pagination.pageCount!);
     return {

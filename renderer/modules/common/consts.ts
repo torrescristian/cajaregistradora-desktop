@@ -22,6 +22,8 @@ export const ADD_BALANCE_KEY = 'add-balance';
 
 export const EXPENSES_KEY = 'expenses';
 
+export const DEPOSITS_KEY = 'deposits';
+
 export const EXPENSES_TYPE_KEY = 'expense-types';
 
 export const CASH_BALANCE_KEY = 'cash-balances';
@@ -34,6 +36,6 @@ export const REABASTECER_URL = '/admin/productos';
 export const CREAR_PRODUCTOS_URL = '/admin/productos/nuevo';
 export const CUPONES_URL = '/admin/cupones';
 export const PROMO_URL = '/admin/promo';
-export const ANIADIR_FONDOS_URL = '/admin/aniadirFondos';
+export const DEPOSITAR_URL = '/admin/depositar';
 export const GASTOS_URL = '/admin/gastos';
 export const ESTADISTICAS_URL = '/admin/estadisticas';

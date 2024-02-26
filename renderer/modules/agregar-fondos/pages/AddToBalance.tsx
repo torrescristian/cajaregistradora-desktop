@@ -25,9 +25,6 @@ export default function AddToBalance() {
         id: addBalance.id,
         amount: addBalance.amount,
         reason: addBalance.reason,
-        createdAt: addBalance.createdAt,
-        status: addBalance.status,
-        type: addBalance.type,
       }) as INewAddBalance,
   );
   return (
