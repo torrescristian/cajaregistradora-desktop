@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  INewAddBalance,
-} from '../interfaces/INewAddBalance';
+import { INewAddBalance } from '../interfaces/INewAddBalance';
 import strapi from '@/modules/common/libs/strapi';
-import { DEPOSITS_KEY, EXPENSES_KEY, CASH_BALANCE_KEY } from '@/modules/common/consts';
+import {
+  DEPOSITS_KEY,
+  EXPENSES_KEY,
+  CASH_BALANCE_KEY,
+} from '@/modules/common/consts';
 import useActiveCashBalanceQuery from './useActiveCashBalanceQuery';
 import { toast } from 'react-toastify';
 import { ICashBalance } from '../interfaces/ICashBalance';
@@ -24,14 +26,12 @@ export default function useCreateCashAddBalanceMutation() {
         reason: newAddBalance.reason,
         cashBalance: cashBalance.id,
         amount: Number(newAddBalance.amount),
-        
       });
 
-      
-        await strapi.update(CASH_BALANCE_KEY, cashBalance.id!, {
-          newCashAmount: Number(cashBalance.newCashAmount) + Number(newAddBalance.amount),
-        } as Partial<ICashBalance>);
-      
+      await strapi.update(CASH_BALANCE_KEY, cashBalance.id!, {
+        newCashAmount:
+          Number(cashBalance.newCashAmount) + Number(newAddBalance.amount),
+      } as Partial<ICashBalance>);
 
       toast.success('Saldo actualizado');
       queryClient.invalidateQueries([EXPENSES_KEY]);

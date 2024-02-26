@@ -18,8 +18,5 @@ export interface IAddNewBalanceType {
   store?: IStore;
 }
 
-
-
-
 export type IAddNewBalanceResponse = IResponsePage<INewAddBalance>;
 export type IAddNewBalanceTypesResponse = IResponsePage<IAddNewBalanceType>;
