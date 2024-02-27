@@ -8,6 +8,7 @@ export interface INewAddBalance<CASH_BALANCE = ICashBalance> {
   reason: string;
   cashBalance: ICashBalance;
   store?: IStore;
+  createdAt?: string;
 }
 
 export interface IAddNewBalanceType {
@@ -16,6 +17,7 @@ export interface IAddNewBalanceType {
   reason: string;
   cashBalance: ICashBalance;
   store?: IStore;
+  createdAt?: string;
 }
 
 export type IAddNewBalanceResponse = IResponsePage<INewAddBalance>;

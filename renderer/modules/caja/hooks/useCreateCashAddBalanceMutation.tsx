@@ -24,6 +24,7 @@ export default function useCreateCashAddBalanceMutation() {
 
       const res = await strapi.create(DEPOSITS_KEY, {
         reason: newAddBalance.reason,
+        createdAt: newAddBalance.createdAt,
         cashBalance: cashBalance.id,
         amount: Number(newAddBalance.amount),
       });
@@ -34,7 +35,7 @@ export default function useCreateCashAddBalanceMutation() {
       } as Partial<ICashBalance>);
 
       toast.success('Saldo actualizado');
-      queryClient.invalidateQueries([EXPENSES_KEY]);
+      queryClient.invalidateQueries([DEPOSITS_KEY]);
       queryClient.invalidateQueries([CASH_BALANCE_KEY]);
     } catch (e) {
       toast.error(`Error al registrar el saldo: ${e}`);

@@ -2,7 +2,7 @@ import {
   INewAddBalance,
   IAddNewBalanceResponse,
 } from '@/modules/caja/interfaces/INewAddBalance';
-import { EXPENSES_KEY } from '@/modules/common/consts';
+import { DEPOSITS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
 
@@ -17,8 +17,8 @@ interface IResponse {
 }
 
 export default function useAddBalancesQuery({ page, setTotalPages }: IProps) {
-  return useQuery<IResponse>([EXPENSES_KEY, page], async () => {
-    const resp = (await strapi.find(EXPENSES_KEY, {
+  return useQuery<IResponse>([DEPOSITS_KEY, page], async () => {
+    const resp = (await strapi.find(DEPOSITS_KEY, {
       populate: ['type'],
       /* @ts-ignore*/
       page,

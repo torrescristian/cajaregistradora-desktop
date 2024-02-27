@@ -7,6 +7,7 @@ import {
 } from '@/modules/reabastecer/components/ButtonPagination';
 
 import CreateAddBalanceForm from '../organisms/CreateAddBalanceForm';
+import AddToBalanceTable from '../template/addToBalanceTable';
 
 export default function AddToBalance() {
   const paginationControls = useButtonPagination();
@@ -23,6 +24,7 @@ export default function AddToBalance() {
     (addBalance) =>
       ({
         id: addBalance.id,
+        createdAt: addBalance.createdAt,
         amount: addBalance.amount,
         reason: addBalance.reason,
       }) as INewAddBalance,
@@ -30,6 +32,8 @@ export default function AddToBalance() {
   return (
     <section className="w-full flex flex-col justify-center gap-10">
       <CreateAddBalanceForm data={data} />
+      <AddToBalanceTable data={data!}/>
+      <ButtonPagination {...paginationControls} />
     </section>
   );
 }
