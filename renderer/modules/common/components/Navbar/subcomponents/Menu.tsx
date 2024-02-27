@@ -63,13 +63,13 @@ const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
                   Promos
                 </NavButton>
                 <NavButton className="w-full" href={DEPOSITAR_URL}>
-                  Añadir Fondos
+                  Depositar
                 </NavButton>
                 <NavButton className="w-full" href={GASTOS_URL}>
                   Gastos
                 </NavButton>
                 <NavButton className="w-full" href={ESTADISTICAS_URL}>
-                  Estadisticas
+                  Estadísticas
                 </NavButton>
               </>
             ) : null}
