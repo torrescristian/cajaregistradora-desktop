@@ -32,7 +32,7 @@ export default function AddToBalance() {
   return (
     <section className="w-full flex flex-col justify-center gap-10">
       <CreateAddBalanceForm data={data} />
-      <AddToBalanceTable data={data!}/>
+      <AddToBalanceTable data={data!} />
       <ButtonPagination {...paginationControls} />
     </section>
   );

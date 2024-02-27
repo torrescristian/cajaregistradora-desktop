@@ -5,31 +5,31 @@ import { useCancelAddToBalanceMutation } from '../hooks/useCancelAddToBalanceMut
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
 
 interface IProps {
-    newAddBalance: INewAddBalance;
+  newAddBalance: INewAddBalance;
 }
 
-export default function ButtonCancelAddToBalance({ newAddBalance }: IProps){
-    const ref = useRef<HTMLDialogElement>(null);
-    
-    const cancelAddToBalanceMutation = useCancelAddToBalanceMutation();
+export default function ButtonCancelAddToBalance({ newAddBalance }: IProps) {
+  const ref = useRef<HTMLDialogElement>(null);
 
-    const handleClickOpenModal = (e: React.MouseEvent) => {
-        e.preventDefault();
-        ref.current?.showModal();
-      };
-    
-      const handleClickCloseModal = (e: React.MouseEvent) => {
-        e.preventDefault();
-        ref.current?.close();
-      };
+  const cancelAddToBalanceMutation = useCancelAddToBalanceMutation();
 
-      const handleClickCancelAddToBalance = () => {
-        cancelAddToBalanceMutation.mutate(newAddBalance);
-        ref.current?.close();
-      };
+  const handleClickOpenModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    ref.current?.showModal();
+  };
 
-      return(
-        <section>
+  const handleClickCloseModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    ref.current?.close();
+  };
+
+  const handleClickCancelAddToBalance = () => {
+    cancelAddToBalanceMutation.mutate(newAddBalance);
+    ref.current?.close();
+  };
+
+  return (
+    <section>
       <button
         className="btn btn-error text-neutral-content"
         onClick={handleClickOpenModal}
@@ -58,5 +58,5 @@ export default function ButtonCancelAddToBalance({ newAddBalance }: IProps){
         </div>
       </dialog>
     </section>
-      )
+  );
 }

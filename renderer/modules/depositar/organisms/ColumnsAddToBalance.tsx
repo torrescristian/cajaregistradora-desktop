@@ -13,16 +13,18 @@ export const columnsDefExp = [
       row.createdAt && format(new Date(row.createdAt), 'dd/MM/yyyy HH:mm'),
     header: 'Fecha',
   },
-    {
-      accessorFn: (row: INewAddBalance) => formatPrice(row.amount),
-      header: 'Monto',
-    },
-    {
-      accessorKey: 'reason',
-      header: 'Motivo',
-    },
-    columnHelper.display({
-      header: 'Eliminar',
-      cell: (info) => <ButtonCancelAddToBalance newAddBalance={info.row.original} />,
-    }),
-  ];
+  {
+    accessorFn: (row: INewAddBalance) => formatPrice(row.amount),
+    header: 'Monto',
+  },
+  {
+    accessorKey: 'reason',
+    header: 'Motivo',
+  },
+  columnHelper.display({
+    header: 'Eliminar',
+    cell: (info) => (
+      <ButtonCancelAddToBalance newAddBalance={info.row.original} />
+    ),
+  }),
+];
