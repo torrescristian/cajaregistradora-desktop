@@ -18,7 +18,7 @@ export interface IProduct<
   store: number;
   isService: boolean;
   default_variant: DEFAULT_VARIANT;
-  image: string;
+  image?: string;
   type: PRODUCT_TYPE;
   updatedAt?: string;
   createdAt?: string;
