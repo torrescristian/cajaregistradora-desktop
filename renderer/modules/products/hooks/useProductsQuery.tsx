@@ -104,6 +104,7 @@ export default function useProductsQuery({
 
         if (selectedProductType) {
           options.filters = {
+            ...options.filters,
             type: selectedProductType,
           };
         }
