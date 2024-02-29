@@ -18,7 +18,7 @@ export interface IProduct<
   store: number;
   isService: boolean;
   default_variant: DEFAULT_VARIANT;
-  image: string;
+  image?: string;
   type: PRODUCT_TYPE;
   updatedAt?: string;
   createdAt?: string;
@@ -35,6 +35,7 @@ export interface IProductType<PRODUCTS = IProduct[]> {
   name: string;
   product: PRODUCTS;
   emoji: string;
+  image?: string;
 }
 export type IProductPayload = IProduct<number, number, number>;
 export type IProductTypePayload = IProductType<number[]>;

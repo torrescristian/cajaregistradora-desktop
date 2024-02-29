@@ -4,14 +4,18 @@ import { getStrapiUrl } from '@/modules/common/libs/utils';
 export const useImageControl = () => {
   const processSubmit = async (e: any) => {
     e.preventDefault();
-    const valueFile = e.target;
 
-    if (valueFile === undefined || null) {
-      return 'default.png';
+    const formData = new FormData(e.target);
+    const imageFile = formData.get('files');
+
+    // Verificar si se proporcionó un archivo de imagen
+    if (!imageFile || (imageFile instanceof File && imageFile.size === 0)) {
+      // No se proporcionó una imagen o el tamaño del archivo es cero, retornar un valor por defecto
+      return undefined;
     }
 
-    if (valueFile !== undefined || null) {
-      const formData = new FormData(e.target);
+    try {
+      // Se proporcionó una imagen, enviar el formulario con la imagen
       const productImage = await fetch(`${getStrapiUrl()}/api/upload`, {
         method: 'POST',
         body: formData,
@@ -24,6 +28,9 @@ export const useImageControl = () => {
       }).then((res) => res.json());
 
       return productImage;
+    } catch (error) {
+      console.error('Error al cargar la imagen:', error);
+      return null; // Retornar null en caso de error
     }
   };
 
