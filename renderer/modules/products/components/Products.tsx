@@ -5,6 +5,7 @@ import Loader from '@/modules/common/components/Loader';
 import ProductTypes from './ProductTypes';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import RenderPromos from '@/modules/promos/components/RenderPromo';
+
 import { useProductsProps } from '../hooks/useProductsProps';
 import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
 

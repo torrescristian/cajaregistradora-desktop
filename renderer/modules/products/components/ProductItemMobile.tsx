@@ -1,5 +1,5 @@
 import HighlightedText from '@/modules/common/components/HighlightedText';
-import { IProduct, PRODUCT_STATUS } from '../interfaces/IProduct';
+import { IProduct, MEASURE_UNIT } from '../interfaces/IProduct';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { Selector } from '@/modules/common/components/Selector';
 import useProductItem from '../hooks/useProductItem';
@@ -9,6 +9,7 @@ import {
   RemoveProductButton,
 } from '@/modules/cart/components/ProductItem.styles';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
+import { ChangeEvent, useState } from 'react';
 
 interface IProps {
   product: IProduct;
@@ -17,13 +18,23 @@ interface IProps {
 
 export const ProductItemMobile = ({ product, onClick }: IProps) => {
   const {
+    cartItemQuantity,
+    setItemQuantity,
     handleChangeVariant,
     handleClick,
-    selectedVariant,
-    cartItemQuantity,
-    handleClickRemove,
     handleClickAdd,
+    handleClickRemove,
+    selectedVariant,
   } = useProductItem({ product, onClick });
+  const [quantity, setQuantity] = useState<string>(String(cartItemQuantity));
+
+  const handleClickSetQuantity = () => {
+    setItemQuantity(Number(quantity));
+  };
+
+  const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuantity(e.target.value === '' ? '' : e.target.value);
+  };
 
   return (
     <div className="flex flex-col w-full mt-3 border-2 p-5">
@@ -45,22 +56,43 @@ export const ProductItemMobile = ({ product, onClick }: IProps) => {
             />
           </RenderIf>
           <p className="my-3">{formatPrice(selectedVariant.price)}</p>
-
-          {cartItemQuantity > 0 ? (
-            <div className="flex flex-row gap-2 w-min items-center">
-              <RemoveProductButton onClick={handleClickRemove} />
-              <p>&times;{cartItemQuantity}</p>
-              <AddProductButton onClick={handleClickAdd} />
+          <RenderIf condition={product.measureUnit === MEASURE_UNIT.KILOGRAM}>
+            <div className="flex flex-row">
+              <input
+                className="input w-32 input-bordered text-right"
+                value={quantity}
+                onChange={handleChangeQuantity}
+              />
+              <button
+                className="btn btn-primary w-min rounded-lg"
+                onClick={handleClickSetQuantity}
+                data-test="add-product"
+              >
+                Agregar
+              </button>
             </div>
-          ) : (
-            <button
-              className="btn btn-primary w-min rounded-lg"
-              onClick={handleClick}
-              data-test="add-product"
-            >
-              Agregar
-            </button>
-          )}
+          </RenderIf>
+          <RenderIf
+            condition={
+              !product.measureUnit || product.measureUnit === MEASURE_UNIT.UNIT
+            }
+          >
+            {cartItemQuantity > 0 ? (
+              <div className="flex flex-row gap-2 w-min items-center">
+                <RemoveProductButton onClick={handleClickRemove} />
+                <p>&times;{cartItemQuantity}</p>
+                <AddProductButton onClick={handleClickAdd} />
+              </div>
+            ) : (
+              <button
+                className="btn btn-primary w-min rounded-lg"
+                onClick={handleClick}
+                data-test="add-product"
+              >
+                Agregar
+              </button>
+            )}
+          </RenderIf>
         </div>
       </div>
     </div>
