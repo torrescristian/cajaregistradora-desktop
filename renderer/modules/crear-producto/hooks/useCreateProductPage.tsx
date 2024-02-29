@@ -27,7 +27,7 @@ export default function useCreateProductPage({ controlType, product }: IProps) {
   } = useForm<IProductPayload>({
     defaultValues: {
       name: product?.name || '',
-      image: product?.image || '',
+      image: product?.image || undefined,
       isService: product?.isService || true,
     },
   });

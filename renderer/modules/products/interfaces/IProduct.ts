@@ -35,6 +35,7 @@ export interface IProductType<PRODUCTS = IProduct[]> {
   name: string;
   product: PRODUCTS;
   emoji: string;
+  image?: string;
 }
 export type IProductPayload = IProduct<number, number, number>;
 export type IProductTypePayload = IProductType<number[]>;
