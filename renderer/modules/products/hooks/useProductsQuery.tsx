@@ -8,7 +8,8 @@ import {
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { PRODUCTS_KEY } from '@/modules/common/consts';
-import { IVariant } from '@/modules/common/interfaces/IVariants';
+import { IVariant,
+  STATUS_VARIANTS, } from '@/modules/common/interfaces/IVariants';
 const parseProductFacade = (product: IProduct): IProduct => {
   const {
     name,
@@ -22,11 +23,16 @@ const parseProductFacade = (product: IProduct): IProduct => {
     description,
   } = product;
 
+  // Filtrar solo las variantes con estado "enabled"
+  const enabledVariants = variants.filter(
+    (variant) => variant.status === STATUS_VARIANTS.ENABLED,
+  );
+
   const res = {
     id,
     name,
     isService,
-    variants: variants.map(
+    variants: enabledVariants.map(
       (variant) =>
         ({
           id: variant.id,
