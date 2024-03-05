@@ -6,7 +6,7 @@ import {
 import { newColumnDefOrder } from './NewColumnOrder';
 import { ITable } from '../interfaces/ITable';
 import { ButtonAdd } from './ButtonAdd';
-import {TablesColumn} from './TablesColumn';
+import { TablesColumn } from './TablesColumn';
 import { DeliveriesColumn } from './DeliviriesColumn';
 import { OrdersColumn } from './OrdersColumn';
 
@@ -22,7 +22,7 @@ export default function NewOrderTable({ tables, setTableToUpdate }: IProps) {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <section className='flex flex-row w-full text-center divide-x'>
+    <section className="flex flex-row w-full text-center divide-x">
       <TablesColumn />
       <DeliveriesColumn />
       <OrdersColumn />
