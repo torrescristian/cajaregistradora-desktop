@@ -5,6 +5,10 @@ import {
 } from '@tanstack/react-table';
 import { newColumnDefOrder } from './NewColumnOrder';
 import { ITable } from '../interfaces/ITable';
+import { ButtonAdd } from './ButtonAdd';
+import {TablesColumn} from './TablesColumn';
+import { DeliveriesColumn } from './DeliviriesColumn';
+import { OrdersColumn } from './OrdersColumn';
 
 interface IProps {
   tables: ITable[];
@@ -18,19 +22,10 @@ export default function NewOrderTable({ tables, setTableToUpdate }: IProps) {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <table className="table-fixed w-full border-collapse border border-slate-500">
-      <thead>
-        {NewTableInstanceOrder.getHeaderGroups().map(({ id, headers }) => (
-          <tr key={id}>
-            {headers.map(({ id: headerId, column, getContext }) => (
-              <th key={headerId}>
-                {flexRender(column.columnDef.header, getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody></tbody>
-    </table>
+    <section className='flex flex-row w-full text-center divide-x'>
+      <TablesColumn />
+      <DeliveriesColumn />
+      <OrdersColumn />
+    </section>
   );
 }

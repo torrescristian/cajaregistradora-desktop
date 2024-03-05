@@ -9,7 +9,7 @@ export default function NewOrdenesPage() {
     setTableToUpdate(null);
   };
   return (
-    <section className="flex items-center justify-center ">
+    <section className="flex items-center justify-center p-3">
       <NewOrderTable setTableToUpdate={setTableToUpdate} tables={[]} />
     </section>
   );

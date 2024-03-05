@@ -1,7 +1,7 @@
 export const ButtonAdd = () => {
   return (
-    <div className="w-full flex">
-      <button className="btn btn-outline text-base-content">aaaaaaaaaaa</button>
+    <div className="flex justify-center items-center">
+      <button className="btn btn-outline text-base-content w-32">+</button>
     </div>
   );
 };
