@@ -1,4 +1,4 @@
-import { ButtonAdd } from './ButtonAdd';
+import { ButtonAdd } from '../atoms/ButtonAdd';
 
 export function DeliveriesColumn() {
   return (

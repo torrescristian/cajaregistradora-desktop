@@ -13,7 +13,7 @@ import CartPromo from '../../../cart/components/CartPromo';
 import { Divider } from '../../../cart/components/Sale/Sale.styles';
 import { ICartItem } from '../../../cart/interfaces/ICart';
 import CartItemMobile from './CartItemMobile';
-import { useModalStore } from '@/modules/common/contexts/useModalStore';
+import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
 import { ConfirmOrderMobile } from '../../../cart/components/ConfirmOrderMobile';
 import { ButtonClose } from '../ButtonClose';
 
@@ -59,7 +59,7 @@ const CartMobile = ({
   const subtotalPrice = useCartStore(getSubtotalPrice);
   const promosItems = useCartStore(getPromoItems);
 
-  const { openModal, closeModal } = useModalStore();
+  const { openDrawer: openModal, closeDrawer: closeModal } = useDrawerStore();
   if (updateMode && !order) {
     throw new Error('Missing order to update');
   }

@@ -5,7 +5,7 @@ import { PhoneIcon } from '@heroicons/react/24/solid';
 import { ChangeTheme } from '../ChangeTheme';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import OutsideAlerter from '../../OutsideAlerter';
-import { useModalStore } from '@/modules/common/contexts/useModalStore';
+import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
 import {
   CAJA_URL,
   CREAR_PRODUCTOS_URL,
@@ -23,7 +23,7 @@ import {
 const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
   const isMobile = useIsMobile();
-  const { closeModal } = useModalStore();
+  const { closeDrawer: closeModal } = useDrawerStore();
   return (
     <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
       <OutsideAlerter callback={closeModal}>

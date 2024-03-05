@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { ITable } from '../interfaces/ITable';
 import { info } from 'console';
-import { ButtonAdd } from './ButtonAdd';
+import { ButtonAdd } from './atoms/ButtonAdd';
 
 const columnHelper = createColumnHelper<ITable>();
 

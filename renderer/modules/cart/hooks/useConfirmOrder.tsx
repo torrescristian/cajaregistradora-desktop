@@ -24,7 +24,7 @@ import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
 import useUpdateOrderMutation from './useUpdateOrderMutation';
 import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
-import { useModalStore } from '@/modules/common/contexts/useModalStore';
+import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
 import { toast } from 'react-toastify';
 import useCreateOrderMutation from './useCreateOrderMutation';
 import usePayments from '@/modules/ordenes/hooks/usePayments';
@@ -81,7 +81,7 @@ export default function useConfirmOrder({
 
   const createTicketMutation = useCreateTicketMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
-  const { closeModal } = useModalStore();
+  const { closeDrawer: closeModal } = useDrawerStore();
 
   const clearForm = () => {};
   const createOrder = async () => {

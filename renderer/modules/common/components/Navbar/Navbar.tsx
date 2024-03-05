@@ -4,12 +4,12 @@ import NavButton from './subcomponents/NavButton';
 import { WifiStatus } from './subcomponents/WifiStatus';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import Menu from './subcomponents/Menu';
-import { useModalStore } from '../../contexts/useModalStore';
+import { useDrawerStore } from '../../contexts/useDrawerStore';
 import useNavBar from '../../hooks/useNavBar';
 import { NavbarUser } from './subcomponents/NavbarUser';
 
 export default function Navbar() {
-  const { openModal } = useModalStore();
+  const { openDrawer: openModal } = useDrawerStore();
 
   const isMobile = useIsMobile();
   const { handleLogout, isLoggedIn } = useNavBar();

@@ -1,13 +1,14 @@
 import 'react-toastify/dist/ReactToastify.css';
 import CustomToastContainer from './CustomToastContainer';
 import Navbar from './Navbar/Navbar';
-import { useModalStore } from '../contexts/useModalStore';
+import { useDrawerStore } from '../contexts/useDrawerStore';
+import Modal from './templates/Modal';
 
 interface IProps {
   children: React.ReactNode;
 }
 export default function GlobalLayout({ children }: IProps) {
-  const { isOpen, content: Content, closeModal } = useModalStore();
+  const { isDrawerOpen, content: Content, closeDrawer } = useDrawerStore();
 
   return (
     <div className={'drawer drawer-end'}>
@@ -15,11 +16,12 @@ export default function GlobalLayout({ children }: IProps) {
       <input
         id="menu-drawer"
         type="checkbox"
-        checked={isOpen}
+        checked={isDrawerOpen}
         className="drawer-toggle"
       />
 
       <div className="drawer-content">
+        <Modal />
         <section className="p-5">
           <Navbar />
           <section className="flex flex-col">{children}</section>
@@ -30,7 +32,7 @@ export default function GlobalLayout({ children }: IProps) {
           htmlFor="menu-drawer"
           aria-label="close sidebar"
           className="drawer-overlay"
-          onClick={closeModal}
+          onClick={closeDrawer}
         ></label>
         {Content}
       </div>

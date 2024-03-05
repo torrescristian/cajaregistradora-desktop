@@ -47,7 +47,7 @@ export const ProductsMobile = ({
       <RenderIf condition={updateMode}>
         <div className="w-full flex justify-center">
           <button className="btn w-max btn-error" onClick={closeUpdateMode}>
-            Dejar de editar
+            Cancelar edición
           </button>
         </div>
       </RenderIf>

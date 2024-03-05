@@ -1,5 +1,5 @@
 import CartMobile from '@/modules/common/components/Mobile/CartMobile';
-import { useModalStore } from '../../contexts/useModalStore';
+import { useDrawerStore } from '../../contexts/useDrawerStore';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import OutsideAlerter from '../OutsideAlerter';
 
@@ -16,7 +16,7 @@ export const CartDrawer = ({
   updateMode,
   closeUpdateMode,
 }: IProps) => {
-  const { isOpen, closeModal } = useModalStore();
+  const { isDrawerOpen: isOpen, closeDrawer: closeModal } = useDrawerStore();
 
   return (
     <OutsideAlerter callback={closeModal}>

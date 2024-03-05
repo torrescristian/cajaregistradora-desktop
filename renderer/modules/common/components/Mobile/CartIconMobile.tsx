@@ -1,5 +1,5 @@
 import { CartDrawer } from '@/modules/common/components/Mobile/CartDrawer';
-import { useModalStore } from '@/modules/common/contexts/useModalStore';
+import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 import { ICartItem, IPromoItem } from '../../../cart/interfaces/ICart';
 import {
@@ -24,7 +24,7 @@ export const CartIconMobile = ({
   closeUpdateMode,
   promoItems,
 }: IProps) => {
-  const { openModal } = useModalStore();
+  const { openDrawer: openModal } = useDrawerStore();
   const items = useCartStore(getCartItems) as ICartItem[];
 
   return (

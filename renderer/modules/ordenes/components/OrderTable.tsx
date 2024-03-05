@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-table';
 import { IOrder } from '../interfaces/IOrder';
 import { columnDefOrder } from './columnOrder';
-import FormRow from './FormRow';
+import OrderProvider from '../context/OrderProvider';
 import {
   getInitCart,
   useCartStore,
@@ -56,22 +56,24 @@ export default function OrderTable({ orders, setOrderToUpdate }: IProps) {
         <tbody>
           {tableInstanceOrder.getRowModel().rows.map((rowEl) => {
             return (
-              <FormRow
+              <OrderProvider
                 onSubmit={handleSubmitEditOrder}
                 order={rowEl.original}
                 key={rowEl.id}
               >
-                {rowEl.getVisibleCells().map((cellEl) => {
-                  return (
-                    <td key={cellEl.id}>
-                      {flexRender(
-                        cellEl.column.columnDef.cell,
-                        cellEl.getContext(),
-                      )}
-                    </td>
-                  );
-                })}
-              </FormRow>
+                <tr>
+                  {rowEl.getVisibleCells().map((cellEl) => {
+                    return (
+                      <td key={cellEl.id}>
+                        {flexRender(
+                          cellEl.column.columnDef.cell,
+                          cellEl.getContext(),
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              </OrderProvider>
             );
           })}
         </tbody>
