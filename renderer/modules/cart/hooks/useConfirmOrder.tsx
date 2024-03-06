@@ -230,6 +230,8 @@ export default function useConfirmOrder({
     closeModal();
     await printInvoice(ticketResponse.data.id);
     await printCommand(updatedOrderResponse.data.id);
+    closeTakeAway(); // Actualiza el estado de getOpenTakeAway
+    router.push('/ordenes');
   };
   const handleClickConfirmOrder = () => {
     ref.current?.showModal();
