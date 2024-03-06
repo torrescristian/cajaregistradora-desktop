@@ -37,7 +37,7 @@ export function OrdersColumn() {
   return (
     <div className="flex flex-col w-full item-center gap-3 px-5">
       <h1 className="whitespace-nowrap">Pedidos a retirar</h1>
-      <ButtonAdd  isTakeAwayOpen={isTakeAwayOpen}/>
+      <ButtonAdd isTakeAwayOpen={isTakeAwayOpen} />
       <div className="grid grid-cols-2 gap-4">
         {orderQuery.data.orders.map((o) => (
           <OrderCard order={o} />

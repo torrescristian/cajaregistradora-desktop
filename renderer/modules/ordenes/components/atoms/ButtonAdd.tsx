@@ -11,7 +11,12 @@ export const ButtonAdd = ({ isTakeAwayOpen }) => {
   return (
     <div className="flex justify-center items-center">
       <Link href="/pedidos">
-        <button className="btn btn-outline text-base-content w-32" onClick={handleClick}>+</button>
+        <button
+          className="btn btn-outline text-base-content w-32"
+          onClick={handleClick}
+        >
+          +
+        </button>
       </Link>
     </div>
   );

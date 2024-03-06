@@ -108,7 +108,6 @@ export default function useConfirmOrder({
     closeModal();
     closeTakeAway(); // Actualiza el estado de getOpenTakeAway
     router.push('/ordenes');
-    
   };
 
   const updateOrder = async () => {
