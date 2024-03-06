@@ -30,6 +30,13 @@ import useCreateOrderMutation from './useCreateOrderMutation';
 import usePayments from '@/modules/ordenes/hooks/usePayments';
 import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
 import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import { useRouter } from 'next/router';
+import {
+  getIsTakeAwayOpen,
+  getOpenTakeAway,
+  getCloseTakeAway,
+  useTakeAwayStore,
+} from '@/modules/common/contexts/useTakeAwayStore';
 
 interface IProps {
   updateMode?: boolean;
@@ -82,6 +89,8 @@ export default function useConfirmOrder({
   const createTicketMutation = useCreateTicketMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const { closeDrawer: closeModal } = useDrawerStore();
+  const router = useRouter();
+  const closeTakeAway = useTakeAwayStore(getCloseTakeAway);
 
   const clearForm = () => {};
   const createOrder = async () => {
@@ -97,6 +106,9 @@ export default function useConfirmOrder({
     });
     await printCommand(orderResponse.data.id);
     closeModal();
+    closeTakeAway(); // Actualiza el estado de getOpenTakeAway
+    router.push('/ordenes');
+    
   };
 
   const updateOrder = async () => {
