@@ -1,3 +1,4 @@
+import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { create } from 'zustand';
 
 enum ORDER_SECTION_STATE {
@@ -12,21 +13,33 @@ enum ORDER_SECTION_STATE {
 
 interface IOrderState {
   orderState: ORDER_SECTION_STATE;
+  orderToUpdate: IOrder | null;
   setOrderState: (orderState: ORDER_SECTION_STATE) => void;
+  setOrderToUpdate: (orderToUpdate: IOrder) => void;
 }
 
 export const useOrderStore = create<IOrderState>((set) => ({
   orderState: ORDER_SECTION_STATE.DEFAULT,
+  orderToUpdate: null,
   setOrderState: (orderState: ORDER_SECTION_STATE) => set({ orderState }),
+  setOrderToUpdate: (orderToUpdate) =>
+    set({ orderToUpdate, orderState: ORDER_SECTION_STATE.UPDATE_TAKEAWAY }),
 }));
 
 export const getIsProductCatalogActive = (state: IOrderState) =>
   state.orderState !== ORDER_SECTION_STATE.DEFAULT;
 export const getHideProductCatalog = (state: IOrderState) => () =>
   state.setOrderState(ORDER_SECTION_STATE.DEFAULT);
+
 export const getCreateTakeAway = (state: IOrderState) => () =>
   state.setOrderState(ORDER_SECTION_STATE.CREATE_TAKEAWAY);
 export const getIsCreateTakeAway = (state: IOrderState) =>
   state.orderState === ORDER_SECTION_STATE.CREATE_TAKEAWAY;
+
+export const getUpdateTakeAway =
+  (state: IOrderState) => (orderToUpdate: IOrder) =>
+    state.setOrderToUpdate(orderToUpdate);
 export const getIsUpdateTakeAway = (state: IOrderState) =>
   state.orderState === ORDER_SECTION_STATE.UPDATE_TAKEAWAY;
+
+export const getOrderToUpdate = (state: IOrderState) => state.orderToUpdate;
