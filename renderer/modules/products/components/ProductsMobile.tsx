@@ -9,7 +9,6 @@ import RenderPromos from '@/modules/promos/components/RenderPromo';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
-import QuickOrders from '@/modules/pedidos/components/QuickOrders';
 
 interface IProps {
   updateMode?: boolean;
@@ -114,12 +113,6 @@ export const ProductsMobile = ({
             <ButtonPagination {...paginationControls} />
           </RenderIf>
         </div>
-
-        <RenderIf condition={!updateMode}>
-          <div className="flex flex-col w-min items-end">
-            <QuickOrders />
-          </div>
-        </RenderIf>
       </div>
     </section>
   );

@@ -1,23 +1,16 @@
-import Link from 'next/link';
+import { ButtonHTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-export const ButtonAdd = ({ isTakeAwayOpen }) => {
-  const handleClick = () => {
-    // Aquí puedes usar todos los estados pasados como props según sea necesario
-    if (isTakeAwayOpen) {
-      // Lógica para manejar el estado isTakeAwayOpen
-      isTakeAwayOpen(true);
-    }
-  };
+export const ButtonAdd = ({
+  className,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
-    <div className="flex justify-center items-center">
-      <Link href="/pedidos">
-        <button
-          className="btn btn-outline text-base-content w-32"
-          onClick={handleClick}
-        >
-          +
-        </button>
-      </Link>
-    </div>
+    <button
+      className={twMerge('btn btn-outline text-base-content w-32', className)}
+      {...props}
+    >
+      +
+    </button>
   );
 };

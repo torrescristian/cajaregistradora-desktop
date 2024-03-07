@@ -24,7 +24,7 @@ export const CartIconMobile = ({
   closeUpdateMode,
   promoItems,
 }: IProps) => {
-  const { openDrawer: openModal } = useDrawerStore();
+  const { openDrawer } = useDrawerStore();
   const items = useCartStore(getCartItems) as ICartItem[];
 
   return (
@@ -38,7 +38,7 @@ export const CartIconMobile = ({
             htmlFor="menu-drawer"
             className="drawer-button btn btn-primary z-50"
             onClick={() =>
-              openModal(
+              openDrawer(
                 <CartDrawer
                   updateMode={updateMode}
                   closeUpdateMode={closeUpdateMode}
@@ -57,7 +57,7 @@ export const CartIconMobile = ({
             htmlFor="menu-drawer"
             className="drawer-button btn btn-disabled btn-primary z-50"
             onClick={() =>
-              openModal(
+              openDrawer(
                 <CartDrawer
                   updateMode={updateMode}
                   closeUpdateMode={closeUpdateMode}

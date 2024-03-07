@@ -16,10 +16,10 @@ export const CartDrawer = ({
   updateMode,
   closeUpdateMode,
 }: IProps) => {
-  const { isDrawerOpen: isOpen, closeDrawer: closeModal } = useDrawerStore();
+  const { closeDrawer } = useDrawerStore();
 
   return (
-    <OutsideAlerter callback={closeModal}>
+    <OutsideAlerter callback={closeDrawer}>
       <ul className="bg-base-100">
         <CartMobile
           updateMode={updateMode}

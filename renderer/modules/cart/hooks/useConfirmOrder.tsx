@@ -32,11 +32,9 @@ import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
 import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 import { useRouter } from 'next/router';
 import {
-  getIsTakeAwayOpen,
-  getOpenTakeAway,
-  getCloseTakeAway,
-  useTakeAwayStore,
-} from '@/modules/common/contexts/useTakeAwayStore';
+  useOrderStore,
+  getHideProductCatalog,
+} from '@/modules/common/contexts/useOrderStore';
 
 interface IProps {
   updateMode?: boolean;
@@ -65,6 +63,7 @@ export default function useConfirmOrder({
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const discountAmount = useCartStore(getDiscountAmount) || '';
   const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
+  const hideProductCatalog = useOrderStore(getHideProductCatalog);
 
   const newTotalPrice = calcDiscount({
     price: order?.totalPrice || totalPrice,
@@ -88,9 +87,8 @@ export default function useConfirmOrder({
 
   const createTicketMutation = useCreateTicketMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
-  const { closeDrawer: closeModal } = useDrawerStore();
+  const { closeDrawer } = useDrawerStore();
   const router = useRouter();
-  const closeTakeAway = useTakeAwayStore(getCloseTakeAway);
 
   const clearForm = () => {};
   const createOrder = async () => {
@@ -105,8 +103,8 @@ export default function useConfirmOrder({
       totalPrice: newTotalPrice,
     });
     await printCommand(orderResponse.data.id);
-    closeModal();
-    closeTakeAway(); // Actualiza el estado de getOpenTakeAway
+    closeDrawer();
+    hideProductCatalog(); // Actualiza el estado de getOpenTakeAway
     router.push('/ordenes');
   };
 
@@ -134,7 +132,7 @@ export default function useConfirmOrder({
     } else {
       createOrder();
     }
-    closeModal();
+    closeDrawer();
     clearForm();
   };
 
@@ -227,10 +225,10 @@ export default function useConfirmOrder({
         },
       });
 
-    closeModal();
+    closeDrawer();
     await printInvoice(ticketResponse.data.id);
     await printCommand(updatedOrderResponse.data.id);
-    closeTakeAway(); // Actualiza el estado de getOpenTakeAway
+    hideProductCatalog();
     router.push('/ordenes');
   };
   const handleClickConfirmOrder = () => {
@@ -240,7 +238,7 @@ export default function useConfirmOrder({
   return {
     addClientId,
     additionalDetails,
-    closeModal,
+    closeModal: closeDrawer,
     coupon,
     discountAmount,
     discountType,

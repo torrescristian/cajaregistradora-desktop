@@ -23,10 +23,10 @@ import {
 const Menu = ({ onLogout, isLoggedIn }: ISubMenuProps) => {
   const { isOwner } = useAuthState();
   const isMobile = useIsMobile();
-  const { closeDrawer: closeModal } = useDrawerStore();
+  const { closeDrawer } = useDrawerStore();
   return (
     <section className="flex flex-col items-center space-x-4 menu p-4 w-80 min-h-full bg-base-200 text-base-content ">
-      <OutsideAlerter callback={closeModal}>
+      <OutsideAlerter callback={closeDrawer}>
         {isLoggedIn && (
           <ul>
             {isMobile ? (

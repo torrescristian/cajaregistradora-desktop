@@ -11,7 +11,7 @@ export interface ILinkProps {
 
 const NavButton = ({ href, children, className, onClick }: ILinkProps) => {
   const router = useRouter();
-  const { closeDrawer: closeModal } = useDrawerStore();
+  const { closeDrawer } = useDrawerStore();
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ const NavButton = ({ href, children, className, onClick }: ILinkProps) => {
 
     if (!href) return;
 
-    closeModal();
+    closeDrawer();
     router.push(href);
   };
 

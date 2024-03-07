@@ -59,7 +59,7 @@ const CartMobile = ({
   const subtotalPrice = useCartStore(getSubtotalPrice);
   const promosItems = useCartStore(getPromoItems);
 
-  const { openDrawer: openModal, closeDrawer: closeModal } = useDrawerStore();
+  const { openDrawer, closeDrawer: closeModal } = useDrawerStore();
   if (updateMode && !order) {
     throw new Error('Missing order to update');
   }
@@ -88,7 +88,7 @@ const CartMobile = ({
               <button
                 className="btn btn-primary"
                 onClick={() =>
-                  openModal(
+                  openDrawer(
                     <ConfirmOrderMobile
                       closeUpdateMode={closeUpdateMode}
                       updateMode={updateMode}

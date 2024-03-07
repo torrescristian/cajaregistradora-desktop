@@ -9,7 +9,7 @@ import useNavBar from '../../hooks/useNavBar';
 import { NavbarUser } from './subcomponents/NavbarUser';
 
 export default function Navbar() {
-  const { openDrawer: openModal } = useDrawerStore();
+  const { openDrawer } = useDrawerStore();
 
   const isMobile = useIsMobile();
   const { handleLogout, isLoggedIn } = useNavBar();
@@ -31,7 +31,7 @@ export default function Navbar() {
                 htmlFor="menu-drawer"
                 className="btn btn-secondary w-full drawer-button flex flex-row flex-nowrap"
                 onClick={() =>
-                  openModal(
+                  openDrawer(
                     <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,
                   )
                 }
@@ -68,7 +68,7 @@ export default function Navbar() {
               htmlFor="menu-drawer"
               className="btn btn-secondary drawer-button"
               onClick={() =>
-                openModal(
+                openDrawer(
                   <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />,
                 )
               }
