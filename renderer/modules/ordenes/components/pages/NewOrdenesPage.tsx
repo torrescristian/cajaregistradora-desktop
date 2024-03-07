@@ -5,13 +5,13 @@ import {
   getIsProductCatalogActive,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
-import { ProductsMobile } from '@/modules/products/components/ProductsMobile';
+import { ProductsCatalog } from '@/modules/products/components/ProductsCatalog';
 
 export default function NewOrdenesPage() {
   const isProductCatalogActive = useOrderStore(getIsProductCatalogActive);
 
   if (isProductCatalogActive) {
-    return <ProductsMobile />;
+    return <ProductsCatalog />;
   }
 
   return (

@@ -1,19 +1,16 @@
-import CartMobile from '@/modules/common/components/Mobile/CartMobile';
+import CartContainer from '@/modules/common/components/Mobile/CartContainer';
 import { useDrawerStore } from '../../contexts/useDrawerStore';
 import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import OutsideAlerter from '../OutsideAlerter';
 
 interface IProps {
-  updateMode?: boolean;
-  order?: IOrder;
   onSubmit?: () => void;
   closeUpdateMode: () => void;
 }
 
 export const CartDrawer = ({
   onSubmit,
-  order,
-  updateMode,
+
   closeUpdateMode,
 }: IProps) => {
   const { closeDrawer } = useDrawerStore();
@@ -21,12 +18,7 @@ export const CartDrawer = ({
   return (
     <OutsideAlerter callback={closeDrawer}>
       <ul className="bg-base-100">
-        <CartMobile
-          updateMode={updateMode}
-          closeUpdateMode={closeUpdateMode}
-          order={order}
-          onSubmit={onSubmit}
-        />
+        <CartContainer closeUpdateMode={closeUpdateMode} onSubmit={onSubmit} />
       </ul>
     </OutsideAlerter>
   );

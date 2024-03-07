@@ -77,7 +77,6 @@ export default function useConfirmOrder({
 
   const { printInvoice, printCommand } = usePrintService();
 
-  const ref = useRef<HTMLDialogElement>(null);
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation({
     onSuccess: () => {
@@ -231,9 +230,6 @@ export default function useConfirmOrder({
     hideProductCatalog();
     router.push('/ordenes');
   };
-  const handleClickConfirmOrder = () => {
-    ref.current?.showModal();
-  };
 
   return {
     addClientId,
@@ -244,7 +240,6 @@ export default function useConfirmOrder({
     discountType,
     handleChangeAdditionalsDetails,
     handleChangeDiscountType,
-    handleClickConfirmOrder,
     handleCouponDiscountAmount,
     handleCreateTicket,
     handleSubmit,
@@ -252,7 +247,6 @@ export default function useConfirmOrder({
     newTotalPrice,
     orderMutation,
     paymentProps,
-    ref,
     setDiscountAmount,
     setDiscountType,
     subtotalPrice,

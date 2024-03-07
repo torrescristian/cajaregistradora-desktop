@@ -1,6 +1,6 @@
 import Loader from '@/modules/common/components/Loader';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
-import { ProductsMobile } from '../products/components/ProductsMobile';
+import { ProductsCatalog } from '../products/components/ProductsCatalog';
 import { useRouter } from 'next/router';
 import { CAJA_URL } from '@/modules/common/consts';
 
@@ -29,5 +29,5 @@ export default function PedidosPage() {
     );
   }
 
-  return <ProductsMobile />;
+  return <ProductsCatalog />;
 }

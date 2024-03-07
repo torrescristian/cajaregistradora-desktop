@@ -1,6 +1,5 @@
 import ClientForm from './ClientForm';
 import Loader from '@/modules/common/components/Loader';
-import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
 import ValidateCoupon from '@/modules/ordenes/components/ValidateCoupon';
 import { formatPrice } from '@/modules/common/libs/utils';
@@ -12,22 +11,24 @@ import useConfirmOrder from '../hooks/useConfirmOrder';
 import { IPromoItem } from '../interfaces/ICart';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import { Divider } from './Sale/Sale.styles';
+import {
+  getOrderToUpdate,
+  getIsOrderBeingUpdated,
+  useOrderStore,
+} from '@/modules/common/contexts/useOrderStore';
 
 interface IProps {
-  updateMode?: boolean;
-  order?: IOrder;
   onSubmit?: () => void;
   promoItems?: IPromoItem[];
   closeUpdateMode?: () => void;
 }
 
-export const ConfirmOrderMobile = ({
-  updateMode,
-  order,
+export const ConfirmOrder = ({
   onSubmit,
   promoItems,
   closeUpdateMode,
 }: IProps) => {
+  const order = useOrderStore(getOrderToUpdate)!;
   const {
     addClientId,
     additionalDetails,
@@ -48,9 +49,11 @@ export const ConfirmOrderMobile = ({
     onSubmit,
     order,
     promoItems,
-    updateMode,
+
     closeUpdateMode,
   });
+
+  const isOrderUpdate = useOrderStore(getIsOrderBeingUpdated);
 
   if (orderMutation.isLoading) {
     return <Loader />;
@@ -92,15 +95,14 @@ export const ConfirmOrderMobile = ({
         </div>
       </section>
       <div className="flex flex-col w-full items-center gap-5 pt-5">
-        {updateMode ? (
+        {isOrderUpdate ? (
           <button
             onClick={handleSubmit}
             className="btn w-full sticky top-0 z-20  whitespace-nowrap btn-primary text-xl text-primary-content"
           >
             Actualizar orden
           </button>
-        ) : null}
-        {updateMode ? null : (
+        ) : (
           <div>
             <button
               className="btn btn-warning btn-outline w-full"

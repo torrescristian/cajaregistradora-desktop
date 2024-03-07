@@ -13,7 +13,7 @@ interface IProps {
   variant: IVariant;
 }
 
-const CartItemMobile = ({ product, variant }: IProps) => {
+const CartItem = ({ product, variant }: IProps) => {
   const { cartItemQuantity, handleClickAdd, handleClickRemove } =
     useProductItem({ product, selectedVariant: variant });
 
@@ -38,4 +38,4 @@ const CartItemMobile = ({ product, variant }: IProps) => {
   );
 };
 
-export default CartItemMobile;
+export default CartItem;

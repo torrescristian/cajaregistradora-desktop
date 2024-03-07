@@ -4,7 +4,7 @@ import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
 import Loader from '@/modules/common/components/Loader';
 import OrderTable from './components/OrderTable';
-import { ProductsMobile } from '../products/components/ProductsMobile';
+import { ProductsCatalog } from '../products/components/ProductsCatalog';
 import {
   ButtonPagination,
   useButtonPagination,
@@ -41,9 +41,7 @@ export default function OrdenesPage() {
   if (updateMode) {
     return (
       <Wrapper>
-        <ProductsMobile
-          order={orderToUpdate}
-          updateMode
+        <ProductsCatalog
           onSubmit={() => {
             setOrderToUpdate(null);
           }}

@@ -7,14 +7,13 @@ import {
   useCartStore,
 } from '@/modules/cart/contexts/useCartStore';
 import { Card } from '@/modules/common/components/Card';
-import { IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import CartPromo from '../../../cart/components/CartPromo';
 import { Divider } from '../../../cart/components/Sale/Sale.styles';
 import { ICartItem } from '../../../cart/interfaces/ICart';
-import CartItemMobile from './CartItemMobile';
+import CartItem from './CartItem';
 import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
-import { ConfirmOrderMobile } from '../../../cart/components/ConfirmOrderMobile';
+import { ConfirmOrder } from '../../../cart/components/ConfirmOrder';
 import { ButtonClose } from '../ButtonClose';
 
 const ProductContainer = ({ children }: IComponent) => (
@@ -43,33 +42,23 @@ const Layout = ({
 );
 
 interface IProps {
-  updateMode?: boolean;
-  order?: IOrder;
   onSubmit?: () => void;
   closeUpdateMode: () => void;
 }
 
-const CartMobile = ({
-  updateMode,
-  order,
-  onSubmit,
-  closeUpdateMode,
-}: IProps) => {
+const CartContainer = ({ onSubmit, closeUpdateMode }: IProps) => {
   const items = useCartStore(getCartItems) as ICartItem[];
   const subtotalPrice = useCartStore(getSubtotalPrice);
   const promosItems = useCartStore(getPromoItems);
 
   const { openDrawer, closeDrawer: closeModal } = useDrawerStore();
-  if (updateMode && !order) {
-    throw new Error('Missing order to update');
-  }
 
   return (
     <Layout>
       <ProductContainer>
         <div className="flex flex-col gap-3 overflow-y-scroll h-[70vh]">
           {items.map((item) => (
-            <CartItemMobile
+            <CartItem
               key={item.selectedVariant.id}
               product={item.product}
               variant={item.selectedVariant}
@@ -89,10 +78,8 @@ const CartMobile = ({
                 className="btn btn-primary"
                 onClick={() =>
                   openDrawer(
-                    <ConfirmOrderMobile
+                    <ConfirmOrder
                       closeUpdateMode={closeUpdateMode}
-                      updateMode={updateMode}
-                      order={order}
                       onSubmit={onSubmit}
                       promoItems={promosItems}
                     />,
@@ -109,4 +96,4 @@ const CartMobile = ({
   );
 };
 
-export default CartMobile;
+export default CartContainer;

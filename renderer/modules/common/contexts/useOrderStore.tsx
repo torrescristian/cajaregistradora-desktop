@@ -28,6 +28,14 @@ export const useOrderStore = create<IOrderState>((set) => ({
 
 export const getIsProductCatalogActive = (state: IOrderState) =>
   state.orderState !== ORDER_SECTION_STATE.DEFAULT;
+
+export const getIsOrderBeingUpdated = (state: IOrderState) =>
+  [
+    ORDER_SECTION_STATE.UPDATE_DELIVERY,
+    ORDER_SECTION_STATE.UPDATE_TABLE,
+    ORDER_SECTION_STATE.UPDATE_TAKEAWAY,
+  ].includes(state.orderState);
+
 export const getHideProductCatalog = (state: IOrderState) => () =>
   state.setOrderState(ORDER_SECTION_STATE.DEFAULT);
 
