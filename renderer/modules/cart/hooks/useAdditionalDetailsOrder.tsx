@@ -121,6 +121,7 @@ export default function useAdditionalDetailsOrder({
         client: clientId!,
         coupon,
         discount: { amount: Number(discountAmount!), type: discountType! },
+        //Error null
         id: order!.id!,
         items: items.map(adaptCartItemToOrderItem),
         promoItems: promoItems!,

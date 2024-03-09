@@ -41,12 +41,14 @@ export const getHideProductCatalog = (state: IOrderState) => () =>
 
 export const getCreateTakeAway = (state: IOrderState) => () =>
   state.setOrderState(ORDER_SECTION_STATE.CREATE_TAKEAWAY);
+
 export const getIsCreateTakeAway = (state: IOrderState) =>
   state.orderState === ORDER_SECTION_STATE.CREATE_TAKEAWAY;
 
 export const getUpdateTakeAway =
   (state: IOrderState) => (orderToUpdate: IOrder) =>
     state.setOrderToUpdate(orderToUpdate);
+
 export const getIsUpdateTakeAway = (state: IOrderState) =>
   state.orderState === ORDER_SECTION_STATE.UPDATE_TAKEAWAY;
 
