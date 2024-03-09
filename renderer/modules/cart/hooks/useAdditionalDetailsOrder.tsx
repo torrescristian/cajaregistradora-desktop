@@ -6,6 +6,7 @@ import {
 import {
   getAdditionalDetails,
   getCartItems,
+  getClearCart,
   getClientId,
   getDiscountAmount,
   getDiscountType,
@@ -17,7 +18,7 @@ import {
   useCartStore,
 } from '../contexts/useCartStore';
 import { ICartItem, IPromoItem } from '../interfaces/ICart';
-import { useMemo, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
@@ -35,21 +36,21 @@ import {
   useOrderStore,
   getHideProductCatalog,
 } from '@/modules/common/contexts/useOrderStore';
+import { getIsUpdateTakeAway } from '@/modules/common/contexts/useOrderStore';
+import { getIsCreateTakeAway } from '@/modules/common/contexts/useOrderStore';
+import { useQueryClient } from '@tanstack/react-query';
+import { ORDERS_KEY } from '@/modules/common/consts';
 
 interface IProps {
-  updateMode?: boolean;
   order?: IOrder;
   onSubmit?: () => void;
   promoItems?: IPromoItem[];
-  closeUpdateMode?: () => void;
 }
 
-export default function useConfirmOrder({
+export default function useAdditionalDetailsOrder({
   onSubmit,
   order,
   promoItems,
-  updateMode,
-  closeUpdateMode,
 }: IProps) {
   const additionalDetails = useCartStore(getAdditionalDetails);
   const totalPrice = useCartStore(getTotalPrice);
@@ -63,7 +64,6 @@ export default function useConfirmOrder({
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const discountAmount = useCartStore(getDiscountAmount) || '';
   const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
-  const hideProductCatalog = useOrderStore(getHideProductCatalog);
 
   const newTotalPrice = calcDiscount({
     price: order?.totalPrice || totalPrice,
@@ -88,9 +88,16 @@ export default function useConfirmOrder({
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
   const { closeDrawer } = useDrawerStore();
   const router = useRouter();
+  const hideProductCatalog = useOrderStore(getHideProductCatalog);
+  const isUpdateTakeAway = useOrderStore(getIsUpdateTakeAway);
+  const isCreateTakeAway = useOrderStore(getIsCreateTakeAway);
+  const clearCart = useCartStore(getClearCart);
 
   const clearForm = () => {};
-  const createOrder = async () => {
+
+  const queryClient = useQueryClient();
+
+  const createTakeAwayOrder = async () => {
     const { orderResponse } = await orderMutation.mutateAsync({
       additionalDetails,
       clientId,
@@ -107,8 +114,8 @@ export default function useConfirmOrder({
     router.push('/ordenes');
   };
 
-  const updateOrder = async () => {
-    await updateOrderMutation.mutateAsync({
+  const updateTakeAwayOrder = async () => {
+    const { orderResponse } = await updateOrderMutation.mutateAsync({
       order: {
         additionalDetails,
         client: clientId!,
@@ -122,16 +129,22 @@ export default function useConfirmOrder({
         totalPrice: newTotalPrice,
       },
     });
-    closeUpdateMode?.();
+    await printCommand(orderResponse.data.id);
+    hideProductCatalog();
   };
 
   const handleSubmit = () => {
-    if (updateMode) {
-      updateOrder();
-    } else {
-      createOrder();
+    switch (true) {
+      case isCreateTakeAway: {
+        createTakeAwayOrder();
+      }
+      case isUpdateTakeAway: {
+        updateTakeAwayOrder();
+      }
     }
+    queryClient.invalidateQueries([ORDERS_KEY]);
     closeDrawer();
+    clearCart();
     clearForm();
   };
 

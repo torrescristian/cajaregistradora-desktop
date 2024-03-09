@@ -1,23 +1,27 @@
+import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+
+import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
+import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
+import { calcDiscount } from '@/modules/common/libs/utils';
+import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
+import usePrintService from '@/modules/common/hooks/usePrintService';
+import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import { ORDERS_KEY } from '@/modules/common/consts';
+
+import usePayments from './usePayments';
 import { DISCOUNT_TYPE, IOrder } from '../interfaces/IOrder';
 import useCreateTicketMutation from './useCreateTicketMutation';
 import useCancelOrderMutation from './useCancelOrderMutation';
-import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
-import { useState } from 'react';
-import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import { toast } from 'react-toastify';
-import { calcDiscount } from '@/modules/common/libs/utils';
-import usePayments from './usePayments';
-import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
-import usePrintService from '@/modules/common/hooks/usePrintService';
 import useValidateCoupon from './useValidateCoupon';
-import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
 
 interface IProps {
   order: IOrder;
   onSubmit?: (order: IOrder) => void;
 }
 
-export default function useCreateTicketForm({ order, onSubmit }: IProps) {
+export default function useConfirmSaleForm({ order, onSubmit }: IProps) {
   const createTicketMutation = useCreateTicketMutation();
   const cancelOrderMutation = useCancelOrderMutation();
   const activeCashBalanceQuery = useActiveCashBalanceQuery();
@@ -39,6 +43,7 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
 
   const [coupon, setCoupon] = useState<ICoupon | undefined>(order.coupon);
   const [isCheckedAcordion, setIsCheckedAcordion] = useState(false);
+  const queryClient = useQueryClient();
 
   const paymentProps = usePayments();
 
@@ -119,8 +124,8 @@ export default function useCreateTicketForm({ order, onSubmit }: IProps) {
       });
 
       await printInvoice(ticketResponse.data.id);
+      queryClient.invalidateQueries([ORDERS_KEY]);
       handleClearForm();
-      window.location.reload();
       toast.success('Pagado con exito');
     } catch (error) {
       console.error(error);

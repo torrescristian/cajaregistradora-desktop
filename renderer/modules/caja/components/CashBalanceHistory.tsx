@@ -3,12 +3,12 @@ import { ICashBalance } from '../interfaces/ICashBalance';
 import TodayCashBalancesTable from './TodayCashBalancesTable';
 import useCashBalancesQuery from '../hooks/useCashBalancesQuery';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '@/modules/reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '@/modules/common/components/molecules/Pagination';
 
 export default function CashBalanceHistory() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const todayCashBalances = useCashBalancesQuery({
     page: paginationControls.page,
     setTotalPages: paginationControls.setTotalPages,
@@ -39,7 +39,7 @@ export default function CashBalanceHistory() {
         <section className="flex flex-col gap-5 w-full">
           <p className="text-2xl text-center">Historial de Cajas:</p>
           <TodayCashBalancesTable cashBalances={dailyCashBalances} />
-          <ButtonPagination {...paginationControls} />
+          <Pagination {...paginationControls} />
         </section>
       </RenderIf>
     </div>

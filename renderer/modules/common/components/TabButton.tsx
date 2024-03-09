@@ -13,7 +13,6 @@ const TabButton = ({ className, children, isActive, ...props }: IProps) => {
         className,
       )}
     >
-      {' '}
       {children}
     </div>
   );

@@ -8,7 +8,7 @@ export const NavbarUser = () => {
   const router = useRouter();
   return (
     <div
-      className="w-max flex flex-row items-center btn-ghost select-none"
+      className="w-max flex flex-row items-center btn-ghost select-none h-12"
       onClick={() => router.push('/pedidos')}
     >
       <img src="/images/logo.png" className="w-36 sm:w-20" />

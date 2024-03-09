@@ -1,6 +1,7 @@
-import IClient from '@/modules/cart/interfaces/IClient';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
+
+import IClient from '@/modules/cart/interfaces/IClient';
 
 interface IProps {
   client: IClient;

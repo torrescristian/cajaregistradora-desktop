@@ -1,13 +1,7 @@
-import OrdenesPage from '@/modules/ordenes/OrdenesPage';
-import NewOrdenesPage from '@/modules/ordenes/components/pages/NewOrdenesPage';
+import OrdenesPage from '@/modules/ordenes/components/pages/OrdenesPage';
 
 function ordenes() {
-  return (
-    <div>
-      <NewOrdenesPage />
-      <OrdenesPage />
-    </div>
-  );
+  return <OrdenesPage />;
 }
 
 export default ordenes;

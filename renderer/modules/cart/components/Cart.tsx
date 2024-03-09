@@ -13,7 +13,7 @@ import CartPromo from './CartPromo';
 import CartItem from './CartItem';
 import { Divider } from './Sale/Sale.styles';
 import { ICartItem } from '../interfaces/ICart';
-import { ConfirmOrder } from './ConfirmOrder';
+import { AdditionalDetailsOrderDrawer } from './AdditionalDetailsOrderDrawer';
 
 const ProductContainer = ({ children }: IComponent) => (
   <section className="flex flex-col sm:flex-row w-full gap-5 justify-between">
@@ -77,9 +77,7 @@ const Cart = ({ updateMode, order, onSubmit }: IProps) => {
           </section>
           <section className="w-max">
             <RenderIf condition={items.length || promosItems.length}>
-              <ConfirmOrder
-                updateMode={updateMode}
-                order={order}
+              <AdditionalDetailsOrderDrawer
                 onSubmit={onSubmit}
                 promoItems={promosItems}
               />

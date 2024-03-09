@@ -1,12 +1,12 @@
-import useCouponByCodeQuery from '@/modules/ordenes/hooks/useCouponByCodeQuery';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+
 import ErrorMessage from '@/modules/common/components/ErrorMessage';
-import { useDebounce } from 'use-debounce';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import SuccessMessage from './SuccessMessage';
-import useValidateCoupon from '../hooks/useValidateCoupon';
+
+import SuccessMessage from '../atoms/SuccessMessage';
+import useValidateCoupon from '../../hooks/useValidateCoupon';
 
 interface IProps {
   subtotalPrice: number;

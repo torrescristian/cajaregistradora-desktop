@@ -1,13 +1,14 @@
-import TablesColumn from '../organisms/TablesColumn';
-import DeliveriesColumn from '../organisms/DeliveriesColumn';
-import OrdersColumn from '../organisms/OrdersColumn';
 import {
   getIsProductCatalogActive,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
 import { ProductsCatalog } from '@/modules/products/components/ProductsCatalog';
 
-export default function NewOrdenesPage() {
+import TablesColumn from '../organisms/TablesColumn';
+import DeliveriesColumn from '../organisms/DeliveriesColumn';
+import OrdersColumn from '../organisms/OrdersColumn';
+
+export default function OrdenesPage() {
   const isProductCatalogActive = useOrderStore(getIsProductCatalogActive);
 
   if (isProductCatalogActive) {

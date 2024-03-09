@@ -2,14 +2,14 @@ import Loader from '@/modules/common/components/Loader';
 import { IExpense } from '../interfaces/IExpense';
 import ExpensesPendingTable from './ExpensesPendingTable';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '@/modules/reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '@/modules/common/components/molecules/Pagination';
 import useExpensesPendingQuery from '../hooks/useExpensesPendingQuery';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 
 export default function ExpensesPending() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
 
   const expensesPendingQuery = useExpensesPendingQuery({
     page: paginationControls.page,
@@ -35,7 +35,7 @@ export default function ExpensesPending() {
       <RenderIf condition={expensePending.length > 0}>
         <p className="text-xl text-center divider">Gastos Pendientes</p>
         <ExpensesPendingTable data={dataExpenses!} />
-        <ButtonPagination {...paginationControls} />
+        <Pagination {...paginationControls} />
       </RenderIf>
     </div>
   );

@@ -3,7 +3,7 @@ import { Selector } from '@/modules/common/components/Selector';
 import { paymentTypesAndLabels } from '@/modules/recibos/utils/utils';
 import { RenderIf } from '@/modules/common/components/RenderIf';
 import FieldLabel from '@/modules/common/components/FieldLabel';
-import usePayments from '../hooks/usePayments';
+import usePayments from '../../hooks/usePayments';
 
 export default function Payments({
   cashAmount,

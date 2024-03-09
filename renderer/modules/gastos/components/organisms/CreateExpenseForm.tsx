@@ -4,9 +4,9 @@ import FieldLabel from '@/modules/common/components/FieldLabel';
 import { useForm } from 'react-hook-form';
 import ExpensesTable from '../templates/ExpensesTable';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '@/modules/reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '@/modules/common/components/molecules/Pagination';
 import { useState } from 'react';
 import useCreateCashBalanceExpenseMutation from '@/modules/caja/hooks/useCreateCashBalanceExpenseMutation';
 

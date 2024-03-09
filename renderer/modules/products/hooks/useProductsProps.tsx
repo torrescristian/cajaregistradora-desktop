@@ -7,11 +7,11 @@ import {
   getPromoItems,
   useCartStore,
 } from '@/modules/cart/contexts/useCartStore';
-import { useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import { usePagination } from '@/modules/common/components/molecules/Pagination';
 
 export const useProductsProps = () => {
   const searchProps = useSearchProps();
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
 
   const [showPromo, setShowPromo] = useState(false);
   const [activePage, setActivePage] = useState(1);

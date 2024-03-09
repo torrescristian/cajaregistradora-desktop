@@ -1,9 +1,10 @@
-import { RenderIf } from '@/modules/common/components/RenderIf';
-import { longRange } from '@/modules/common/libs/utils';
 import { useState, useCallback, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-export const useButtonPagination = () => {
+import { RenderIf } from '@/modules/common/components/RenderIf';
+import { longRange } from '@/modules/common/libs/utils';
+
+export const usePagination = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -40,7 +41,7 @@ interface IProps {
   onChangePage: (page: number) => () => void;
 }
 
-export const ButtonPagination = ({
+export const Pagination = ({
   onNextPage,
   onPreviousPage,
   page,

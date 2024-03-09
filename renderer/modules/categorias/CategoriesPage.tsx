@@ -18,12 +18,12 @@ import { toast } from 'react-toastify';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '../reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '../common/components/molecules/Pagination';
 
 export default function CategoriesPage() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const createCategoryMutation = useCreateCategoryMutation();
   const searchProps = useSearchProps();
   const productsQuery = useProductsQuery({
@@ -122,7 +122,7 @@ export default function CategoriesPage() {
                 />
               ))}
             </div>
-            <ButtonPagination {...paginationControls} />
+            <Pagination {...paginationControls} />
           </div>
           <div className="flex flex-row">
             <RenderIf condition={!newVariantSelected}> </RenderIf>

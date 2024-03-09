@@ -7,7 +7,7 @@ import CardCategoryList from './CardCategoryList';
 import SubmitButton from '@/modules/common/components/SubmitButton';
 import FieldLabel from '@/modules/common/components/FieldLabel';
 import useCreatePromo from '../hooks/useCreatePromo';
-import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import { Pagination } from '@/modules/common/components/molecules/Pagination';
 
 export const CreatePromo = () => {
   const {
@@ -107,7 +107,7 @@ export const CreatePromo = () => {
                 />
               ))}
             </div>
-            <ButtonPagination {...paginationControls} />
+            <Pagination {...paginationControls} />
           </div>
           <div className="flex flex-col gap-5">
             <CardVariantList

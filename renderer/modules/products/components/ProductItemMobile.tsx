@@ -26,7 +26,7 @@ export const ProductItemMobile = ({ product, onClick }: IProps) => {
   } = useProductItem({ product, onClick });
 
   return (
-    <div className="flex flex-col w-full mt-3 border-2 p-5">
+    <div className="flex flex-col w-full mt-3 p-5">
       <HighlightedText>{product.name}</HighlightedText>
 
       <div className="flex flex-row w-full gap-3 justify-between">

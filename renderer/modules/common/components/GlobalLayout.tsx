@@ -18,11 +18,12 @@ export default function GlobalLayout({ children }: IProps) {
         type="checkbox"
         checked={isDrawerOpen}
         className="drawer-toggle"
+        readOnly
       />
 
       <div className="drawer-content">
         <Modal />
-        <section className="p-5">
+        <section>
           <Navbar />
           <section className="flex flex-col">{children}</section>
         </section>

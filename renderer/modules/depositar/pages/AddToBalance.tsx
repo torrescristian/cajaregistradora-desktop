@@ -2,15 +2,15 @@ import { INewAddBalance } from '@/modules/caja/interfaces/INewAddBalance';
 import Loader from '@/modules/common/components/Loader';
 import useAddBalancesQuery from '../hooks/useAddBalancesQuery';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '@/modules/reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '@/modules/common/components/molecules/Pagination';
 
 import CreateAddBalanceForm from '../organisms/CreateAddBalanceForm';
 import AddToBalanceTable from '../template/addToBalanceTable';
 
 export default function AddToBalance() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
 
   const addBalanceQuery = useAddBalancesQuery({
     page: paginationControls.page,
@@ -33,7 +33,7 @@ export default function AddToBalance() {
     <section className="w-full flex flex-col justify-center gap-10">
       <CreateAddBalanceForm data={data} />
       <AddToBalanceTable data={data!} />
-      <ButtonPagination {...paginationControls} />
+      <Pagination {...paginationControls} />
     </section>
   );
 }

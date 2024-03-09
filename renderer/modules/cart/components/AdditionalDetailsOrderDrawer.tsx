@@ -1,13 +1,13 @@
 import ClientForm from './ClientForm';
 import Loader from '@/modules/common/components/Loader';
 import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
-import ValidateCoupon from '@/modules/ordenes/components/ValidateCoupon';
+import ValidateCoupon from '@/modules/ordenes/components/molecules/ValidateCoupon';
 import { formatPrice } from '@/modules/common/libs/utils';
 import { DataItem } from '@/modules/common/components/DataItem';
 import 'react-toastify/dist/ReactToastify.css';
-import Payments from '@/modules/ordenes/components/Payments';
+import Payments from '@/modules/ordenes/components/molecules/Payments';
 import CustomToastContainer from '@/modules/common/components/CustomToastContainer';
-import useConfirmOrder from '../hooks/useConfirmOrder';
+import useAdditionalDetailsOrder from '../hooks/useAdditionalDetailsOrder';
 import { IPromoItem } from '../interfaces/ICart';
 import { ButtonClose } from '@/modules/common/components/ButtonClose';
 import { Divider } from './Sale/Sale.styles';
@@ -16,41 +16,37 @@ import {
   getIsOrderBeingUpdated,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 interface IProps {
+  // FIXME: remove onsubmit
   onSubmit?: () => void;
   promoItems?: IPromoItem[];
-  closeUpdateMode?: () => void;
 }
 
-export const ConfirmOrder = ({
+export const AdditionalDetailsOrderDrawer = ({
   onSubmit,
   promoItems,
-  closeUpdateMode,
 }: IProps) => {
   const order = useOrderStore(getOrderToUpdate)!;
   const {
     addClientId,
     additionalDetails,
-    closeModal,
     coupon,
     discountAmount,
     discountType,
     handleChangeAdditionalsDetails,
     handleCouponDiscountAmount,
-    handleCreateTicket,
     handleSubmit,
     orderMutation,
     paymentProps,
     setDiscountAmount,
     setDiscountType,
     subtotalPrice,
-  } = useConfirmOrder({
+  } = useAdditionalDetailsOrder({
     onSubmit,
     order,
     promoItems,
-
-    closeUpdateMode,
   });
 
   const isOrderUpdate = useOrderStore(getIsOrderBeingUpdated);
@@ -60,7 +56,30 @@ export const ConfirmOrder = ({
   }
 
   return (
-    <section className="p-5 bg-base-100 text-base-content ">
+    <section className="p-5 bg-base-100 text-base-content h-screen">
+      <div className="flex flex-col w-full items-center whitespace-nowrap gap-5 pt-5">
+        {isOrderUpdate ? (
+          <button
+            onClick={handleSubmit}
+            className="btn btn-info btn-outline w-full"
+          >
+            Actualizar orden
+          </button>
+        ) : (
+          <button
+            className="btn btn-success btn-outline w-full"
+            onClick={handleSubmit}
+          >
+            Crear Orden
+          </button>
+        )}
+        <DataItem
+          label="Total:"
+          value={formatPrice(subtotalPrice)}
+          defaultValue=""
+          className="text-2xl flex flex-row"
+        />
+      </div>
       <ClientForm
         onSelect={(client) => addClientId(client?.id || null)}
         defaultClient={order?.client}
@@ -86,44 +105,8 @@ export const ConfirmOrder = ({
             coupon={coupon}
           />
           <Payments {...paymentProps} />
-          <DataItem
-            label="Total:"
-            value={formatPrice(subtotalPrice)}
-            defaultValue=""
-            className="text-2xl"
-          />
         </div>
       </section>
-      <div className="flex flex-col w-full items-center gap-5 pt-5">
-        {isOrderUpdate ? (
-          <button
-            onClick={handleSubmit}
-            className="btn w-full sticky top-0 z-20  whitespace-nowrap btn-primary text-xl text-primary-content"
-          >
-            Actualizar orden
-          </button>
-        ) : (
-          <div>
-            <button
-              className="btn btn-warning btn-outline w-full"
-              onClick={handleSubmit}
-            >
-              Crear Orden
-            </button>
-            <button
-              className="btn btn-error btn-outline w-full"
-              onClick={handleCreateTicket}
-            >
-              Finalizar venta
-            </button>
-          </div>
-        )}
-        <ButtonClose
-          label="Cerrar"
-          className="self-right"
-          onClick={() => closeModal()}
-        />
-      </div>
     </section>
   );
 };

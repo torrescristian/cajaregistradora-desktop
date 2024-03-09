@@ -59,7 +59,10 @@ export default function useUpdateOrderMutation({ onSuccess }: IProps) {
 
       queryClient.invalidateQueries([CLIENTS_KEY]);
       queryClient.invalidateQueries([ORDERS_KEY]);
-      return resp;
+      return {
+        orderResponse: resp[0],
+        stockResponse: resp[1],
+      };
     },
     { onSuccess },
   );

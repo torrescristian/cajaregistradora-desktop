@@ -3,13 +3,13 @@ import Loader from '@/modules/common/components/Loader';
 import useExpensesQuery from '../../hooks/useExpensesQuery';
 import ExpensesTable from '../templates/ExpensesTable';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '@/modules/reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '@/modules/common/components/molecules/Pagination';
 import CreateExpenseForm from '../organisms/CreateExpenseForm';
 
 export default function ExpensePage() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
 
   const expensesQuery = useExpensesQuery({
     page: paginationControls.page,
@@ -34,7 +34,7 @@ export default function ExpensePage() {
     <section className="w-full flex flex-col justify-center gap-10">
       <CreateExpenseForm data={data} />
       <ExpensesTable data={data!} />
-      <ButtonPagination {...paginationControls} />
+      <Pagination {...paginationControls} />
     </section>
   );
 }

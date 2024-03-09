@@ -13,10 +13,10 @@ import {
 import { ICategoryExpanded } from '@/modules/categorias/interfaces/ICategory';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
-import { useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import { usePagination } from '@/modules/common/components/molecules/Pagination';
 
 export default function useCreatePromo() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const categoryQuery = useCategoryQuery();
   const createPromoMutation = useCreatePromoMutation();
   const [selectedProductType, setSelectedProductType] =

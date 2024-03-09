@@ -9,16 +9,29 @@ import {
   useModalStore,
 } from '@/modules/common/contexts/useModalStore';
 
-import { OrderContext } from '../context/OrderContext';
-import { IOrder } from '../interfaces/IOrder';
+import { OrderContext } from '../../context/OrderContext';
+import { IOrder } from '../../interfaces/IOrder';
+import useCancelOrderMutation from '../../hooks/useCancelOrderMutation';
+import { toast } from 'react-toastify';
 
 interface IProps {
   order: IOrder;
 }
 
 const ConfirmModal = ({ order }: IProps) => {
-  const { handleCancelOrder } = useContext(OrderContext);
   const closeModal = useModalStore(getCloseModal);
+  const cancelOrderMutation = useCancelOrderMutation();
+
+  const handleCancelOrder = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      await cancelOrderMutation.mutateAsync(order);
+      closeModal();
+      toast.success('Orden cancelada con exito');
+    } catch (e) {
+      toast.error('No se pudo cancelar la orden');
+    }
+  };
 
   return (
     <ModalTemplate>

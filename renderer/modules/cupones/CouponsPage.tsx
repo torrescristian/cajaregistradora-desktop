@@ -8,12 +8,12 @@ import { CreateCouponMobile } from './components/CreateCouponMobile';
 import CouponTable from './components/CouponTable';
 import { ICoupon } from './interfaces/ICoupon';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '../reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '../common/components/molecules/Pagination';
 
 export default function CouponsPage() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const couponQuery = useCouponsQuery({
     page: paginationControls.page,
     setTotalPages: paginationControls.setTotalPages,
@@ -55,7 +55,7 @@ export default function CouponsPage() {
             ) : (
               <div>
                 <CouponTable coupon={data!} />
-                <ButtonPagination {...paginationControls} />
+                <Pagination {...paginationControls} />
               </div>
             ),
           },

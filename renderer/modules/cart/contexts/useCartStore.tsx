@@ -1,9 +1,10 @@
-import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
+import { DISCOUNT_TYPE, IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import { IVariant } from '@/modules/common/interfaces/IVariants';
 import { calcDiscount } from '@/modules/common/libs/utils';
 import { create } from 'zustand';
 import { ICartItem, ICartState, IPromoItem } from '../interfaces/ICart';
+import { adaptOrderItemToCartItem } from '@/modules/ordenes/utils/utils';
 
 interface IAddProductProps {
   product: IProduct;
@@ -310,3 +311,14 @@ export const getPromoItems = (state: ICartStore) => state.promoItems;
 export const getAddPromo = (state: ICartStore) => state.addPromo;
 export const getRemovePromo = (state: ICartStore) => state.removePromo;
 export const getInitCart = (state: ICartStore) => state.initCart;
+export const getSetCartFromOrder = (state: ICartStore) => (order: IOrder) =>
+  state.initCart({
+    additionalDetails: order.additionalDetails,
+    subtotalPrice: order.subtotalPrice,
+    totalPrice: order.totalPrice,
+    cartItems: order.items.map(adaptOrderItemToCartItem),
+    promoItems: order.promoItems,
+    discountAmount: order.discount?.amount,
+    discountType: order.discount?.type,
+  });
+export const getClearCart = (state: ICartStore) => state.clearCart;

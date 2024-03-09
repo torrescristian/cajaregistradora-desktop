@@ -11,12 +11,12 @@ import UpdateVariantTable from './components/UpdateVariantTable';
 import NoMobileVersion from '../common/components/NoMobileVersion';
 import useVariantsQuery from './hooks/useVariantsQuery';
 import {
-  useButtonPagination,
-  ButtonPagination,
-} from './components/ButtonPagination';
+  usePagination,
+  Pagination,
+} from '../common/components/molecules/Pagination';
 
 export default function ReabastecerPage() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const searchProps = useSearchProps();
   const variantsQuery = useVariantsQuery({
     query: searchProps.query,
@@ -46,7 +46,7 @@ export default function ReabastecerPage() {
         {!variantsQuery.isLoading && !variantsQuery.isError && (
           <UpdateVariantTable tableInstance={tableInstance} />
         )}
-        <ButtonPagination {...paginationControls} />
+        <Pagination {...paginationControls} />
       </section>
     </PageLayout>
   );
