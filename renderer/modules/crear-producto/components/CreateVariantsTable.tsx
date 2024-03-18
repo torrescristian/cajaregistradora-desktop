@@ -3,7 +3,7 @@ import {
   STATUS_VARIANTS,
 } from '@/modules/common/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 
 interface IProps {
   hasStockControl: boolean;

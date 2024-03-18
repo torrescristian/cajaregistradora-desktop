@@ -3,11 +3,11 @@ import { ITicket, TICKET_STATUS } from '@/modules/recibos/interfaces/ITicket';
 import { formatPrice } from '@/modules/common/libs/utils';
 import { ClockIcon, ReceiptRefundIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
-import { DataItem } from '../../common/components/DataItem';
+import { DataItem } from '../../common/components/atoms/DataItem';
 import { toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 
 interface IDeleteTicketModalProps {
   ticket: ITicket;

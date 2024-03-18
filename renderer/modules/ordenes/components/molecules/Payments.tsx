@@ -1,8 +1,8 @@
 import { PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
-import { Selector } from '@/modules/common/components/Selector';
+import { Selector } from '@/modules/common/components/molecules/Selector';
 import { paymentTypesAndLabels } from '@/modules/recibos/utils/utils';
-import { RenderIf } from '@/modules/common/components/RenderIf';
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import usePayments from '../../hooks/usePayments';
 
 export default function Payments({

@@ -1,164 +1,48 @@
+import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+
+import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
+import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
+import usePrintService from '@/modules/common/hooks/usePrintService';
+import { calcDiscount } from '@/modules/common/libs/utils';
+import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
+import usePayments from '@/modules/ordenes/hooks/usePayments';
+import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
 import {
-  DISCOUNT_TYPE,
-  IDiscount,
-  IOrder,
-} from '@/modules/ordenes/interfaces/IOrder';
+  useOrderStore,
+  getHideProductCatalog,
+  getOrderToUpdate,
+  getIsCreateDelivery,
+} from '@/modules/common/contexts/useOrderStore';
+import { getIsUpdateTakeAway } from '@/modules/common/contexts/useOrderStore';
+import { getIsCreateTakeAway } from '@/modules/common/contexts/useOrderStore';
+import { ORDENES_URL, ORDERS_KEY } from '@/modules/common/consts';
+
 import {
+  getAddClientId,
   getAdditionalDetails,
   getCartItems,
   getClearCart,
   getClientId,
   getDiscountAmount,
   getDiscountType,
-  getSetAdditionalDetails,
+  getPromoItems,
   getSetDiscountAmount,
   getSetDiscountType,
   getSubtotalPrice,
   getTotalPrice,
   useCartStore,
 } from '../contexts/useCartStore';
-import { ICartItem, IPromoItem } from '../interfaces/ICart';
-import { useState } from 'react';
-import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import usePrintService from '@/modules/common/hooks/usePrintService';
-import { calcDiscount, formatPrice } from '@/modules/common/libs/utils';
 import useUpdateOrderMutation from './useUpdateOrderMutation';
-import useCreateTicketMutation from '@/modules/ordenes/hooks/useCreateTicketMutation';
-import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
-import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
-import { toast } from 'react-toastify';
 import useCreateOrderMutation from './useCreateOrderMutation';
-import usePayments from '@/modules/ordenes/hooks/usePayments';
-import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
-import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
+import useCreateDeliveryMutation from './useCreateDeliveryMutation';
+import { DELIVERY_STATUS } from '../interfaces/IDelivery';
 import { useRouter } from 'next/router';
-import {
-  useOrderStore,
-  getHideProductCatalog,
-} from '@/modules/common/contexts/useOrderStore';
-import { getIsUpdateTakeAway } from '@/modules/common/contexts/useOrderStore';
-import { getIsCreateTakeAway } from '@/modules/common/contexts/useOrderStore';
-import { useQueryClient } from '@tanstack/react-query';
-import { ORDERS_KEY } from '@/modules/common/consts';
 
-interface IProps {
-  order?: IOrder;
-  onSubmit?: () => void;
-  promoItems?: IPromoItem[];
-}
-
-export default function useAdditionalDetailsOrder({
-  onSubmit,
-  order,
-  promoItems,
-}: IProps) {
-  const additionalDetails = useCartStore(getAdditionalDetails);
-  const totalPrice = useCartStore(getTotalPrice);
-  const subtotalPrice = useCartStore(getSubtotalPrice);
-  const items = useCartStore(getCartItems) as ICartItem[];
-  const addClientId = useCartStore((state) => state.addClientId);
-  const clientId = useCartStore(getClientId);
-  const setAdditionalDetails = useCartStore(getSetAdditionalDetails);
-  const setDiscountType = useCartStore(getSetDiscountType);
-  const setDiscountAmount = useCartStore(getSetDiscountAmount);
+const useCoupon = () => {
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  const discountAmount = useCartStore(getDiscountAmount) || '';
-  const discountType = useCartStore(getDiscountType) || DISCOUNT_TYPE.FIXED;
-
-  const newTotalPrice = calcDiscount({
-    price: order?.totalPrice || totalPrice,
-    discountAmount: couponDiscount,
-    discountType: DISCOUNT_TYPE.FIXED,
-  });
-
   const [coupon, setCoupon] = useState<ICoupon>();
-
-  const paymentProps = usePayments();
-
-  const { printInvoice, printCommand } = usePrintService();
-
-  const orderMutation = useCreateOrderMutation();
-  const updateOrderMutation = useUpdateOrderMutation({
-    onSuccess: () => {
-      onSubmit?.();
-    },
-  });
-
-  const createTicketMutation = useCreateTicketMutation();
-  const activeCashBalanceQuery = useActiveCashBalanceQuery();
-  const { closeDrawer } = useDrawerStore();
-  const router = useRouter();
-  const hideProductCatalog = useOrderStore(getHideProductCatalog);
-  const isUpdateTakeAway = useOrderStore(getIsUpdateTakeAway);
-  const isCreateTakeAway = useOrderStore(getIsCreateTakeAway);
-  const clearCart = useCartStore(getClearCart);
-
-  const clearForm = () => {};
-
-  const queryClient = useQueryClient();
-
-  const createTakeAwayOrder = async () => {
-    const { orderResponse } = await orderMutation.mutateAsync({
-      additionalDetails,
-      clientId,
-      coupon,
-      discount: { amount: Number(discountAmount!), type: discountType! },
-      items,
-      promoItems: promoItems!,
-      subtotalPrice,
-      totalPrice: newTotalPrice,
-    });
-    await printCommand(orderResponse.data.id);
-    closeDrawer();
-    hideProductCatalog(); // Actualiza el estado de getOpenTakeAway
-    router.push('/ordenes');
-  };
-
-  const updateTakeAwayOrder = async () => {
-    const { orderResponse } = await updateOrderMutation.mutateAsync({
-      order: {
-        additionalDetails,
-        client: clientId!,
-        coupon,
-        discount: { amount: Number(discountAmount!), type: discountType! },
-        //Error null
-        id: order!.id!,
-        items: items.map(adaptCartItemToOrderItem),
-        promoItems: promoItems!,
-        status: order!.status,
-        subtotalPrice,
-        totalPrice: newTotalPrice,
-      },
-    });
-    await printCommand(orderResponse.data.id);
-    hideProductCatalog();
-  };
-
-  const handleSubmit = () => {
-    switch (true) {
-      case isCreateTakeAway: {
-        createTakeAwayOrder();
-      }
-      case isUpdateTakeAway: {
-        updateTakeAwayOrder();
-      }
-    }
-    queryClient.invalidateQueries([ORDERS_KEY]);
-    closeDrawer();
-    clearCart();
-    clearForm();
-  };
-
-  const handleChangeAdditionalsDetails = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setAdditionalDetails(e.target.value);
-  };
-
-  const handleChangeDiscountType = (discount: IDiscount) => {
-    setDiscountType(discount.type);
-    setDiscountAmount(discount.amount);
-  };
 
   const handleCouponDiscountAmount = ({
     couponDiscount,
@@ -171,98 +55,148 @@ export default function useAdditionalDetailsOrder({
     setCoupon(coupon);
   };
 
-  const handleCreateTicket = async () => {
-    const sum =
-      paymentProps.cashAmount +
-      paymentProps.creditAmount +
-      paymentProps.debitAmount;
+  return {
+    coupon,
+    couponDiscount,
+    handleCouponDiscountAmount,
+  };
+};
 
-    if (paymentProps.type === PAYMENT_TYPE.MULTIPLE && sum !== newTotalPrice) {
-      toast.error(
-        `Se está cobrando ${formatPrice(sum)} de ${formatPrice(newTotalPrice)}`,
-      );
+export default function useAdditionalDetailsOrder() {
+  // cart state
+  const additionalDetails = useCartStore(getAdditionalDetails);
+  const totalPrice = useCartStore(getTotalPrice);
+  const subtotalPrice = useCartStore(getSubtotalPrice);
+  const items = useCartStore(getCartItems);
+  const addClientId = useCartStore(getAddClientId);
+  const clientId = useCartStore(getClientId);
+  const setDiscountType = useCartStore(getSetDiscountType);
+  const setDiscountAmount = useCartStore(getSetDiscountAmount);
+  const discountAmount = useCartStore(getDiscountAmount);
+  const discountType = useCartStore(getDiscountType);
+  const clearCart = useCartStore(getClearCart);
+  const promoItems = useCartStore(getPromoItems);
+  // order state
+  const order = useOrderStore(getOrderToUpdate)!;
+  const hideProductCatalog = useOrderStore(getHideProductCatalog);
+  const isCreateTakeAway = useOrderStore(getIsCreateTakeAway);
+  const isUpdateTakeAway = useOrderStore(getIsUpdateTakeAway);
+  const isCreateDelivery = useOrderStore(getIsCreateDelivery);
+  // mutations
+  const orderMutation = useCreateOrderMutation();
+  const updateOrderMutation = useUpdateOrderMutation();
+  const deliveryMutation = useCreateDeliveryMutation();
+
+  const { coupon, couponDiscount, handleCouponDiscountAmount } = useCoupon();
+
+  const newTotalPrice = calcDiscount({
+    price: order?.totalPrice || totalPrice,
+    discountAmount: couponDiscount,
+    discountType: DISCOUNT_TYPE.FIXED,
+  });
+
+  const paymentProps = usePayments();
+
+  const { printCommand } = usePrintService();
+
+  const { closeDrawer } = useDrawerStore();
+
+  const queryClient = useQueryClient();
+
+  const router = useRouter();
+
+  // handlers
+  const createOrder = async () => {
+    const { orderResponse } = await orderMutation.mutateAsync({
+      additionalDetails,
+      clientId,
+      coupon,
+      discount: { amount: Number(discountAmount!), type: discountType! },
+      items,
+      promoItems: promoItems!,
+      subtotalPrice,
+      totalPrice: newTotalPrice,
+    });
+
+    return orderResponse.data.id;
+  };
+
+  const createTakeAwayOrder = async () => {
+    const orderId = await createOrder();
+    await printCommand(orderId);
+    closeDrawer();
+    hideProductCatalog();
+  };
+
+  const updateTakeAwayOrder = async () => {
+    const { orderResponse } = await updateOrderMutation.mutateAsync({
+      order: {
+        additionalDetails,
+        client: clientId!,
+        coupon,
+        discount: { amount: Number(discountAmount!), type: discountType! },
+        id: order!.id!,
+        items: items.map(adaptCartItemToOrderItem),
+        promoItems: promoItems!,
+        status: order!.status,
+        subtotalPrice,
+        totalPrice: newTotalPrice,
+      },
+    });
+    await printCommand(orderResponse.data.id);
+    hideProductCatalog();
+  };
+
+  const createDeliveryOrder = async () => {
+    const { delivery } = useOrderStore.getState();
+
+    if (!delivery) {
+      toast.error('Falta cargar el cliente');
       return;
     }
 
-    let payments: IPayment[] = [];
-    if (paymentProps.type === PAYMENT_TYPE.MULTIPLE) {
-      payments = [
-        {
-          type: PAYMENT_TYPE.CASH,
-          amount: paymentProps.cashAmount,
-        },
-        {
-          type: PAYMENT_TYPE.CREDIT,
-          amount: paymentProps.creditAmount,
-        },
-        {
-          type: PAYMENT_TYPE.DEBIT,
-          amount: paymentProps.debitAmount,
-        },
-      ].filter(({ amount }) => Boolean(amount));
-    } else {
-      payments = [
-        {
-          type: paymentProps.type,
-          amount: newTotalPrice,
-        },
-      ];
-    }
-
-    const { orderResponse } = await orderMutation.mutateAsync({
-      items,
-      totalPrice: newTotalPrice,
-      additionalDetails,
-      clientId,
-      subtotalPrice,
-      discount: { amount: Number(discountAmount!), type: discountType! },
-      promoItems: promoItems!,
+    const orderId = await createOrder();
+    await deliveryMutation.mutateAsync({
+      ...delivery,
+      order: orderId,
+      status: DELIVERY_STATUS.PENDING,
     });
+  };
 
-    const { orderResponse: updatedOrderResponse, ticketResponse } =
-      await createTicketMutation.mutateAsync({
-        ticket: {
-          order: orderResponse.data.id,
-          totalPrice: newTotalPrice,
-          cashBalance: activeCashBalanceQuery.cashBalance?.id!,
-          payments,
-          couponDiscount,
-        },
-        coupon: {
-          id: coupon?.id,
-          availableUses: coupon?.availableUses!,
-        },
-        discount: orderResponse.data.attributes?.discount || {
-          amount: Number(discountAmount!),
-          type: discountType!,
-        },
-      });
-
+  const handleSubmit = async () => {
+    switch (true) {
+      case isCreateTakeAway: {
+        await createTakeAwayOrder();
+        break;
+      }
+      case isUpdateTakeAway: {
+        await updateTakeAwayOrder();
+        break;
+      }
+      case isCreateDelivery: {
+        await createDeliveryOrder();
+        break;
+      }
+    }
+    queryClient.invalidateQueries([ORDERS_KEY]);
     closeDrawer();
-    await printInvoice(ticketResponse.data.id);
-    await printCommand(updatedOrderResponse.data.id);
-    hideProductCatalog();
-    router.push('/ordenes');
+    clearCart();
+    router.push(ORDENES_URL);
   };
 
   return {
     addClientId,
-    additionalDetails,
-    closeModal: closeDrawer,
     coupon,
+    deliveryMutation,
     discountAmount,
     discountType,
-    handleChangeAdditionalsDetails,
-    handleChangeDiscountType,
     handleCouponDiscountAmount,
-    handleCreateTicket,
     handleSubmit,
-    items,
-    newTotalPrice,
     orderMutation,
     paymentProps,
     setDiscountAmount,
     setDiscountType,
     subtotalPrice,
+    updateOrderMutation,
   };
 }

@@ -4,23 +4,23 @@ import { IProduct } from '@/modules/products/interfaces/IProduct';
 import React, { useState } from 'react';
 import SearchInput, {
   useSearchProps,
-} from '@/modules/common/components/SearchInput';
+} from '@/modules/common/components/molecules/SearchInput';
 import ProductItem from '@/modules/products/components/ProductItem';
 import {
   IVariantPromo,
   STATUS_VARIANTS,
 } from '@/modules/common/interfaces/IVariants';
 import { MinusIcon } from '@heroicons/react/24/solid';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import useFormControl from '@/modules/common/hooks/useFormControl';
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import { toast } from 'react-toastify';
-import SubmitButton from '@/modules/common/components/SubmitButton';
-import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
+import SubmitButton from '@/modules/common/components/atoms/SubmitButton';
 import {
   Pagination,
   usePagination,
 } from '../common/components/molecules/Pagination';
+import { Divider } from '../common/components/atoms/Divider';
 
 export default function CategoriesPage() {
   const paginationControls = usePagination();

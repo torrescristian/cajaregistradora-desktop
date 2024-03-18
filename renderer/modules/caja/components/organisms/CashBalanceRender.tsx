@@ -1,13 +1,12 @@
-import { RenderIf } from '@/modules/common/components/RenderIf';
-import Loader from '@/modules/common/components/Loader';
-import { CreateCashBalance } from '@/modules/common/components/Mobile/CashBalanceMobile';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
+import Loader from '@/modules/common/components/atoms/Loader';
 import { CloseCashBalance } from '../molecules/CloseCashBalance';
 import { CashBalanceActivate } from '../molecules/CashBalanceActive';
 import { InitialCashBalanceInput } from '../molecules/InitialCashBalanceInput';
 import useActiveCashBalanceQuery from '../../hooks/useActiveCashBalanceQuery';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import useInitCashMutation from '../../hooks/useInitCashMutation';
-import PageLayout from '@/modules/common/components/PageLayout';
+import PageLayout from '@/modules/common/components/templates/PageLayout';
 
 export default function CashBalanceRender() {
   const {
@@ -56,7 +55,12 @@ export default function CashBalanceRender() {
             <section className="flex">
               <RenderIf condition={!isLoading && isSuccess}>
                 <RenderIf condition={!cashIsActive}>
-                  <CreateCashBalance onClick={handleClickInitCash} />
+                  <button
+                    className="btn flex w-fit btn-primary text-primary-content"
+                    onClick={handleClickInitCash}
+                  >
+                    Iniciar Caja
+                  </button>
                 </RenderIf>
                 <RenderIf condition={cashIsActive}>
                   <CloseCashBalance cashBalanceId={cashBalance?.id!} />

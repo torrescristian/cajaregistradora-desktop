@@ -1,8 +1,8 @@
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import TicketPendingTable from './TicketPedingTable';
 import useTicketPendingQuery from '@/modules/recibos/hooks/useTicketPendingQuery';
 import { ITicket } from '@/modules/recibos/interfaces/ITicket';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import {
   Pagination,
   usePagination,

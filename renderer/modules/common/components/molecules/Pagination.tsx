@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { longRange } from '@/modules/common/libs/utils';
 
 export const usePagination = () => {

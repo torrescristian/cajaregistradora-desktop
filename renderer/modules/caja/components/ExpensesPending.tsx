@@ -1,4 +1,4 @@
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import { IExpense } from '../interfaces/IExpense';
 import ExpensesPendingTable from './ExpensesPendingTable';
 import {
@@ -6,7 +6,7 @@ import {
   usePagination,
 } from '@/modules/common/components/molecules/Pagination';
 import useExpensesPendingQuery from '../hooks/useExpensesPendingQuery';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 
 export default function ExpensesPending() {
   const paginationControls = usePagination();

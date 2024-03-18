@@ -1,5 +1,5 @@
 import { INewAddBalance } from '@/modules/caja/interfaces/INewAddBalance';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import useAddBalancesQuery from '../hooks/useAddBalancesQuery';
 import {
   Pagination,

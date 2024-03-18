@@ -1,13 +1,13 @@
-import FormFieldText from '@/modules/common/components/FormFieldText';
-import SearchInput from '@/modules/common/components/SearchInput';
+import FormFieldText from '@/modules/common/components/molecules/FormFieldText';
+import SearchInput from '@/modules/common/components/molecules/SearchInput';
 import ProductItem from '@/modules/products/components/ProductItem';
 import { MinusIcon } from '@heroicons/react/24/solid';
-import { RenderIf } from '@/modules/common/components/RenderIf';
-import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
+import { DiscountTypeControl } from '@/modules/common/components/molecules/DiscountTypeControl';
 import { DISCOUNT_TYPE, IDiscount } from '@/modules/ordenes/interfaces/IOrder';
-import { Card } from '@/modules/common/components/Card';
-import Loader from '@/modules/common/components/Loader';
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import { Card } from '@/modules/common/components/atoms/Card';
+import Loader from '@/modules/common/components/atoms/Loader';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import useCreateCoupon from '../hooks/useCreateCoupon';
 import { Pagination } from '@/modules/common/components/molecules/Pagination';
 

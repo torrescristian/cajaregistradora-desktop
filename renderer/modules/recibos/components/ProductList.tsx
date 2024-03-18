@@ -1,5 +1,5 @@
 import { IPromoItem } from '@/modules/cart/interfaces/ICart';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { IOrderItem } from '@/modules/ordenes/interfaces/IOrder';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';

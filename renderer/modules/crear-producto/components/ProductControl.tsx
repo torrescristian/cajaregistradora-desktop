@@ -1,9 +1,9 @@
 'use client';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import CreateVariantsTable from '@/modules/crear-producto/components/CreateVariantsTable';
-import SubmitButton from '@/modules/common/components/SubmitButton';
-import FieldLabel from '@/modules/common/components/FieldLabel';
-import { CreateProductTypeMenuModal } from './CreateProductTypeMenuModal';
+import SubmitButton from '@/modules/common/components/atoms/SubmitButton';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
+
 import useCreateProductPage from '../hooks/useCreateProductPage';
 
 interface IProps {

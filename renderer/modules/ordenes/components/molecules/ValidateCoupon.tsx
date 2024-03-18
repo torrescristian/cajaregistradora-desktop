@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ErrorMessage from '@/modules/common/components/ErrorMessage';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import ErrorMessage from '@/modules/common/components/atoms/ErrorMessage';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 

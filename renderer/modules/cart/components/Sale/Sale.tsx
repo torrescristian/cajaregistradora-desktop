@@ -3,12 +3,12 @@ import { IProps } from '@/modules/common/interfaces/Sale.interfaces';
 import {
   Container,
   DateComponent,
-  Divider,
   SaleItem,
   SaleItemsContainer,
   TotalItems,
 } from './Sale.styles';
 import { SaleContext } from '@/modules/common/contexts/SaleContext';
+import { Divider } from '@/modules/common/components/atoms/Divider';
 
 export default function Sale({ sale }: IProps) {
   return (

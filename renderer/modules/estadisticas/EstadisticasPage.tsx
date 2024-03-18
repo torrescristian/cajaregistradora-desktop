@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CalendarMonth } from './components/CalendarMonth';
 import useCashBalancesByDateQuery from '../caja/hooks/useCashBalancesByDateQuery';
-import FieldLabel from '../common/components/FieldLabel';
+import FieldLabel from '../common/components/atoms/FieldLabel';
 
 function EstadisticasPage() {
   const [pageSize, setPageSize] = useState(10);

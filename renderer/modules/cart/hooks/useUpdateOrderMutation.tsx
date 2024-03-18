@@ -1,71 +1,67 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { IOrder, IOrderItem } from '@/modules/ordenes/interfaces/IOrder';
 import IStockPerVariant, {
   IStockPerVariantPages,
 } from '@/modules/ordenes/interfaces/IStockPerVariant';
 import strapi from '@/modules/common/libs/strapi';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import IClient from '@/modules/cart/interfaces/IClient';
 import { ORDERS_KEY, CLIENTS_KEY } from '@/modules/common/consts';
-import { ICartItem } from '../interfaces/ICart';
 import { adaptOrderItemToCartItem } from '@/modules/ordenes/utils/utils';
+
+import { ICartItem } from '../interfaces/ICart';
 
 interface IMutateProps {
   order: IOrder<number>;
 }
-interface IProps {
-  onSuccess: () => void;
-}
 
-export default function useUpdateOrderMutation({ onSuccess }: IProps) {
+export default function useUpdateOrderMutation() {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    async ({ order }: IMutateProps) => {
-      const resp = [null, null] as [any, any];
+  return useMutation(async ({ order }: IMutateProps) => {
+    const resp = [null, null] as [any, any];
 
-      console.log({ order });
+    console.log({ order });
 
-      resp[0] = await strapi.update(ORDERS_KEY, order.id!, {
-        ...order,
-        client: order.client || undefined,
-        id: undefined,
-        items: order.items.map((item): IOrderItem<number, number> => {
-          return {
-            product: item.product!.id,
-            quantity: item.quantity,
-            price: item.selectedVariant.price,
-            selectedVariant: item.selectedVariant.id!,
-          };
-        }),
-        subtotalPrice: order.subtotalPrice,
-        totalPrice: order.subtotalPrice,
-      });
-      if (order.client) {
-        resp[1] = await strapi.update(CLIENTS_KEY, order.client!, {
-          address: order.address,
-        } as IClient);
-      }
-      // TODO:
-      const excludeServiceItem = (item: IOrderItem): boolean =>
-        !item.product!.isService;
+    resp[0] = await strapi.update(ORDERS_KEY, order.id!, {
+      ...order,
+      client: order.client || undefined,
+      id: undefined,
+      items: order.items.map((item): IOrderItem<number, number> => {
+        return {
+          product: item.product!.id,
+          quantity: item.quantity,
+          price: item.selectedVariant.price,
+          selectedVariant: item.selectedVariant.id!,
+        };
+      }),
+      subtotalPrice: order.subtotalPrice,
+      totalPrice: order.subtotalPrice,
+    });
+    if (order.client) {
+      resp[1] = await strapi.update(CLIENTS_KEY, order.client!, {
+        address: order.address,
+      } as IClient);
+    }
 
-      const itemsToUpdate = order.items
-        .filter(excludeServiceItem)
-        .map(adaptOrderItemToCartItem);
+    const excludeServiceItem = (item: IOrderItem): boolean =>
+      !item.product!.isService;
 
-      if (itemsToUpdate.length) {
-        resp[1] = await updateStock(itemsToUpdate);
-      }
+    const itemsToUpdate = order.items
+      .filter(excludeServiceItem)
+      .map(adaptOrderItemToCartItem);
 
-      queryClient.invalidateQueries([CLIENTS_KEY]);
-      queryClient.invalidateQueries([ORDERS_KEY]);
-      return {
-        orderResponse: resp[0],
-        stockResponse: resp[1],
-      };
-    },
-    { onSuccess },
-  );
+    if (itemsToUpdate.length) {
+      resp[1] = await updateStock(itemsToUpdate);
+    }
+
+    queryClient.invalidateQueries([CLIENTS_KEY]);
+    queryClient.invalidateQueries([ORDERS_KEY]);
+    return {
+      orderResponse: resp[0],
+      stockResponse: resp[1],
+    };
+  });
 }
 
 async function updateStock(items: ICartItem[]) {

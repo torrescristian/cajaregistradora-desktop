@@ -1,8 +1,8 @@
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import ExpensesTable from './CashExpensesTable';
 import useExpensesQuery from '../hooks/useCashBalanceExpensesQuery';
 import { IExpense } from '../interfaces/IExpense';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import useCreateExpenseMutation from '../hooks/useCreateCashBalanceExpenseMutation';
 import { useForm } from 'react-hook-form';
 import useExpensesTypeQuery from '../hooks/useExpenseTypesQuery';

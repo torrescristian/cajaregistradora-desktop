@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import useCreatePromoMutation from './useCreatePromoMutation';
 import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
 import { useState } from 'react';
-import { useSearchProps } from '@/modules/common/components/SearchInput';
+import { useSearchProps } from '@/modules/common/components/molecules/SearchInput';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import {
   ICategoryAndQuantity,

@@ -1,14 +1,13 @@
-import HighlightedText from '@/modules/common/components/HighlightedText';
-import { IProduct, PRODUCT_STATUS } from '../interfaces/IProduct';
-import { RenderIf } from '@/modules/common/components/RenderIf';
-import { Selector } from '@/modules/common/components/Selector';
-import useProductItem from '../hooks/useProductItem';
-import { formatPrice, getUrlFromImage } from '@/modules/common/libs/utils';
-import {
-  AddProductButton,
-  RemoveProductButton,
-} from '@/modules/cart/components/ProductItem.styles';
+import HighlightedText from '@/modules/common/components/atoms/HighlightedText';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
+import { Selector } from '@/modules/common/components/molecules/Selector';
+import { formatPrice } from '@/modules/common/libs/utils';
+import { RemoveProductButton } from '@/modules/cart/components/ProductItem.styles';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
+import AddProductButton from '@/modules/common/components/atoms/AddProductButton';
+
+import { IProduct } from '../interfaces/IProduct';
+import useProductItem from '../hooks/useProductItem';
 
 interface IProps {
   product: IProduct;

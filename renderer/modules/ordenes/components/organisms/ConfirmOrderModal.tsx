@@ -1,10 +1,10 @@
 import React from 'react';
 import { CheckIcon } from '@heroicons/react/24/solid';
 
-import { DataItem } from '@/modules/common/components/DataItem';
+import { DataItem } from '@/modules/common/components/atoms/DataItem';
 import { formatPrice } from '@/modules/common/libs/utils';
-import { DiscountTypeControl } from '@/modules/common/components/DiscountTypeControl';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { DiscountTypeControl } from '@/modules/common/components/molecules/DiscountTypeControl';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 import ModalTemplate from '@/modules/common/components/templates/ModalTemplate';
 import {
   getCloseModal,

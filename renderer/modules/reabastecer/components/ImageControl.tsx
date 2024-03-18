@@ -2,7 +2,7 @@ import useUpdateProductMutation from '@/modules/reabastecer/hooks/useUpdateProdu
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import strapi from '@/modules/common/libs/strapi';
 import React from 'react';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import { getStrapiUrl, getUrlFromImage } from '@/modules/common/libs/utils';
 
 interface IProps {

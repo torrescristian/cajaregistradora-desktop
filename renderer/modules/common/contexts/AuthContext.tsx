@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useContext } from 'react';
 import IUser from '@/modules/common/interfaces/IUser';
 import strapi from '@/modules/common/libs/strapi';
-import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
+import { IComponent } from '@/modules/common/interfaces/IComponent';
 import getUserByJWT from '@/modules/common/hooks/getUserByJWT';
 
 export interface UserState {

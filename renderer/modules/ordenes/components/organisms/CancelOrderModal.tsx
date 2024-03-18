@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { TrashIcon } from '@heroicons/react/24/solid';
 
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 import ModalTemplate from '@/modules/common/components/templates/ModalTemplate';
 import {
   getCloseModal,

@@ -1,9 +1,9 @@
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import { useProductsProps } from '../hooks/useProductsProps';
-import SearchInput from '@/modules/common/components/SearchInput';
+import SearchInput from '@/modules/common/components/molecules/SearchInput';
 import { ProductItemMobile } from './ProductItemMobile';
 import ProductTypes from './ProductTypes';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import RenderPromos from '@/modules/promos/components/RenderPromo';
 import { Pagination } from '@/modules/common/components/molecules/Pagination';
 import {
@@ -11,11 +11,12 @@ import {
   getIsOrderBeingUpdated,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
-import CartReview from '@/modules/common/components/organisms/CartReview';
+import CartReview from '@/modules/cart/components/organisms/CartReview';
 import {
   getClearCart,
   useCartStore,
 } from '@/modules/cart/contexts/useCartStore';
+import { ArrowLeftIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 export const ProductsCatalog = () => {
   const {
@@ -45,9 +46,15 @@ export const ProductsCatalog = () => {
   return (
     <section className="w-full flex flex-col gap-4 md:mt-0">
       <div className="w-full flex justify-center">
-        <button className="btn w-max btn-error" onClick={handleClickGoBack}>
-          {isOrderUpdate ? 'Cancelar edición' : 'Volver'}
-        </button>
+        {isOrderUpdate ? (
+          <button className="btn btn-error w-96" onClick={handleClickGoBack}>
+            <XMarkIcon className="w-5 h-5" /> Cancelar edición
+          </button>
+        ) : (
+          <button className="btn btn-error w-96" onClick={handleClickGoBack}>
+            <ArrowLeftIcon className="w-5 h-5" /> Volver
+          </button>
+        )}
       </div>
       <div className="w-full flex flex-row justify-between gap-5 ">
         <div className="flex flex-col w-full gap-5">

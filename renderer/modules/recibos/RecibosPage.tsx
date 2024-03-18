@@ -6,9 +6,9 @@ import {
 } from '@/modules/common/libs/utils';
 import { IColumnTicket } from './interfaces/IColumnTicket';
 import TicketTable from './components/TicketTable';
-import Loader from '../common/components/Loader';
-import PageLayout from '../common/components/PageLayout';
-import NoMobileVersion from '../common/components/NoMobileVersion';
+import Loader from '../common/components/atoms/Loader';
+import PageLayout from '../common/components/templates/PageLayout';
+import NoMobileVersion from '../common/components/atoms/NoMobileVersion';
 import {
   Pagination,
   usePagination,

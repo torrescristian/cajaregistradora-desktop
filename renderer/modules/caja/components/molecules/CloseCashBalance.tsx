@@ -1,7 +1,7 @@
 import useCloseCashBalanceMutation from '@/modules/caja/hooks/useCloseCashBalanceMutation';
 import useExpensesPendingQuery from '../../hooks/useExpensesPendingQuery';
 import useTicketPendingQuery from '@/modules/recibos/hooks/useTicketPendingQuery';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 
 interface IProps {
   cashBalanceId: number;

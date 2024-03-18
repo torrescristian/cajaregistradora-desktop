@@ -7,6 +7,7 @@ import {
   ISingleResultResponsePage,
 } from '@/modules/common/interfaces/utils';
 import { IPromoItem } from '@/modules/cart/interfaces/ICart';
+import { IDelivery } from '@/modules/cart/interfaces/IDelivery';
 
 export interface IOrderItem<PRODUCT = IProduct, SELECTED_VARIANT = IVariant> {
   quantity: number;
@@ -36,6 +37,7 @@ export interface IOrder<
   totalPrice: number;
   updatedAt?: string;
   promoItems: IPromoItem[];
+  delivery?: IDelivery;
 }
 
 export interface IDiscount {

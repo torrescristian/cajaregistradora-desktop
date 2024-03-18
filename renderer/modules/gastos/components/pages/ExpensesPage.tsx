@@ -1,5 +1,5 @@
 import { IExpense } from '@/modules/caja/interfaces/IExpense';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import useExpensesQuery from '../../hooks/useExpensesQuery';
 import ExpensesTable from '../templates/ExpensesTable';
 import {

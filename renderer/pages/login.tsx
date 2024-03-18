@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/solid';
 import useLoginMutation from '@/modules/common/hooks/useLoginMutation';
-import Loader from '@/modules/common/components/Loader';
-import PageLayout from '@/modules/common/components/PageLayout';
-import Footer from '@/modules/common/components/Footer';
-import WhatsappButton from '@/modules/common/components/WhatsappButton';
+import Loader from '@/modules/common/components/atoms/Loader';
+import PageLayout from '@/modules/common/components/templates/PageLayout';
+import Footer from '@/modules/common/components/molecules/Footer';
+import WhatsappButton from '@/modules/common/components/atoms/WhatsappButton';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
+import { ORDENES_URL } from '@/modules/common/consts';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = React.useState<string>('');
@@ -35,7 +36,7 @@ const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.push('/pedidos');
+      router.push(ORDENES_URL);
     }
   }, [isLoggedIn]);
 

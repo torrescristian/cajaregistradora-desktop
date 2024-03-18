@@ -1,6 +1,6 @@
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import useCouponsQuery from './hooks/useCouponsQuery';
-import CreateListTabs from '@/modules/common/components/CreateListTabs';
+import CreateListTabs from '@/modules/common/components/molecules/CreateListTabs';
 import { CreateCoupon } from '@/modules/cupones/components/CreateCoupon';
 import Coupon from './components/Coupon';
 import useIsMobile from '../reabastecer/hooks/useIsMobile';

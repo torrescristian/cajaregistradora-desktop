@@ -1,4 +1,4 @@
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { ICashBalance } from '../interfaces/ICashBalance';
 import TodayCashBalancesTable from './TodayCashBalancesTable';
 import useCashBalancesQuery from '../hooks/useCashBalancesQuery';

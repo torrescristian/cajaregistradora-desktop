@@ -16,7 +16,6 @@ interface IProps {
 }
 
 export const EditOrderModal = ({ order }: IProps) => {
-  //Añade el producto pero no lo actualiza
   const updateTakeAway = useOrderStore(getUpdateTakeAway);
   const setCartFromOrder = useCartStore(getSetCartFromOrder);
 

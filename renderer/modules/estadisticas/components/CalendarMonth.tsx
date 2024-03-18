@@ -1,6 +1,6 @@
 import 'react-calendar/dist/Calendar.css';
 import { format, isSameDay } from 'date-fns';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import es from 'date-fns/locale/es';
 import { CalendarWeek } from './CalendarWeek';
 import { ICashBalanceExpanded } from '@/modules/caja/interfaces/ICashBalance';

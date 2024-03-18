@@ -1,7 +1,7 @@
 import { IProductType } from '@/modules/products/interfaces/IProduct';
-import TabButton from '@/modules/common/components/TabButton';
+import TabButton from '@/modules/common/components/atoms/TabButton';
 import useProductTypeQuery from '@/modules/products/hooks/useProductTypesQuery';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { FunnelIcon } from '@heroicons/react/24/solid';
 interface IProps {

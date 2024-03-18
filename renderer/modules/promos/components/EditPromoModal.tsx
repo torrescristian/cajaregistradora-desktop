@@ -6,12 +6,12 @@ import {
   IPromo,
   IVariantAndQuantity,
 } from '@/modules/promos/interfaces/IPromo';
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import useCategoryQuery from '@/modules/categorias/hooks/useCategoryQuery';
 import { ICategoryExpanded } from '@/modules/categorias/interfaces/ICategory';
 import SearchInput, {
   useSearchProps,
-} from '@/modules/common/components/SearchInput';
+} from '@/modules/common/components/molecules/SearchInput';
 import ProductItem from '@/modules/products/components/ProductItem';
 import CardVariantList from './CardVariantList';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
@@ -20,7 +20,7 @@ import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import useUpdatePromo from '@/modules/promos/hooks/useUpdatePromo';
 import { toast } from 'react-toastify';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 import {
   Pagination,
   usePagination,

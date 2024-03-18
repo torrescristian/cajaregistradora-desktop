@@ -1,9 +1,12 @@
-import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
-import Footer from '@/modules/common/components/Footer';
-import WhatsappButton from '@/modules/common/components/WhatsappButton';
-import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import React from 'react';
+
+import Footer from '@/modules/common/components/molecules/Footer';
+import WhatsappButton from '@/modules/common/components/atoms/WhatsappButton';
+import { Divider } from '@/modules/common/components/atoms/Divider';
+import { IComponent } from '@/modules/common/interfaces/IComponent';
+import { useAuthState } from '@/modules/common/contexts/AuthContext';
+import { LOGIN_URL, ORDENES_URL } from '@/modules/common/consts';
 
 const Subtitle = ({ children }: IComponent) => (
   <>
@@ -18,6 +21,14 @@ const Parragraph = ({ children }: IComponent) => (
 const CajaRegistradoraApp: React.FC = () => {
   const router = useRouter();
 
+  const { isLoggedIn } = useAuthState();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push(ORDENES_URL);
+    }
+  }, [isLoggedIn]);
+
   return (
     <section className="flex flex-col gap-5 justify-center items-start px-[20vw]">
       <div className="w-full flex flex-col items-end gap-3">
@@ -25,7 +36,7 @@ const CajaRegistradoraApp: React.FC = () => {
         <span className="italic">Tu aliado en las ventas</span>
         <button
           className="btn btn-primary"
-          onClick={() => router.push('/login')}
+          onClick={() => router.push(LOGIN_URL)}
         >
           Iniciar Sesión
         </button>
@@ -70,20 +81,6 @@ const CajaRegistradoraApp: React.FC = () => {
         </Parragraph>
       </div>
 
-      {/* <div>
-        <Subtitle>🌟 Descubre CajaRegistradora.com.ar hoy mismo.</Subtitle>
-        <div
-          className="btn btn-primary"
-          onClick={() => window.open('URL_REAL_DE_TU_PAGINA_DE_DEMOSTRACION')}
-        >
-          Probar ahora
-        </div>
-        <p>
-          Utiliza el usuario de prueba "lacocina@gmail.com" con la contraseña
-          "lacocina123" y experimenta todas las funcionalidades de
-          CajaRegistradora.com.ar.
-        </p>
-      </div> */}
       <WhatsappButton className="fixed bottom-12 w-fit" />
       <div className="p-10" />
       <Footer />

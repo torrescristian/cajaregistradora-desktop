@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { ICouponPayload } from '../interfaces/ICoupon';
 import { useState } from 'react';
 import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
-import { useSearchProps } from '@/modules/common/components/SearchInput';
+import { useSearchProps } from '@/modules/common/components/molecules/SearchInput';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import useCreateCouponMutation from './useCreateCouponMutation';
 import { IDiscount } from '@/modules/ordenes/interfaces/IOrder';

@@ -1,3 +1,7 @@
+import { toast } from 'react-toastify';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import * as yup from 'yup';
+
 import {
   IDiscount,
   IOrder,
@@ -5,14 +9,12 @@ import {
   ORDER_STATUS,
 } from '@/modules/ordenes/interfaces/IOrder';
 import strapi from '@/modules/common/libs/strapi';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import {
+  getClearCart,
   getPromoItems,
   useCartStore,
 } from '@/modules/cart/contexts/useCartStore';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
-import * as yup from 'yup';
 import { IStrapiSingleResponse } from '@/modules/common/interfaces/utils';
 import { parsePromoItemsToCartItems } from '@/modules/common/libs/utils';
 import {
@@ -20,8 +22,8 @@ import {
   STOCK_PER_VARIANTS_KEY,
   ORDERS_KEY,
 } from '@/modules/common/consts';
+
 import { ICartItem, IPromoItem } from '../interfaces/ICart';
-import { toast } from 'react-toastify';
 
 interface IProps {
   items: ICartItem[];
@@ -34,40 +36,46 @@ interface IProps {
   promoItems?: IPromoItem[];
 }
 
-export default function useCreateOrderMutation() {
+export default function useCreateOrderMutation(
+  { onSuccess } = {
+    onSuccess: () => toast.success('Orden creada con exito'),
+  },
+) {
   const queryClient = useQueryClient();
-  const clearCart = useCartStore((state) => state.clearCart);
+  const clearCart = useCartStore(getClearCart);
   const promoItems = useCartStore(getPromoItems);
 
-  return useMutation(async (props: IProps) => {
-    const resp = [null, null, null] as [any, any, any];
-    try {
-      resp[0] = await strapi.create(ORDERS_KEY, parseOrderToPayLoad(props));
+  return useMutation(
+    async (props: IProps) => {
+      const resp = [null, null, null] as [any, any, any];
+      try {
+        resp[0] = await strapi.create(ORDERS_KEY, parseOrderToPayLoad(props));
 
-      const excludeServiceItem = (item: ICartItem): boolean =>
-        !item.product.isService;
+        const excludeServiceItem = (item: ICartItem): boolean =>
+          !item.product.isService;
 
-      const itemsToUpdate = props.items.filter(excludeServiceItem);
-      if (itemsToUpdate.length) {
-        resp[1] = await updateStock(itemsToUpdate);
+        const itemsToUpdate = props.items.filter(excludeServiceItem);
+        if (itemsToUpdate.length) {
+          resp[1] = await updateStock(itemsToUpdate);
+        }
+        if (promoItems.length) {
+          resp[2] = await updateStock(parsePromoItemsToCartItems(promoItems));
+        }
+        queryClient.invalidateQueries([ORDERS_KEY]);
+        queryClient.invalidateQueries([PRODUCTS_KEY]);
+        queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);
+        clearCart();
+      } catch (error) {
+        toast.error('Error al crear orden');
       }
-      if (promoItems.length) {
-        resp[2] = await updateStock(parsePromoItemsToCartItems(promoItems));
-      }
-      toast.success('Orden creada con exito');
-      queryClient.invalidateQueries([ORDERS_KEY]);
-      queryClient.invalidateQueries([PRODUCTS_KEY]);
-      queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);
-      clearCart();
-    } catch (error) {
-      toast.error('Error al crear orden');
-    }
-    return {
-      orderResponse: resp[0] as IStrapiSingleResponse<IOrder>,
-      productsStockUpdateResponse: resp[1],
-      promosStockUpdateResponse: resp[2],
-    };
-  });
+      return {
+        orderResponse: resp[0] as IStrapiSingleResponse<IOrder>,
+        productsStockUpdateResponse: resp[1],
+        promosStockUpdateResponse: resp[2],
+      };
+    },
+    { onSuccess },
+  );
 }
 
 function parseOrderToPayLoad({

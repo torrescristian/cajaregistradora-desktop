@@ -25,8 +25,6 @@ type ISetCart = Pick<
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
 
-// uso:
-// const clientName = useCartStore(getClientName)
 type ICartStore = ICartState & {
   initCart: (cartPayload: ICartState) => void;
   addProduct: ({ product, selectedVariant }: IAddProductProps) => void;
@@ -298,6 +296,7 @@ export const getCartItemQuantityByVariantId =
   };
 export const getSubtotalPrice = (state: ICartStore) => state.subtotalPrice;
 export const getClientId = (state: ICartStore) => state.clientId;
+export const getAddClientId = (state: ICartStore) => state.addClientId;
 export const getSetCart = (state: ICartStore) => state.setCart;
 export const getSetAdditionalDetails = (state: ICartStore) =>
   state.setAdditionalDetails;
@@ -305,8 +304,10 @@ export const getSetDiscountType = (state: ICartStore) => state.setDiscountType;
 export const getSetDiscountAmount = (state: ICartStore) =>
   state.setDiscountAmount;
 
-export const getDiscountType = (state: ICartStore) => state.discountType;
-export const getDiscountAmount = (state: ICartStore) => state.discountAmount;
+export const getDiscountType = (state: ICartStore) =>
+  state.discountType || DISCOUNT_TYPE.FIXED;
+export const getDiscountAmount = (state: ICartStore) =>
+  state.discountAmount || '';
 export const getPromoItems = (state: ICartStore) => state.promoItems;
 export const getAddPromo = (state: ICartStore) => state.addPromo;
 export const getRemovePromo = (state: ICartStore) => state.removePromo;

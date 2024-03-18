@@ -1,4 +1,4 @@
-import { useSearchProps } from '@/modules/common/components/SearchInput';
+import { useSearchProps } from '@/modules/common/components/molecules/SearchInput';
 import { useState } from 'react';
 import { IProduct, IProductType } from '../interfaces/IProduct';
 import usePromoQuery from '@/modules/promos/hooks/usePromoQuery';
