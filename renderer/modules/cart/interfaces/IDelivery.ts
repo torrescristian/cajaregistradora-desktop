@@ -11,6 +11,7 @@ export enum DELIVERY_STATUS {
 }
 
 export interface IDelivery<ORDER = IOrder, CLIENT = IClient> {
+  id?: number;
   userName: string;
   userAddress: string;
   userPhone: string;

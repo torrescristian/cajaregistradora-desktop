@@ -58,7 +58,7 @@ export const CancelOrderModal = ({ order }: IProps) => {
   return (
     <button
       disabled={cancelOrderMutation.isLoading}
-      className="btn btn-min btn-error btn-outline text-base-content"
+      className="btn btn-square btn-min btn-error btn-outline text-base-content"
       onClick={() => openModal(<ConfirmModal order={order} />)}
     >
       <TrashIcon className="w-5 h-5 " />

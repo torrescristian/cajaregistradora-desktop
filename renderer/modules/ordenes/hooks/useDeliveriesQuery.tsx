@@ -2,6 +2,7 @@ import { IOrderResponse, IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { DELIVERIES_KEY, ORDERS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
 import { useQuery } from '@tanstack/react-query';
+import { DELIVERY_STATUS } from '@/modules/cart/interfaces/IDelivery';
 
 interface IProps {
   page: number;
@@ -20,6 +21,9 @@ export default function useDeliveriesQuery({ page, setTotalPages }: IProps) {
         delivery: {
           id: {
             $notNull: true,
+          },
+          status: {
+            $in: [DELIVERY_STATUS.PENDING, DELIVERY_STATUS.READY],
           },
         },
       },

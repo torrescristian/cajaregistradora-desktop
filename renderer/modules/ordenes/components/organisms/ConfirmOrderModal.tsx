@@ -72,7 +72,7 @@ export const ConfirmOrderModal = ({ order }: IProps) => {
   return (
     <div>
       <button
-        className="btn btn-success btn-outline text-neutral-content"
+        className="btn btn-square btn-success btn-outline text-neutral-content"
         onClick={() => openModal(<Modal order={order} />)}
       >
         <CheckIcon className="w-5 h-5" />

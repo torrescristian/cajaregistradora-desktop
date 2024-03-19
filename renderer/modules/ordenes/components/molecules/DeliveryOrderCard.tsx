@@ -1,10 +1,12 @@
 import { formatPrice } from '@/modules/common/libs/utils';
+import { MapPinIcon, UserIcon } from '@heroicons/react/24/solid';
 
 import { IOrder } from '../../interfaces/IOrder';
 import { CancelOrderModal } from '../organisms/CancelOrderModal';
-import { ConfirmOrderModal } from '../organisms/ConfirmOrderModal';
 import { EditOrderModal } from '../organisms/EditOrderModal';
-import { MapPinIcon, UserIcon } from '@heroicons/react/24/solid';
+import NextStepDeliveryButton from './NextStepDeliveryButton';
+import { DELIVERY_STATUS } from '@/modules/cart/interfaces/IDelivery';
+import { ConfirmOrderModal } from '../organisms/ConfirmOrderModal';
 
 interface IProps {
   order: IOrder;
@@ -12,7 +14,7 @@ interface IProps {
 
 export default function DeliveryOrderCard({ order }: IProps) {
   return (
-    <div className="flex flex-col gap-4 border-2 rounded-lg p-4 border-neutral">
+    <div className="flex flex-col justify-between gap-4 border-2 rounded-lg p-4 border-neutral">
       <p className="flex gap-2">
         <UserIcon className="w-5 h-5" />
         {order.delivery?.userName || order.delivery?.client?.name || '🫥'}
@@ -23,9 +25,16 @@ export default function DeliveryOrderCard({ order }: IProps) {
       </p>
       <p className="text-left">Total: {formatPrice(order.totalPrice)}</p>
       <div className="flex justify-center gap-2">
-        <ConfirmOrderModal order={order} />
-        <EditOrderModal order={order} />
-        <CancelOrderModal order={order} />
+        {order.delivery?.status === DELIVERY_STATUS.PENDING && (
+          <>
+            <NextStepDeliveryButton order={order} />
+            <EditOrderModal order={order} />
+            <CancelOrderModal order={order} />
+          </>
+        )}
+        {order.delivery?.status === DELIVERY_STATUS.READY && (
+          <ConfirmOrderModal order={order} />
+        )}
       </div>
     </div>
   );

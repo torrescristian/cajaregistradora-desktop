@@ -6,7 +6,10 @@ import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
 import { ICoupon } from '@/modules/cupones/interfaces/ICoupon';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import { calcDiscount } from '@/modules/common/libs/utils';
-import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
+import {
+  getCloseDrawer,
+  useDrawerStore,
+} from '@/modules/common/contexts/useDrawerStore';
 import usePayments from '@/modules/ordenes/hooks/usePayments';
 import { adaptCartItemToOrderItem } from '@/modules/ordenes/utils/utils';
 import {
@@ -39,6 +42,10 @@ import useCreateOrderMutation from './useCreateOrderMutation';
 import useCreateDeliveryMutation from './useCreateDeliveryMutation';
 import { DELIVERY_STATUS } from '../interfaces/IDelivery';
 import { useRouter } from 'next/router';
+import {
+  getCloseModal,
+  useModalStore,
+} from '@/modules/common/contexts/useModalStore';
 
 const useCoupon = () => {
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
@@ -99,7 +106,8 @@ export default function useAdditionalDetailsOrder() {
 
   const { printCommand } = usePrintService();
 
-  const { closeDrawer } = useDrawerStore();
+  const closeDrawer = useDrawerStore(getCloseDrawer);
+  const closeModal = useModalStore(getCloseModal);
 
   const queryClient = useQueryClient();
 
@@ -124,8 +132,6 @@ export default function useAdditionalDetailsOrder() {
   const createTakeAwayOrder = async () => {
     const orderId = await createOrder();
     await printCommand(orderId);
-    closeDrawer();
-    hideProductCatalog();
   };
 
   const updateTakeAwayOrder = async () => {
@@ -144,7 +150,6 @@ export default function useAdditionalDetailsOrder() {
       },
     });
     await printCommand(orderResponse.data.id);
-    hideProductCatalog();
   };
 
   const createDeliveryOrder = async () => {
@@ -180,7 +185,9 @@ export default function useAdditionalDetailsOrder() {
     }
     queryClient.invalidateQueries([ORDERS_KEY]);
     closeDrawer();
+    closeModal();
     clearCart();
+    hideProductCatalog();
     router.push(ORDENES_URL);
   };
 

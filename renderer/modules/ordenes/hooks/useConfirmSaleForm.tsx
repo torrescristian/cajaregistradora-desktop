@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
@@ -8,13 +8,17 @@ import { calcDiscount } from '@/modules/common/libs/utils';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
-import { ORDERS_KEY } from '@/modules/common/consts';
+import { DELIVERIES_KEY, ORDERS_KEY } from '@/modules/common/consts';
 
 import usePayments from './usePayments';
 import { DISCOUNT_TYPE, IOrder } from '../interfaces/IOrder';
 import useCreateTicketMutation from './useCreateTicketMutation';
 import useCancelOrderMutation from './useCancelOrderMutation';
 import useValidateCoupon from './useValidateCoupon';
+import {
+  getCloseModal,
+  useModalStore,
+} from '@/modules/common/contexts/useModalStore';
 
 interface IProps {
   order: IOrder;
@@ -53,6 +57,8 @@ export default function useConfirmSaleForm({ order, onSubmit }: IProps) {
   });
 
   const { printInvoice } = usePrintService();
+
+  const closeModal = useModalStore(getCloseModal);
 
   const handleClearForm = () => {
     setAdditionalDetails('');
@@ -121,12 +127,18 @@ export default function useConfirmSaleForm({ order, onSubmit }: IProps) {
           amount: Number(discountAmount),
           type: discountType,
         },
+        delivery: order.delivery,
       });
 
       await printInvoice(ticketResponse.data.id);
-      queryClient.invalidateQueries([ORDERS_KEY]);
+      if (order.delivery?.id) {
+        queryClient.invalidateQueries([DELIVERIES_KEY]);
+      } else {
+        queryClient.invalidateQueries([ORDERS_KEY]);
+      }
       handleClearForm();
       toast.success('Pagado con exito');
+      closeModal();
     } catch (error) {
       console.error(error);
       toast.error(`No se está cobrando correctamente`);

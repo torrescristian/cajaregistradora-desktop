@@ -25,7 +25,10 @@ export const EditOrderModal = ({ order }: IProps) => {
   };
 
   return (
-    <button className="btn btn-outline text-base-content" onClick={handleClick}>
+    <button
+      className="btn btn-square btn-outline text-base-content"
+      onClick={handleClick}
+    >
       <PencilIcon className="w-5 h-5 " />
     </button>
   );

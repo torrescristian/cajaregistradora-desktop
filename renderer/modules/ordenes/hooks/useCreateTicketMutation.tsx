@@ -20,7 +20,12 @@ import {
   ORDERS_KEY,
   COUPONS_KEY,
   CASH_BALANCE_KEY,
+  DELIVERIES_KEY,
 } from '@/modules/common/consts';
+import {
+  DELIVERY_STATUS,
+  IDelivery,
+} from '@/modules/cart/interfaces/IDelivery';
 
 type ICreateTicketMutation = Omit<ITicketPayload, 'id' | 'status'>;
 
@@ -28,6 +33,7 @@ interface IProps {
   ticket: ICreateTicketMutation;
   coupon?: Pick<ICoupon, 'id' | 'availableUses'>;
   discount: IDiscount;
+  delivery?: IDelivery;
 }
 
 export default function useCreateTicketMutation() {
@@ -66,7 +72,7 @@ export default function useCreateTicketMutation() {
     return Number(cashBalance.digitalCashAmount) + Number(cashPayment.amount);
   }
 
-  return useMutation(async ({ ticket, coupon, discount }: IProps) => {
+  return useMutation(async ({ ticket, coupon, discount, delivery }: IProps) => {
     await TicketPayloadSchema().validate(ticket);
     const sum = ticket.payments.reduce(
       (acc, curr) => acc + Number(curr.amount),
@@ -105,11 +111,19 @@ export default function useCreateTicketMutation() {
       },
     );
 
+    let deliveryPromise;
+    if (delivery) {
+      deliveryPromise = strapi.update(DELIVERIES_KEY, delivery.id!, {
+        status: DELIVERY_STATUS.DELIVERED,
+      });
+    }
+
     const res = await Promise.all([
       ticketResPromise,
       orderResPromise,
       newCashBalancePromise,
       couponRestPromise,
+      deliveryPromise,
     ]);
 
     queryClient.invalidateQueries([COUPONS_KEY]);
@@ -122,6 +136,7 @@ export default function useCreateTicketMutation() {
       orderResponse: res[1] as IStrapiSingleResponse<IOrder>,
       cashBalanceResponse: res[2],
       couponResponse: res[3],
+      deliveryResponse: res[4],
     };
   });
 }
