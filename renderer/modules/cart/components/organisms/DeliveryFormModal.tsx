@@ -7,12 +7,16 @@ import {
   useModalStore,
 } from '@/modules/common/contexts/useModalStore';
 import {
+  getDelivery,
+  getIsCreateDelivery,
+  getIsUpdateDelivery,
   getSetDelivery,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 
 import ClientForm from './ClientForm';
+import { DELIVERY_STATUS } from '../../interfaces/IDelivery';
 
 interface IProps {
   onSubmit: () => void;
@@ -20,11 +24,13 @@ interface IProps {
 
 export default function DeliveryFormModal({ onSubmit }: IProps) {
   const closeModal = useModalStore(getCloseModal);
+  const delivery = useOrderStore(getDelivery);
   const setDelivery = useOrderStore(getSetDelivery);
-  const userNameControl = useFormControl('');
-  const userAddressControl = useFormControl('');
-  const userPhoneControl = useFormControl('');
-  const clientControl = useFormControl(0);
+  const userNameControl = useFormControl(delivery?.userName || '');
+  const userAddressControl = useFormControl(delivery?.userAddress || '');
+  const userPhoneControl = useFormControl(delivery?.userPhone || '');
+  const clientControl = useFormControl(delivery?.client || null);
+  const isCreateDelivery = useOrderStore(getIsCreateDelivery);
 
   const handleClickSubmit = () => {
     setDelivery({
@@ -32,6 +38,7 @@ export default function DeliveryFormModal({ onSubmit }: IProps) {
       userName: userNameControl.value,
       userPhone: userPhoneControl.value,
       client: clientControl.value,
+      status: DELIVERY_STATUS.PENDING,
     });
     onSubmit();
   };
@@ -72,7 +79,7 @@ export default function DeliveryFormModal({ onSubmit }: IProps) {
           className="btn btn-success text-white"
           onClick={handleClickSubmit}
         >
-          Crear Orden
+          {isCreateDelivery ? 'Crear Delivery' : 'Actualizar Delivery'}
         </button>
       </div>
     </ModalTemplate>

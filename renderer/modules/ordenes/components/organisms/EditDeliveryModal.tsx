@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  getUpdateTakeAway,
+  getUpdateDelivery,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
 import {
@@ -16,13 +16,13 @@ interface IProps {
   order: IOrder;
 }
 
-export const EditOrderModal = ({ order }: IProps) => {
-  const updateTakeAway = useOrderStore(getUpdateTakeAway);
+export const EditDeliveryModal = ({ order }: IProps) => {
+  const updateDelivery = useOrderStore(getUpdateDelivery);
   const setCartFromOrder = useCartStore(getSetCartFromOrder);
 
   const handleClick = () => {
     setCartFromOrder(order);
-    updateTakeAway(order);
+    updateDelivery(order);
   };
 
   return <EditButton onClick={handleClick} />;

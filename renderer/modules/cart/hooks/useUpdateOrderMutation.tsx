@@ -6,7 +6,11 @@ import IStockPerVariant, {
 } from '@/modules/ordenes/interfaces/IStockPerVariant';
 import strapi from '@/modules/common/libs/strapi';
 import IClient from '@/modules/cart/interfaces/IClient';
-import { ORDERS_KEY, CLIENTS_KEY } from '@/modules/common/consts';
+import {
+  ORDERS_KEY,
+  CLIENTS_KEY,
+  DELIVERIES_KEY,
+} from '@/modules/common/consts';
 import { adaptOrderItemToCartItem } from '@/modules/ordenes/utils/utils';
 
 import { ICartItem } from '../interfaces/ICart';
@@ -19,9 +23,7 @@ export default function useUpdateOrderMutation() {
   const queryClient = useQueryClient();
 
   return useMutation(async ({ order }: IMutateProps) => {
-    const resp = [null, null] as [any, any];
-
-    console.log({ order });
+    const resp = [null, null, null] as [any, any, any];
 
     resp[0] = await strapi.update(ORDERS_KEY, order.id!, {
       ...order,
@@ -55,11 +57,23 @@ export default function useUpdateOrderMutation() {
       resp[1] = await updateStock(itemsToUpdate);
     }
 
+    if (order.delivery) {
+      const delivery = {
+        ...order.delivery,
+      };
+      resp[2] = await strapi.update(
+        DELIVERIES_KEY,
+        order.delivery.id!,
+        delivery,
+      );
+    }
+
     queryClient.invalidateQueries([CLIENTS_KEY]);
     queryClient.invalidateQueries([ORDERS_KEY]);
     return {
       orderResponse: resp[0],
       stockResponse: resp[1],
+      deliveryResponse: resp[2],
     };
   });
 }

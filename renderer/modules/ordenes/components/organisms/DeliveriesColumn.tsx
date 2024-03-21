@@ -1,5 +1,6 @@
 import {
   getCreateDelivery,
+  getSetDelivery,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
 import { usePagination } from '@/modules/common/components/molecules/Pagination';
@@ -13,6 +14,7 @@ import { IOrder } from '../../interfaces/IOrder';
 import DeliveryOrderCard from '../molecules/DeliveryOrderCard';
 
 export default function DeliveriesColumn() {
+  const setDelivery = useOrderStore(getSetDelivery);
   const createDelivery = useOrderStore(getCreateDelivery);
 
   const paginationControls = usePagination();
@@ -25,10 +27,15 @@ export default function DeliveriesColumn() {
     );
   }
 
+  const handleClickCreateDelivery = () => {
+    setDelivery(null);
+    createDelivery();
+  };
+
   return (
     <div className="flex flex-col w-full item-center gap-3 px-5">
       <h2 className="text-lg">Deliveries</h2>
-      <ButtonAdd onClick={createDelivery} />
+      <ButtonAdd onClick={handleClickCreateDelivery} />
       <div className="grid grid-cols-2 gap-4">
         {deliveriesQuery.data?.orders.map((o: IOrder) => (
           <DeliveryOrderCard key={o.id} order={o} />

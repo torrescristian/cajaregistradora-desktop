@@ -17,6 +17,7 @@ import {
   getHideProductCatalog,
   getOrderToUpdate,
   getIsCreateDelivery,
+  getIsUpdateDelivery,
 } from '@/modules/common/contexts/useOrderStore';
 import { getIsUpdateTakeAway } from '@/modules/common/contexts/useOrderStore';
 import { getIsCreateTakeAway } from '@/modules/common/contexts/useOrderStore';
@@ -89,6 +90,7 @@ export default function useAdditionalDetailsOrder() {
   const isCreateTakeAway = useOrderStore(getIsCreateTakeAway);
   const isUpdateTakeAway = useOrderStore(getIsUpdateTakeAway);
   const isCreateDelivery = useOrderStore(getIsCreateDelivery);
+  const isUpdateDelivery = useOrderStore(getIsUpdateDelivery);
   // mutations
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation();
@@ -164,8 +166,37 @@ export default function useAdditionalDetailsOrder() {
     await deliveryMutation.mutateAsync({
       ...delivery,
       order: orderId,
+      client: delivery.client?.id || clientId || undefined,
       status: DELIVERY_STATUS.PENDING,
     });
+  };
+
+  const updateDeliveryOrder = async () => {
+    const { delivery } = useOrderStore.getState();
+
+    const { orderResponse } = await updateOrderMutation.mutateAsync({
+      order: {
+        additionalDetails,
+        client: clientId!,
+        coupon,
+        discount: { amount: Number(discountAmount!), type: discountType! },
+        id: order!.id!,
+        items: items.map(adaptCartItemToOrderItem),
+        promoItems: promoItems!,
+        status: order!.status,
+        subtotalPrice,
+        totalPrice: newTotalPrice,
+        delivery: {
+          id: delivery?.id || order!.delivery?.id!,
+          client: delivery?.client || order!.delivery?.client,
+          userAddress: delivery?.userAddress || order!.delivery?.userAddress!,
+          userName: delivery?.userName || order!.delivery?.userName!,
+          userPhone: delivery?.userPhone || order!.delivery?.userPhone!,
+          status: delivery?.status || order!.delivery?.status!,
+        },
+      },
+    });
+    await printCommand(orderResponse.data.id);
   };
 
   const handleSubmit = async () => {
@@ -180,6 +211,10 @@ export default function useAdditionalDetailsOrder() {
       }
       case isCreateDelivery: {
         await createDeliveryOrder();
+        break;
+      }
+      case isUpdateDelivery: {
+        await updateDeliveryOrder();
         break;
       }
     }

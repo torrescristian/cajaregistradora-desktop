@@ -1,12 +1,13 @@
 import { formatPrice } from '@/modules/common/libs/utils';
 import { MapPinIcon, UserIcon } from '@heroicons/react/24/solid';
 
+import { DELIVERY_STATUS } from '@/modules/cart/interfaces/IDelivery';
+
 import { IOrder } from '../../interfaces/IOrder';
 import { CancelOrderModal } from '../organisms/CancelOrderModal';
-import { EditOrderModal } from '../organisms/EditOrderModal';
 import NextStepDeliveryButton from './NextStepDeliveryButton';
-import { DELIVERY_STATUS } from '@/modules/cart/interfaces/IDelivery';
 import { ConfirmOrderModal } from '../organisms/ConfirmOrderModal';
+import { EditDeliveryModal } from '../organisms/EditDeliveryModal';
 
 interface IProps {
   order: IOrder;
@@ -28,7 +29,7 @@ export default function DeliveryOrderCard({ order }: IProps) {
         {order.delivery?.status === DELIVERY_STATUS.PENDING && (
           <>
             <NextStepDeliveryButton order={order} />
-            <EditOrderModal order={order} />
+            <EditDeliveryModal order={order} />
             <CancelOrderModal order={order} />
           </>
         )}
