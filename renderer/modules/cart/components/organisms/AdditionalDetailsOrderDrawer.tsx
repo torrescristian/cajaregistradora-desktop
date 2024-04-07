@@ -9,6 +9,7 @@ import Payments from '@/modules/ordenes/components/molecules/Payments';
 import CustomToastContainer from '@/modules/common/components/molecules/CustomToastContainer';
 import {
   getIsCreateDelivery,
+  getIsCreateTable,
   getIsCreateTakeAway,
   getIsOrderBeingUpdated,
   getOrderToUpdate,
@@ -32,6 +33,7 @@ const ActionButton = ({ onSubmit, isLoading }: IActionButton) => {
   const isOrderUpdate = useOrderStore(getIsOrderBeingUpdated);
   const isCreateTakeAway = useOrderStore(getIsCreateTakeAway);
   const isCreateDelivery = useOrderStore(getIsCreateDelivery);
+  const isCreateTable = useOrderStore(getIsCreateTable);
   const openModal = useModalStore(getOpenModal);
 
   const handleClickCreateDelivery = () => {
@@ -67,6 +69,16 @@ const ActionButton = ({ onSubmit, isLoading }: IActionButton) => {
           onClick={handleClickCreateDelivery}
         >
           Crear Delivery
+        </button>
+      );
+    }
+    case isCreateTable: {
+      return (
+        <button
+          className="btn btn-success btn-outline w-full"
+          onClick={onSubmit}
+        >
+          Cargar orden en mesa
         </button>
       );
     }

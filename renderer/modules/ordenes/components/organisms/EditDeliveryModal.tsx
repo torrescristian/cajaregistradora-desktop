@@ -10,7 +10,7 @@ import {
 } from '@/modules/cart/contexts/useCartStore';
 
 import { IOrder } from '../../interfaces/IOrder';
-import EditButton from '../molecules/EditButton';
+import EditButton from '../atoms/EditButton';
 
 interface IProps {
   order: IOrder;

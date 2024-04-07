@@ -1,16 +1,8 @@
-import { ShoppingCartIcon } from '@heroicons/react/24/solid';
-
-import { formatPrice } from '@/modules/common/libs/utils';
 import {
   getCartItems,
-  getPromoItems,
-  getSubtotalPrice,
   useCartStore,
 } from '@/modules/cart/contexts/useCartStore';
-import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
-import { useDrawerStore } from '@/modules/common/contexts/useDrawerStore';
 import CartPromo from '@/modules/cart/components/molecules/CartPromo';
-import { AdditionalDetailsOrderDrawer } from '@/modules/cart/components/organisms/AdditionalDetailsOrderDrawer';
 import CartItem from '@/modules/cart/components/molecules/CartItem';
 import { Divider } from '@/modules/common/components/atoms/Divider';
 import {
@@ -19,8 +11,10 @@ import {
 } from '@/modules/common/contexts/useModalStore';
 import {
   getIsCreateDelivery,
+  getIsCreateTable,
   getIsCreateTakeAway,
   getIsUpdateDelivery,
+  getIsUpdateTable,
   getIsUpdateTakeAway,
   useOrderStore,
 } from '@/modules/common/contexts/useOrderStore';
@@ -33,6 +27,8 @@ const ActionButton = () => {
   const isCreateTakeAway = useOrderStore(getIsCreateTakeAway);
   const isUpdateDelivery = useOrderStore(getIsUpdateDelivery);
   const isCreateDelivery = useOrderStore(getIsCreateDelivery);
+  const isCreateTable = useOrderStore(getIsCreateTable);
+  const isUpdateTable = useOrderStore(getIsUpdateTable);
   const openModal = useModalStore(getOpenModal);
   const { handleSubmit } = useAdditionalDetailsOrder();
 
@@ -84,6 +80,28 @@ const ActionButton = () => {
     );
   }
 
+  if (isCreateTable) {
+    return (
+      <button
+        className="btn btn-success btn-outline w-full"
+        onClick={handleSubmit}
+      >
+        Cargar orden en mesa
+      </button>
+    );
+  }
+
+  if (isUpdateTable) {
+    return (
+      <button
+        className="btn btn-info btn-outline w-full"
+        onClick={handleSubmit}
+      >
+        Actualizar orden en mesa
+      </button>
+    );
+  }
+
   return null;
 };
 
@@ -108,31 +126,5 @@ const CartReview = () => {
     </section>
   );
 };
-
-function PasarOrdenButton() {
-  const items = useCartStore(getCartItems);
-  const promosItems = useCartStore(getPromoItems);
-  const subtotalPrice = useCartStore(getSubtotalPrice);
-  const { openDrawer } = useDrawerStore();
-
-  return (
-    <div className="flex flex-col items-center text-base-content gap-4 w-full">
-      <p className="flex text-center text-xl gap-5">
-        <span className="text-neutral-500">Total:</span>
-        <span>{formatPrice(subtotalPrice)}</span>
-      </p>
-      <div className="flex flex-row items-center">
-        <RenderIf condition={items.length || promosItems.length}>
-          <button
-            className="btn btn-primary flex gap-4"
-            onClick={() => openDrawer(<AdditionalDetailsOrderDrawer />)}
-          >
-            <ShoppingCartIcon className="w-5 h-5" /> Pasar Orden
-          </button>
-        </RenderIf>
-      </div>
-    </div>
-  );
-}
 
 export default CartReview;

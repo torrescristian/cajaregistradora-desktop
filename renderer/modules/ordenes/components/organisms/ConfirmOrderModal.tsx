@@ -16,12 +16,15 @@ import ValidateCoupon from '../molecules/ValidateCoupon';
 import { IOrder } from '../../interfaces/IOrder';
 import Payments from '../molecules/Payments';
 import useConfirmSaleForm from '../../hooks/useConfirmSaleForm';
+import CheckButton from '../atoms/CheckButton';
 
 interface IProps {
   order: IOrder;
+  fill?: boolean;
+  onSuccess?: () => void;
 }
 
-const Modal = ({ order }: IProps) => {
+const Modal = ({ order, onSuccess }: IProps) => {
   const {
     coupon,
     discountAmount,
@@ -32,7 +35,7 @@ const Modal = ({ order }: IProps) => {
     setDiscountAmount,
     setDiscountType,
     paymentProps,
-  } = useConfirmSaleForm({ order });
+  } = useConfirmSaleForm({ order, onSubmit: onSuccess });
 
   const closeModal = useModalStore(getCloseModal);
 
@@ -66,17 +69,13 @@ const Modal = ({ order }: IProps) => {
   );
 };
 
-export const ConfirmOrderModal = ({ order }: IProps) => {
+export const ConfirmOrderModal = ({ order, fill, onSuccess }: IProps) => {
   const openModal = useModalStore(getOpenModal);
 
   return (
-    <div>
-      <button
-        className="btn btn-square btn-success btn-outline text-neutral-content"
-        onClick={() => openModal(<Modal order={order} />)}
-      >
-        <CheckIcon className="w-5 h-5" />
-      </button>
-    </div>
+    <CheckButton
+      fill={fill}
+      onClick={() => openModal(<Modal order={order} onSuccess={onSuccess} />)}
+    />
   );
 };

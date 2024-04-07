@@ -3,5 +3,5 @@ interface IProps {
 }
 
 export default function ErrorMessage({ children }: IProps) {
-  return <p className="alert alert-error">{children}</p>;
+  return children && <p className="alert alert-error">{children}</p>;
 }

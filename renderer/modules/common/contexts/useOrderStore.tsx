@@ -85,3 +85,21 @@ export const getIsUpdateDelivery = (state: IOrderState) =>
 export const getDelivery = (state: IOrderState) => state.delivery;
 
 export const getSetDelivery = (state: IOrderState) => state.setDelivery;
+
+export const getCreateTable =
+  (state: IOrderState) => (orderToUpdate: IOrder) => {
+    state.setOrderState(ORDER_SECTION_STATE.CREATE_TABLE);
+    state.setOrderToUpdate(orderToUpdate);
+  };
+
+export const getIsCreateTable = (state: IOrderState) =>
+  state.orderState === ORDER_SECTION_STATE.CREATE_TABLE;
+
+export const getUpdateTable =
+  (state: IOrderState) => (orderToUpdate: IOrder) => {
+    state.setOrderState(ORDER_SECTION_STATE.UPDATE_TABLE);
+    state.setOrderToUpdate(orderToUpdate);
+  };
+
+export const getIsUpdateTable = (state: IOrderState) =>
+  state.orderState === ORDER_SECTION_STATE.UPDATE_TABLE;

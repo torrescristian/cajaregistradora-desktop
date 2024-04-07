@@ -8,7 +8,11 @@ import { calcDiscount } from '@/modules/common/libs/utils';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
 import usePrintService from '@/modules/common/hooks/usePrintService';
 import { IPayment, PAYMENT_TYPE } from '@/modules/recibos/interfaces/ITicket';
-import { DELIVERIES_KEY, ORDERS_KEY } from '@/modules/common/consts';
+import {
+  DELIVERIES_KEY,
+  ORDERS_KEY,
+  TABLES_KEY,
+} from '@/modules/common/consts';
 
 import usePayments from './usePayments';
 import { DISCOUNT_TYPE, IOrder } from '../interfaces/IOrder';
@@ -19,6 +23,7 @@ import {
   getCloseModal,
   useModalStore,
 } from '@/modules/common/contexts/useModalStore';
+import useCompleteTableOrderMutation from './useCompleteTableOrderMutation';
 
 interface IProps {
   order: IOrder;
@@ -33,6 +38,7 @@ export default function useConfirmSaleForm({ order, onSubmit }: IProps) {
   const [additionalDetails, setAdditionalDetails] = useState(
     order.additionalDetails || '',
   );
+  const completeTableOrderMutation = useCompleteTableOrderMutation();
 
   const { discountAmount, discountType, setDiscountAmount, setDiscountType } =
     useCalcDiscountType({
@@ -133,9 +139,13 @@ export default function useConfirmSaleForm({ order, onSubmit }: IProps) {
       await printInvoice(ticketResponse.data.id);
       if (order.delivery?.id) {
         queryClient.invalidateQueries([DELIVERIES_KEY]);
+      } else if (order.table?.id) {
+        await completeTableOrderMutation.mutateAsync(order.table);
+        queryClient.invalidateQueries([TABLES_KEY]);
       } else {
         queryClient.invalidateQueries([ORDERS_KEY]);
       }
+      onSubmit?.(order);
       handleClearForm();
       toast.success('Pagado con exito');
       closeModal();

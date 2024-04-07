@@ -6,7 +6,7 @@ import { ProductsCatalog } from '@/modules/products/components/ProductsCatalog';
 
 import TablesColumn from '../organisms/TablesColumn';
 import DeliveriesColumn from '../organisms/DeliveriesColumn';
-import OrdersColumn from '../organisms/OrdersColumn';
+import TakeawaysColumn from '../organisms/TakeawaysColumn';
 import useActiveCashBalanceQuery from '@/modules/caja/hooks/useActiveCashBalanceQuery';
 import Loader from '@/modules/common/components/atoms/Loader';
 import { useRouter } from 'next/router';
@@ -46,7 +46,7 @@ export default function OrdenesPage() {
     <section className="flex flex-row w-full text-center divide-x">
       <TablesColumn />
       <DeliveriesColumn />
-      <OrdersColumn />
+      <TakeawaysColumn />
     </section>
   );
 }

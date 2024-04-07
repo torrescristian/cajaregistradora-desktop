@@ -21,6 +21,7 @@ import {
   COUPONS_KEY,
   CASH_BALANCE_KEY,
   DELIVERIES_KEY,
+  TABLES_KEY,
 } from '@/modules/common/consts';
 import {
   DELIVERY_STATUS,

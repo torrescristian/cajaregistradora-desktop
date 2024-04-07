@@ -14,6 +14,8 @@ export const DEPOSITS_KEY = 'deposits';
 export const EXPENSES_TYPE_KEY = 'expense-types';
 export const CASH_BALANCE_KEY = 'cash-balances';
 export const DELIVERIES_KEY = 'deliveries';
+export const TABLES_KEY = 'tables';
+export const TABLES_CATEGORIES_KEY = 'table-categories';
 
 export const LOGIN_URL = '/login';
 export const ORDENES_URL = '/ordenes';

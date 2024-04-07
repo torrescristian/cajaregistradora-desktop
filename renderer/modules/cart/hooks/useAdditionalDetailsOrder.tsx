@@ -18,6 +18,8 @@ import {
   getOrderToUpdate,
   getIsCreateDelivery,
   getIsUpdateDelivery,
+  getIsCreateTable,
+  getIsUpdateTable,
 } from '@/modules/common/contexts/useOrderStore';
 import { getIsUpdateTakeAway } from '@/modules/common/contexts/useOrderStore';
 import { getIsCreateTakeAway } from '@/modules/common/contexts/useOrderStore';
@@ -47,6 +49,8 @@ import {
   getCloseModal,
   useModalStore,
 } from '@/modules/common/contexts/useModalStore';
+import useTakeTableOrderMutation from './useTakeTableOrderMutation';
+import { is } from 'date-fns/locale';
 
 const useCoupon = () => {
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
@@ -91,10 +95,13 @@ export default function useAdditionalDetailsOrder() {
   const isUpdateTakeAway = useOrderStore(getIsUpdateTakeAway);
   const isCreateDelivery = useOrderStore(getIsCreateDelivery);
   const isUpdateDelivery = useOrderStore(getIsUpdateDelivery);
+  const isCreateTable = useOrderStore(getIsCreateTable);
+  const isUpdateTable = useOrderStore(getIsUpdateTable);
   // mutations
   const orderMutation = useCreateOrderMutation();
   const updateOrderMutation = useUpdateOrderMutation();
   const deliveryMutation = useCreateDeliveryMutation();
+  const takeTableOrderMutation = useTakeTableOrderMutation();
 
   const { coupon, couponDiscount, handleCouponDiscountAmount } = useCoupon();
 
@@ -199,6 +206,34 @@ export default function useAdditionalDetailsOrder() {
     await printCommand(orderResponse.data.id);
   };
 
+  const createTableOrder = async () => {
+    const orderId = await createOrder();
+    await takeTableOrderMutation.mutateAsync({
+      order: orderId,
+      table: order.table!.id!,
+    });
+
+    await printCommand(orderId);
+  };
+
+  const updateTableOrder = async () => {
+    const { orderResponse } = await updateOrderMutation.mutateAsync({
+      order: {
+        additionalDetails,
+        client: clientId!,
+        coupon,
+        discount: { amount: Number(discountAmount!), type: discountType! },
+        id: order!.id!,
+        items: items.map(adaptCartItemToOrderItem),
+        promoItems: promoItems!,
+        status: order!.status,
+        subtotalPrice,
+        totalPrice: newTotalPrice,
+      },
+    });
+    await printCommand(orderResponse.data.id);
+  };
+
   const handleSubmit = async () => {
     switch (true) {
       case isCreateTakeAway: {
@@ -215,6 +250,14 @@ export default function useAdditionalDetailsOrder() {
       }
       case isUpdateDelivery: {
         await updateDeliveryOrder();
+        break;
+      }
+      case isCreateTable: {
+        await createTableOrder();
+        break;
+      }
+      case isUpdateTable: {
+        await updateTableOrder();
         break;
       }
     }
