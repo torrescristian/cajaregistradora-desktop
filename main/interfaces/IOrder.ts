@@ -1,8 +1,9 @@
 import { IPromoItem } from './ICart';
 import IClient from './IClient';
 import { ICoupon } from './ICoupon';
+import { IDelivery } from './IDelivery';
 import { IProduct } from './IProduct';
-import IStore from './IStore';
+import { ITable } from './ITable';
 import { IVariant } from './IVariants';
 import { IResponsePage } from './utils';
 
@@ -35,7 +36,8 @@ export interface IOrder<
   totalPrice: number;
   updatedAt?: string;
   promoItems: IPromoItem[];
-  store: IStore;
+  delivery?: IDelivery;
+  table?: ITable;
 }
 
 export interface IDiscount {

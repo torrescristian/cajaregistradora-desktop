@@ -26,6 +26,8 @@ export default function useTablesQuery() {
         'order.promoItems.selectedVariants.product',
         'order.promoItems.selectedVariants.product.type',
       ],
+      // @ts-ignore
+      pageSize: 1000,
     })) as unknown as IResponsePage<ITable>;
 
     return res.results;

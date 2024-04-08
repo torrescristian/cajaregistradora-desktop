@@ -7,11 +7,22 @@ import {
 } from '@/modules/common/contexts/useModalStore';
 import CreateTableModal from './CreateTableModal';
 import useTablesQuery from '../../hooks/useTablesQuery';
+import { ITable } from '../../interfaces/ITable';
 
 export default function TablesColumn() {
   const [updateMode, setUpdateMode] = useState(false);
   const openModal = useModalStore(getOpenModal);
   const tablesQuery = useTablesQuery();
+  const tablesByCategory = tablesQuery.data?.reduce(
+    (acc: { [id: string]: ITable[] }, table) => {
+      if (!acc[table.category.id]) {
+        acc[table.category.id] = [];
+      }
+      acc[table.category.id].push(table);
+      return acc;
+    },
+    {},
+  );
 
   return (
     <div className="flex flex-col items-center justify-start w-full gap-3 px-5">
@@ -39,10 +50,26 @@ export default function TablesColumn() {
           <PencilIcon className="w-5 h-5" /> Editar
         </button>
       )}
-      <div className="grid lg:grid-cols-2 gap-4 w-full">
-        {tablesQuery.data?.map((table) => (
-          <TableCard key={table.id} table={table} />
-        ))}
+      <div className="flex flex-col gap-4 text-neutral w-full">
+        {tablesByCategory &&
+          Object.keys(tablesByCategory).map((categoryId) => (
+            <div
+              key={categoryId}
+              className="flex flex-col gap-4 w-full"
+              style={{
+                backgroundColor: tablesByCategory[categoryId][0].category.color,
+              }}
+            >
+              <h3 className="text-lg">
+                {tablesByCategory[categoryId][0].category.name}
+              </h3>
+              <div className="grid lg:grid-cols-2">
+                {tablesByCategory[categoryId].map((table) => (
+                  <TableCard key={table.id} table={table} />
+                ))}
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );

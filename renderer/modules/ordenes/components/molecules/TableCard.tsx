@@ -40,17 +40,9 @@ export function TableCard({ table }: IProps) {
     updateTable(order);
   };
 
-  const handleSuccess = () => {};
-
   return (
     <div
-      className={twMerge(
-        'rounded-lg p-4 w-full flex flex-col gap-4',
-        suggestTextColor(table.category.color),
-      )}
-      style={{
-        backgroundColor: table.category.color,
-      }}
+      className={twMerge('rounded-lg p-4 w-full flex flex-col gap-4 border')}
     >
       <h3 className="text-lg font-semibold">Mesa: {table.code}</h3>
       <div className="flex flex-col gap-2 items-center">
@@ -58,7 +50,7 @@ export function TableCard({ table }: IProps) {
           <>
             <p className="text-sm">{formatPrice(table.order?.totalPrice)}</p>
             <div className="flex gap-2">
-              <ConfirmOrderModal onSuccess={handleSuccess} order={order} fill />{' '}
+              <ConfirmOrderModal order={order} fill />{' '}
               <button className="btn btn-square" onClick={handleClickEdit}>
                 <PencilIcon className="w-5 h-5" />
               </button>
@@ -66,8 +58,7 @@ export function TableCard({ table }: IProps) {
           </>
         ) : (
           <ButtonAdd
-            fill
-            className="border border-neutral text-neutral"
+            className="border border-neutral text-black"
             onClick={handleClickAdd}
           />
         )}

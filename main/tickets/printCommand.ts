@@ -1,8 +1,9 @@
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
+
 import { parseDateToArgentinianFormat } from '../helpers/utils';
 import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL } from '../helpers/const';
-import { IOrder, ORDER_STATUS } from '../interfaces/IOrder';
+import { IOrder } from '../interfaces/IOrder';
 
 export default function printCommand(order: IOrder) {
   try {
@@ -97,16 +98,7 @@ export default function printCommand(order: IOrder) {
       }
 
       // total amount & status
-      printer
-        .text(FONT_SIZE_SMALL)
-        .align('LT')
-        .text(
-          `Pago: ${
-            order.status === ORDER_STATUS.PENDING ? 'PENDIENTE' : 'ABONADO'
-          }`,
-        )
-        .align(ALIGN.CT)
-        .text(FONT_SIZE_SMALL);
+      printer.align(ALIGN.CT).text(FONT_SIZE_SMALL);
 
       // close printer
       printer.cut().close();
