@@ -1,8 +1,8 @@
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import ExpensesTable from './CashExpensesTable';
 import useExpensesQuery from '../hooks/useCashBalanceExpensesQuery';
 import { IExpense } from '../interfaces/IExpense';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import useCreateExpenseMutation from '../hooks/useCreateCashBalanceExpenseMutation';
 import { useForm } from 'react-hook-form';
 import useExpensesTypeQuery from '../hooks/useExpenseTypesQuery';
@@ -11,9 +11,9 @@ import useCashBalanceExpensesQuery from '../hooks/useCashBalanceExpensesQuery';
 import CashExpensesTable from './CashExpensesTable';
 import { useState } from 'react';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '@/modules/reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '@/modules/common/components/molecules/Pagination';
 
 export default function ReturnCashBalance() {
   const {
@@ -22,7 +22,7 @@ export default function ReturnCashBalance() {
     formState: { errors },
     handleSubmit,
   } = useForm<IExpense>();
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
 
   const cashBalanceExpensesQuery = useCashBalanceExpensesQuery({
     page: paginationControls.page,
@@ -88,7 +88,7 @@ export default function ReturnCashBalance() {
       </form>
 
       <CashExpensesTable data={data!} />
-      <ButtonPagination {...paginationControls} />
+      <Pagination {...paginationControls} />
     </section>
   );
 }

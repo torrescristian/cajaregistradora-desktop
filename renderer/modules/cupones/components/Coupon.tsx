@@ -3,10 +3,10 @@ import {
   formatPrice,
   parseDateToArgentinianFormat,
 } from '@/modules/common/libs/utils';
-import { DataItem } from '@/modules/common/components/DataItem';
+import { DataItem } from '@/modules/common/components/atoms/DataItem';
 import { DISCOUNT_TYPE, IDiscount } from '@/modules/ordenes/interfaces/IOrder';
 import { TrashIcon } from '@heroicons/react/24/solid';
-import { Card } from '@/modules/common/components/Card';
+import { Card } from '@/modules/common/components/atoms/Card';
 import useCancelCouponMutation from '@/modules/cupones/hooks/useCancelCouponMutation';
 import CancelCouponButton from './CancelCouponButton';
 

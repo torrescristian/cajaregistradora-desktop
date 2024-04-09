@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import {
   IOrderResponse,
   IOrder,
@@ -5,7 +7,6 @@ import {
 } from '@/modules/ordenes/interfaces/IOrder';
 import { ORDERS_KEY } from '@/modules/common/consts';
 import strapi from '@/modules/common/libs/strapi';
-import { useQuery } from '@tanstack/react-query';
 
 interface IProps {
   page: number;
@@ -22,6 +23,11 @@ export default function useOrderQuery({ page, setTotalPages }: IProps) {
     const orderResponse = (await strapi.find(ORDERS_KEY, {
       filters: {
         status: ORDER_STATUS.PENDING,
+        delivery: {
+          id: {
+            $null: true,
+          },
+        },
       },
       populate: [
         'client',

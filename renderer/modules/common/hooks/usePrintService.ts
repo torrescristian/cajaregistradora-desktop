@@ -10,6 +10,7 @@ enum EVENT_TYPE {
   PRINT_INVOICE = 'print:invoice',
   PRINT_COMMAND = 'print:command',
   PRINT_CASH = 'print:cash',
+  PRINT_DELIVERY = 'print:delivery',
 }
 
 export default function usePrintService() {
@@ -46,9 +47,16 @@ export default function usePrintService() {
     _emit(EVENT_TYPE.PRINT_COMMAND, order);
   };
 
+  const printDelivery = async (orderId: number) => {
+    const order = await findOrderById(orderId);
+
+    _emit(EVENT_TYPE.PRINT_DELIVERY, order);
+  };
+
   return {
     printCommand,
     printInvoice,
     printCash,
+    printDelivery,
   };
 }

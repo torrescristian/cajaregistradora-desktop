@@ -1,6 +1,6 @@
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import useCouponsQuery from './hooks/useCouponsQuery';
-import CreateListTabs from '@/modules/common/components/CreateListTabs';
+import CreateListTabs from '@/modules/common/components/molecules/CreateListTabs';
 import { CreateCoupon } from '@/modules/cupones/components/CreateCoupon';
 import Coupon from './components/Coupon';
 import useIsMobile from '../reabastecer/hooks/useIsMobile';
@@ -8,12 +8,12 @@ import { CreateCouponMobile } from './components/CreateCouponMobile';
 import CouponTable from './components/CouponTable';
 import { ICoupon } from './interfaces/ICoupon';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '../reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '../common/components/molecules/Pagination';
 
 export default function CouponsPage() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const couponQuery = useCouponsQuery({
     page: paginationControls.page,
     setTotalPages: paginationControls.setTotalPages,
@@ -55,7 +55,7 @@ export default function CouponsPage() {
             ) : (
               <div>
                 <CouponTable coupon={data!} />
-                <ButtonPagination {...paginationControls} />
+                <Pagination {...paginationControls} />
               </div>
             ),
           },

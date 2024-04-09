@@ -13,7 +13,13 @@ export interface IUseUpdateVariantMutationProps {
   stockPerVariant: IStockPerVariant;
 }
 
-export default function useUpdateStockPerVariantMutation() {
+interface IProps {
+  disableSuccessToast?: boolean;
+}
+
+export default function useUpdateStockPerVariantMutation({
+  disableSuccessToast,
+}: IProps = {}) {
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -38,7 +44,9 @@ export default function useUpdateStockPerVariantMutation() {
           newStockPerVariant,
         );
 
-        toast.success('Stock actualizado con éxito');
+        if (!disableSuccessToast) {
+          toast.success('Stock actualizado con éxito');
+        }
         await queryClient.invalidateQueries([PRODUCTS_KEY]);
         await queryClient.invalidateQueries([STOCK_PER_VARIANTS_KEY]);
         await queryClient.invalidateQueries([VARIANTS_KEY]);

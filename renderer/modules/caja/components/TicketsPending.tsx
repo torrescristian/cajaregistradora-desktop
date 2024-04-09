@@ -1,15 +1,15 @@
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import TicketPendingTable from './TicketPedingTable';
 import useTicketPendingQuery from '@/modules/recibos/hooks/useTicketPendingQuery';
 import { ITicket } from '@/modules/recibos/interfaces/ITicket';
-import Loader from '@/modules/common/components/Loader';
+import Loader from '@/modules/common/components/atoms/Loader';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '@/modules/reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '@/modules/common/components/molecules/Pagination';
 
 export default function TicketsPending() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
 
   const ticketPendingQuery = useTicketPendingQuery({
     page: paginationControls.page,
@@ -36,7 +36,7 @@ export default function TicketsPending() {
       <RenderIf condition={ticketPending.length > 0}>
         <p className="text-xl text-center divider">Devoluciones Pendientes</p>
         <TicketPendingTable tickets={dataTicket!} />
-        <ButtonPagination {...paginationControls} />
+        <Pagination {...paginationControls} />
       </RenderIf>
     </div>
   );

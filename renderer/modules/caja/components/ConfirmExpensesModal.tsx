@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
 import ExpensesPending from './ExpensesPending';
 import TicketsPending from './TicketsPending';

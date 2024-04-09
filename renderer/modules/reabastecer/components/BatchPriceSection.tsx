@@ -1,10 +1,10 @@
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import useUpdateVariantPriceMutation from '@/modules/reabastecer/hooks/useUpdateVariantPriceMutation';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { VARIANTS_KEY } from '@/modules/common/consts';
 import { useQueryClient } from '@tanstack/react-query';
 

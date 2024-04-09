@@ -4,6 +4,7 @@ import { Server, Socket } from 'socket.io';
 import printCommand from './tickets/printCommand';
 import printInvoice from './tickets/printInvoice';
 import printCashBalance from './tickets/printCashBalance';
+import printDelivery from './tickets/printDelivery';
 
 export default function createSocketServer(app) {
   const expressApp = express();
@@ -28,6 +29,10 @@ export default function createSocketServer(app) {
 
       socket.on('print:cash', (props) => {
         printCashBalance(JSON.parse(props));
+      });
+
+      socket.on('print:delivery', (props) => {
+        printDelivery(JSON.parse(props));
       });
     } catch (error) {
       console.log(error);

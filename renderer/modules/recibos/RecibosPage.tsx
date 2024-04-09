@@ -6,16 +6,16 @@ import {
 } from '@/modules/common/libs/utils';
 import { IColumnTicket } from './interfaces/IColumnTicket';
 import TicketTable from './components/TicketTable';
-import Loader from '../common/components/Loader';
-import PageLayout from '../common/components/PageLayout';
-import NoMobileVersion from '../common/components/NoMobileVersion';
+import Loader from '../common/components/atoms/Loader';
+import PageLayout from '../common/components/templates/PageLayout';
+import NoMobileVersion from '../common/components/atoms/NoMobileVersion';
 import {
-  ButtonPagination,
-  useButtonPagination,
-} from '../reabastecer/components/ButtonPagination';
+  Pagination,
+  usePagination,
+} from '../common/components/molecules/Pagination';
 
 export default function RecibosPage() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const ticketQuery = useTicketQuery({
     page: paginationControls.page,
     setTotalPages: paginationControls.setTotalPages,
@@ -52,7 +52,7 @@ export default function RecibosPage() {
     <PageLayout className="gap-5 justify-center p-5  sm:mt-2 mt-20 overflow-x-scroll ">
       <NoMobileVersion />
       <TicketTable data={data} />
-      <ButtonPagination {...paginationControls} />
+      <Pagination {...paginationControls} />
     </PageLayout>
   );
 }

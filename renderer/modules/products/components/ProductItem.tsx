@@ -1,12 +1,12 @@
-import { IComponent } from '@/modules/common/interfaces/ProductItem.interfaces';
+import { IComponent } from '@/modules/common/interfaces/IComponent';
 import useProductItem from '@/modules/products/hooks/useProductItem';
 import { formatPrice, getUrlFromImage } from '@/modules/common/libs/utils';
-import { Card } from '@/modules/common/components/Card';
-import { Selector } from '@/modules/common/components/Selector';
+import { Card } from '@/modules/common/components/atoms/Card';
+import { Selector } from '@/modules/common/components/molecules/Selector';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
-import HighlightedText from '@/modules/common/components/HighlightedText';
+import HighlightedText from '@/modules/common/components/atoms/HighlightedText';
 
 const Text = ({ children }: IComponent) => {
   return (

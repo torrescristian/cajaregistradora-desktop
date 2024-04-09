@@ -3,6 +3,7 @@ import { login, useAuthDispatch } from '@/modules/common/contexts/AuthContext';
 import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import getUserByJWT from '@/modules/common/hooks/getUserByJWT';
+import { ORDENES_URL } from '../consts';
 
 interface ILoginPayload {
   identifier: string;
@@ -26,6 +27,6 @@ export default function useLoginMutation() {
     const { jwt } = await strapi.login(payload);
     const user = await getUserByJWT(jwt);
     dispatch(login(user));
-    router.push('/pedidos');
+    router.push(ORDENES_URL);
   });
 }

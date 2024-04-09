@@ -1,7 +1,7 @@
 import { IProductType } from '@/modules/products/interfaces/IProduct';
-import TabButton from '@/modules/common/components/TabButton';
+import TabButton from '@/modules/common/components/atoms/TabButton';
 import useProductTypeQuery from '@/modules/products/hooks/useProductTypesQuery';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import useIsMobile from '@/modules/reabastecer/hooks/useIsMobile';
 import { FunnelIcon } from '@heroicons/react/24/solid';
 interface IProps {
@@ -38,8 +38,8 @@ export default function ProductTypes({
     <section className="flex flex-col sm:flex-row items-center">
       {isMobile ? (
         <RenderIf condition={productTypes?.length}>
-          <div className="dropdown z-[1]">
-            <label tabIndex={0} className="btn btn-secondary  m-1">
+          <div className="dropdown z-1">
+            <label tabIndex={0} className="btn btn-secondary m-1">
               <FunnelIcon className="w-5 h-5 text-secondary-content" />
             </label>
             <div
@@ -115,7 +115,7 @@ export default function ProductTypes({
               </label>
               <div
                 tabIndex={0}
-                className="dropdown-content flex flex-col z-[1] overflow-y-scroll h-[40vh] shadow rounded-box w-64"
+                className="dropdown-content flex flex-col z-30 w-64 right-0"
               >
                 {productTypes
                   ?.filter((t) => t)

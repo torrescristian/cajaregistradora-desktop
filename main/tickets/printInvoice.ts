@@ -5,7 +5,7 @@ import {
   formatPrice,
   parseDateToArgentinianFormat,
 } from '../helpers/utils';
-import { ALIGN, FONT_SIZE_SMALL } from '../helpers/const';
+import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL } from '../helpers/const';
 import { ITicket } from '../interfaces/ITicket';
 
 export default function printInvoice(ticket: ITicket) {
@@ -40,10 +40,16 @@ export default function printInvoice(ticket: ITicket) {
       printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.com.ar');
 
       // store, client and order data
-      printer.text(FONT_SIZE_SMALL).text(ticket.store.name);
+      printer.text(FONT_SIZE_SMALL).text(ticket.store.name).align(ALIGN.LT);
+
+      if (order.table?.id) {
+        printer
+          .text(FONT_SIZE_NORMAL)
+          .text(`Mesa: ${order.table.code}`)
+          .text(FONT_SIZE_SMALL);
+      }
 
       printer
-        .align(ALIGN.LT)
         .text(`Pedido # ${order.id!}`)
         .text(`Fecha: ${parseDateToArgentinianFormat(order.createdAt)}`);
 

@@ -1,13 +1,13 @@
 import { formatPrice, range } from '@/modules/common/libs/utils';
-import { RenderIf } from '@/modules/common/components/RenderIf';
-import { Card } from '@/modules/common/components/Card';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
+import { Card } from '@/modules/common/components/atoms/Card';
 import useRenderPromo from '../hooks/useRenderPromo';
-import HighlightedText from '@/modules/common/components/HighlightedText';
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import HighlightedText from '@/modules/common/components/atoms/HighlightedText';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import { EditPromoModal } from './EditPromoModal';
 import { CancelPromoModal } from './CancelPromoModal';
 import { IPromoItem } from '@/modules/cart/interfaces/ICart';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 
 interface IProps {
   promosItems: IPromoItem[];

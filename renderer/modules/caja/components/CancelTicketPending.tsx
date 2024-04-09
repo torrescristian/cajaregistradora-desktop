@@ -1,5 +1,5 @@
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
-import { DataItem } from '@/modules/common/components/DataItem';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
+import { DataItem } from '@/modules/common/components/atoms/DataItem';
 import { formatPrice } from '@/modules/common/libs/utils';
 import useCancelTicketMutation from '@/modules/recibos/hooks/useCancelTicketMutation';
 import { ITicket } from '@/modules/recibos/interfaces/ITicket';

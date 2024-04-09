@@ -1,4 +1,4 @@
-import CreateListTabs from '@/modules/common/components/CreateListTabs';
+import CreateListTabs from '@/modules/common/components/molecules/CreateListTabs';
 import RenderPromos from './components/RenderPromo';
 import { CreatePromo } from './components/CreatePromo';
 import usePromoQuery from '@/modules/promos/hooks/usePromoQuery';

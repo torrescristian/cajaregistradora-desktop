@@ -4,7 +4,6 @@ import {
   ICashBalanceExpanded,
   ICashBalancePage,
 } from '@/modules/caja/interfaces/ICashBalance';
-import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
 import { CASH_BALANCE_KEY } from '@/modules/common/consts';
@@ -15,7 +14,6 @@ interface IProps {
 }
 
 export default function useActiveCashBalanceQuery() {
-  const router = useRouter();
   const { userData } = useAuthState();
   const { data, isLoading, isError, isSuccess } = useQuery<IProps | null>(
     [CASH_BALANCE_KEY, userData?.id],

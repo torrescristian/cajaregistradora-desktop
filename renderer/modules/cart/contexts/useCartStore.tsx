@@ -1,9 +1,10 @@
-import { DISCOUNT_TYPE } from '@/modules/ordenes/interfaces/IOrder';
+import { DISCOUNT_TYPE, IOrder } from '@/modules/ordenes/interfaces/IOrder';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import { IVariant } from '@/modules/common/interfaces/IVariants';
 import { calcDiscount } from '@/modules/common/libs/utils';
 import { create } from 'zustand';
 import { ICartItem, ICartState, IPromoItem } from '../interfaces/ICart';
+import { adaptOrderItemToCartItem } from '@/modules/ordenes/utils/utils';
 
 interface IAddProductProps {
   product: IProduct;
@@ -24,8 +25,6 @@ type ISetCart = Pick<
 
 const fixPrice = (price: number) => Math.round(price * 100) / 100;
 
-// uso:
-// const clientName = useCartStore(getClientName)
 type ICartStore = ICartState & {
   initCart: (cartPayload: ICartState) => void;
   addProduct: ({ product, selectedVariant }: IAddProductProps) => void;
@@ -297,6 +296,7 @@ export const getCartItemQuantityByVariantId =
   };
 export const getSubtotalPrice = (state: ICartStore) => state.subtotalPrice;
 export const getClientId = (state: ICartStore) => state.clientId;
+export const getAddClientId = (state: ICartStore) => state.addClientId;
 export const getSetCart = (state: ICartStore) => state.setCart;
 export const getSetAdditionalDetails = (state: ICartStore) =>
   state.setAdditionalDetails;
@@ -304,9 +304,22 @@ export const getSetDiscountType = (state: ICartStore) => state.setDiscountType;
 export const getSetDiscountAmount = (state: ICartStore) =>
   state.setDiscountAmount;
 
-export const getDiscountType = (state: ICartStore) => state.discountType;
-export const getDiscountAmount = (state: ICartStore) => state.discountAmount;
+export const getDiscountType = (state: ICartStore) =>
+  state.discountType || DISCOUNT_TYPE.FIXED;
+export const getDiscountAmount = (state: ICartStore) =>
+  state.discountAmount || '';
 export const getPromoItems = (state: ICartStore) => state.promoItems;
 export const getAddPromo = (state: ICartStore) => state.addPromo;
 export const getRemovePromo = (state: ICartStore) => state.removePromo;
 export const getInitCart = (state: ICartStore) => state.initCart;
+export const getSetCartFromOrder = (state: ICartStore) => (order: IOrder) =>
+  state.initCart({
+    additionalDetails: order.additionalDetails,
+    subtotalPrice: order.subtotalPrice,
+    totalPrice: order.totalPrice,
+    cartItems: order.items.map(adaptOrderItemToCartItem),
+    promoItems: order.promoItems,
+    discountAmount: order.discount?.amount,
+    discountType: order.discount?.type,
+  });
+export const getClearCart = (state: ICartStore) => state.clearCart;

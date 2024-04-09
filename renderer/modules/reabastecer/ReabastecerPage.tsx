@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import SearchInput, {
   useSearchProps,
-} from '@/modules/common/components/SearchInput';
-import PageLayout from '@/modules/common/components/PageLayout';
+} from '@/modules/common/components/molecules/SearchInput';
+import PageLayout from '@/modules/common/components/templates/PageLayout';
 import { BatchPriceSection } from '@/modules/reabastecer/components/BatchPriceSection';
-import Loader from '@/modules/common/components/Loader';
-import ErrorMessage from '@/modules/common/components/ErrorMessage';
+import Loader from '@/modules/common/components/atoms/Loader';
+import ErrorMessage from '@/modules/common/components/atoms/ErrorMessage';
 import { useVariantUpdateTableProps } from '@/modules/reabastecer/hooks/useVariantUpdateTableProps';
 import UpdateVariantTable from './components/UpdateVariantTable';
-import NoMobileVersion from '../common/components/NoMobileVersion';
+import NoMobileVersion from '../common/components/atoms/NoMobileVersion';
 import useVariantsQuery from './hooks/useVariantsQuery';
 import {
-  useButtonPagination,
-  ButtonPagination,
-} from './components/ButtonPagination';
+  usePagination,
+  Pagination,
+} from '../common/components/molecules/Pagination';
 
 export default function ReabastecerPage() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const searchProps = useSearchProps();
   const variantsQuery = useVariantsQuery({
     query: searchProps.query,
@@ -46,7 +46,7 @@ export default function ReabastecerPage() {
         {!variantsQuery.isLoading && !variantsQuery.isError && (
           <UpdateVariantTable tableInstance={tableInstance} />
         )}
-        <ButtonPagination {...paginationControls} />
+        <Pagination {...paginationControls} />
       </section>
     </PageLayout>
   );

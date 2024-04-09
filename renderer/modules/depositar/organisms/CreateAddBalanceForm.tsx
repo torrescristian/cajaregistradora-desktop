@@ -1,4 +1,4 @@
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import useCreateCashAddBalanceMutation from '@/modules/caja/hooks/useCreateCashAddBalanceMutation';
 import { INewAddBalance } from '@/modules/caja/interfaces/INewAddBalance';
 import { useForm } from 'react-hook-form';

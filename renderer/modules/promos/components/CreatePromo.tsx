@@ -1,13 +1,13 @@
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import ProductItem from '@/modules/products/components/ProductItem';
-import SearchInput from '@/modules/common/components/SearchInput';
+import SearchInput from '@/modules/common/components/molecules/SearchInput';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import CardVariantList from './CardVariantList';
 import CardCategoryList from './CardCategoryList';
-import SubmitButton from '@/modules/common/components/SubmitButton';
-import FieldLabel from '@/modules/common/components/FieldLabel';
+import SubmitButton from '@/modules/common/components/atoms/SubmitButton';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import useCreatePromo from '../hooks/useCreatePromo';
-import { ButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import { Pagination } from '@/modules/common/components/molecules/Pagination';
 
 export const CreatePromo = () => {
   const {
@@ -107,7 +107,7 @@ export const CreatePromo = () => {
                 />
               ))}
             </div>
-            <ButtonPagination {...paginationControls} />
+            <Pagination {...paginationControls} />
           </div>
           <div className="flex flex-col gap-5">
             <CardVariantList

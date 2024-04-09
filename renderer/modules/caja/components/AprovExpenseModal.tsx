@@ -1,10 +1,10 @@
 import { formatPrice } from '@/modules/common/libs/utils';
 import { IExpense } from '../interfaces/IExpense';
-import { DataItem } from '@/modules/common/components/DataItem';
+import { DataItem } from '@/modules/common/components/atoms/DataItem';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import useAprovedExpensePending from '../hooks/useAprovedExpensePending';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 
 interface IProps {
   expense: IExpense;

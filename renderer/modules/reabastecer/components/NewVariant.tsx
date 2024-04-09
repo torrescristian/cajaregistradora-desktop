@@ -1,5 +1,5 @@
-import FieldLabel from '@/modules/common/components/FieldLabel';
-import { RenderIf } from '@/modules/common/components/RenderIf';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import { useForm } from 'react-hook-form';
 import useCreateVariantMutation from '@/modules/cupones/hooks/useCreateVariantMutation';

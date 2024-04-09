@@ -2,14 +2,14 @@ import { useForm } from 'react-hook-form';
 import { ICouponPayload } from '../interfaces/ICoupon';
 import { useState } from 'react';
 import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
-import { useSearchProps } from '@/modules/common/components/SearchInput';
+import { useSearchProps } from '@/modules/common/components/molecules/SearchInput';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import useCreateCouponMutation from './useCreateCouponMutation';
 import { IDiscount } from '@/modules/ordenes/interfaces/IOrder';
 import { IVariantPromo } from '@/modules/common/interfaces/IVariants';
 import { toast } from 'react-toastify';
 import useCalcDiscountType from '@/modules/common/hooks/useCalcDiscountType';
-import { useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import { usePagination } from '@/modules/common/components/molecules/Pagination';
 
 export default function useCreateCoupon() {
   const {
@@ -24,7 +24,7 @@ export default function useCreateCoupon() {
       availableUses: 1,
     },
   });
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
 
   const [selectedProductType, setSelectedProductType] =
     useState<IProductType>();

@@ -1,7 +1,7 @@
 import { IVariantAndQuantity } from '@/modules/promos/interfaces/IPromo';
 import { formatPrice } from '@/modules/common/libs/utils';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { Card } from '@/modules/common/components/Card';
+import { Card } from '@/modules/common/components/atoms/Card';
 
 interface IProps {
   selectedVariantList: IVariantAndQuantity[];

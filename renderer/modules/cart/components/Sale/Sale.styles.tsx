@@ -9,17 +9,7 @@ import {
   ISaleItemProps,
 } from '@/modules/common/interfaces/Sale.interfaces';
 import { useSale } from '@/modules/common/contexts/SaleContext';
-import { twMerge } from 'tailwind-merge';
-
-export const Divider = ({
-  children,
-  className,
-}: {
-  children?: any;
-  className?: string;
-}) => (
-  <div className={twMerge('divider h-1 w-full', className)}>{children}</div>
-);
+import { Divider } from '@/modules/common/components/atoms/Divider';
 
 export const Container = ({ children }: IContainerProps) => (
   <section className="alert flex flex-col font-semibold shadow-lx text-center bg-stone-50 shadow-lg w-full h-5/6 justify-start">

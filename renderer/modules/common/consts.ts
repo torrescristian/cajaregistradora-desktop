@@ -1,36 +1,25 @@
 export const VARIANTS_KEY = 'variants';
-
 export const STOCK_PER_VARIANTS_KEY = 'stock-per-variants';
-
 export const PRODUCTS_KEY = 'products';
-
 export const PRODUCT_TYPE_KEY = 'product-types';
-
 export const TICKETS_KEY = 'tickets';
-
 export const ORDERS_KEY = 'orders';
-
 export const COUPONS_KEY = 'coupons';
-
 export const CLIENTS_KEY = 'clients';
-
 export const CATEGORIES_KEY = 'categories';
-
 export const NOTIFICATIONS_KEY = 'notifications';
-
 export const ADD_BALANCE_KEY = 'add-balance';
-
 export const EXPENSES_KEY = 'expenses';
-
 export const DEPOSITS_KEY = 'deposits';
-
 export const EXPENSES_TYPE_KEY = 'expense-types';
-
 export const CASH_BALANCE_KEY = 'cash-balances';
+export const DELIVERIES_KEY = 'deliveries';
+export const TABLES_KEY = 'tables';
+export const TABLES_CATEGORIES_KEY = 'table-categories';
 
+export const LOGIN_URL = '/login';
 export const ORDENES_URL = '/ordenes';
 export const RECIBOS_URL = '/recibos';
-export const PEDIDOS_URL = '/pedidos';
 export const CAJA_URL = '/admin/caja';
 export const REABASTECER_URL = '/admin/productos';
 export const CREAR_PRODUCTOS_URL = '/admin/productos/nuevo';

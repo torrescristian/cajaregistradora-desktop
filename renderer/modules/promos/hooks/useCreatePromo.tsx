@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import useCreatePromoMutation from './useCreatePromoMutation';
 import { IProduct, IProductType } from '@/modules/products/interfaces/IProduct';
 import { useState } from 'react';
-import { useSearchProps } from '@/modules/common/components/SearchInput';
+import { useSearchProps } from '@/modules/common/components/molecules/SearchInput';
 import useProductsQuery from '@/modules/products/hooks/useProductsQuery';
 import {
   ICategoryAndQuantity,
@@ -13,10 +13,10 @@ import {
 import { ICategoryExpanded } from '@/modules/categorias/interfaces/ICategory';
 import useFormControl from '@/modules/common/hooks/useFormControl';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
-import { useButtonPagination } from '@/modules/reabastecer/components/ButtonPagination';
+import { usePagination } from '@/modules/common/components/molecules/Pagination';
 
 export default function useCreatePromo() {
-  const paginationControls = useButtonPagination();
+  const paginationControls = usePagination();
   const categoryQuery = useCategoryQuery();
   const createPromoMutation = useCreatePromoMutation();
   const [selectedProductType, setSelectedProductType] =

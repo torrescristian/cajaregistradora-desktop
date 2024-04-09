@@ -1,13 +1,15 @@
 import { useRef } from 'react';
-import OrderItem from '../../ordenes/components/OrderItem';
-import { ITicket } from '@/modules/recibos/interfaces/ITicket';
-import { DataItem } from '@/modules/common/components/DataItem';
-import { getLabelByPaymentType } from '../utils/utils';
-import { discountToString, formatPrice } from '@/modules/common/libs/utils';
-import { RenderIf } from '@/modules/common/components/RenderIf';
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
-import { Divider } from '@/modules/cart/components/Sale/Sale.styles';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+
+import { ITicket } from '@/modules/recibos/interfaces/ITicket';
+import { DataItem } from '@/modules/common/components/atoms/DataItem';
+import { discountToString, formatPrice } from '@/modules/common/libs/utils';
+import { RenderIf } from '@/modules/common/components/atoms/RenderIf';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
+
+import OrderItem from './molecules/OrderItem';
+import { getLabelByPaymentType } from '../utils/utils';
+import { Divider } from '@/modules/common/components/atoms/Divider';
 interface IMoreInfoModal {
   ticket: ITicket;
 }

@@ -1,18 +1,16 @@
-import FormControl from '@/modules/common/components/FormControl';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+
+import FormControl from '@/modules/common/components/molecules/FormControl';
 import useUpdateProductForm from '@/modules/reabastecer/hooks/useUpdateProduct';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
-import { useForm } from 'react-hook-form';
 import useUpdateProductMutation from '@/modules/reabastecer/hooks/useUpdateProductMutation';
 import ImageControl from '@/modules/reabastecer/components/ImageControl';
 import { IVariantExpanded } from '@/modules/common/interfaces/IVariants';
 import useUpdateVariantMutation from '@/modules/reabastecer/hooks/useUpdateVariantMutation';
-import {
-  RemoveProductButton,
-  UpdateProductButton,
-} from '@/modules/cart/components/ProductItem.styles';
-import { toast } from 'react-toastify';
+import UpdateProductButton from '@/modules/common/components/atoms/UpdateProductButton';
+
 import RemoveVariantModal from './RemoveVariantModal';
-import RemoveProductItemModal from './RemoveProductItemModal';
 import ChangeIsService from './ChangeIsService';
 
 interface IProps {

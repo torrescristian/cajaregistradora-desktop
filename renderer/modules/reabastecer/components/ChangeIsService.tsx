@@ -1,4 +1,4 @@
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import { useRef, useState } from 'react';

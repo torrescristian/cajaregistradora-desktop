@@ -3,9 +3,9 @@ import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import ProductRow from './ProductRow';
 import { IProduct } from '@/modules/products/interfaces/IProduct';
-import { Card } from '@/modules/common/components/Card';
+import { Card } from '@/modules/common/components/atoms/Card';
 import { NewVariant } from './NewVariant';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 import ChangeIsService from './ChangeIsService';
 
 interface IProps {

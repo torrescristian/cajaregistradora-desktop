@@ -26,7 +26,6 @@ export default function useCancelOrderMutation() {
           selectedVariant: item.selectedVariant,
         }) as ICartItem,
     );
-    console.log({ cartItemsFromOrder });
     const promises = await returnStock.mutateAsync(cartItemsFromOrder);
 
     const cartItemsFromPromo = await returnStock.mutateAsync(

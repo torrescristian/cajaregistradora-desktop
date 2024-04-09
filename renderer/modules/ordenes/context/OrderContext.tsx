@@ -1,10 +1,10 @@
 import { createContext } from 'react';
 import { DISCOUNT_TYPE, IOrder } from '../interfaces/IOrder';
 import { IPayment } from '@/modules/recibos/interfaces/ITicket';
-import useCreateTicketForm from '../hooks/useCreateTicketForm';
+import useConfirmSaleForm from '../hooks/useConfirmSaleForm';
 
 type OrderContextProps = Omit<
-  ReturnType<typeof useCreateTicketForm>,
+  ReturnType<typeof useConfirmSaleForm>,
   'handleToggleAccordion' | 'isCheckedAcordion'
 > & {
   order: IOrder;

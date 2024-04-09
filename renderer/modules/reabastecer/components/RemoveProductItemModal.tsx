@@ -1,4 +1,4 @@
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 import useCancelProductMutation from '@/modules/reabastecer/hooks/useCancelProductMutation';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';

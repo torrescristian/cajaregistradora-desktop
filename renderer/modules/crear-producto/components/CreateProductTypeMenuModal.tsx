@@ -1,10 +1,11 @@
-import { IProductType } from '@/modules/products/interfaces/IProduct';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import FieldLabel from '@/modules/common/components/FieldLabel';
-import EmojiSelector from './EmojiSelector';
+
+import { IProductType } from '@/modules/products/interfaces/IProduct';
+import FieldLabel from '@/modules/common/components/atoms/FieldLabel';
 import useCreateProductType from '@/modules/cupones/hooks/useCreateProductType';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+
+import EmojiSelector from './EmojiSelector';
 
 export const CreateProductTypeMenuModal = () => {
   const {

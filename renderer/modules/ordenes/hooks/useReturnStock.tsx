@@ -3,7 +3,9 @@ import useUpdateStockPerVariantMutation from '@/modules/reabastecer/hooks/useUpd
 import { ICartItem } from '@/modules/cart/interfaces/ICart';
 
 export default function useReturnStock() {
-  const updateStockPerVariantMutation = useUpdateStockPerVariantMutation();
+  const updateStockPerVariantMutation = useUpdateStockPerVariantMutation({
+    disableSuccessToast: true,
+  });
   return useMutation(async (cartItems: ICartItem[]) => {
     return cartItems.map(async (item: ICartItem) => {
       const { quantity, selectedVariant, product } = item;

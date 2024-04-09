@@ -1,7 +1,7 @@
-import PageLayout from '@/modules/common/components/PageLayout';
+import PageLayout from '@/modules/common/components/templates/PageLayout';
 import { useAuthState } from '@/modules/common/contexts/AuthContext';
 
-import CreateListTabs from '../../../common/components/CreateListTabs';
+import CreateListTabs from '../../../common/components/molecules/CreateListTabs';
 import CashBalanceRender from '../organisms/CashBalanceRender';
 import ConfirmExpensesModal from '../ConfirmExpensesModal';
 import CashBalanceHistory from '../CashBalanceHistory';

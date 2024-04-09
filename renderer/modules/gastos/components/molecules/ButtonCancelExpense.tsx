@@ -2,7 +2,7 @@ import { IExpense } from '@/modules/caja/interfaces/IExpense';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import { useCancelExpensesMutation } from '../../hooks/useCancelExpensesMutation';
-import { ButtonClose } from '@/modules/common/components/ButtonClose';
+import { ButtonClose } from '@/modules/common/components/atoms/ButtonClose';
 
 interface IProps {
   expense: IExpense;
