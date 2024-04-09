@@ -1,22 +1,11 @@
 import escpos from 'escpos';
 import escposUSB from 'escpos-usb';
-import {
-  discountToString,
-  formatPrice,
-  parseDateToArgentinianFormat,
-} from '../helpers/utils';
+import { formatPrice, parseDateToArgentinianFormat } from '../helpers/utils';
 import { ALIGN, FONT_SIZE_NORMAL, FONT_SIZE_SMALL } from '../helpers/const';
-import { ITicket } from '../interfaces/ITicket';
+import { IOrder } from '../interfaces/IOrder';
 
-export default function printInvoice(ticket: ITicket) {
+export default function printInvoice(order: IOrder) {
   try {
-    if (!ticket?.id || !ticket?.order?.id) {
-      console.log('Missing Ticket', ticket);
-      return;
-    }
-
-    const { order } = ticket;
-
     if (!escposUSB) return;
 
     escpos.USB = escposUSB;
@@ -40,7 +29,13 @@ export default function printInvoice(ticket: ITicket) {
       printer.text(FONT_SIZE_SMALL).text('https://cajaregistradora.com.ar');
 
       // store, client and order data
-      printer.text(FONT_SIZE_SMALL).text(ticket.store.name).align(ALIGN.LT);
+      printer.text(FONT_SIZE_SMALL).text(order.store!.name).align(ALIGN.LT);
+
+      if (order.delivery?.id) {
+        printer.text(
+          `Domicilio: ${order.delivery.userAddress || order.client.address}`,
+        );
+      }
 
       if (order.table?.id) {
         printer
@@ -86,21 +81,8 @@ export default function printInvoice(ticket: ITicket) {
       // total amount & status
       printer.drawLine().align(ALIGN.RT);
 
-      if (ticket.couponDiscount) {
-        printer
-          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
-          .text(`Descuento de cupon: ${ticket.couponDiscount}`);
-        if (ticket.order.discount?.amount) {
-          printer.text(`Otros descuentos: ${discountToString(order.discount)}`);
-        }
-      } else if (ticket.order.discount?.amount) {
-        printer
-          .text(`Subtotal: ${formatPrice(order.subtotalPrice)}`)
-          .text(`Descuento: ${discountToString(order.discount)}`);
-      }
-
       printer
-        .text(`Total: ${formatPrice(ticket.totalPrice)}`)
+        .text(`Total: ${formatPrice(order.totalPrice)}`)
         .drawLine()
         .align(ALIGN.CT)
         .text('Sin validez fiscal');

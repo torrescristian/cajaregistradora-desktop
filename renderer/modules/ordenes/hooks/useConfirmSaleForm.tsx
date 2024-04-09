@@ -136,14 +136,15 @@ export default function useConfirmSaleForm({ order, onSubmit }: IProps) {
         delivery: order.delivery,
       });
 
-      await printInvoice(ticketResponse.data.id);
       if (order.delivery?.id) {
         queryClient.invalidateQueries([DELIVERIES_KEY]);
       } else if (order.table?.id) {
         await completeTableOrderMutation.mutateAsync(order.table);
         queryClient.invalidateQueries([TABLES_KEY]);
+        await printInvoice(ticketResponse.data.id);
       } else {
         queryClient.invalidateQueries([ORDERS_KEY]);
+        await printInvoice(ticketResponse.data.id);
       }
       onSubmit?.(order);
       handleClearForm();

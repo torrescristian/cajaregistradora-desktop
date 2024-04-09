@@ -1,3 +1,4 @@
+import IStore from '@/modules/common/interfaces/IStore';
 import { IPromoItem } from './ICart';
 import IClient from './IClient';
 import { ICoupon } from './ICoupon';
@@ -38,6 +39,7 @@ export interface IOrder<
   promoItems: IPromoItem[];
   delivery?: IDelivery;
   table?: ITable;
+  store?: IStore;
 }
 
 export interface IDiscount {

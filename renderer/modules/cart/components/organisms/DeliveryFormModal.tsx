@@ -78,6 +78,7 @@ export default function DeliveryFormModal({ onSubmit }: IProps) {
           type="submit"
           className="btn btn-success text-white"
           onClick={handleClickSubmit}
+          disabled={!userAddressControl.value || !clientControl.value}
         >
           {isCreateDelivery ? 'Crear Delivery' : 'Actualizar Delivery'}
         </button>
